@@ -1,10 +1,16 @@
 import React from 'react';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem, PageHeader, Jumbotron, Button, ButtonToolbar} from 'react-bootstrap';
+import TopMenu from './TopMenu.jsx';
+import Content from './Content.jsx';
 
 class App extends React.Component {
 
   render() {
-    return null;
+    return (
+      <div>
+        <TopMenu />
+        <Content />
+      </div>
+    );
   }
 }
 

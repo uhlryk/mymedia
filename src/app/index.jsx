@@ -5,8 +5,11 @@ import style from './sass/style.scss';
 import createStore from './stores/index.js';
 import reducer from './reducers/index.js';
 import App from './components/App.jsx';
+import * as Pages from './pages';
 
-var store = createStore(reducer);
+var store = createStore(reducer, {
+  page: Pages.COLLECTION_LIST
+});
 
 render(
   <Provider store={store}>
