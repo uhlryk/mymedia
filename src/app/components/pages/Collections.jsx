@@ -20,10 +20,7 @@ class Collections extends React.Component {
       properties: [ 'openDirectory']
     }, (fileNames) => {
       if(fileNames && fileNames.length > 0) {
-        this.props.dispatch({
-          type: Actions.OPEN_COLLECTION,
-          directory: fileNames[0]
-        });
+        this.props.dispatch(Actions.Thunk.readCollection(fileNames[0]));
       }
     });
 

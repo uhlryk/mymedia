@@ -7,12 +7,19 @@ export default function(state= {}, action) {
       return {
         page: Pages.COLLECTION_LIST
       }
-    case Actions.OPEN_COLLECTION:
+    case Actions.INIT_READ_COLLECTION:
       return {
         page: Pages.LOADER,
         collection: {
           directory: action.directory
         }
+      }
+    case Actions.FINISH_READ_COLLECTION:
+      return {
+        page: Pages.MEDIA_LIST,
+        collection: Object.assign({
+          files: action.files
+        }, state.collection)
       }
     default :
       return state;
