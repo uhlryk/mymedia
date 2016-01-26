@@ -2,7 +2,7 @@ import React from 'react';
 import ReactRedux from 'react-redux';
 import * as RB from 'react-bootstrap';
 import * as Pages from '../pages';
-import * as ActionTypes from '../actionTypes';
+import * as Actions from '../actions/index.js';
 
 class TopMenu extends React.Component {
 
@@ -13,7 +13,7 @@ class TopMenu extends React.Component {
 
   onCollection() {
     this.props.dispatch({
-      type: ActionTypes.SELECT_COLLECTION
+      type: Actions.SELECT_COLLECTION
     });
   }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as RB from 'react-bootstrap';
-import * as ActionTypes from '../../actionTypes';
+import * as Actions from '../../actions/index.js';
 var remote = require('remote');
 var dialog = remote.require('dialog');
 
@@ -21,7 +21,7 @@ class Collections extends React.Component {
     }, (fileNames) => {
       if(fileNames && fileNames.length > 0) {
         this.props.dispatch({
-          type: ActionTypes.OPEN_COLLECTION,
+          type: Actions.OPEN_COLLECTION,
           directory: fileNames[0]
         });
       }

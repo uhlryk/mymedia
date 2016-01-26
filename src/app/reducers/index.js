@@ -1,13 +1,13 @@
-import * as ActionTypes from '../actionTypes';
+import * as Actions from '../actions/index.js';
 import * as Pages from '../pages';
 
 export default function(state= {}, action) {
   switch(action.type) {
-    case ActionTypes.SELECT_COLLECTION:
+    case Actions.SELECT_COLLECTION:
       return {
         page: Pages.COLLECTION_LIST
       }
-    case ActionTypes.OPEN_COLLECTION:
+    case Actions.OPEN_COLLECTION:
       return {
         page: Pages.LOADER,
         collection: {
