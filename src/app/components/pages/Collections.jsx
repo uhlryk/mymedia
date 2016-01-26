@@ -16,10 +16,10 @@ class Collections extends React.Component {
     dialog.showOpenDialog({
       properties: [ 'openDirectory']
     }, (fileNames) => {
-      if(fileNames) {
-        console.log(fileNames);
+      if(fileNames && fileNames.length > 0) {
         this.props.dispatch({
-          type: ActionTypes.GO_TO_MEDIA_PAGE
+          type: ActionTypes.OPEN_COLLECTION,
+          directory: fileNames[0]
         });
       }
     });

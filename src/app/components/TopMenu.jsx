@@ -13,7 +13,7 @@ class TopMenu extends React.Component {
 
   onCollection() {
     this.props.dispatch({
-      type: ActionTypes.GO_TO_COLLECTION_PAGE
+      type: ActionTypes.SELECT_COLLECTION
     });
   }
 

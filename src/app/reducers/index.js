@@ -3,13 +3,16 @@ import * as Pages from '../pages';
 
 export default function(state= {}, action) {
   switch(action.type) {
-  case ActionTypes.GO_TO_COLLECTION_PAGE:
+  case ActionTypes.SELECT_COLLECTION:
     return {
       page: Pages.COLLECTION_LIST
     }
-  case ActionTypes.GO_TO_MEDIA_PAGE:
+  case ActionTypes.OPEN_COLLECTION:
     return {
-      page: Pages.MEDIA_LIST
+      page: Pages.MEDIA_LIST,
+      collection: {
+        directory: action.directory
+      }
     }
   default :
     return state;
