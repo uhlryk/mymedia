@@ -1,9 +1,13 @@
 import React from 'react';
-import ReactRedux from 'react-redux';
+import { connect } from 'react-redux';
 import * as RB from 'react-bootstrap';
 import * as Pages from '../pages';
 import Collections from './pages/Collections.jsx'
 import Collection from './pages/Collection.jsx'
+
+@connect(state => ({
+  page: state.page
+}))
 class Content extends React.Component {
 
   render() {
@@ -25,10 +29,4 @@ class Content extends React.Component {
   }
 }
 
-function select(state) {
-  return {
-    page: state.page
-  }
-}
-
-export default ReactRedux.connect(select)(Content);
+export default Content;

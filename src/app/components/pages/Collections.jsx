@@ -1,10 +1,13 @@
 import React from 'react';
-import ReactRedux from 'react-redux';
+import { connect } from 'react-redux';
 import * as RB from 'react-bootstrap';
 import * as ActionTypes from '../../actionTypes';
 var remote = require('remote');
 var dialog = remote.require('dialog');
 
+@connect(state => ({
+  page: state.page
+}))
 class Collections extends React.Component {
 
   constructor(props) {
@@ -40,10 +43,4 @@ class Collections extends React.Component {
   }
 }
 
-function select(state) {
-  return {
-    page: state.page
-  }
-}
-
-export default ReactRedux.connect(select)(Collections);
+export default Collections;
