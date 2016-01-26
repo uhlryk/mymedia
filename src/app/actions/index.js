@@ -20,13 +20,12 @@ export const finishReadCollection = files => ({
   files
 });
 
-import walkSync from '../helpers/directoryList';
+import directoryList from '../helpers/directoryList';
 export const Thunk = {
   readCollection : directory => (dispatch, getState) => {
     dispatch(initReadCollection(directory));
 
-    walkSync(directory, (err, files) => {
-      console.log(files);
+    directoryList(directory, (err, files) => {
       dispatch(finishReadCollection(files));
     });
   }
