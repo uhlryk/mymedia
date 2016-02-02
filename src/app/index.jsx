@@ -5,15 +5,22 @@ import style from './sass/style.scss';
 import createStore from './stores/index.js';
 import reducer from './reducers/index.js';
 import App from './components/App.jsx';
-import * as Pages from './pages';
+import { Router, Route, createMemoryHistory } from 'react-router';
+import Collections from './components/pages/Collections.jsx';
+import Collection from './components/pages/Collection.jsx';
 
-var store = createStore(reducer, {
-  page: Pages.COLLECTION_LIST
-});
+const history = createMemoryHistory('collections');
+
+const store = createStore(reducer);
 
 render(
   <Provider store={store}>
-    <App />
+    <Router history={history}>
+      <Route path="/" component={App}>
+        <Route path="collection" component={Collection}/>
+        <Route path="collections" component={Collections}/>
+      </Route>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

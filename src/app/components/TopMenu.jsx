@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactRedux from 'react-redux';
 import * as RB from 'react-bootstrap';
-import * as Pages from '../pages';
 import * as Actions from '../actions/index.js';
 
 class TopMenu extends React.Component {
+
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
 
   constructor(props) {
     super(props);
@@ -12,9 +15,7 @@ class TopMenu extends React.Component {
   }
 
   onCollection() {
-    this.props.dispatch({
-      type: Actions.SELECT_COLLECTION
-    });
+    this.props.dispatch(Actions.Thunk.selectCollection(this.context.router));
   }
 
   render() {

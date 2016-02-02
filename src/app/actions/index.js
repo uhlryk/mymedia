@@ -1,32 +1,27 @@
 export const SELECT_COLLECTION = 'selectCollection';
-export const INIT_READ_COLLECTION = 'initReadCollection';
-export const FINISH_READ_COLLECTION = 'finishReadCollection';
+export const SET_COLLECTION_PATH = 'setCollectionPath';
+export const SET_FILE_LIST = 'setFileList';
 
-/**
- * start check collection directory
- * @param directory
- */
-export const initReadCollection = directory => ({
-  type: INIT_READ_COLLECTION,
-  directory
-});
-
-/**
- * finish check collection directory
- * @param directory
- */
-export const finishReadCollection = files => ({
-  type: FINISH_READ_COLLECTION,
-  files
-});
-
-import directoryList from '../helpers/directoryList';
+import fileList from '../helpers/fileList';
 export const Thunk = {
-  readCollection : directory => (dispatch, getState) => {
-    dispatch(initReadCollection(directory));
-
-    directoryList(directory, (err, files) => {
-      dispatch(finishReadCollection(files));
+  startCollection : (router, path) => (dispatch, getState) => {
+    dispatch({
+      type: SET_COLLECTION_PATH,
+      path
     });
+    router.push('collection');
+
+    fileList(path, (err, files) => {
+      dispatch({
+        type: SET_FILE_LIST,
+        files
+      });
+    });
+  },
+  selectCollection : (router) => (dispatch, getState) => {
+    dispatch({
+      type: SELECT_COLLECTION
+    });
+    router.push('collections');
   }
 }

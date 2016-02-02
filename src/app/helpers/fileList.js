@@ -3,7 +3,7 @@ var path = require('path');
 
 
 
-export default function directoryList(dir, done) {
+export default function fileList(dir, done) {
   function walk(dir, done) {
     var results = [];
     fs.readdir(dir, function (err, list) {

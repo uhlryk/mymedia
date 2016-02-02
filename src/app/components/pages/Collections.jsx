@@ -6,21 +6,24 @@ var remote = require('remote');
 var dialog = remote.require('dialog');
 
 @connect(state => ({
-  page: state.page
 }))
 class Collections extends React.Component {
 
+  static contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
-    this.onOpenDirectory = this.onOpenDirectory.bind(this);
+    this.onCollectionPath = this.onCollectionPath.bind(this);
   }
 
-  onOpenDirectory() {
+  onCollectionPath() {
     dialog.showOpenDialog({
       properties: [ 'openDirectory']
     }, (fileNames) => {
       if(fileNames && fileNames.length > 0) {
-        this.props.dispatch(Actions.Thunk.readCollection(fileNames[0]));
+        this.props.dispatch(Actions.Thunk.startCollection(this.context.router, fileNames[0]));
       }
     });
 
@@ -32,7 +35,7 @@ class Collections extends React.Component {
         <RB.Jumbotron className="text-center">
           <p>Select Collection directory</p>
           <p>
-            <RB.Button bsStyle="primary" onClick={this.onOpenDirectory} >Collection</RB.Button>
+            <RB.Button bsStyle="primary" onClick={this.onCollectionPath} >Collection</RB.Button>
           </p>
         </RB.Jumbotron>
       </div>
