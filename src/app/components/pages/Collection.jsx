@@ -1,5 +1,5 @@
-import React from 'react';
-import * as RB from 'react-bootstrap';
+import React from "react";
+import * as RB from "react-bootstrap";
 class Collection extends React.Component {
 
   render() {

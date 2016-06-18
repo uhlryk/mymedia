@@ -1,15 +1,15 @@
-export const SELECT_COLLECTION = 'selectCollection';
-export const SET_COLLECTION_PATH = 'setCollectionPath';
-export const SET_FILE_LIST = 'setFileList';
+export const SELECT_COLLECTION = "selectCollection";
+export const SET_COLLECTION_PATH = "setCollectionPath";
+export const SET_FILE_LIST = "setFileList";
 
-import fileList from '../helpers/fileList';
+import fileList from "../helpers/fileList";
 export const Thunk = {
   startCollection : (router, path) => (dispatch, getState) => {
     dispatch({
       type: SET_COLLECTION_PATH,
       path
     });
-    router.push('collection');
+    router.push("collection");
 
     fileList(path, (err, files) => {
       dispatch({
@@ -22,6 +22,6 @@ export const Thunk = {
     dispatch({
       type: SELECT_COLLECTION
     });
-    router.push('collections');
+    router.push("collections");
   }
 }

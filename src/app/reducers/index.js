@@ -1,4 +1,4 @@
-import * as Actions from '../actions/index.js';
+import * as Actions from "../actions/index.js";
 
 export default function(state= {}, action) {
   switch(action.type) {

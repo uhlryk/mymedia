@@ -1,5 +1,6 @@
-import React from 'react';
-import TopMenu from './TopMenu.jsx';
+import React from "react";
+import TopMenu from "./TopMenu.jsx";
+import Loader from "./Loader.jsx";
 
 class App extends React.Component {
 
@@ -10,6 +11,7 @@ class App extends React.Component {
         <div className="container">
           {this.props.children}
         </div>
+        <Loader />
       </div>
     );
   }

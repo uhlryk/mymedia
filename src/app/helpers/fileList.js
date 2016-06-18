@@ -1,7 +1,5 @@
-var fs = require('fs');
-var path = require('path');
-
-
+var fs = require("fs");
+var path = require("path");
 
 export default function fileList(dir, done) {
   function walk(dir, done) {

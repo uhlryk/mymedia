@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactRedux from 'react-redux';
-import * as RB from 'react-bootstrap';
-import * as Actions from '../actions/index.js';
+import React from "react";
+import ReactRedux from "react-redux";
+import * as RB from "react-bootstrap";
+import * as Actions from "../actions/index.js";
 
 class TopMenu extends React.Component {
 
