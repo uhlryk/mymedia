@@ -2,8 +2,11 @@ import React from "react";
 import { Router, Route } from "react-router";
 
 import Content from "./../components/Content.jsx";
-import SelectProject from "./../components/pages/SelectProject.jsx";
-import MediaList from "./../components/pages/MediaList.jsx";
+import Project from "./Project.jsx";
+import ProjectMedia from "./project/Media.jsx";
+
+import ProjectSelect from "./project/SelectProject.jsx";
+import ProjectMediaList from "./project/media/MediaList.jsx";
 
 
 
@@ -15,8 +18,12 @@ class AppRouter extends React.Component {
     return (
       <Router history={this.props.history}>
         <Route component={Content}>
-          <Route path="/" component={SelectProject} />
-          <Route path="list" component={MediaList} />
+          <Route path="project" component={Project} >
+            <Route path="select" component={ProjectSelect} />
+            <Route path="media" component={ProjectMedia} >
+              <Route path="list" component={ProjectMediaList} />
+            </Route>
+          </Route>
         </Route>
       </Router>
     );
