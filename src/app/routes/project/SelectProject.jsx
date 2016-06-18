@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as RB from "react-bootstrap";
 import selectProjectPath from "./../../thunks/project/selectPath";
+import { showInfoModal } from "./../../actions/modal";
 
 /**
  * project is name of directory which contain media files
