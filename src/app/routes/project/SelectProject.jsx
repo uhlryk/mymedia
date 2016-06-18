@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import * as RB from "react-bootstrap";
 import { selectProjectPath } from "./../../actions/project";
-import { showNotification } from "./../../actions/notification";
-import { showInfoModal } from "./../../actions/modal";
 
 /**
  * project is name of directory which contain media files

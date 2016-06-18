@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 }))
 class Loader extends React.Component {
   render() {
-    if(this.props.loader && this.props.loader.show) {
+    if(this.props.loader) {
       return (
         <div className="loader">
           <div className="loader__spinner"></div>
