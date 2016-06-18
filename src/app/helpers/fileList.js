@@ -1,5 +1,5 @@
-var fs = require("fs");
-var path = require("path");
+import fs from "fs";
+import path from "path";
 
 export default function fileList(dir, done) {
   function walk(dir, done) {
@@ -16,9 +16,14 @@ export default function fileList(dir, done) {
               results = results.concat(res);
               if (!--pending) done(null, results);
             });
+          } else if (stat && stat.isFile()){
+            results.push({
+              path: file,
+              size: stat.size,
+              birthtime: stat.birthtime
+            });
+            if (!--pending) done(null, results);
           } else {
-            console.log(stat);
-            results.push(file);
             if (!--pending) done(null, results);
           }
         });

@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "font-awesome": "^4.5.0",
+    "lodash": "^4.13.1",
     "react": "^0.14.6",
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.6",

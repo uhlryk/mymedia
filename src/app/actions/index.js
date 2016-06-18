@@ -1,26 +1,21 @@
+import path from "path";
+import fileSave from "../helpers/fileSave";
+import { showErrorModal } from "./modal";
+import { showLoader, hideLoader } from "./loader";
+import { showNotification } from "./notification";
 
-
-
-import fileList from "../helpers/fileList";
-export const Thunk = {
-  startCollection : (router, path) => (dispatch, getState) => {
-    dispatch({
-      type: SET_COLLECTION_PATH,
-      path
+export function save() {
+  return (dispatch, getState) => {
+    dispatch(showLoader("saving data"));
+    fileSave(path.join(getState().project.path, ".mymedia.json"), JSON.stringify({
+      media: getState().fileList
+    }), (err) => {
+      if(err) {
+        dispatch(showErrorModal(err));
+      } else {
+        showNotification("success", "save project");
+      }
+      dispatch(hideLoader());
     });
-    router.push("collection");
-
-    fileList(path, (err, files) => {
-      dispatch({
-        type: SET_FILE_LIST,
-        files
-      });
-    });
-  },
-  selectCollection : (router) => (dispatch, getState) => {
-    dispatch({
-      type: SELECT_COLLECTION
-    });
-    router.push("collections");
   }
 }

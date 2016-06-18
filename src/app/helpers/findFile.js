@@ -1,5 +1,5 @@
-var fs = require("fs");
-var path = require("path");
+import fs from "fs";
+import path from "path";
 
 export default function findFile(dir, name, done) {
 

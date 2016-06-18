@@ -12,7 +12,6 @@ class Notification extends React.Component {
   }
 
   componentWillUpdate(nextProps) {
-    console.log(nextProps);
     if(nextProps.notification) {
       this._notificationSystem.addNotification({
         message: nextProps.notification.message,
