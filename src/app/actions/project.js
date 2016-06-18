@@ -1,5 +1,8 @@
 import remote from "remote";
-import findProjectFile from "../helpers/findFile";
+import { push } from "react-router-redux";
+import findFile from "../helpers/findFile";
+import { showLoader, hideLoader } from "./loader";
+import { showErrorModal, showYesNoModal } from "./modal";
 
 const dialog = remote.require("dialog");
 
@@ -14,22 +17,49 @@ export function initProject(path) {
   }
 }
 
-export function selectProjectPath(path) {
+export function askIfCreateNewProjectFile(path) {
   return (dispatch, getState) => {
+    dispatch(showYesNoModal(
+      "New  project",
+      "Do you want to create new project? There is no project file",
+      "create",
+      "chancel",
+      () => {
+
+      },
+      () => {
+        //do nothing
+      }
+    ));
+
+  };
+}
+
+export function findProjectFile(path) {
+  return (dispatch, getState) => {
+    dispatch(showLoader("checking media directory"));
+    findFile(path, ".mymedia.json", (err, result) => {
+      dispatch(hideLoader());
+      if(err) {
+        dispatch(showErrorModal(err));
+      } else if(result){
+        dispatch(initProject(path));
+      } else {
+        dispatch(askIfCreateNewProjectFile(path));
+      }
+    });
+  };
+}
+
+export function selectProjectPath() {
+  return (dispatch, getState) => {
+    dispatch(showLoader("selecting media directory"));
     dialog.showOpenDialog({
       properties: [ "openDirectory"]
     }, (fileNames) => {
+      dispatch(hideLoader());
       if(fileNames && fileNames.length > 0) {
-        findProjectFile(fileNames[0], ".mymedia.json", (err, result) => {
-          if(err) {
-
-          } else if(result){
-
-            dispatch(initProject(fileNames[0]));
-          } else {
-
-          }
-        });
+        dispatch(findProjectFile(fileNames[0]));
       }
     });
   }

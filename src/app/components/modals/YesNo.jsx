@@ -1,13 +1,15 @@
 import React from "react";
 import * as RB from "react-bootstrap";
 
-class Info extends React.Component {
+class YesNo extends React.Component {
 
   static propsTypes = {
     title: React.PropTypes.string,
     message: React.PropTypes.string,
-    label: React.PropTypes.string,
-    onClick: React.PropTypes.func,
+    labelYes: React.PropTypes.string,
+    labelNo: React.PropTypes.string,
+    onClickYes: React.PropTypes.func,
+    onClickNo: React.PropTypes.func,
     showModal: React.PropTypes.bool
   };
 
@@ -23,7 +25,8 @@ class Info extends React.Component {
         </RB.Modal.Body>
 
         <RB.Modal.Footer>
-          <RB.Button bsStyle="primary" onClick={this.props.onClick}>{this.props.label}</RB.Button>
+          <RB.Button bsStyle="primary" onClick={this.props.onClickYes}>{this.props.labelYes}</RB.Button>
+          <RB.Button bsStyle="primary" onClick={this.props.onClickNo}>{this.props.labelNo}</RB.Button>
         </RB.Modal.Footer>
 
       </RB.Modal>
@@ -31,4 +34,4 @@ class Info extends React.Component {
   }
 }
 
-export default Info;
+export default YesNo;
