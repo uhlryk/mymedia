@@ -1,26 +1,17 @@
 import React from "react";
-import { render } from "react-dom";
-import { Provider } from "react-redux";
+import ReactDOM from "react-dom";
 import style from "./sass/style.scss";
-import createStore from "./stores/index.js";
-import reducer from "./reducers/index.js";
-import App from "./components/App.jsx";
-import { Router, Route, createMemoryHistory } from "react-router";
-import SelectDirectory from "./components/pages/SelectDirectory.jsx";
-import Collection from "./components/pages/Collection.jsx";
+import { createMemoryHistory } from "react-router";
+import App from "./App.jsx";
 
-const history = createMemoryHistory("selectDirectory");
+const initialState = window.__INITIAL_STATE__;
+const config = window.__CONFIG__;
 
-const store = createStore(reducer);
+const history = createMemoryHistory("/");
 
-render(
-  <Provider store={store}>
-    <Router history={history}>
-      <Route path="/" component={App}>
-        <Route path="collection" component={Collection}/>
-        <Route path="selectDirectory" component={SelectDirectory}/>
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById("root")
-);
+ReactDOM.render(
+  <App
+    config={config}
+    history={history}
+    initialState={initialState}
+  />, document.getElementById("root"));

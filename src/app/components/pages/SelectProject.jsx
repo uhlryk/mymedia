@@ -5,9 +5,12 @@ import * as Actions from "../../actions/index.js";
 var remote = require("remote");
 var dialog = remote.require("dialog");
 
+/**
+ * project is name of directory which contain media files
+ */
 @connect(state => ({
 }))
-class SelectDirectory extends React.Component {
+class SelectProject extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object.isRequired
@@ -43,4 +46,4 @@ class SelectDirectory extends React.Component {
   }
 }
 
-export default SelectDirectory;
+export default SelectProject;

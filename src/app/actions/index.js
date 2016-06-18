@@ -1,6 +1,5 @@
-export const SELECT_COLLECTION = "selectCollection";
-export const SET_COLLECTION_PATH = "setCollectionPath";
-export const SET_FILE_LIST = "setFileList";
+
+
 
 import fileList from "../helpers/fileList";
 export const Thunk = {

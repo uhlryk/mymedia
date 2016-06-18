@@ -1,22 +1,10 @@
-import * as Actions from "../actions/index.js";
+import { combineReducers } from "redux";
+import { routerReducer } from "react-router-redux"
+import project from "./project";
 
-export default function(state= {}, action) {
-  switch(action.type) {
-    case Actions.SELECT_COLLECTION:
-      return {};
-    case Actions.SET_COLLECTION_PATH:
-      return {
-        collection: {
-          directory: action.directory
-        }
-      };
-    case Actions.SET_FILE_LIST:
-      return {
-        collection: Object.assign({
-          files: action.files
-        }, state.collection)
-      };
-    default :
-      return state;
-  }
-};
+
+export default combineReducers({
+  project,
+  routing: routerReducer
+});
+

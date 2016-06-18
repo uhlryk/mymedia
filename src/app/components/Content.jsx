@@ -2,7 +2,7 @@ import React from "react";
 import TopMenu from "./TopMenu.jsx";
 import Loader from "./Loader.jsx";
 
-class App extends React.Component {
+class Content extends React.Component {
 
   render() {
     return (
@@ -17,4 +17,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Content;

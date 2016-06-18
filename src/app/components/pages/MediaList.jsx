@@ -1,6 +1,6 @@
 import React from "react";
 import * as RB from "react-bootstrap";
-class Collection extends React.Component {
+class MediaList extends React.Component {
 
   render() {
     return (
@@ -15,4 +15,4 @@ class Collection extends React.Component {
   }
 }
 
-export default Collection;
+export default MediaList;
