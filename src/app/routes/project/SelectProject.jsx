@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import * as RB from "react-bootstrap";
-import * as Actions from "../../actions/index.js";
-var remote = require("remote");
-var dialog = remote.require("dialog");
+import selectProjectPath from "./../../thunks/project/selectPath";
 
 /**
  * project is name of directory which contain media files
@@ -22,23 +20,16 @@ class SelectProject extends React.Component {
   }
 
   onCollectionPath() {
-    dialog.showOpenDialog({
-      properties: [ "openDirectory"]
-    }, (fileNames) => {
-      if(fileNames && fileNames.length > 0) {
-        this.props.dispatch(Actions.Thunk.startCollection(this.context.router, fileNames[0]));
-      }
-    });
-
+    this.props.dispatch(selectProjectPath());
   }
 
   render() {
     return (
       <div className="row">
         <RB.Jumbotron className="text-center">
-          <p>Select Collection directory</p>
+          <p>Please Select Media directory <small>select directory where are your media files</small></p>
           <p>
-            <RB.Button bsStyle="primary" onClick={this.onCollectionPath} >Select Media Directory</RB.Button>
+            <RB.Button bsStyle="primary" onClick={this.onCollectionPath} >Select</RB.Button>
           </p>
         </RB.Jumbotron>
       </div>

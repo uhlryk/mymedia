@@ -7,7 +7,6 @@ class Content extends React.Component {
   render() {
     return (
       <div>
-        <TopMenu />
         <div className="container">
           {this.props.children}
         </div>

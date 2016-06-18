@@ -4,6 +4,7 @@ export default function project(state = false, action) {
   switch(action.type) {
     case INIT_PROJECT:
       return {
+        name: "",
         path: action.path,
         existingFiles: [],
         newFiles: []
