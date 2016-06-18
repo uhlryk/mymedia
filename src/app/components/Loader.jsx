@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import TopMenu from "./TopMenu.jsx";
 
 @connect(state => ({
   loader: state.loader
