@@ -1,12 +1,14 @@
 import remote from "remote";
 import { push } from "react-router-redux";
-import findFile from "../helpers/findFile";
+import { PROJECT_FILE } from "../constants/general";
+import fileFind from "../helpers/fileFind";
 import fileList from "../helpers/fileList";
+import fileLoad from "../helpers/fileLoad";
 
 import { showLoader, hideLoader } from "./loader";
 import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
-import { addNewFiles } from "./fileList";
+import { addNewFiles, setProjectFiles } from "./fileList";
 
 const dialog = remote.require("dialog");
 
@@ -33,7 +35,6 @@ export function askIfCreateNewProjectFile(path) {
         fileList(path, (err, files) => {
           dispatch(addNewFiles(files));
           dispatch(hideLoader());
-          dispatch(hideLoader());
           dispatch(save());
           dispatch(push("project/media/list"));
         });
@@ -49,19 +50,34 @@ export function askIfCreateNewProjectFile(path) {
 export function findProjectFile(path) {
   return (dispatch, getState) => {
     dispatch(showLoader("checking media directory"));
-    findFile(path, ".mymedia.json", (err, result) => {
+    fileFind(path, PROJECT_FILE, (err, result) => {
       dispatch(hideLoader());
       if(err) {
         dispatch(showErrorModal(err));
       } else if(result){
-        //load project file
-        //check if is ok
-        //dispatch project data
-        //load files from directory
-        //compare loaded files with project files
-        //dispatch project files
-        //dispatch new files
-        //navigate to file list
+        dispatch(showLoader("load project"));
+        fileLoad(path, PROJECT_FILE, (err, result) => {
+          if(err) {
+            dispatch(showErrorModal(err));
+            dispatch(hideLoader());
+          } else if(result){
+            let projectData = {};
+            try {
+              projectData = JSON.parse(result);
+            } catch(err) {
+              dispatch(showErrorModal(err));
+              dispatch(hideLoader());
+            }
+            console.log(projectData);
+            dispatch(initProject(path));
+            dispatch(setProjectFiles(projectData.media));
+            fileList(path, (err, files) => {
+              dispatch(addNewFiles(files));
+              dispatch(hideLoader());
+              dispatch(push("project/media/list"));
+            });
+          }
+        });
       } else {
         dispatch(askIfCreateNewProjectFile(path));
       }
