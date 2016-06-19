@@ -1,0 +1,20 @@
+.list {
+  &__table {
+    @extend .table;
+    @extend .table-striped;
+    @extend .table-hover;
+    table-layout: fixed;
+  }
+  &__column {
+    width: auto;
+    &--xs {
+      width:50px;
+    }
+    &--sm {
+      width:80px;
+    }
+  }
+  &__filter {
+    width: 100%;
+  }
+}

@@ -68,13 +68,11 @@ export function findProjectFile(path) {
               dispatch(showErrorModal(err));
               dispatch(hideLoader());
             }
-            console.log(projectData);
             dispatch(initProject(path));
             dispatch(setProjectFiles(projectData.media));
             fileList(path, (err, files) => {
               dispatch(addNewFiles(files));
               dispatch(hideLoader());
-              console.log(getState().media);
               dispatch(push("project/media/list"));
             });
           }

@@ -1,18 +1,55 @@
 import React from "react";
 import * as RB from "react-bootstrap";
-class MediaList extends React.Component {
+import Griddle from "griddle-react";
+import { connect } from "react-redux";
+import Filter from "../../../components/grid/Filter.jsx";
+
+@connect(state => ({
+  fileList: state.fileList
+}))
+class List extends React.Component {
 
   render() {
-    return (
-      <div className="row">
-        <RB.Jumbotron>
-          <h1>BBBBB</h1>
-          <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-          <p><RB.Button bsStyle="primary">Learn more</RB.Button></p>
-        </RB.Jumbotron>
-      </div>
-    );
+    console.log(this.props.fileList);
+    let list = Object.keys(this.props.fileList).map(filePath => {
+      return this.props.fileList[filePath];
+    });
+    console.log(list);
+    if(list.length) {
+      return (
+        <div className="list">
+          <Griddle
+            useGriddleStyles={false}
+            tableClassName="list__table"
+            results={list}
+            showFilter={false}
+            showSettings={false}
+            columnMetadata={[{
+              columnName: "exist",
+              displayName: "",
+              customComponent: (props) => <span> {props.data?"exist" : "deleted"}</span>
+            }, {
+              columnName: "path",
+              displayName: "path",
+              customHeaderComponent: Filter
+            }, {
+              columnName: "size",
+              displayName: "size",
+              customHeaderComponent: Filter
+            }]}
+            columns={["exist", "path", "size"]}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div className="row">
+          <h2>Empty List</h2>
+        </div>
+      );
+    }
   }
+
 }
 
-export default MediaList;
+export default List;

@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "font-awesome": "^4.5.0",
+    "griddle-react": "^0.5.1",
     "lodash": "^4.13.1",
     "react": "^0.14.6",
     "react-bootstrap": "^0.28.2",
