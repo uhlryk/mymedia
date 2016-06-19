@@ -18,7 +18,7 @@ export default function fileList(dir, done) {
             });
           } else if (stat && stat.isFile()){
             results.push({
-              path: file,
+              path: path.relative(dir, file),
               size: stat.size,
               birthtime: stat.birthtime
             });
