@@ -27,7 +27,7 @@ export function askIfCreateNewProjectFile(path) {
       "New  project",
       "Do you want to create new project? There is no project file",
       "create",
-      "chancel",
+      "cancel",
       () => {
         dispatch(showLoader("finding files"));
         dispatch(initProject(path));
@@ -35,7 +35,7 @@ export function askIfCreateNewProjectFile(path) {
           dispatch(addNewFiles(files));
           dispatch(hideLoader());
           dispatch(save());
-          dispatch(push("project/media/list"));
+          dispatch(push("project/media"));
         });
       },
       () => {
@@ -72,7 +72,7 @@ export function findProjectFile(path) {
             fileList(path, (err, files) => {
               dispatch(addNewFiles(files));
               dispatch(hideLoader());
-              dispatch(push("project/media/list"));
+              dispatch(push("project/media"));
             });
           }
         });

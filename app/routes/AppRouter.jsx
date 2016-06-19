@@ -6,9 +6,7 @@ import Project from "./Project.jsx";
 import ProjectMedia from "./project/Media.jsx";
 
 import ProjectSelect from "./project/SelectProject.jsx";
-import ProjectMediaList from "./project/media/MediaList.jsx";
-
-
+import ProjectMediaEditFile from "./project/media/EditFile.jsx";
 
 class AppRouter extends React.Component {
   static propTypes= {
@@ -21,7 +19,7 @@ class AppRouter extends React.Component {
           <Route path="project" component={Project} >
             <Route path="select" component={ProjectSelect} />
             <Route path="media" component={ProjectMedia} >
-              <Route path="list" component={ProjectMediaList} />
+              <Route path="edit-file" component={ProjectMediaEditFile} />
             </Route>
           </Route>
         </Route>
