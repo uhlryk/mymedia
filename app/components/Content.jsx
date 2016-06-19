@@ -1,6 +1,5 @@
 import React from "react";
 import Notification from "./Notification.jsx";
-import TopMenu from "./TopMenu.jsx";
 import Loader from "./Loader.jsx";
 import Modal from "./modals/Modal.jsx";
 

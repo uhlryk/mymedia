@@ -7,6 +7,9 @@
   }
   &__column {
     width: auto;
+    &--xxs {
+      width:50px;
+    }
     &--xs {
       width:50px;
     }

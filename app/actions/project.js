@@ -1,4 +1,5 @@
-import remote from "remote";
+import { remote} from "electron";
+const dialog = remote.dialog;
 import { push } from "react-router-redux";
 import { PROJECT_FILE } from "../constants/general";
 import fileFind from "../helpers/fileFind";
@@ -9,8 +10,6 @@ import { showLoader, hideLoader } from "./loader";
 import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
 import { addNewFiles, setProjectFiles } from "./fileList";
-
-const dialog = remote.require("dialog");
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";

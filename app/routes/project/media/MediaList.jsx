@@ -27,7 +27,8 @@ class List extends React.Component {
             columnMetadata={[{
               columnName: "exist",
               displayName: "",
-              customComponent: (props) => <span> {props.data?"exist" : "deleted"}</span>
+              cssClassName: "list__column list__column--xxs",
+              customComponent: (props) => <span> {props.data? <i className="fa fa-thumbs-up" aria-hidden="true"></i> : <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>}</span>
             }, {
               columnName: "path",
               displayName: "path",
