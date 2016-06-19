@@ -32,10 +32,11 @@ var webpackOptions = {
         test: /\.scss$/,
         loaders: ['style', 'css', 'sass']
       },
-      {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000'
-      },
+      {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?mimetype=image/svg+xml'},
+      {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
+      {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/font-woff"},
+      {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader?mimetype=application/octet-stream"},
+      {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file-loader"},
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -53,8 +54,10 @@ var webpackOptions = {
   target: 'electron',
   sassLoader: {
     includePaths: [
-      path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/'),
-      path.resolve(__dirname, './node_modules/compass-mixins/lib/')
+      path.resolve(__dirname, './node_modules/'),
+      //path.resolve(__dirname, './node_modules/font-awesome/scss'),
+      //path.resolve(__dirname, './node_modules/bootstrap-sass/assets/stylesheets/'),
+      //path.resolve(__dirname, './node_modules/compass-mixins/lib/')
     ]
   },
   eslint: {

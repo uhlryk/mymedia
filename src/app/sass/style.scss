@@ -1,5 +1,7 @@
-@import "compass";
-@import "compass/reset";
+
+@import "fontAwesome";
+@import "compass-mixins/lib/compass";
+@import "compass-mixins/lib/compass/reset";
 @import "bootstrap";
 @import "loader";
 @import "list";
