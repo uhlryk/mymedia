@@ -74,6 +74,7 @@ export function findProjectFile(path) {
             fileList(path, (err, files) => {
               dispatch(addNewFiles(files));
               dispatch(hideLoader());
+              console.log(getState().media);
               dispatch(push("project/media/list"));
             });
           }
