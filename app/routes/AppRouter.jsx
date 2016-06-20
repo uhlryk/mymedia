@@ -19,7 +19,7 @@ class AppRouter extends React.Component {
           <Route path="project" component={Project} >
             <Route path="select" component={ProjectSelect} />
             <Route path="media" component={ProjectMedia} >
-              <Route path="edit-file" component={ProjectMediaEditFile} />
+              <Route path="edit-file/:hashPath" component={ProjectMediaEditFile} />
             </Route>
           </Route>
         </Route>

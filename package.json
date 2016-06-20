@@ -97,6 +97,7 @@
     "griddle-callback": "^0.2.1",
     "griddle-react": "^0.5.1",
     "lodash": "^4.13.1",
+    "md5": "^2.1.0",
     "node-sass": "^3.8.0",
     "path": "^0.12.7",
     "postcss": "^5.0.21",
