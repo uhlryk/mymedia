@@ -3,6 +3,8 @@ import * as RB from "react-bootstrap";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
+import { saveMedia } from "../../../actions/index";
+
 @connect(state => ({
   fileList: state.fileList
 }))
@@ -26,7 +28,7 @@ class EditFile extends React.Component {
 
   handleNameChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { email: evt.target.value})
+      details: Object.assign({}, this.state.details, { name: evt.target.value})
     });
   }
 
@@ -35,11 +37,27 @@ class EditFile extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    //dispatch to reducer
+    this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));
+    this.props.dispatch(push("project/media"));
+  }
+
+  validation() {
+    let newValidation = {};
+    let isValid = true;
+    if(!this.state.details.name || this.state.details.name === "") {
+      isValid = false;
+      newValidation.name = 'Field is required';
+    }
+
+    if(isValid === false) {
+      this.setState({
+        validation: newValidation
+      });
+    }
+    return isValid;
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="edit-form">
         <form onSubmit={this.handleSubmit}>

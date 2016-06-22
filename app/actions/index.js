@@ -4,6 +4,8 @@ import fileSave from "../helpers/fileSave";
 import { showErrorModal } from "./modal";
 import { showLoader, hideLoader } from "./loader";
 import { showNotification } from "./notification";
+import { updateFile } from "./fileList";
+
 
 export function save() {
   return (dispatch, getState) => {
@@ -18,6 +20,13 @@ export function save() {
       }
       dispatch(hideLoader());
     });
+  };
+}
+
+export function saveMedia(hashPath, data) {
+  return (dispatch, getState) => {
+    dispatch(updateFile(hashPath, data));
+    dispatch(save());
   };
 }
 
