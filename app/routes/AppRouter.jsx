@@ -4,9 +4,12 @@ import { Router, Route } from "react-router";
 import Content from "./../components/Content.jsx";
 import Project from "./Project.jsx";
 import ProjectMedia from "./project/Media.jsx";
+import ProjectMediaAttribute from "./project/media/Attribute.jsx";
 
 import ProjectSelect from "./project/SelectProject.jsx";
 import ProjectMediaEditFile from "./project/media/EditFile.jsx";
+
+import ProjectMediaAttributeAddGroup from "./project/media/attribute/AddGroup.jsx";
 
 class AppRouter extends React.Component {
   static propTypes= {
@@ -20,6 +23,9 @@ class AppRouter extends React.Component {
             <Route path="select" component={ProjectSelect} />
             <Route path="media" component={ProjectMedia} >
               <Route path="edit-file/:hashPath" component={ProjectMediaEditFile} />
+              <Route path="attribute" component={ProjectMediaAttribute} >
+                <Route path="add-group" component={ProjectMediaAttributeAddGroup} />
+              </Route>
             </Route>
           </Route>
         </Route>

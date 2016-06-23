@@ -59,7 +59,7 @@ class EditFile extends React.Component {
 
   render() {
     return (
-      <div className="edit-form">
+      <div className="popup edit-form">
         <form onSubmit={this.handleSubmit}>
           <RB.Input
             type='text'
