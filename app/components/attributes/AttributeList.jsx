@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
 @connect(state => ({
+  labelList: state.labelList
 }))
 class Media extends React.Component {
 
@@ -13,12 +14,17 @@ class Media extends React.Component {
   }
 
   onAddGroupClick() {
-    this.props.dispatch(push("project/media/attribute/add-group"));
+    this.props.dispatch(push("project/media/attribute/select-type"));
   }
 
   render() {
+    let labelList = Object.keys(this.props.labelList).map(labelKey => <div key={labelKey}>{this.props.labelList[labelKey].name}</div>);
+
     return (
-      <RB.Button bsStyle="primary" onClick={this.onAddGroupClick}>Add</RB.Button>
+      <div>
+        {labelList}
+        <RB.Button bsStyle="primary" onClick={this.onAddGroupClick}>Add</RB.Button>
+      </div>
     );
   }
 }

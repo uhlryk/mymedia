@@ -111,7 +111,8 @@
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
     "sass-loader": "^3.2.0",
-    "source-map-support": "^0.4.0"
+    "source-map-support": "^0.4.0",
+    "uuid-v4": "^0.1.0"
   },
   "devEngines": {
     "node": "4.x || 5.x || 6.x",

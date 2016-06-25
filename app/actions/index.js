@@ -11,7 +11,8 @@ export function save() {
   return (dispatch, getState) => {
     dispatch(showLoader("saving data"));
     fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
-      media: getState().fileList
+      media: getState().fileList,
+      label: getState().labelList
     }), (err) => {
       if(err) {
         dispatch(showErrorModal(err));
