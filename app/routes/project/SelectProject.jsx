@@ -22,12 +22,12 @@ class SelectProject extends React.Component {
   render() {
     return (
       <div className="row">
-        <RB.Jumbotron className="text-center">
+        <div className="jumbotron">
           <p>Please Select Media directory <small>select directory where are your media files</small></p>
           <p>
             <RB.Button bsStyle="primary" onClick={this.onProjectPath} >Select</RB.Button>
           </p>
-        </RB.Jumbotron>
+        </div>
       </div>
     );
   }
