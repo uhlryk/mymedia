@@ -33,7 +33,10 @@
     text-overflow: ellipsis;
   }
   &__description {
-
+    padding: 10px;
+    i {
+      font-style: italic;
+    }
   }
   &__button {
     @extend .btn;

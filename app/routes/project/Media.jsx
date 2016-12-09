@@ -2,7 +2,7 @@ import React from "react";
 import * as RB from "react-bootstrap";
 import { connect } from "react-redux";
 
-import Table from "../../components/table/Table.jsx";
+import Table from "../../components/list/Table.jsx";
 import AttributeList from "../../components/attributes/AttributeList.jsx";
 
 @connect(state => ({

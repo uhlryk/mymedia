@@ -1,5 +1,4 @@
 import React from "react";
-import * as RB from "react-bootstrap";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
@@ -19,6 +18,7 @@ class EditFile extends React.Component {
     };
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -29,6 +29,12 @@ class EditFile extends React.Component {
   handleNameChange(evt) {
     this.setState({
       details: Object.assign({}, this.state.details, { name: evt.target.value})
+    });
+  }
+
+  handleDescriptionChange(evt) {
+    this.setState({
+      details: Object.assign({}, this.state.details, { description: evt.target.value})
     });
   }
 
@@ -58,22 +64,20 @@ class EditFile extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="popup edit-form">
         <form onSubmit={this.handleSubmit}>
-          <RB.Input
-            type='text'
-            value={this.state.details.name}
-            placeholder='Enter name'
-            label='Name'
-            ref='nameInput'
-            help={this.state.validation.name}
-            groupClassName='group-class'
-            labelClassName='label-class'
-            onChange={this.handleNameChange} />
-
-          <RB.ButtonInput type='submit' value='Submit Button' />
-          <RB.Button bsStyle="primary" onClick={this.onCloseClick}>Close</RB.Button>
+          <div className="form-group">
+            <label>Name</label>
+            <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+          </div>
+          <div className="form-group">
+            <label>Description</label>
+            <textarea className="form-control" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
+          </div>
+          <button type="submit" className="btn btn-default">Submit</button>
+          <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>
         </form>
       </div>
     );
