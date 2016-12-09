@@ -1,9 +1,8 @@
 import React from "react";
 import * as RB from "react-bootstrap";
-import Griddle from "griddle-react";
 import { connect } from "react-redux";
 
-import CustomRow from "../../components/grid/CustomRow.jsx";
+import Table from "../../components/table/Table.jsx";
 import AttributeList from "../../components/attributes/AttributeList.jsx";
 
 @connect(state => ({
@@ -21,16 +20,7 @@ class Media extends React.Component {
           <div className="media__attributes">
             <AttributeList />
           </div>
-          <div className="media__list list">
-            <Griddle
-              results={list}
-              resultsPerPage={20}
-              showFilter={false}
-              showSettings={false}
-              useCustomRowComponent={true}
-              customRowComponent={CustomRow}
-            />
-          </div>
+          <Table className="media__list list" results={list} />
           <div className="media__popup">
             {this.props.children}
           </div>

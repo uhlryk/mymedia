@@ -1,9 +1,9 @@
 .list {
   &__row {
-    background-color: red;
-    border: 1px solid green;
+    background-color: $near-white;
+    border-bottom: 1px solid #dddddd;
     width:100%;
-
+    padding: 5px;
     &--long {
       height: auto;
       .list__additional {
@@ -26,7 +26,18 @@
   &__size {
 
   }
+  &__name {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   &__description {
+
+  }
+  &__button {
+    @extend .btn;
+    @extend .btn-primary;
 
   }
 }
