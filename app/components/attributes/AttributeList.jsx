@@ -14,11 +14,11 @@ class Media extends React.Component {
   }
 
   onAddGroupClick() {
-    this.props.dispatch(push("project/media/attribute/select-type"));
+    this.props.dispatch(push("project/media/attribute/add-label"));
   }
 
   render() {
-    let labelList = Object.keys(this.props.labelList).map(labelKey => <div key={labelKey}>{this.props.labelList[labelKey].name}</div>);
+    let labelList = Object.keys(this.props.labelList).map(labelKey => <div key={labelKey}><span className="badge" >{this.props.labelList[labelKey].name}</span></div>);
 
     return (
       <div>

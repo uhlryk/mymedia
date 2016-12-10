@@ -64,6 +64,10 @@ class LabelForm extends React.Component {
             <label>Name</label>
             <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
           </div>
+          <div className="form-group">
+            <label>Select parent</label>
+            <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+          </div>
           <button type="submit" className="btn btn-default">Submit</button>
           <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>
         </form>
@@ -73,16 +77,3 @@ class LabelForm extends React.Component {
 }
 
 export default LabelForm;
-//<RB.Input
-//  type='text'
-//  value={this.state.details.name}
-//  placeholder='Enter name'
-//  label='Name'
-//  ref='nameInput'
-//  help={this.state.validation.name}
-//  groupClassName='group-class'
-//  labelClassName='label-class'
-//  onChange={this.handleNameChange} />
-//
-//<RB.ButtonInput type='submit' value='Submit Button' />
-//  <RB.Button bsStyle="primary" onClick={this.onCloseClick}>Close</RB.Button>

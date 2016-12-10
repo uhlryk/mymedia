@@ -9,7 +9,6 @@ import ProjectMediaAttribute from "./project/media/Attribute.jsx";
 import ProjectSelect from "./project/SelectProject.jsx";
 import ProjectMediaEditFile from "./project/media/EditFile.jsx";
 
-import ProjectMediaAttributeSelectType from "./project/media/attribute/SelectType.jsx";
 import ProjectMediaAttributeLabelForm from "./project/media/attribute/LabelForm.jsx";
 
 class AppRouter extends React.Component {
@@ -25,7 +24,6 @@ class AppRouter extends React.Component {
             <Route path="media" component={ProjectMedia} >
               <Route path="edit-file/:hashPath" component={ProjectMediaEditFile} />
               <Route path="attribute" component={ProjectMediaAttribute} >
-                <Route path="select-type" component={ProjectMediaAttributeSelectType} />
                 <Route path="add-label" component={ProjectMediaAttributeLabelForm} />
               </Route>
             </Route>
