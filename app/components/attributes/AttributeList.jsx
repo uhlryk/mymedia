@@ -6,7 +6,7 @@ import { push } from "react-router-redux";
 @connect(state => ({
   labelList: state.labelList
 }))
-class Media extends React.Component {
+class AttributeList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,4 +28,4 @@ class Media extends React.Component {
     );
   }
 }
-export default Media;
+export default AttributeList;

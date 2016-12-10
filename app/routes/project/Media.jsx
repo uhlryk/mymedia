@@ -1,5 +1,4 @@
 import React from "react";
-import * as RB from "react-bootstrap";
 import { connect } from "react-redux";
 
 import Table from "../../components/list/Table.jsx";

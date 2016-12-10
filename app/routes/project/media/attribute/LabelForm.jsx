@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
 import { addLabel } from "../../../../actions/labelList";
+import SelectAttribute from "../../../../components/attributes/SelectAttribute.jsx";
 
 @connect(state => ({
 }))
@@ -18,16 +19,23 @@ class LabelForm extends React.Component {
     };
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleParentChange = this.handleParentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   onCloseClick() {
-    this.props.dispatch(push("project/media/attribute/select-type"));
+    this.props.dispatch(push("project/media/"));
   }
 
   handleNameChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { name: evt.target.value})
+      details: Object.assign({}, this.state.details, { name: evt.target.value })
+    });
+  }
+
+  handleParentChange(hashPath) {
+    this.setState({
+      details: Object.assign({}, this.state.details, { parent: hashPath })
     });
   }
 
@@ -66,7 +74,7 @@ class LabelForm extends React.Component {
           </div>
           <div className="form-group">
             <label>Select parent</label>
-            <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+            <SelectAttribute onChange={this.handleParentChange} />
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
           <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>

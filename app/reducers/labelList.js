@@ -17,6 +17,7 @@ export default function labelList(state = {}, action) {
       let uuidKey = uuid();
       newState[uuidKey] = {
         name: action.name,
+        parent: action.parent,
         uuid: uuidKey
       };
       return newState;

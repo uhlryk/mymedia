@@ -6,7 +6,8 @@ export function addLabel(data) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_LABEL,
-      name: data.name
+      name: data.name,
+      parent: data.parent
     });
     dispatch(save());
   }
