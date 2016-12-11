@@ -2,7 +2,6 @@ import React from "react";
 import path from "path";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import { showVideoMP4V } from "./../actions/video";
 
 @connect(state => ({
   fileList: state.fileList,
