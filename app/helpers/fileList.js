@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-export default function fileList(dir, done) {
+export default function fileList(baseDir, done) {
   function walk(dir, done) {
     var results = [];
     fs.readdir(dir, function (err, list) {
@@ -17,12 +17,15 @@ export default function fileList(dir, done) {
               if (!--pending) done(null, results);
             });
           } else if (stat && stat.isFile()){
-            results.push({
-              name: path.basename(file),
-              path: path.relative(dir, file),
-              size: stat.size,
-              birthtime: stat.birthtime
-            });
+            var filename = path.basename(file);
+            if (/^\./.test(filename) === false) {
+              results.push({
+                name: path.basename(file),
+                path: path.relative(baseDir, file),
+                size: stat.size,
+                birthtime: stat.birthtime
+              });
+            }
             if (!--pending) done(null, results);
           } else {
             if (!--pending) done(null, results);
@@ -31,5 +34,5 @@ export default function fileList(dir, done) {
       });
     });
   };
-  walk(dir, done);
+  walk(baseDir, done);
 }

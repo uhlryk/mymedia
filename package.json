@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.6",
+    "classnames": "^2.2.5",
     "compass-mixins": "^0.12.10",
     "css-modules-require-hook": "^4.0.0",
     "electron-debug": "^1.0.0",

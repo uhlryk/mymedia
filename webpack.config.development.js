@@ -61,6 +61,10 @@ const config = {
   ],
 
   target: 'electron-renderer',
+  node: {
+    __dirname: false,
+    __filename: false
+  },
   sassLoader: {
     includePaths: [
       path.resolve(__dirname, './node_modules/'),
