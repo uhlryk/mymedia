@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import classNames from "classnames";
 import FileSize from "./FileSize.jsx";
-import Viewer from "../Viewer.jsx";
+import OpenFile from "./OpenFile.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
 @connect(state => ({}))
@@ -16,6 +16,7 @@ class CustomRow extends React.Component {
     }
     this.onToggleSize = this.onToggleSize.bind(this);
     this.onEditClick = this.onEditClick.bind(this);
+    this.onAttributeClick = this.onAttributeClick.bind(this);
   }
 
   onToggleSize() {
@@ -25,6 +26,9 @@ class CustomRow extends React.Component {
   }
   onEditClick() {
     this.props.dispatch(push("project/media/edit-file/" + this.props.data.hashPath));
+  }
+  onAttributeClick() {
+    this.props.dispatch(push("project/media/attribute/manage/" + this.props.data.hashPath));
   }
   render() {
     let toogleSizeLabel = this.state.short ? "More" : "Less";
@@ -46,8 +50,9 @@ class CustomRow extends React.Component {
             {descriptionComponent}
           </div>
           <div className="list__tags">
-            <Viewer hashPath={this.props.data.hashPath} />
+            <OpenFile hashPath={this.props.data.hashPath} />
             <button className="list__button" onClick={this.onEditClick} ><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+            <button className="list__button" onClick={this.onAttributeClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i></button>
           </div>
         </div>
         <div className="list__more">

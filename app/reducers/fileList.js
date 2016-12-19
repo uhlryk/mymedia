@@ -28,7 +28,6 @@ export default function fileList(state = {}, action) {
       });
       return newState;
     case UPDATE_FILE:
-      console.log("C1");
       let newState = _.cloneDeep(state);
       let originalFile = newState[action.hashPath];
       Object.assign(originalFile, action.data);

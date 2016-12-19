@@ -8,7 +8,7 @@ import { push } from "react-router-redux";
   fileList: state.fileList,
   project: state.project
 }))
-class Viewer extends React.Component {
+class OpenFile extends React.Component {
 
   constructor(props) {
     super(props);
@@ -25,4 +25,4 @@ class Viewer extends React.Component {
   }
 }
 
-export default Viewer;
+export default OpenFile;

@@ -93,7 +93,7 @@
     "css-modules-require-hook": "^4.0.0",
     "electron-debug": "^1.0.0",
     "filesize": "^3.3.0",
-    "font-awesome": "^4.6.3",
+    "font-awesome": "^4.7.0",
     "fs": "0.0.2",
     "lodash": "^4.13.1",
     "md5": "^2.1.0",
