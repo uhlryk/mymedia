@@ -1,0 +1,34 @@
+.actionMenu {
+  position: relative;
+  &__button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #dddddd;
+    padding:5px 8px;
+    border-radius: 4px;
+    &:hover {
+      background: #eeeeee;
+    }
+  }
+  &__menu {
+    width:100px;
+    background: #eeeeee;
+    position: absolute;
+    top: 0;
+    right: 28px;
+    display: none;
+    &--open {
+      display: block;
+    }
+  }
+  &__element {
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    border-bottom: 1px solid #dddddd;
+    &:hover {
+      background: #eeeeee;
+    }
+  }
+}

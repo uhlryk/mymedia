@@ -15,9 +15,18 @@
     height: 0px;
     overflow: hidden;
   }
+  &__title {
+    position: relative;
+  }
   &__name {
+    padding:5px 50px 5px 0px;
     font-weight: bold;
     font-size: 15px;
+  }
+  &__menu {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
   &__original-path {
     font-style: italic;
@@ -37,10 +46,5 @@
     i {
       font-style: italic;
     }
-  }
-  &__button {
-    @extend .btn;
-    @extend .btn-primary;
-
   }
 }

@@ -10,6 +10,10 @@ import { push } from "react-router-redux";
 }))
 class OpenFile extends React.Component {
 
+  static propsTypes = {
+    className: React.PropTypes.string
+  };
+
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -21,7 +25,7 @@ class OpenFile extends React.Component {
   }
 
   render() {
-    return <a className="list__button" target="_blank" onClick={this.onClick}><i className="fa fa-eye" aria-hidden="true"></i></a>;
+    return <div className={this.props.className} target="_blank" onClick={this.onClick}>run</div>;
   }
 }
 
