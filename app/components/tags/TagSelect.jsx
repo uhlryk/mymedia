@@ -3,9 +3,9 @@ import { connect } from "react-redux";
 import Select from 'react-select';
 
 @connect(state => ({
-  labelList: state.labelList
+  tagList: state.tagList
 }))
-class AutoSuggestAttribute extends React.Component {
+class TagSelect extends React.Component {
 
   static propsTypes = {
     onChange: React.PropTypes.func
@@ -15,7 +15,7 @@ class AutoSuggestAttribute extends React.Component {
     super(props);
     this.state = {
       value: 0,
-      labels: prepareLabels(props.labelList),
+      tagList: prepareTags(props.tagList),
     };
   }
 
@@ -29,41 +29,41 @@ class AutoSuggestAttribute extends React.Component {
   };
 
   render () {
-    const { labels } = this.state;
+    const { tagList } = this.state;
 
-    console.log(labels);
+    console.log(tagList);
     return (
       <Select
         simpleValue
         value={this.state.value}
-        options={labels}
+        options={tagList}
         onChange={this.onChange}
       />
     );
   }
 }
 
-export default AutoSuggestAttribute;
+export default TagSelect;
 
-function prepareLabels(labels) {
+function prepareTags(tagList) {
   const suggestions = [{
     label: "no parent",
     value: 0
   }];
-  Object.keys(labels).forEach(hashPath => {
+  Object.keys(tagList).forEach(hashPath => {
     suggestions.push({
-      label: buildName(labels, hashPath),
+      label: buildName(tagList, hashPath),
       value: hashPath
     })
   })
   return suggestions;
 }
 
-function buildName(labels, hashPath) {
-  let label = labels[hashPath];
-  let name = label.name.toLowerCase();
-  if (label.parent) {
-    name = buildName(labels, label.parent) + " / " + name;
+function buildName(tagList, hashPath) {
+  let tag = tagList[hashPath];
+  let name = tag.name.toLowerCase();
+  if (tag.parent) {
+    name = buildName(tagList, tag.parent) + " / " + name;
   }
   return name;
 }

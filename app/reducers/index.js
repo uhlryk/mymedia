@@ -5,13 +5,13 @@ import modal from "./modal";
 import notification from "./notification";
 import loader from "./loader";
 import fileList from "./fileList";
-import labelList from "./labelList";
+import tagList from "./tagList";
 
 
 export default combineReducers({
   project,
   fileList,
-  labelList,
+  tagList,
   modal,
   notification,
   loader,

@@ -1,9 +1,12 @@
 .media {
+  &__project {
+
+  }
   &__list {
     width: 75%;
     float: right;
   }
-  &__attributes {
+  &__tags {
     width: 25%;
     float: left;
   }

@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
 @connect(state => ({
-  labelList: state.labelList
+  tagList: state.tagList
 }))
-class AttributeList extends React.Component {
+class TagList extends React.Component {
 
   constructor(props) {
     super(props);
@@ -14,18 +14,18 @@ class AttributeList extends React.Component {
   }
 
   onAddGroupClick() {
-    this.props.dispatch(push("project/media/attribute/add-label"));
+    this.props.dispatch(push("project/media/tag/add"));
   }
 
   render() {
-    let labelList = Object.keys(this.props.labelList).map(labelKey => <div key={labelKey}><span className="badge" >{this.props.labelList[labelKey].name}</span></div>);
+    let tagList = Object.keys(this.props.tagList).map(tagKey => <div key={tagKey}><span className="badge" >{this.props.tagList[tagKey].name}</span></div>);
 
     return (
       <div>
-        {labelList}
+        {tagList}
         <RB.Button bsStyle="primary" onClick={this.onAddGroupClick}>Add</RB.Button>
       </div>
     );
   }
 }
-export default AttributeList;
+export default TagList;

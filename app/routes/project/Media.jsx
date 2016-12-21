@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
 import Table from "../../components/list/Table.jsx";
-import AttributeList from "../../components/attributes/AttributeList.jsx";
+import TagList from "../../components/tags/TagList.jsx";
 
 @connect(state => ({
   fileList: state.fileList
@@ -16,8 +17,11 @@ class Media extends React.Component {
     if(list.length) {
       return (
         <div className="media">
-          <div className="media__attributes">
-            <AttributeList />
+          <div className="media__project">
+            <ProjectNavigation />
+          </div>
+          <div className="media__tags">
+            <TagList />
           </div>
           <Table className="media__list list" results={list} />
           <div className="media__popup">

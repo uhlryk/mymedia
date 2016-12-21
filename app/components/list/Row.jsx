@@ -25,10 +25,10 @@ class CustomRow extends React.Component {
     })
   }
   onEditClick() {
-    this.props.dispatch(push("project/media/edit-file/" + this.props.data.hashPath));
+    this.props.dispatch(push("project/media/edit/" + this.props.data.hashPath));
   }
   onAttributeClick() {
-    this.props.dispatch(push("project/media/attribute/manage/" + this.props.data.hashPath));
+    this.props.dispatch(push("project/media/tag/add/" + this.props.data.hashPath));
   }
   render() {
     let toogleSizeLabel = this.state.short ? "More" : "Less";

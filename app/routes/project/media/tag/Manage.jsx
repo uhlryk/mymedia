@@ -2,13 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
-import { addLabel } from "../../../../actions/labelList";
-import SelectAttribute from "../../../../components/attributes/SelectAttribute.jsx";
+import { addTag } from "../../../../actions/tagList";
+import TagSelect from "../../../../components/tags/TagSelect.jsx";
 import { saveMedia } from "../../../../actions/index";
 
 @connect(state => ({
   fileList: state.fileList,
-  labelList: state.labelList
+  tagList: state.tagList
 }))
 class Manage extends React.Component {
 
@@ -64,12 +64,12 @@ class Manage extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             { Object.keys(this.state.details.attributes)
-                .map(labelKey => <div key={labelKey}><span className="badge">{this.props.labelList[labelKey].name}</span></div>)
+                .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
             }
           </div>
           <div className="form-group">
             <label>Add Label</label>
-            <SelectAttribute onChange={this.handleAddAttribute} />
+            <TagSelect onChange={this.handleAddAttribute} />
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
           <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>

@@ -4,13 +4,12 @@ import { Router, Route } from "react-router";
 import Content from "./../components/Content.jsx";
 import Project from "./Project.jsx";
 import ProjectMedia from "./project/Media.jsx";
-import ProjectMediaAttribute from "./project/media/Attribute.jsx";
+import ProjectMediaTag from "./project/media/Tag.jsx";
 
 import ProjectSelect from "./project/SelectProject.jsx";
-import ProjectMediaEditFile from "./project/media/EditFile.jsx";
-import ProjectMediaAttributeManage from "./project/media/attribute/Manage.jsx";
-
-import ProjectMediaAttributeLabelForm from "./project/media/attribute/LabelForm.jsx";
+import ProjectMediaEdit from "./project/media/Edit.jsx";
+import ProjectMediaTagManage from "./project/media/tag/Manage.jsx";
+import ProjectMediaTagForm from "./project/media/tag/Form.jsx";
 
 class AppRouter extends React.Component {
   static propTypes= {
@@ -23,10 +22,10 @@ class AppRouter extends React.Component {
           <Route path="project" component={Project} >
             <Route path="select" component={ProjectSelect} />
             <Route path="media" component={ProjectMedia} >
-              <Route path="edit-file/:hashPath" component={ProjectMediaEditFile} />
-              <Route path="attribute" component={ProjectMediaAttribute} >
-                <Route path="add-label" component={ProjectMediaAttributeLabelForm} />
-                <Route path="manage/:hashPath" component={ProjectMediaAttributeManage} />
+              <Route path="edit/:hashPath" component={ProjectMediaEdit} />
+              <Route path="tag" component={ProjectMediaTag} >
+                <Route path="add" component={ProjectMediaTagForm} />
+                <Route path="manage/:hashPath" component={ProjectMediaTagManage} />
               </Route>
             </Route>
           </Route>

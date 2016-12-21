@@ -2,40 +2,39 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 
-import { addLabel } from "../../../../actions/labelList";
-import SelectAttribute from "../../../../components/attributes/SelectAttribute.jsx";
+import { saveMedia } from "../../../actions/index";
 
 @connect(state => ({
+  fileList: state.fileList
 }))
-class LabelForm extends React.Component {
+class Edit extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      details: {
-        name: ""
-      },
+      details: this.props.fileList[this.props.params.hashPath],
+      hashPath: this.props.params.hashPath,
       validation: {}
     };
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleParentChange = this.handleParentChange.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   onCloseClick() {
-    this.props.dispatch(push("project/media/"));
+    this.props.dispatch(push("project/media"));
   }
 
   handleNameChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { name: evt.target.value })
+      details: Object.assign({}, this.state.details, { name: evt.target.value})
     });
   }
 
-  handleParentChange(hashPath) {
+  handleDescriptionChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { parent: hashPath })
+      details: Object.assign({}, this.state.details, { description: evt.target.value})
     });
   }
 
@@ -44,7 +43,7 @@ class LabelForm extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(addLabel(this.state.details));
+    this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));
     this.props.dispatch(push("project/media"));
   }
 
@@ -65,6 +64,7 @@ class LabelForm extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <div className="popup edit-form">
         <form onSubmit={this.handleSubmit}>
@@ -73,8 +73,8 @@ class LabelForm extends React.Component {
             <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
           </div>
           <div className="form-group">
-            <label>Select parent</label>
-            <SelectAttribute onChange={this.handleParentChange} />
+            <label>Description</label>
+            <textarea className="form-control" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
           </div>
           <button type="submit" className="btn btn-default">Submit</button>
           <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>
@@ -84,4 +84,4 @@ class LabelForm extends React.Component {
   }
 }
 
-export default LabelForm;
+export default Edit;

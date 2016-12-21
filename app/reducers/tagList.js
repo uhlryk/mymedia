@@ -1,18 +1,18 @@
 import _ from "lodash";
 import uuid from "uuid-v4";
-import { ADD_NEW_LABEL, SET_BULK_LABELS } from "../actions/labelList";
+import { ADD_NEW_TAG, SET_BULK_TAGS } from "../actions/tagList";
 
-export default function labelList(state = {}, action) {
+export default function tagList(state = {}, action) {
   let newState;
   switch(action.type) {
-    case SET_BULK_LABELS:
+    case SET_BULK_TAGS:
       newState = {};
       Object.keys(action.list).forEach(hashPath => {
-        let label = _.cloneDeep(action.list[hashPath]);
-        newState[hashPath] = label;
+        let tag = _.cloneDeep(action.list[hashPath]);
+        newState[hashPath] = tag;
       });
       return newState;
-    case ADD_NEW_LABEL:
+    case ADD_NEW_TAG:
       newState = _.cloneDeep(state);
       let uuidKey = uuid();
       newState[uuidKey] = {

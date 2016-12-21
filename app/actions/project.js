@@ -10,7 +10,7 @@ import { showLoader, hideLoader } from "./loader";
 import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
 import { addNewFiles, setProjectFiles } from "./fileList";
-import { setLabels } from "./labelList";
+import { setTags } from "./tagList";
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
@@ -70,7 +70,7 @@ export function findProjectFile(path) {
             }
             dispatch(initProject(path));
             dispatch(setProjectFiles(projectData.media));
-            dispatch(setLabels(projectData.label));
+            dispatch(setTags(projectData.tagList));
             fileList(path, (err, files) => {
               dispatch(addNewFiles(files));
               dispatch(hideLoader());
