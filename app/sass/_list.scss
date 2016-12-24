@@ -23,8 +23,12 @@
     font-style: italic;
     font-size: 11px;
   }
-  &__size {
-
+  &__meta {
+    width:100%;
+    font-weight: bold;
+  }
+  &__meta-title {
+    font-weight: normal;
   }
   &__name {
     white-space: nowrap;

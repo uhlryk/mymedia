@@ -3,8 +3,7 @@ import filesize from "filesize";
 
 class FileSize extends React.Component {
   render() {
-    return null;
-    //return <span>{filesize(this.props.data)}</span>;
+    return <span>{filesize(this.props.data)}</span>;
   }
 }
 export default FileSize;

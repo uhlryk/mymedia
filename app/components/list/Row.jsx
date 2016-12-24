@@ -40,10 +40,10 @@ class CustomRow extends React.Component {
         <div className="list__name">{this.props.data.name}</div>
         <div className="list__original-path">{this.props.data.path}</div>
         <div className="list__additional">
-          <div className="list__size">
+          <div className="list__meta">
+            <span className="list__meta-title">size: </span>
             <FileSize data={this.props.data.size} />
-          </div>
-          <div className="list__birthtime">
+            <span className="list__meta-title"> created: </span>
             <DateDisplay data={this.props.data.birthtime} />
           </div>
           <div className="list__description">
