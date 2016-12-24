@@ -1,14 +1,11 @@
 import React from "react";
-import { connect } from "react-redux";
-import { push } from "react-router-redux";
 import classNames from "classnames";
 import FileSize from "./FileSize.jsx";
-import OpenFile from "./OpenFile.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 import ActionMenu from "./ActionMenu.jsx";
-import { ipcRenderer } from "electron";
+import FileActionMenu from "./FileActionMenu.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
-@connect(state => ({}))
+
 class CustomRow extends React.Component {
 
   static propsTypes = {
@@ -31,28 +28,19 @@ class CustomRow extends React.Component {
   render() {
     let toogleSizeLabel = this.state.short ? "More" : "Less";
     let descriptionComponent = this.props.file.description || <i>{DEFAULT_DESCRIPTION}</i>;
-    const menuElements = [{
-      component: <OpenFile className="actionMenu__element" hashPath={this.props.file.hashPath} />,
-    }, {
-      label: "edit",
-      onClick: () => this.props.dispatch(push("project/media/edit/" + this.props.file.hashPath))
-    }, {
-      label: "tags",
-      onClick: () => this.props.dispatch(push("project/media/tag/manage/" + this.props.file.hashPath))
-    }];
     return (
       <div className={classNames("list__row", {"list__row--long": !this.state.short})}>
         <div className="list__title">
           <div className="list__name">{this.props.file.name}</div>
-          <div className="list__menu"><ActionMenu elements={menuElements}/></div>
+          <div className="list__menu"><FileActionMenu hashPath={this.props.file.hashPath}/></div>
         </div>
         <div className="list__original-path">{this.props.file.path}</div>
         <div className="list__additional">
-          <div className="list__size">
-            <FileSize data={this.props.file.size} />
-          </div>
-          <div className="list__birthtime">
+          <div className="list__metadata">
+            <span>created: </span>
             <DateDisplay data={this.props.file.birthtime} />
+            <span className="list__metadata-size-label">size: </span>
+            <FileSize data={this.props.file.size} />
           </div>
           <div className="list__description">
             {descriptionComponent}

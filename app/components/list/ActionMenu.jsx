@@ -17,6 +17,9 @@ class ActionMenu extends React.Component {
 
 
   onToggle() {
+    if(!this.state.menu) {
+
+    }
     this.setState({
       menu: !this.state.menu
     })
@@ -26,16 +29,12 @@ class ActionMenu extends React.Component {
     const rows = [];
     for (var i=0; i < this.props.elements.length; i++) {
       let element = this.props.elements[i];
-      if(element.component) {
-        rows.push(element.component);
-      } else {
-        rows.push(<div className="actionMenu__element" onClick={element.onClick}>{element.label}</div>);
-      }
+      rows.push(<div key={element.label} className="action-menu__element" onClick={element.onClick}>{element.label}</div>);
     }
     return (
-      <div className="actionMenu">
-        <div className="actionMenu__button" onClick={this.onToggle}><i className="fa fa-bars" aria-hidden="true"></i></div>
-        <div className={classNames("actionMenu__menu", {"actionMenu__menu--open": this.state.menu})}>
+      <div className="action-menu">
+        <div className="action-menu__button" onClick={this.onToggle}><i className="fa fa-bars" aria-hidden="true"></i></div>
+        <div className={classNames("action-menu__menu", {"action-menu__menu--open": this.state.menu})}>
           {rows}
         </div>
       </div>
