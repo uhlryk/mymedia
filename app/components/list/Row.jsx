@@ -21,7 +21,7 @@ class CustomRow extends React.Component {
     this.onToggleSize = this.onToggleSize.bind(this);
     this.onOpenClick = this.onOpenClick.bind(this);
     this.onEditClick = this.onEditClick.bind(this);
-    this.onAttributeClick = this.onAttributeClick.bind(this);
+    this.onManageTagClick = this.onManageTagClick.bind(this);
   }
 
   onToggleSize() {
@@ -35,7 +35,7 @@ class CustomRow extends React.Component {
   onEditClick() {
     this.props.dispatch(push("project/media/edit/" + this.props.data.hashPath));
   }
-  onAttributeClick() {
+  onManageTagClick() {
     this.props.dispatch(push("project/media/tag/manage/" + this.props.data.hashPath));
   }
   render() {
@@ -60,7 +60,7 @@ class CustomRow extends React.Component {
           <div className="list__tags">
             <button className="list__button" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i></button>
             <button className="list__button" onClick={this.onEditClick} ><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-            <button className="list__button" onClick={this.onAttributeClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i></button>
+            <button className="list__button" onClick={this.onManageTagClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i></button>
           </div>
         </div>
         <div className="list__more">
