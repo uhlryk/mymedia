@@ -45,4 +45,22 @@
       font-style: italic;
     }
   }
+  &__actions {
+    margin-top:10px;
+    height:20px;
+    text-align: center;
+  }
+  &__more {
+    cursor: pointer;
+    float: left;
+  }
+  &__open {
+    cursor: pointer;
+    margin: 0 auto;
+    display: inline;
+  }
+  &__manage {
+    cursor: pointer;
+    float: right;
+  }
 }

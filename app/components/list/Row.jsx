@@ -20,8 +20,7 @@ class CustomRow extends React.Component {
     };
     this.onToggleSize = this.onToggleSize.bind(this);
     this.onOpenClick = this.onOpenClick.bind(this);
-    this.onEditClick = this.onEditClick.bind(this);
-    this.onManageTagClick = this.onManageTagClick.bind(this);
+    this.onManageClick = this.onManageClick.bind(this);
   }
 
   onToggleSize() {
@@ -32,14 +31,13 @@ class CustomRow extends React.Component {
   onOpenClick() {
     this.props.dispatch(openFile(this.props.data.path));
   }
-  onEditClick() {
-    this.props.dispatch(push("project/media/edit/" + this.props.data.hashPath));
-  }
-  onManageTagClick() {
-    this.props.dispatch(push("project/media/tag/manage/" + this.props.data.hashPath));
+  onManageClick() {
+    this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
   }
   render() {
-    let toogleSizeLabel = this.state.short ? "More" : "Less";
+    const moreComponent = <span>&#9658; More</span>;
+    const lessComponent = <span>&#9660; Less</span>;
+    let toogleSizeLabel = this.state.short ? moreComponent : lessComponent;
     let descriptionComponent = this.props.data.description || <i>{DEFAULT_DESCRIPTION}</i>;
 
 
@@ -58,13 +56,12 @@ class CustomRow extends React.Component {
             {descriptionComponent}
           </div>
           <div className="list__tags">
-            <button className="list__button" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i></button>
-            <button className="list__button" onClick={this.onEditClick} ><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-            <button className="list__button" onClick={this.onManageTagClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i></button>
           </div>
         </div>
-        <div className="list__more">
-          <div onClick={this.onToggleSize} >{toogleSizeLabel}</div>
+        <div className="list__actions">
+          <div className="list__more" onClick={this.onToggleSize} >{toogleSizeLabel}</div>
+          <div className="list__open" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i> play</div>
+          <div className="list__manage" onClick={this.onManageClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i> manage</div>
         </div>
       </div>
     );

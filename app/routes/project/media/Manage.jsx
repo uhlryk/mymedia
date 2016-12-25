@@ -1,24 +1,32 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-
+import TagSelect from "../../../components/tags/TagSelect.jsx";
 import { saveMedia } from "../../../actions/index";
 
 @connect(state => ({
-  fileList: state.fileList
+  fileList: state.fileList,
+  tagList: state.tagList
 }))
-class Edit extends React.Component {
+class Manage extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log(this.props.fileList[this.props.params.hashPath].tags)
     this.state = {
-      details: this.props.fileList[this.props.params.hashPath],
+      details: Object.assign({}, this.props.fileList[this.props.params.hashPath]),
       hashPath: this.props.params.hashPath,
       validation: {}
     };
+    Object.keys(this.state.details.tags).forEach(tagKey => {
+      if(!this.props.tagList[tagKey]) {
+        delete this.state.details.tags[tagKey];
+      }
+    });
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -36,6 +44,16 @@ class Edit extends React.Component {
     this.setState({
       details: Object.assign({}, this.state.details, { description: evt.target.value})
     });
+  }
+
+  handleAddTag(tagHashPath) {
+    if(tagHashPath > 0) {
+      this.setState({
+        details: Object.assign({}, this.state.details, {
+          tags: Object.assign({}, this.state.details.tags, {[tagHashPath]: true})
+        })
+      });
+    }
   }
 
   handleSubmit(evt) {
@@ -64,7 +82,6 @@ class Edit extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="popup edit-form">
         <form onSubmit={this.handleSubmit}>
@@ -76,6 +93,15 @@ class Edit extends React.Component {
             <label>Description</label>
             <textarea className="form-control" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
           </div>
+          <div className="form-group">
+            { Object.keys(this.state.details.tags)
+              .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
+              }
+          </div>
+          <div className="form-group">
+            <label>Add Label</label>
+            <TagSelect onChange={this.handleAddTag} />
+          </div>
           <button type="submit" className="btn btn-default">Submit</button>
           <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>
         </form>
@@ -84,4 +110,4 @@ class Edit extends React.Component {
   }
 }
 
-export default Edit;
+export default Manage;

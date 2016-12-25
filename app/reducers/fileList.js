@@ -2,6 +2,9 @@ import _ from "lodash";
 import md5 from "md5";
 import { ADD_NEW_BULK_FILES, SET_PROJECT_BULK_FILES, UPDATE_FILE } from "../actions/fileList";
 
+const DEFAULT_MEDIA_FILE = {
+  tags: {}
+}
 export default function fileList(state = {}, action) {
   let newState;
   switch(action.type) {
@@ -23,7 +26,7 @@ export default function fileList(state = {}, action) {
         } else {
           file.exist = true;
           file.hashPath = hashPath;
-          newState[hashPath] = file;
+          newState[hashPath] = Object.assign({}, file, DEFAULT_MEDIA_FILE);
         }
       });
       return newState;

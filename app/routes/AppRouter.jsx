@@ -7,8 +7,7 @@ import ProjectMedia from "./project/Media.jsx";
 import ProjectMediaTag from "./project/media/Tag.jsx";
 
 import ProjectSelect from "./project/SelectProject.jsx";
-import ProjectMediaEdit from "./project/media/Edit.jsx";
-import ProjectMediaTagManage from "./project/media/tag/Manage.jsx";
+import ProjectMediaManage from "./project/media/Manage.jsx";
 import ProjectMediaTagForm from "./project/media/tag/Form.jsx";
 
 class AppRouter extends React.Component {
@@ -22,10 +21,9 @@ class AppRouter extends React.Component {
           <Route path="project" component={Project} >
             <Route path="select" component={ProjectSelect} />
             <Route path="media" component={ProjectMedia} >
-              <Route path="edit/:hashPath" component={ProjectMediaEdit} />
+              <Route path="manage/:hashPath" component={ProjectMediaManage} />
               <Route path="tag" component={ProjectMediaTag} >
                 <Route path="add" component={ProjectMediaTagForm} />
-                <Route path="manage/:hashPath" component={ProjectMediaTagManage} />
               </Route>
             </Route>
           </Route>

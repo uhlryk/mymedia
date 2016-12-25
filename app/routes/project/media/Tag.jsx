@@ -1,8 +1,8 @@
 import React from "react";
 
-class Attribute extends React.Component {
+class Tag extends React.Component {
   render() {
     return this.props.children;
   }
 }
-export default Attribute;
+export default Tag;
