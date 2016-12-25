@@ -2,19 +2,24 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import classNames from "classnames";
+import { openFile } from "./../../actions/openFile";
 import FileSize from "./FileSize.jsx";
-import OpenFile from "./OpenFile.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
-@connect(state => ({}))
+@connect(state => ({ }))
 class CustomRow extends React.Component {
+
+  static propsTypes = {
+    data: React.PropTypes.Object
+  };
 
   constructor(props) {
     super(props);
     this.state = {
       short: true
-    }
+    };
     this.onToggleSize = this.onToggleSize.bind(this);
+    this.onOpenClick = this.onOpenClick.bind(this);
     this.onEditClick = this.onEditClick.bind(this);
     this.onAttributeClick = this.onAttributeClick.bind(this);
   }
@@ -23,6 +28,9 @@ class CustomRow extends React.Component {
     this.setState({
       short: !this.state.short
     })
+  }
+  onOpenClick() {
+    this.props.dispatch(openFile(this.props.data.path));
   }
   onEditClick() {
     this.props.dispatch(push("project/media/edit/" + this.props.data.hashPath));
@@ -50,7 +58,7 @@ class CustomRow extends React.Component {
             {descriptionComponent}
           </div>
           <div className="list__tags">
-            <OpenFile hashPath={this.props.data.hashPath} />
+            <button className="list__button" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i></button>
             <button className="list__button" onClick={this.onEditClick} ><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
             <button className="list__button" onClick={this.onAttributeClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i></button>
           </div>

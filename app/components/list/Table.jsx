@@ -3,6 +3,11 @@ import Row from "./Row.jsx";
 
 class Table extends React.Component {
 
+  static propsTypes = {
+    results: React.PropTypes.array,
+    className: React.PropTypes.string
+  };
+
   render() {
     var rows = [];
     for (var i=0; i < this.props.results.length; i++) {
