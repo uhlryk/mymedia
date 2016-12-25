@@ -6,7 +6,9 @@ import { openFile } from "./../../actions/openFile";
 import FileSize from "./FileSize.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
-@connect(state => ({ }))
+@connect(state => ({
+  tagList: state.tagList
+}))
 class CustomRow extends React.Component {
 
   static propsTypes = {
@@ -56,6 +58,9 @@ class CustomRow extends React.Component {
             {descriptionComponent}
           </div>
           <div className="list__tags">
+            { Object.keys(this.props.data.tags)
+              .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
+              }
           </div>
         </div>
         <div className="list__actions">

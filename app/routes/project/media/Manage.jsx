@@ -18,11 +18,6 @@ class Manage extends React.Component {
       hashPath: this.props.params.hashPath,
       validation: {}
     };
-    Object.keys(this.state.details.tags).forEach(tagKey => {
-      if(!this.props.tagList[tagKey]) {
-        delete this.state.details.tags[tagKey];
-      }
-    });
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
