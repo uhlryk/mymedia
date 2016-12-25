@@ -45,8 +45,8 @@ class CustomRow extends React.Component {
 
     return (
       <div className={classNames("list__row", {"list__row--long": !this.state.short})}>
-        <div className="list__name">{this.props.data.name}</div>
-        <div className="list__original-path">{this.props.data.path}</div>
+        <div onDoubleClick={this.onOpenClick} className="list__name">{this.props.data.name}</div>
+        <div onDoubleClick={this.onOpenClick}  className="list__original-path">{this.props.data.path}</div>
         <div className="list__additional">
           <div className="list__meta">
             <span className="list__meta-title">size: </span>

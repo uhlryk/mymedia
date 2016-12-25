@@ -16,11 +16,13 @@
     overflow: hidden;
   }
   &__name {
+    cursor: pointer;
     padding:5px 50px 5px 0px;
     font-weight: bold;
     font-size: 15px;
   }
   &__original-path {
+    cursor: pointer;
     font-style: italic;
     font-size: 11px;
   }
