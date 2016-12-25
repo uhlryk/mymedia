@@ -16,6 +16,7 @@
     overflow: hidden;
   }
   &__name {
+    padding:5px 50px 5px 0px;
     font-weight: bold;
     font-size: 15px;
   }
@@ -41,10 +42,5 @@
     i {
       font-style: italic;
     }
-  }
-  &__button {
-    @extend .btn;
-    @extend .btn-primary;
-
   }
 }
