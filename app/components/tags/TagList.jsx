@@ -2,28 +2,39 @@ import React from "react";
 import * as RB from "react-bootstrap";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import TagSelect from "./TagSelect.jsx";
+import { activatePositiveTag } from "./../../actions/activeTagList";
 
 @connect(state => ({
-  tagList: state.tagList
+  tagList: state.tagList,
+  activeTagList: state.activeTagList
 }))
 class TagList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onAddGroupClick = this.onAddGroupClick.bind(this);
+    this.onManageTagsClick = this.onManageTagsClick.bind(this);
+    this.handleAddTag = this.handleAddTag.bind(this);
   }
 
-  onAddGroupClick() {
+  onManageTagsClick() {
     this.props.dispatch(push("project/media/tag/add"));
   }
 
-  render() {
-    let tagList = Object.keys(this.props.tagList).map(tagKey => <div key={tagKey}><span className="badge" >{this.props.tagList[tagKey].name}</span></div>);
+  handleAddTag(tagHash) {
+    if(tagHash !== 0) {
+      this.props.dispatch(activatePositiveTag(tagHash));
+    }
+  }
 
+  render() {
     return (
       <div>
-        {tagList}
-        <RB.Button bsStyle="primary" onClick={this.onAddGroupClick}>Add</RB.Button>
+        { Object.keys(this.props.activeTagList)
+          .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
+          }
+        <RB.Button bsStyle="primary" onClick={this.onManageTagsClick}>Add</RB.Button>
+        <TagSelect onChange={this.handleAddTag} />
       </div>
     );
   }

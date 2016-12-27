@@ -41,11 +41,11 @@ class Manage extends React.Component {
     });
   }
 
-  handleAddTag(tagHashPath) {
-    if(tagHashPath > 0) {
+  handleAddTag(tagHash) {
+    if(tagHash !== 0) {
       this.setState({
         details: Object.assign({}, this.state.details, {
-          tags: Object.assign({}, this.state.details.tags, {[tagHashPath]: true})
+          tags: Object.assign({}, this.state.details.tags, {[tagHash]: true})
         })
       });
     }
