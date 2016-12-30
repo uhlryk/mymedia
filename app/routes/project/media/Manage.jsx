@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "../../../components/tags/TagSelect.jsx";
+import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { saveMedia } from "../../../actions/index";
 
 @connect(state => ({
@@ -78,27 +79,28 @@ class Manage extends React.Component {
 
   render() {
     return (
-      <div className="popup edit-form">
+      <div className="popup form">
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
+          <div className="form__group">
             <label>Name</label>
-            <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+            <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+            <ValidationElementError error={this.state.validation.name} />
           </div>
-          <div className="form-group">
+          <div className="form__group">
             <label>Description</label>
-            <textarea className="form-control" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
+            <textarea className="form__element" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
           </div>
-          <div className="form-group">
+          <div className="form__group">
             { Object.keys(this.state.details.tags)
               .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
               }
           </div>
-          <div className="form-group">
+          <div className="form__group">
             <label>Add Label</label>
             <TagSelect onChange={this.handleAddTag} />
           </div>
-          <button type="submit" className="btn btn-default">Submit</button>
-          <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>
+          <button type="submit" className="form__button">Submit</button>
+          <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
       </div>
     );

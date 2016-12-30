@@ -4,8 +4,9 @@ import { push } from "react-router-redux";
 
 import { addTag } from "../../../../actions/tagList";
 import TagSelect from "../../../../components/tags/TagSelect.jsx";
-
+import ValidationElementError from "../../../../components/ValidationElementError.jsx";
 @connect(state => ({
+  tagList: state.tagList
 }))
 class Form extends React.Component {
 
@@ -65,19 +66,25 @@ class Form extends React.Component {
   }
 
   render() {
+    let parent = false;
+    if(this.state.details.parent) {
+      parent = <div><span className="badge">{this.props.tagList[this.state.details.parent].name}</span></div>;
+    }
     return (
-      <div className="popup edit-form">
+      <div className="popup form">
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
+          <div className="form__group">
             <label>Name</label>
-            <input type="text" className="form-control" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+            <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+            <ValidationElementError error={this.state.validation.name} />
           </div>
-          <div className="form-group">
+          <div className="form__group">
+            {parent}
             <label>Select parent</label>
             <TagSelect onChange={this.handleParentChange} />
           </div>
-          <button type="submit" className="btn btn-default">Submit</button>
-          <button type="button" className="btn btn-default" onClick={this.onCloseClick}>Cancel</button>
+          <button type="submit" className="form__button">Submit</button>
+          <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
       </div>
     );

@@ -14,7 +14,7 @@ class TagSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: null,
       tagList: prepareTags(props.tagList),
     };
   }
@@ -28,14 +28,19 @@ class TagSelect extends React.Component {
     });
   };
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      tagList: prepareTags(nextProps.tagList)
+    });
+  }
+
   render () {
     const { tagList } = this.state;
 
-    console.log(tagList);
     return (
       <Select
         simpleValue
-        value={this.state.value}
+        placeholder="Select tag"
         options={tagList}
         onChange={this.onChange}
       />
@@ -46,10 +51,7 @@ class TagSelect extends React.Component {
 export default TagSelect;
 
 function prepareTags(tagList) {
-  const suggestions = [{
-    label: "no parent",
-    value: 0
-  }];
+  const suggestions = [];
   Object.keys(tagList).forEach(hashPath => {
     suggestions.push({
       label: buildName(tagList, hashPath),

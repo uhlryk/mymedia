@@ -1,0 +1,18 @@
+.form {
+  &__element {
+    @extend .form-control;
+  }
+  &__button {
+    @extend .btn;
+    @extend .btn-default;
+  }
+  &__element-helper {
+    &--error {
+      color: red;
+    }
+  }
+  &__group {
+    @extend .form-group;
+  }
+}
+
