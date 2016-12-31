@@ -16,3 +16,6 @@
   }
 }
 
+.button {
+  @extend .form__button;
+}

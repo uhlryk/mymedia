@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "../../../components/tags/TagSelect.jsx";
+import Tag from "../../../components/tags/Tag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { saveMedia } from "../../../actions/index";
 
@@ -92,7 +93,7 @@ class Manage extends React.Component {
           </div>
           <div className="form__group">
             { Object.keys(this.state.details.tags)
-              .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
+              .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} inline="true" />)
               }
           </div>
           <div className="form__group">

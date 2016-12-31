@@ -4,6 +4,7 @@ import { push } from "react-router-redux";
 import classNames from "classnames";
 import { openFile } from "./../../actions/openFile";
 import FileSize from "./FileSize.jsx";
+import Tag from "../tags/Tag.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
 @connect(state => ({
@@ -59,7 +60,7 @@ class CustomRow extends React.Component {
           </div>
           <div className="list__tags">
             { Object.keys(this.props.data.tags)
-              .map(tagKey => <div key={tagKey}><span className="badge">{this.props.tagList[tagKey].name}</span></div>)
+              .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} inline="true" />)
               }
           </div>
         </div>

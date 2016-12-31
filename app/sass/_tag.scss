@@ -1,0 +1,15 @@
+.tag {
+  display: block;
+  margin: 3px;
+  background: #468847;
+  width: 150px;
+  padding: 3px;
+  font-size: 12px;
+  border-radius: 9px;
+  box-sizing: border-box;
+  text-align: center;
+  color: white;
+  &--inline {
+    display: inline-block;
+  }
+}

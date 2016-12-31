@@ -4,6 +4,7 @@ import { push } from "react-router-redux";
 
 import { addTag } from "../../../../actions/tagList";
 import TagSelect from "../../../../components/tags/TagSelect.jsx";
+import Tag from "../../../../components/tags/Tag.jsx";
 import ValidationElementError from "../../../../components/ValidationElementError.jsx";
 @connect(state => ({
   tagList: state.tagList
@@ -68,7 +69,7 @@ class Form extends React.Component {
   render() {
     let parent = false;
     if(this.state.details.parent) {
-      parent = <div><span className="badge">{this.props.tagList[this.state.details.parent].name}</span></div>;
+      parent = <Tag name={this.props.tagList[this.state.details.parent].name} />;
     }
     return (
       <div className="popup form">
