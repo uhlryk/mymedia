@@ -31,7 +31,7 @@ class TagList extends React.Component {
     return (
       <div>
         { Object.keys(this.props.activeTagList)
-          .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} />)
+          .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} remove={()=>{}} revert={()=>{}} />)
           }
         <button className="button" onClick={this.onManageTagsClick}>Add</button>
         <TagSelect onChange={this.handleAddTag} />
