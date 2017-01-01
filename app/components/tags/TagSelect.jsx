@@ -1,21 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
 import Select from 'react-select';
 
-@connect(state => ({
-  tagList: state.tagList
-}))
 class TagSelect extends React.Component {
 
   static propsTypes = {
-    onChange: React.PropTypes.func
+    onChange: React.PropTypes.func,
+    tagList: React.PropTypes.array
   };
 
   constructor(props) {
     super(props);
     this.state = {
       value: null,
-      tagList: prepareTags(props.tagList),
+      tagList: prepareTags(props.tagList)
     };
   }
 

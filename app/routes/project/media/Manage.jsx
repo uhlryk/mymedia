@@ -55,9 +55,6 @@ class Manage extends React.Component {
   handleRemoveTag(tagHash) {
     let tags = Object.assign({}, this.state.details.tags);
     delete tags[tagHash];
-    console.log("P1");
-    console.log(tags);
-    console.log(this.state.details.tags);
     this.setState({
       details: Object.assign({}, this.state.details, {
         tags
@@ -110,7 +107,7 @@ class Manage extends React.Component {
           </div>
           <div className="form__group">
             <label>Add Label</label>
-            <TagSelect onChange={this.handleAddTag} />
+            <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
           </div>
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>

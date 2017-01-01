@@ -89,7 +89,7 @@ class Form extends React.Component {
           <div className="form__group">
             {parent}
             <label>Select parent</label>
-            <TagSelect onChange={this.handleParentChange} />
+            <TagSelect onChange={this.handleParentChange} tagList={this.props.tagList} />
           </div>
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
