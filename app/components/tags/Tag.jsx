@@ -10,10 +10,19 @@ class Tag extends React.Component {
     revert: React.PropTypes.func
   };
 
+  constructor(props) {
+    super(props);
+    this.onRemoveClick = this.onRemoveClick.bind(this);
+  }
+
+  onRemoveClick() {
+    this.props.remove();
+  }
+
   render() {
     let removeButton = false;
     if(this.props.remove) {
-      removeButton = <div className="tag__button"><i className="fa fa-times" aria-hidden="true"></i></div>;
+      removeButton = <div className="tag__button" onClick={this.onRemoveClick}><i className="fa fa-times" aria-hidden="true"></i></div>;
     }
     let revertButton = false;
     if(this.props.revert) {

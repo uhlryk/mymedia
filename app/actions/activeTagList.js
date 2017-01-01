@@ -1,19 +1,29 @@
-export const ACTIVATE_POSITIVE = "active_tag_list.activate_positive";
-export const ACTIVATE_NEGATIVE = "active_tag_list.activate_negative";
+export const REMOVE_ACTIVE_TAG = "active_tag_list.remove";
+export const ADD_POSITIVE_ACTIVE_TAG = "active_tag_list.add_positive";
+export const ADD_NEGATIVE_ACTIVE_TAG = "active_tag_list.add_negative";
 
-export function activatePositiveTag(tagHash) {
+export function removeActiveTag(tagHash) {
   return (dispatch, getState) => {
     dispatch({
-      type: ACTIVATE_POSITIVE,
+      type: REMOVE_ACTIVE_TAG,
       uuid: tagHash
     });
   }
 }
 
-export function activateNegativeTag(tagHash) {
+export function addPositiveActiveTag(tagHash) {
   return (dispatch, getState) => {
     dispatch({
-      type: ACTIVATE_NEGATIVE,
+      type: ADD_POSITIVE_ACTIVE_TAG,
+      uuid: tagHash
+    });
+  }
+}
+
+export function addNegativeActiveTag(tagHash) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ADD_NEGATIVE_ACTIVE_TAG,
       uuid: tagHash
     });
   }

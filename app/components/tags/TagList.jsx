@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "./TagSelect.jsx";
 import Tag from "./Tag.jsx";
-import { activatePositiveTag } from "./../../actions/activeTagList";
+import { addPositiveActiveTag, removeActiveTag } from "./../../actions/activeTagList";
 
 @connect(state => ({
   tagList: state.tagList,
@@ -15,23 +15,26 @@ class TagList extends React.Component {
     super(props);
     this.onManageTagsClick = this.onManageTagsClick.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
+    this.removeTag = this.removeTag.bind(this);
   }
 
   onManageTagsClick() {
     this.props.dispatch(push("project/media/tag/add"));
   }
 
+  removeTag(tagHash) {
+    this.props.dispatch(removeActiveTag(tagHash));
+  }
+
   handleAddTag(tagHash) {
-    if(tagHash !== 0) {
-      this.props.dispatch(activatePositiveTag(tagHash));
-    }
+    this.props.dispatch(addPositiveActiveTag(tagHash));
   }
 
   render() {
     return (
       <div>
         { Object.keys(this.props.activeTagList)
-          .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} remove={()=>{}} revert={()=>{}} />)
+          .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} remove={()=>this.removeTag(this.props.tagList[tagKey].uuid)} revert={()=>{}} />)
           }
         <button className="button" onClick={this.onManageTagsClick}>Add</button>
         <TagSelect onChange={this.handleAddTag} />
