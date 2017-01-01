@@ -1,6 +1,7 @@
 .tag {
   display: block;
   width: 150px;
+  margin: 3px;
   &--inline {
     display: inline-block;
   }
@@ -12,7 +13,6 @@
   }
   &__tag {
     display: inline-block;
-    margin: 3px;
     background: #468847;
     width: 150px;
     padding: 4px 3px 3px 3px;
@@ -23,7 +23,6 @@
     color: white;
   }
   &__button {
-    margin: 1px;
     text-align: center;
     display: inline-block;
     padding: 4px 3px 3px 3px;

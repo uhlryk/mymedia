@@ -25,6 +25,7 @@ class Manage extends React.Component {
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRemoveTag = this.handleRemoveTag.bind(this);
   }
 
   onCloseClick() {
@@ -47,6 +48,19 @@ class Manage extends React.Component {
     this.setState({
       details: Object.assign({}, this.state.details, {
         tags: Object.assign({}, this.state.details.tags, {[tagHash]: true})
+      })
+    });
+  }
+
+  handleRemoveTag(tagHash) {
+    let tags = Object.assign({}, this.state.details.tags);
+    delete tags[tagHash];
+    console.log("P1");
+    console.log(tags);
+    console.log(this.state.details.tags);
+    this.setState({
+      details: Object.assign({}, this.state.details, {
+        tags
       })
     });
   }
@@ -91,7 +105,7 @@ class Manage extends React.Component {
           </div>
           <div className="form__group">
             { Object.keys(this.state.details.tags)
-              .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} inline="true" />)
+              .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} inline="true" remove={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)} />)
               }
           </div>
           <div className="form__group">
