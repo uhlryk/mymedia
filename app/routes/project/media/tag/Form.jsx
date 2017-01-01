@@ -23,6 +23,7 @@ class Form extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleParentChange = this.handleParentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.removeTag = this.removeTag.bind(this);
   }
 
   onCloseClick() {
@@ -66,10 +67,16 @@ class Form extends React.Component {
     return isValid;
   }
 
+  removeTag() {
+    this.setState({
+      details: Object.assign({}, this.state.details, { parent: undefined })
+    });
+  }
+
   render() {
     let parent = false;
     if(this.state.details.parent) {
-      parent = <Tag name={this.props.tagList[this.state.details.parent].name} />;
+      parent = <Tag name={this.props.tagList[this.state.details.parent].name} remove={this.removeTag} />;
     }
     return (
       <div className="popup form">
