@@ -2,21 +2,33 @@
   display: block;
   width: 150px;
   margin: 3px;
-  cursor: pointer;
   position: relative;
   &--inline {
     display: inline-block;
   }
   &__tag {
     display: inline-block;
-    background: #468847;
+    background: #3498db;
+    white-space: nowrap;
     width: 100%;
-    padding: 4px 3px 3px 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 4px 3px 4px 3px;
     font-size: 12px;
     border-radius: 12px;
     box-sizing: border-box;
     text-align: center;
     color: white;
+    &--neutral-color {
+      background: #1b8edb;
+    }
+
+  }
+  &--clickable {
+    cursor: pointer;
+    .tag__tag--neutral-color:hover {
+      background: #1377db;
+    }
   }
   &--removable {
     width: 185px;
@@ -26,18 +38,17 @@
     .tag__remove-icon {
       @extend .fa;
       @extend .fa-times;
-      color: grey;
+      color: white;
       text-align: center;
       display: block;
       position: absolute;
-      top: 3px;
-      right: 3px;
-      padding: 3px 2px 4px 2px;
+      top: 0px;
+      right: 10px;
+      height:100%;
+      border-left: 1px solid white;
+      padding: 6px 10px 7px 10px;
       font-size: 12px;
-      border-radius: 12px;
       width: 20px;
-      background: white;
     }
   }
-
 }
