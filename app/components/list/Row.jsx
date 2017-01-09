@@ -60,7 +60,7 @@ class CustomRow extends React.Component {
           </div>
           <div className="list__tags">
             { Object.keys(this.props.data.tags)
-              .map(tagKey => <Tag key={tagKey} className="tag--inline">{this.props.tagList[tagKey].name}</Tag>)
+              .map(tagKey => <Tag key={tagKey} className="tag--inline" name={this.props.tagList[tagKey].name} />)
               }
           </div>
         </div>

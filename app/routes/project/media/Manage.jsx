@@ -102,7 +102,7 @@ class Manage extends React.Component {
           </div>
           <div className="form__group">
             { Object.keys(this.state.details.tags)
-              .map(tagKey => <RemovableTag key={tagKey} className="tag--inline" onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)} >{this.props.tagList[tagKey].name}</RemovableTag>)
+              .map(tagKey => <RemovableTag key={tagKey} className="tag--inline" onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name}/>)
               }
           </div>
           <div className="form__group">

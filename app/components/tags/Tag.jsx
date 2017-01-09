@@ -4,6 +4,7 @@ import classNames from "classnames";
 class Tag extends React.Component {
 
   static propsTypes = {
+    name: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     color: React.PropTypes.string,
     onClick: React.PropTypes.func
@@ -24,7 +25,10 @@ class Tag extends React.Component {
     const color = this.props.color || "tag__tag--neutral-color";
     return (
       <div className={classNames("tag", {[this.props.className]: this.props.className, "tag--clickable": this.props.onClick})} onClick={this.onClick}>
-        <div className={classNames("tag__tag", color)}>{this.props.children}</div>
+        <div className={classNames("tag__tag", color)}>
+          {this.props.name}
+          {this.props.children}
+        </div>
       </div>
     );
   }

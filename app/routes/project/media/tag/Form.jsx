@@ -76,7 +76,7 @@ class Form extends React.Component {
   render() {
     let parent = false;
     if(this.state.details.parent) {
-      parent = <RemovableTag onClick={this.removeTag} >{this.props.tagList[this.state.details.parent].name}</RemovableTag>;
+      parent = <RemovableTag onClick={this.removeTag} name={this.props.tagList[this.state.details.parent].name} />;
     }
     return (
       <div className="popup form">
