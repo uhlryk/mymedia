@@ -4,35 +4,25 @@ import classNames from "classnames";
 class Tag extends React.Component {
 
   static propsTypes = {
-    name: React.PropTypes.string,
-    inline: React.PropTypes.bool,
-    remove: React.PropTypes.func,
-    revert: React.PropTypes.func
+    className: React.PropTypes.string,
+    onClick: React.PropTypes.func
   };
 
   constructor(props) {
     super(props);
-    this.onRemoveClick = this.onRemoveClick.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
-  onRemoveClick() {
-    this.props.remove();
+  onClick() {
+    if(this.props.onClick) {
+      this.props.onClick();
+    }
   }
 
   render() {
-    let removeButton = false;
-    if(this.props.remove) {
-      removeButton = <div className="tag__button" onClick={this.onRemoveClick}><i className="fa fa-times" aria-hidden="true"></i></div>;
-    }
-    let revertButton = false;
-    if(this.props.revert) {
-      revertButton = <div className="tag__button"><i className="fa fa-exchange" aria-hidden="true"></i></div>;
-    }
     return (
-      <div className={classNames("tag", {"tag--inline": this.props.inline, "tag--one-button": this.props.remove || this.props.revert, "tag--two-button": this.props.remove && this.props.revert})}>
-        <div className="tag__tag">{this.props.name}</div>
-        {removeButton}
-        {revertButton}
+      <div className={classNames("tag", {[this.props.className]: this.props.className})} onClick={this.onClick}>
+        <div className="tag__tag">{this.props.children}</div>
       </div>
     );
   }

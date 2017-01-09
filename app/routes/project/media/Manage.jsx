@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "../../../components/tags/TagSelect.jsx";
-import Tag from "../../../components/tags/Tag.jsx";
+import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { saveMedia } from "../../../actions/index";
 
@@ -102,7 +102,7 @@ class Manage extends React.Component {
           </div>
           <div className="form__group">
             { Object.keys(this.state.details.tags)
-              .map(tagKey => <Tag key={tagKey} name={this.props.tagList[tagKey].name} inline="true" remove={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)} />)
+              .map(tagKey => <RemovableTag key={tagKey} className="tag--inline" onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)} >{this.props.tagList[tagKey].name}</RemovableTag>)
               }
           </div>
           <div className="form__group">
