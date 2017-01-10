@@ -49,7 +49,10 @@ class Form extends React.Component {
       isValid = false;
       newValidation.name = 'Field is required';
     }
-
+    if(Object.keys(this.props.tagList).some(uuid => this.props.tagList[uuid].name === this.state.details.name)) {
+      isValid = false;
+      newValidation.name = 'This tag exist';
+    }
     if(isValid === false) {
       this.setState({
         validation: newValidation
