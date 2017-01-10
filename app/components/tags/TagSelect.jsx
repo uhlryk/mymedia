@@ -49,20 +49,11 @@ export default TagSelect;
 
 function prepareTags(tagList) {
   const suggestions = [];
-  Object.keys(tagList).forEach(hashPath => {
+  Object.keys(tagList).forEach(uuid => {
     suggestions.push({
-      label: buildName(tagList, hashPath),
-      value: hashPath
+      label: tagList[uuid].name,
+      value: uuid
     })
   })
   return suggestions;
-}
-
-function buildName(tagList, hashPath) {
-  let tag = tagList[hashPath];
-  let name = tag.name.toLowerCase();
-  if (tag.parent) {
-    name = buildName(tagList, tag.parent) + " / " + name;
-  }
-  return name;
 }

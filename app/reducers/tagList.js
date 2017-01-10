@@ -17,7 +17,6 @@ export default function tagList(state = {}, action) {
       let uuidKey = uuid();
       newState[uuidKey] = {
         name: action.name,
-        parent: action.parent,
         uuid: uuidKey
       };
       return newState;

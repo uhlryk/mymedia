@@ -6,8 +6,7 @@ export function addTag(data) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_TAG,
-      name: data.name,
-      parent: data.parent
+      name: data.name
     });
     dispatch(save());
   }

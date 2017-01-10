@@ -4,7 +4,6 @@ import { push } from "react-router-redux";
 
 import { addTag } from "../../../../actions/tagList";
 import TagSelect from "../../../../components/tags/TagSelect.jsx";
-import RemovableTag from "../../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../../components/ValidationElementError.jsx";
 @connect(state => ({
   tagList: state.tagList
@@ -21,9 +20,7 @@ class Form extends React.Component {
     };
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleParentChange = this.handleParentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.removeTag = this.removeTag.bind(this);
   }
 
   onCloseClick() {
@@ -33,12 +30,6 @@ class Form extends React.Component {
   handleNameChange(evt) {
     this.setState({
       details: Object.assign({}, this.state.details, { name: evt.target.value })
-    });
-  }
-
-  handleParentChange(hashPath) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { parent: hashPath })
     });
   }
 
@@ -67,17 +58,7 @@ class Form extends React.Component {
     return isValid;
   }
 
-  removeTag() {
-    this.setState({
-      details: Object.assign({}, this.state.details, { parent: undefined })
-    });
-  }
-
   render() {
-    let parent = false;
-    if(this.state.details.parent) {
-      parent = <RemovableTag onClick={this.removeTag} name={this.props.tagList[this.state.details.parent].name} />;
-    }
     return (
       <div className="popup form">
         <form onSubmit={this.handleSubmit}>
@@ -85,11 +66,6 @@ class Form extends React.Component {
             <label>Name</label>
             <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
             <ValidationElementError error={this.state.validation.name} />
-          </div>
-          <div className="form__group">
-            {parent}
-            <label>Select parent</label>
-            <TagSelect onChange={this.handleParentChange} tagList={this.props.tagList} />
           </div>
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
