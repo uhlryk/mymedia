@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import Tag from "./Tag.jsx";
+import ChargeTagWrapper from "./ChargeTagWrapper.jsx";
 
 class ChangeableTagWrapper extends React.Component {
 
@@ -22,16 +22,13 @@ class ChangeableTagWrapper extends React.Component {
 
   render() {
     return (
-      <div className="changeable-tag-wrapper">
+      <ChargeTagWrapper isPositive={this.props.isPositive} className={this.props.className}>
         <div
-          className={classNames("changeable-tag-wrapper__change-button", {
-            "changeable-tag-wrapper__change-button--positive": this.props.isPositive,
-            "changeable-tag-wrapper__change-button--negative": !this.props.isPositive
-          })}
+          className="changeable-tag-wrapper__change-button"
           onClick={this.onChange}
         ></div>
         {this.props.children}
-      </div>
+      </ChargeTagWrapper>
     );
   }
 }
