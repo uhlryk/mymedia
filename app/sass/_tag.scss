@@ -1,6 +1,22 @@
 .changeable-tag-wrapper {
   padding-left: 30px;
   position: relative;
+  &--negative {
+    .changeable-tag-wrapper__change-button {
+      background: #00db1b;
+    }
+    .tag__tag {
+      background: #db0e21;
+    }
+  }
+  &--positive {
+    .changeable-tag-wrapper__change-button {
+      background: #db0e21;
+    }
+    .tag__tag {
+      background: #00db1b;
+    }
+  }
   &__change-button{
     position: absolute;
     width: 25px;
@@ -8,12 +24,6 @@
     top:0;
     left: 0;
     background: grey;
-    &--positive {
-      background: #00db1b;
-    }
-    &--negative {
-      background: #db0e21;
-    }
   }
 }
 .tag {

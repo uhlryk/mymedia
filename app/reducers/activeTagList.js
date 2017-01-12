@@ -8,7 +8,7 @@ export default function activeTagList(state = {}, action) {
       newState = _.cloneDeep(state);
       newState[action.uuid] = {
         name: action.name,
-        charge: 1,
+        charge: true,
         uuid: action.uuid
       };
       return newState;
@@ -16,7 +16,7 @@ export default function activeTagList(state = {}, action) {
       newState = _.cloneDeep(state);
       newState[action.uuid] = {
         name: action.name,
-        charge: -1,
+        charge: false,
         uuid: action.uuid
       };
       return newState;

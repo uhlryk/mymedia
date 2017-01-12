@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import ChargeTagWrapper from "./ChargeTagWrapper.jsx";
 
-class ChangeableTagWrapper extends React.Component {
+class ChangeableChargeTagWrapper extends React.Component {
 
   static propsTypes = {
     isPositive: React.PropTypes.bool.isRequired,
@@ -32,4 +32,4 @@ class ChangeableTagWrapper extends React.Component {
     );
   }
 }
-export default ChangeableTagWrapper;
+export default ChangeableChargeTagWrapper;
