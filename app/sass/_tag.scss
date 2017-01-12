@@ -1,3 +1,21 @@
+.changeable-tag-wrapper {
+  padding-left: 30px;
+  position: relative;
+  &__change-button{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top:0;
+    left: 0;
+    background: grey;
+    &--positive {
+      background: #00db1b;
+    }
+    &--negative {
+      background: #db0e21;
+    }
+  }
+}
 .tag {
   display: block;
   width: 150px;
@@ -22,7 +40,12 @@
     &--neutral-color {
       background: #1b8edb;
     }
-
+    &--positive-color {
+      background: #00db1b;
+    }
+    &--negative-color {
+      background: #db0e21;
+    }
   }
   &--clickable {
     cursor: pointer;

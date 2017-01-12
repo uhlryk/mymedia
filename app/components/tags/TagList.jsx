@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "./TagSelect.jsx";
 import RemovableTag from "./RemovableTag.jsx";
+import ChangeableTagWrapper from "./ChangeableTagWrapper.jsx";
 import { addPositiveActiveTag, removeActiveTag } from "./../../actions/activeTagList";
 
 @connect(state => ({
@@ -34,8 +35,12 @@ class TagList extends React.Component {
     return (
       <div>
         { Object.keys(this.props.activeTagList)
-          .map(tagKey => <RemovableTag key={tagKey} onClick={()=>this.removeTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name} />)
-          }
+          .map(tagKey => (
+            <ChangeableTagWrapper key={tagKey} onChange={()=>{}} isPositive={true} >
+              <RemovableTag onClick={()=>this.removeTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name} />
+            </ChangeableTagWrapper>
+          ))
+        }
         <button className="button" onClick={this.onManageTagsClick}>Add</button>
         <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
       </div>
