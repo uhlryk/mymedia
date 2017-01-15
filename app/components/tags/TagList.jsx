@@ -41,7 +41,6 @@ class TagList extends React.Component {
             </ChangeableChargeTagWrapper>
           ))
         }
-        <button className="button" onClick={this.onManageTagsClick}>Add</button>
         <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
       </div>
     );
