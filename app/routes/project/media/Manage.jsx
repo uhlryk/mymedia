@@ -1,11 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import TagSelect from "../../../components/tags/TagSelect.jsx";
+import uuid from "uuid-v4";
+//import TagSelect from "../../../components/tags/TagSelect.jsx";
+import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { saveMedia } from "../../../actions/index";
-
+import { addTag } from "../../../actions/tagList";
 @connect(state => ({
   fileList: state.fileList,
   tagList: state.tagList
@@ -14,9 +16,9 @@ class Manage extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props.fileList[this.props.params.hashPath].tags)
     this.state = {
       details: Object.assign({}, this.props.fileList[this.props.params.hashPath]),
+      newTags: {},
       hashPath: this.props.params.hashPath,
       validation: {}
     };
@@ -44,12 +46,26 @@ class Manage extends React.Component {
     });
   }
 
-  handleAddTag(tagHash) {
+  handleAddTag(name) {
+    var tag = Object.keys(this.props.tagList).find(id => this.props.tagList[id].name === name);
+    if(!tag) {
+      tag = {
+        name,
+        uuid: uuid()
+      };
+      const newTags = Object.assign({}, this.state.newTags);
+      newTags[tag.uuid] = tag;
+      this.setState({
+        newTags
+      });
+    }
+
     this.setState({
       details: Object.assign({}, this.state.details, {
-        tags: Object.assign({}, this.state.details.tags, {[tagHash]: true})
+        tags: Object.assign({}, this.state.details.tags, {[tag.uuid]: true})
       })
     });
+
   }
 
   handleRemoveTag(tagHash) {
@@ -62,11 +78,25 @@ class Manage extends React.Component {
     });
   }
 
+  handleRemoveNewTag(id) {
+    let newTags = Object.assign({}, this.state.details.newTags);
+    delete tags[id];
+    this.setState({
+      details: Object.assign({}, this.state.details, {
+        newTags
+      })
+    });
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
     if(this.validation() === false) {
       return;
     }
+    Object.keys(this.state.newTags).forEach(uuid => {
+      const tag = this.state.newTags[uuid];
+      this.props.dispatch(addTag(tag.name, tag.uuid));
+    });
     this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));
     this.props.dispatch(push("project/media"));
   }
@@ -88,6 +118,25 @@ class Manage extends React.Component {
   }
 
   render() {
+    const tags = [];
+    Object.keys(this.state.details.tags)
+      .forEach(tagKey => {
+        if(this.props.tagList[tagKey]) {
+          tags.push(
+            <RemovableTag
+              key={tagKey} className="tag--inline"
+              onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)}
+              name={this.props.tagList[tagKey].name}/>
+          );
+        } else if(this.state.newTags[tagKey]) {
+          tags.push(
+            <RemovableTag
+              key={tagKey} className="tag--inline"
+              onClick={() => this.handleRemoveNewTag(this.state.newTags[tagKey].uuid)}
+              name={this.state.newTags[tagKey].name}/>
+          );
+        }
+      })
     return (
       <div className="popup form">
         <form onSubmit={this.handleSubmit}>
@@ -101,13 +150,11 @@ class Manage extends React.Component {
             <textarea className="form__element" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
           </div>
           <div className="form__group">
-            { Object.keys(this.state.details.tags)
-              .map(tagKey => <RemovableTag key={tagKey} className="tag--inline" onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name}/>)
-              }
+            {tags}
           </div>
           <div className="form__group">
             <label>Add Label</label>
-            <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
+            <TagInput onAddTag={this.handleAddTag} tagList={this.props.tagList} />
           </div>
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>

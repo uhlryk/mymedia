@@ -1,5 +1,4 @@
 import _ from "lodash";
-import uuid from "uuid-v4";
 import { ADD_NEW_TAG, SET_BULK_TAGS } from "../actions/tagList";
 
 export default function tagList(state = {}, action) {
@@ -14,10 +13,9 @@ export default function tagList(state = {}, action) {
       return newState;
     case ADD_NEW_TAG:
       newState = _.cloneDeep(state);
-      let uuidKey = uuid();
-      newState[uuidKey] = {
+      newState[action.uuid] = {
         name: action.name,
-        uuid: uuidKey
+        uuid: action.uuid
       };
       return newState;
     default:
