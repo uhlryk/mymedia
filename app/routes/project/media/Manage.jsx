@@ -79,11 +79,14 @@ class Manage extends React.Component {
   }
 
   handleRemoveNewTag(id) {
-    let newTags = Object.assign({}, this.state.details.newTags);
+    let newTags = Object.assign({}, this.state.newTags);
+    delete newTags[id];
+    let tags = Object.assign({}, this.state.details.tags);
     delete tags[id];
     this.setState({
+      newTags,
       details: Object.assign({}, this.state.details, {
-        newTags
+        tags
       })
     });
   }
@@ -95,6 +98,8 @@ class Manage extends React.Component {
     }
     Object.keys(this.state.newTags).forEach(uuid => {
       const tag = this.state.newTags[uuid];
+      console.log("Z1");
+      console.log(tag);
       this.props.dispatch(addTag(tag.name, tag.uuid));
     });
     this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));
