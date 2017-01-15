@@ -39,6 +39,9 @@ class TagInput extends React.Component {
 
   onClick() {
     this.props.onAddTag(this.state.value);
+    this.setState({
+      value: ""
+    });
   }
 
   onTagsFetchRequested = ({ value }) => {
@@ -56,7 +59,7 @@ class TagInput extends React.Component {
   render () {
     const { value, tagList } = this.state;
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: 'Select tag',
       value,
       onChange: this.onChange
     };
