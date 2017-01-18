@@ -47,24 +47,20 @@ class Manage extends React.Component {
   }
 
   handleAddTag(name) {
-    var tag = Object.keys(this.props.tagList).find(id => this.props.tagList[id].name === name);
+    var tag = Object.keys(this.props.tagList).map(id => this.props.tagList[id]).find(tag => tag.name === name);
+    const newState = {};
     if(!tag) {
       tag = {
         name,
         uuid: uuid()
       };
-      const newTags = Object.assign({}, this.state.newTags);
-      newTags[tag.uuid] = tag;
-      this.setState({
-        newTags
-      });
+      const newTags = Object.assign({}, this.state.newTags, { [tag.uuid]: tag });
+      newState.newTags = newTags;
     }
-
-    this.setState({
-      details: Object.assign({}, this.state.details, {
-        tags: Object.assign({}, this.state.details.tags, {[tag.uuid]: true})
-      })
+    newState.details = Object.assign({}, this.state.details, {
+      tags: Object.assign({}, this.state.details.tags, {[tag.uuid]: true})
     });
+    this.setState(newState);
 
   }
 
@@ -98,8 +94,6 @@ class Manage extends React.Component {
     }
     Object.keys(this.state.newTags).forEach(uuid => {
       const tag = this.state.newTags[uuid];
-      console.log("Z1");
-      console.log(tag);
       this.props.dispatch(addTag(tag.name, tag.uuid));
     });
     this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));

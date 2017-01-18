@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import Autosuggest from 'react-autosuggest';
 
@@ -21,6 +22,8 @@ class TagInput extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.onTagsFetchRequested = this.onTagsFetchRequested.bind(this);
     this.onTagsClearRequested = this.onTagsClearRequested.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
+    this.addTag = this.addTag.bind(this);
   }
 
   getTags(value) {
@@ -38,10 +41,22 @@ class TagInput extends React.Component {
   };
 
   onClick() {
+    this.addTag();
+  }
+
+  addTag() {
     this.props.onAddTag(this.state.value);
     this.setState({
       value: ""
     });
+  }
+
+  onKeyPress(event) {
+    if (event.key === 'Enter') {
+      event.stopPropagation()
+      event.preventDefault();
+      this.addTag();
+    }
   }
 
   onTagsFetchRequested = ({ value }) => {
@@ -55,6 +70,18 @@ class TagInput extends React.Component {
       tagList: []
     });
   };
+
+  componentDidMount() {
+    const node = ReactDOM.findDOMNode(this);
+    const addEvent = node.addEventListener || node.attachEvent;
+    addEvent("keypress", this.onKeyPress, false);
+  }
+
+  componentWillUnmount() {
+    const node = ReactDOM.findDOMNode(this);
+    const removeEvent = node.removeEventListener || node.detachEvent;
+    removeEvent("keypress", this.onKeyPress);
+  }
 
   render () {
     const { value, tagList } = this.state;
@@ -72,6 +99,7 @@ class TagInput extends React.Component {
           getSuggestionValue={tag => tag.name}
           renderSuggestion={tag => <div> {tag.name} </div>}
           inputProps={inputProps}
+          ref={(input) => { this.textInput = input; }}
         />
         <button type="button" className="form__button" onClick={this.onClick}>Add</button>
       </div>
