@@ -47,6 +47,9 @@ class Manage extends React.Component {
   }
 
   handleAddTag(name) {
+    if(!name) {
+      return;
+    }
     var tag = Object.keys(this.props.tagList).map(id => this.props.tagList[id]).find(tag => tag.name === name);
     const newState = {};
     if(!tag) {
