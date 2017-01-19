@@ -2,12 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import uuid from "uuid-v4";
-//import TagSelect from "../../../components/tags/TagSelect.jsx";
 import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { saveMedia } from "../../../actions/index";
 import { addTag } from "../../../actions/tagList";
+import ReactTooltip from "react-tooltip";
+
 @connect(state => ({
   fileList: state.fileList,
   tagList: state.tagList
@@ -63,13 +64,16 @@ class Manage extends React.Component {
     newState.details = Object.assign({}, this.state.details, {
       tags: Object.assign({}, this.state.details.tags, {[tag.uuid]: true})
     });
-    this.setState(newState);
+    this.setState(newState, () => {
+      ReactTooltip.rebuild();
+    });
 
   }
 
   handleRemoveTag(tagHash) {
     let tags = Object.assign({}, this.state.details.tags);
     delete tags[tagHash];
+    ReactTooltip.hide();
     this.setState({
       details: Object.assign({}, this.state.details, {
         tags
@@ -82,6 +86,7 @@ class Manage extends React.Component {
     delete newTags[id];
     let tags = Object.assign({}, this.state.details.tags);
     delete tags[id];
+    ReactTooltip.hide();
     this.setState({
       newTags,
       details: Object.assign({}, this.state.details, {
@@ -162,6 +167,7 @@ class Manage extends React.Component {
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
+        <ReactTooltip place="top" type="info" effect="float"/>
       </div>
     );
   }

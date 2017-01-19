@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import ReactTooltip from 'react-tooltip'
 
 class Tag extends React.Component {
 
@@ -24,7 +25,7 @@ class Tag extends React.Component {
   render() {
     const color = this.props.color || "tag__tag--neutral-color";
     return (
-      <div className={classNames("tag", {[this.props.className]: this.props.className, "tag--clickable": this.props.onClick})} onClick={this.onClick}>
+      <div data-tip={this.props.name} className={classNames("tag", {[this.props.className]: this.props.className, "tag--clickable": this.props.onClick})} onClick={this.onClick}>
         <div className={classNames("tag__tag", color)}>
           {this.props.name}
           {this.props.children}
