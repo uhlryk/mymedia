@@ -138,7 +138,8 @@ class Manage extends React.Component {
               name={this.state.newTags[tagKey].name}/>
           );
         }
-      })
+      });
+    const suggestedTags = Object.keys(this.props.tagList).map(tagKey => this.props.tagList[tagKey]).filter(tag => !this.state.details.tags[tag.uuid]);
     return (
       <div className="popup form">
         <form onSubmit={this.handleSubmit}>
@@ -156,7 +157,7 @@ class Manage extends React.Component {
           </div>
           <div className="form__group">
             <label>Add Label</label>
-            <TagInput onAddTag={this.handleAddTag} tagList={this.props.tagList} />
+            <TagInput onAddTag={this.handleAddTag} tagList={suggestedTags} />
           </div>
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>

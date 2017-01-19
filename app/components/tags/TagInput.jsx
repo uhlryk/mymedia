@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import Autosuggest from 'react-autosuggest';
 
-@connect(state => ({}))
 class TagInput extends React.Component {
 
   static propsTypes = {
@@ -23,28 +22,24 @@ class TagInput extends React.Component {
     this.onTagsFetchRequested = this.onTagsFetchRequested.bind(this);
     this.onTagsClearRequested = this.onTagsClearRequested.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
-    this.addTag = this.addTag.bind(this);
+    this.onTagSelected = this.onTagSelected.bind(this);
   }
 
   getTags(value) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    return inputLength === 0 ? [] : Object.keys(this.props.tagList).map(uuid => this.props.tagList[uuid]).filter(tag =>
+    return inputLength === 0 ? [] : this.props.tagList.filter(tag =>
       tag.name.toLowerCase().slice(0, inputLength) === inputValue
     );
   };
 
-  onChange = (event, { newValue }) => {
+  onChange(event, { newValue }) {
     this.setState({
       value: newValue
     });
   };
 
   onClick() {
-    this.addTag();
-  }
-
-  addTag() {
     this.props.onAddTag(this.state.value);
     this.setState({
       value: ""
@@ -55,21 +50,33 @@ class TagInput extends React.Component {
     if (event.key === 'Enter') {
       event.stopPropagation()
       event.preventDefault();
-      this.addTag();
+      this.props.onAddTag(this.state.value);
+      this.setState({
+        value: ""
+      });
     }
   }
 
-  onTagsFetchRequested = ({ value }) => {
+  onTagsFetchRequested({ value }) {
     this.setState({
       tagList: this.getTags(value)
     });
   };
 
-  onTagsClearRequested = () => {
+  onTagsClearRequested() {
     this.setState({
       tagList: []
     });
   };
+
+  onTagSelected(event, { suggestionValue }) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.props.onAddTag(suggestionValue);
+    this.setState({
+      value: ""
+    });
+  }
 
   componentDidMount() {
     const node = ReactDOM.findDOMNode(this);
@@ -99,7 +106,7 @@ class TagInput extends React.Component {
           getSuggestionValue={tag => tag.name}
           renderSuggestion={tag => <div> {tag.name} </div>}
           inputProps={inputProps}
-          ref={(input) => { this.textInput = input; }}
+          onSuggestionSelected={this.onTagSelected}
         />
         <button type="button" className="form__button" onClick={this.onClick}>Add</button>
       </div>
