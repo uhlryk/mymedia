@@ -131,6 +131,7 @@ class Manage extends React.Component {
         if(this.props.tagList[tagKey]) {
           tags.push(
             <RemovableTag
+              tooltip="manage-component"
               key={tagKey} className="tag--inline"
               onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)}
               name={this.props.tagList[tagKey].name}/>
@@ -138,6 +139,7 @@ class Manage extends React.Component {
         } else if(this.state.newTags[tagKey]) {
           tags.push(
             <RemovableTag
+              tooltip="manage-component"
               key={tagKey} className="tag--inline"
               onClick={() => this.handleRemoveNewTag(this.state.newTags[tagKey].uuid)}
               name={this.state.newTags[tagKey].name}/>
@@ -167,7 +169,7 @@ class Manage extends React.Component {
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
-        <ReactTooltip place="top" type="info" effect="float"/>
+        <ReactTooltip place="top" type="info" effect="float" id="manage-component" class="tooltip"/>
       </div>
     );
   }

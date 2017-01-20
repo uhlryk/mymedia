@@ -5,6 +5,7 @@ import TagSelect from "./TagSelect.jsx";
 import RemovableTag from "./RemovableTag.jsx";
 import ChangeableChargeTagWrapper from "./ChangeableChargeTagWrapper.jsx";
 import { addPositiveActiveTag, removeActiveTag } from "./../../actions/activeTagList";
+import ReactTooltip from "react-tooltip";
 
 @connect(state => ({
   tagList: state.tagList,
@@ -31,17 +32,23 @@ class TagList extends React.Component {
     this.props.dispatch(addPositiveActiveTag(tagHash));
   }
 
+  componentDidUpdate() {
+    ReactTooltip.hide();
+    ReactTooltip.rebuild();
+  }
+
   render() {
     return (
       <div>
         { Object.keys(this.props.activeTagList)
           .map(tagKey => (
             <ChangeableChargeTagWrapper key={tagKey} onChange={()=>{}} isPositive={this.props.activeTagList[tagKey].charge} tag={RemovableTag} >
-              <RemovableTag onClick={()=>this.removeTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name} />
+              <RemovableTag onClick={()=>this.removeTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name} tooltip="tag-list" />
             </ChangeableChargeTagWrapper>
           ))
         }
         <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
+        <ReactTooltip place="right" type="info" effect="float" class="tooltip" id="tag-list" />
       </div>
     );
   }

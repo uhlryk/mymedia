@@ -8,7 +8,8 @@ class RemovableTag extends React.Component {
     name: React.PropTypes.string.isRequired,
     className: React.PropTypes.string,
     onClick: React.PropTypes.func.isRequired,
-    color: React.PropTypes.string
+    color: React.PropTypes.string,
+    tooltip: React.PropTypes.string
   };
 
   constructor(props) {
@@ -22,7 +23,7 @@ class RemovableTag extends React.Component {
 
   render() {
     return (
-      <Tag className={classNames("tag--removable", {[this.props.className]: this.props.className})} onClick={this.props.onClick} name={this.props.name} color={this.props.color} >
+      <Tag className={classNames("tag--removable", {[this.props.className]: this.props.className})} onClick={this.props.onClick} name={this.props.name} color={this.props.color} tooltip={this.props.tooltip} >
         {this.props.children}
         <i className="tag__remove-icon" aria-hidden="true" />
       </Tag>
