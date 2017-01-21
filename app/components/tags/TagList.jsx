@@ -34,9 +34,10 @@ class TagList extends React.Component {
   render() {
     return (
       <div>
+        <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
         { this.props.activeTagList.map(tagName => <RemovableTag key={tagName} onClick={()=>this.removeTag(tagName)} name={tagName} tooltip="tag-list" /> )
           }
-        <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
+
         <ReactTooltip place="right" type="info" effect="float" class="tooltip" id="tag-list" />
       </div>
     );
