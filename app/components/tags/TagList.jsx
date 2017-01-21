@@ -34,7 +34,7 @@ class TagList extends React.Component {
   render() {
     return (
       <div>
-        <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
+        <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList.filter(tagName => this.props.activeTagList.indexOf(tagName) === -1)} />
         { this.props.activeTagList.map(tagName => <RemovableTag key={tagName} onClick={()=>this.removeTag(tagName)} name={tagName} tooltip="tag-list" /> )
           }
 
