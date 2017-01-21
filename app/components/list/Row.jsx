@@ -7,9 +7,7 @@ import FileSize from "./FileSize.jsx";
 import Tag from "../tags/Tag.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
-@connect(state => ({
-  tagList: state.tagList
-}))
+@connect(state => ({ }))
 class CustomRow extends React.Component {
 
   static propsTypes = {
@@ -43,7 +41,6 @@ class CustomRow extends React.Component {
     let toogleSizeLabel = this.state.short ? moreComponent : lessComponent;
     let descriptionComponent = this.props.data.description || <i>{DEFAULT_DESCRIPTION}</i>;
 
-
     return (
       <div className={classNames("list__row", {"list__row--long": !this.state.short})}>
         <div onDoubleClick={this.onOpenClick} className="list__name">{this.props.data.name}</div>
@@ -59,8 +56,8 @@ class CustomRow extends React.Component {
             {descriptionComponent}
           </div>
           <div className="list__tags">
-            { Object.keys(this.props.data.tags)
-              .map(tagKey => <Tag tooltip="file-list" key={tagKey} className="tag--inline" name={this.props.tagList[tagKey].name} />)
+            { this.props.data.tags
+              .map(tagName => <Tag tooltip="file-list" key={tagName} className="tag--inline" name={tagName} />)
               }
           </div>
         </div>

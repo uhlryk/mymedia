@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "./TagSelect.jsx";
 import RemovableTag from "./RemovableTag.jsx";
-import ChangeableChargeTagWrapper from "./ChangeableChargeTagWrapper.jsx";
-import { addPositiveActiveTag, removeActiveTag } from "./../../actions/activeTagList";
+import { addActiveTag, removeActiveTag } from "./../../actions/activeTagList";
 import ReactTooltip from "react-tooltip";
 
 @connect(state => ({
@@ -15,21 +14,16 @@ class TagList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onManageTagsClick = this.onManageTagsClick.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.removeTag = this.removeTag.bind(this);
   }
 
-  onManageTagsClick() {
-    this.props.dispatch(push("project/media/tag/add"));
+  removeTag(name) {
+    this.props.dispatch(removeActiveTag(name));
   }
 
-  removeTag(tagHash) {
-    this.props.dispatch(removeActiveTag(tagHash));
-  }
-
-  handleAddTag(tagHash) {
-    this.props.dispatch(addPositiveActiveTag(tagHash));
+  handleAddTag(name) {
+    this.props.dispatch(addActiveTag(name));
   }
 
   componentDidUpdate() {
@@ -40,13 +34,8 @@ class TagList extends React.Component {
   render() {
     return (
       <div>
-        { Object.keys(this.props.activeTagList)
-          .map(tagKey => (
-            <ChangeableChargeTagWrapper key={tagKey} onChange={()=>{}} isPositive={this.props.activeTagList[tagKey].charge} tag={RemovableTag} >
-              <RemovableTag onClick={()=>this.removeTag(this.props.tagList[tagKey].uuid)} name={this.props.tagList[tagKey].name} tooltip="tag-list" />
-            </ChangeableChargeTagWrapper>
-          ))
-        }
+        { this.props.activeTagList.map(tagName => <RemovableTag key={tagName} onClick={()=>this.removeTag(tagName)} name={tagName} tooltip="tag-list" /> )
+          }
         <TagSelect onChange={this.handleAddTag} tagList={this.props.tagList} />
         <ReactTooltip place="right" type="info" effect="float" class="tooltip" id="tag-list" />
       </div>

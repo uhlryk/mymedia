@@ -1,29 +1,14 @@
 import _ from "lodash";
-import { ADD_POSITIVE_ACTIVE_TAG, ADD_NEGATIVE_ACTIVE_TAG, REMOVE_ACTIVE_TAG } from "../actions/activeTagList";
+import { ADD_ACTIVE_TAG, REMOVE_ACTIVE_TAG } from "../actions/activeTagList";
 
-export default function activeTagList(state = {}, action) {
-  let newState;
+export default function activeTagList(state = [], action) {
   switch(action.type) {
-    case ADD_POSITIVE_ACTIVE_TAG:
-      newState = _.cloneDeep(state);
-      newState[action.uuid] = {
-        name: action.name,
-        charge: true,
-        uuid: action.uuid
-      };
-      return newState;
-    case ADD_NEGATIVE_ACTIVE_TAG:
-      newState = _.cloneDeep(state);
-      newState[action.uuid] = {
-        name: action.name,
-        charge: false,
-        uuid: action.uuid
-      };
-      return newState;
+    case ADD_ACTIVE_TAG:
+      let newState = state.slice();
+      newState.splice(0,0, action.name);
+      return [...new Set(newState)];
     case REMOVE_ACTIVE_TAG:
-      newState = _.cloneDeep(state);
-      delete newState[action.uuid];
-      return newState;
+      return state.filter(tagName => tagName !== action.name);
     default:
       return state
   }

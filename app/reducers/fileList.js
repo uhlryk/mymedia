@@ -3,7 +3,7 @@ import md5 from "md5";
 import { ADD_NEW_BULK_FILES, SET_PROJECT_BULK_FILES, UPDATE_FILE } from "../actions/fileList";
 
 const DEFAULT_MEDIA_FILE = {
-  tags: {}
+  tags: []
 }
 export default function fileList(state = {}, action) {
   let newState;
@@ -34,9 +34,6 @@ export default function fileList(state = {}, action) {
       let newState = _.cloneDeep(state);
       let originalFile = newState[action.hashPath];
       Object.assign(originalFile, action.data);
-      console.log(originalFile);
-      console.log(action.data);
-      console.log(newState);
       return newState;
     default:
       return state

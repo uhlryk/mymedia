@@ -16,12 +16,12 @@ class TagSelect extends React.Component {
     };
   }
 
-  onChange = newValue => {
+  onChange = name => {
     if (this.props.onChange) {
-      this.props.onChange(newValue);
+      this.props.onChange(name);
     }
     this.setState({
-      value: newValue
+      value: name
     });
   };
 
@@ -48,12 +48,8 @@ class TagSelect extends React.Component {
 export default TagSelect;
 
 function prepareTags(tagList) {
-  const suggestions = [];
-  Object.keys(tagList).forEach(uuid => {
-    suggestions.push({
-      label: tagList[uuid].name,
-      value: uuid
-    })
-  })
-  return suggestions;
+  return tagList.map(tagName => ({
+    label: tagName,
+    value: tagName
+  }));
 }

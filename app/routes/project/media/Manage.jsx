@@ -6,7 +6,6 @@ import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { saveMedia } from "../../../actions/index";
-import { addTag } from "../../../actions/tagList";
 import ReactTooltip from "react-tooltip";
 
 @connect(state => ({
@@ -19,7 +18,6 @@ class Manage extends React.Component {
     super(props);
     this.state = {
       details: Object.assign({}, this.props.fileList[this.props.params.hashPath]),
-      newTags: {},
       hashPath: this.props.params.hashPath,
       validation: {}
     };
@@ -51,46 +49,21 @@ class Manage extends React.Component {
     if(!name) {
       return;
     }
-    var tag = Object.keys(this.props.tagList).map(id => this.props.tagList[id]).find(tag => tag.name === name);
-    const newState = {};
-    if(!tag) {
-      tag = {
-        name,
-        uuid: uuid()
-      };
-      const newTags = Object.assign({}, this.state.newTags, { [tag.uuid]: tag });
-      newState.newTags = newTags;
-    }
-    newState.details = Object.assign({}, this.state.details, {
-      tags: Object.assign({}, this.state.details.tags, {[tag.uuid]: true})
-    });
-    this.setState(newState, () => {
+    this.setState({
+      details: Object.assign({}, this.state.details, {
+        tags: [...new Set([name].concat(this.state.details.tags))]
+      })
+    }, () => {
       ReactTooltip.rebuild();
     });
 
   }
 
-  handleRemoveTag(tagHash) {
-    let tags = Object.assign({}, this.state.details.tags);
-    delete tags[tagHash];
+  handleRemoveTag(name) {
     ReactTooltip.hide();
     this.setState({
       details: Object.assign({}, this.state.details, {
-        tags
-      })
-    });
-  }
-
-  handleRemoveNewTag(id) {
-    let newTags = Object.assign({}, this.state.newTags);
-    delete newTags[id];
-    let tags = Object.assign({}, this.state.details.tags);
-    delete tags[id];
-    ReactTooltip.hide();
-    this.setState({
-      newTags,
-      details: Object.assign({}, this.state.details, {
-        tags
+        tags: this.state.details.tags.filter(tagName => tagName !== name)
       })
     });
   }
@@ -100,10 +73,6 @@ class Manage extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    Object.keys(this.state.newTags).forEach(uuid => {
-      const tag = this.state.newTags[uuid];
-      this.props.dispatch(addTag(tag.name, tag.uuid));
-    });
     this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));
     this.props.dispatch(push("project/media"));
   }
@@ -125,28 +94,15 @@ class Manage extends React.Component {
   }
 
   render() {
-    const tags = [];
-    Object.keys(this.state.details.tags)
-      .forEach(tagKey => {
-        if(this.props.tagList[tagKey]) {
-          tags.push(
-            <RemovableTag
-              tooltip="manage-component"
-              key={tagKey} className="tag--inline"
-              onClick={() => this.handleRemoveTag(this.props.tagList[tagKey].uuid)}
-              name={this.props.tagList[tagKey].name}/>
-          );
-        } else if(this.state.newTags[tagKey]) {
-          tags.push(
-            <RemovableTag
-              tooltip="manage-component"
-              key={tagKey} className="tag--inline"
-              onClick={() => this.handleRemoveNewTag(this.state.newTags[tagKey].uuid)}
-              name={this.state.newTags[tagKey].name}/>
-          );
-        }
-      });
-    const suggestedTags = Object.keys(this.props.tagList).map(tagKey => this.props.tagList[tagKey]).filter(tag => !this.state.details.tags[tag.uuid]);
+    const tags = this.state.details.tags
+      .map(name =>
+          <RemovableTag
+            tooltip="manage-component"
+            key={name} className="tag--inline"
+            onClick={() => this.handleRemoveTag(name)}
+            name={name}/>
+      );
+    const suggestedTags = this.props.tagList.filter(tagName => this.state.details.tags.indexOf(tagName) === -1);
     return (
       <div className="popup form">
         <form onSubmit={this.handleSubmit}>
