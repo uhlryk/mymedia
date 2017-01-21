@@ -28,8 +28,8 @@ class TagInput extends React.Component {
   getTags(value) {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    return inputLength === 0 ? [] : this.props.tagList.filter(tag =>
-      tag.name.toLowerCase().slice(0, inputLength) === inputValue
+    return inputLength === 0 ? [] : this.props.tagList.filter(tagName =>
+      tagName.toLowerCase().slice(0, inputLength) === inputValue
     );
   };
 
@@ -103,8 +103,8 @@ class TagInput extends React.Component {
           suggestions={tagList}
           onSuggestionsFetchRequested={this.onTagsFetchRequested}
           onSuggestionsClearRequested={this.onTagsClearRequested}
-          getSuggestionValue={tag => tag.name}
-          renderSuggestion={tag => <div> {tag.name} </div>}
+          getSuggestionValue={tagName => tagName}
+          renderSuggestion={tagName => <div> {tagName} </div>}
           inputProps={inputProps}
           onSuggestionSelected={this.onTagSelected}
         />

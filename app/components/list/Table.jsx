@@ -6,13 +6,20 @@ class Table extends React.Component {
 
   static propsTypes = {
     results: React.PropTypes.array,
+    filters: React.PropTypes.shape({
+      tags: React.PropTypes.array
+    }),
     className: React.PropTypes.string
   };
 
   render() {
     var rows = [];
     for (var i=0; i < this.props.results.length; i++) {
-      rows.push(<Row data={this.props.results[i]} key={this.props.results[i].hashPath} />);
+      let data = this.props.results[i];
+      let tags = data.tags;
+      if(this.props.filters.tags.length === 0 || this.props.filters.tags.length === this.props.filters.tags.filter(tagName => data.tags.indexOf(tagName) !== -1).length) {
+        rows.push(<Row data={data} key={data.hashPath} />);
+      }
     }
     return (
       <div className={this.props.className} >

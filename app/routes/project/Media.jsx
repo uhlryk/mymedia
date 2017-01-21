@@ -6,7 +6,8 @@ import Table from "../../components/list/Table.jsx";
 import TagList from "../../components/tags/TagList.jsx";
 
 @connect(state => ({
-  fileList: state.fileList
+  fileList: state.fileList,
+  activeTagList: state.activeTagList
 }))
 class Media extends React.Component {
 
@@ -23,7 +24,7 @@ class Media extends React.Component {
           <div className="media__tags">
             <TagList />
           </div>
-          <Table className="media__list list" results={list} />
+          <Table className="media__list list" results={list} filters={{ tags: this.props.activeTagList }}/>
           <div className="media__popup">
             {this.props.children}
           </div>
