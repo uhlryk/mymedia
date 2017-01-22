@@ -19,6 +19,15 @@
           #77fa51 20px
       );
     }
+    &--not-changed {
+      background: repeating-linear-gradient(
+          135deg,
+          #e4e6e3,
+          #e4e6e3 10px,
+          #c9edbb 10px,
+          #c9edbb 20px
+      );
+    }
     &--delete {
       background: repeating-linear-gradient(
           135deg,

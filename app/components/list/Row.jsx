@@ -41,8 +41,14 @@ class CustomRow extends React.Component {
     let toogleSizeLabel = this.state.short ? moreComponent : lessComponent;
     let descriptionComponent = this.props.data.description || <i>{DEFAULT_DESCRIPTION}</i>;
 
+    const className = classNames("list__row", {
+      "list__row--long": !this.state.short,
+      "list__row--new": this.props.data.isNew,
+      "list__row--not-changed": !this.props.data.isNew && this.props.data.isPresent && this.props.data.isNotChanged,
+      "list__row--delete": !this.props.data.isPresent
+    });
     return (
-      <div className={classNames("list__row", {"list__row--long": !this.state.short, "list__row--new": this.props.data.isNew,"list__row--delete": !this.props.data.isPresent })}>
+      <div className={className}>
         <div onDoubleClick={this.onOpenClick} className="list__name">{this.props.data.name}</div>
         <div onDoubleClick={this.onOpenClick}  className="list__original-path">{this.props.data.path}</div>
         <div className="list__additional">
