@@ -12,7 +12,7 @@ export default function fileList(state = {}, action) {
       newState = {};
       Object.keys(action.list).forEach(hashPath => {
         let file = _.cloneDeep(action.list[hashPath]);
-        file.exist = false;
+        file.isPresent = false;
         file.isNew = false;
         newState[hashPath] = file;
       });
@@ -21,11 +21,11 @@ export default function fileList(state = {}, action) {
       newState = _.cloneDeep(state);
       action.list.forEach(file => {
         let hashPath = md5(file.path);
-        let projectFile = newState[hashPath];
-        if(projectFile) {
-          projectFile.exist = true;
+        let fileFromProject = newState[hashPath];
+        if(fileFromProject) {
+          fileFromProject.isPresent = true;
         } else {
-          file.exist = true;
+          file.isPresent = true;
           file.isNew = true;
           file.hashPath = hashPath;
           newState[hashPath] = Object.assign({}, file, DEFAULT_MEDIA_FILE);

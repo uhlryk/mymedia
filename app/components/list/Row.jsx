@@ -42,7 +42,7 @@ class CustomRow extends React.Component {
     let descriptionComponent = this.props.data.description || <i>{DEFAULT_DESCRIPTION}</i>;
 
     return (
-      <div className={classNames("list__row", {"list__row--long": !this.state.short, "list__row--new": this.props.data.isNew })}>
+      <div className={classNames("list__row", {"list__row--long": !this.state.short, "list__row--new": this.props.data.isNew,"list__row--delete": !this.props.data.isPresent })}>
         <div onDoubleClick={this.onOpenClick} className="list__name">{this.props.data.name}</div>
         <div onDoubleClick={this.onOpenClick}  className="list__original-path">{this.props.data.path}</div>
         <div className="list__additional">
