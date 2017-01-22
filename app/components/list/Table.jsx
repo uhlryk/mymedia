@@ -13,10 +13,11 @@ class Table extends React.Component {
   };
 
   render() {
-    console.log(this.props.results);
     var rows = [];
-    for (var i=0; i < this.props.results.length; i++) {
-      let data = this.props.results[i];
+    var results = this.props.results.slice();
+    results.sort(compare);
+    for (var i=0; i < results.length; i++) {
+      let data = results[i];
       let tags = data.tags;
       if(this.props.filters.tags.length === 0 || this.props.filters.tags.length === this.props.filters.tags.filter(tagName => data.tags.indexOf(tagName) !== -1).length) {
         rows.push(<Row data={data} key={data.hashPath} />);
@@ -32,3 +33,18 @@ class Table extends React.Component {
 }
 
 export default Table;
+
+function setComparisonValue(file) {
+  if(file.isNew) return 10;
+  if(file.isNotChanged) return 9;
+  if(file.isPresent) return 8;
+  if(!file.isPresent) return 7;
+}
+
+function compare(a, b) {
+  var aValue = setComparisonValue(a);
+  var bValue = setComparisonValue(b);
+  if(aValue > bValue) return -1;
+  if(aValue === bValue) return 0;
+  if(aValue < bValue) return 1;
+}
