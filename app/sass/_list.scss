@@ -10,6 +10,24 @@
         height: auto;
       }
     }
+    &--new {
+      background: repeating-linear-gradient(
+          135deg,
+          #afff92,
+          #afff92 10px,
+          #77fa51 10px,
+          #77fa51 20px
+      );
+    }
+    &--delete {
+      background: repeating-linear-gradient(
+          135deg,
+          #ff8085,
+          #ff8085 10px,
+          #fa393f 10px,
+          #fa393f 20px
+      );
+    }
   }
   &__additional {
     height: 0px;

@@ -72,6 +72,7 @@ export function findProjectFile(path) {
             fileList(path, (err, files) => {
               dispatch(addNewFiles(files));
               dispatch(hideLoader());
+              dispatch(save());
               dispatch(push("project/media"));
             });
           }

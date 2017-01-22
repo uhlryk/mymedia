@@ -13,6 +13,7 @@ class Table extends React.Component {
   };
 
   render() {
+    console.log(this.props.results);
     var rows = [];
     for (var i=0; i < this.props.results.length; i++) {
       let data = this.props.results[i];
