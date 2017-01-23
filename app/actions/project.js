@@ -9,7 +9,7 @@ import fileLoad from "../helpers/fileLoad";
 import { showLoader, hideLoader } from "./loader";
 import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
-import { addNewFiles, setProjectFiles } from "./fileList";
+import { addFiles, setProjectFiles } from "./fileList";
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
@@ -32,7 +32,7 @@ export function askIfCreateNewProjectFile(path) {
         dispatch(showLoader("finding files"));
         dispatch(initProject(path));
         fileList(path, (err, files) => {
-          dispatch(addNewFiles(files));
+          dispatch(addFiles(files));
           dispatch(hideLoader());
           dispatch(save());
           dispatch(push("project/media"));
@@ -70,7 +70,7 @@ export function findProjectFile(path) {
             dispatch(initProject(path));
             dispatch(setProjectFiles(projectData.media));
             fileList(path, (err, files) => {
-              dispatch(addNewFiles(files));
+              dispatch(addFiles(files, true));
               dispatch(hideLoader());
               dispatch(save());
               dispatch(push("project/media"));

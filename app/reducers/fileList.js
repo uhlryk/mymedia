@@ -26,7 +26,7 @@ export default function fileList(state = {}, action) {
           fileFromProject.isPresent = true;
         } else {
           file.isPresent = true;
-          file.isNew = true;
+          file.isNew = action.markAsNew;
           file.isChanged = false;
           file.hashPath = hashPath;
           newState[hashPath] = Object.assign({}, file, DEFAULT_MEDIA_FILE);

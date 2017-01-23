@@ -4,6 +4,7 @@
     border-bottom: 1px solid #dddddd;
     width:100%;
     padding: 5px;
+
     &--long {
       height: auto;
       .list__additional {
@@ -22,10 +23,10 @@
     &--not-changed {
       background: repeating-linear-gradient(
           135deg,
-          #e4e6e3,
-          #e4e6e3 10px,
-          #c9edbb 10px,
-          #c9edbb 20px
+          #f1f3f0,
+          #f1f3f0 10px,
+          #dfedcf 10px,
+          #dfedcf 20px
       );
     }
     &--delete {
