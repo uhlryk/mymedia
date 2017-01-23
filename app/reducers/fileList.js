@@ -27,7 +27,7 @@ export default function fileList(state = {}, action) {
         } else {
           file.isPresent = true;
           file.isNew = true;
-          file.isNotChanged = true;
+          file.isChanged = false;
           file.hashPath = hashPath;
           newState[hashPath] = Object.assign({}, file, DEFAULT_MEDIA_FILE);
         }
@@ -36,8 +36,8 @@ export default function fileList(state = {}, action) {
     case UPDATE_FILE:
       let newState = _.cloneDeep(state);
       let originalFile = newState[action.hashPath];
-      originalFile.isNotChanged = false;
-      Object.assign(originalFile, action.data);
+      Object.assign(originalFile, action.data, {isChanged: true, isNew: false});
+      console.log(originalFile);
       return newState;
     default:
       return state

@@ -36,7 +36,7 @@ export default Table;
 
 function setComparisonValue(file) {
   if(file.isNew) return 10;
-  if(file.isNotChanged) return 9;
+  if(!file.isChanged && file.isPresent) return 9;
   if(file.isPresent) return 8;
   if(!file.isPresent) return 7;
 }

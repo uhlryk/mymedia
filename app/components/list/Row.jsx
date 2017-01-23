@@ -44,7 +44,7 @@ class CustomRow extends React.Component {
     const className = classNames("list__row", {
       "list__row--long": !this.state.short,
       "list__row--new": this.props.data.isNew,
-      "list__row--not-changed": !this.props.data.isNew && this.props.data.isPresent && this.props.data.isNotChanged,
+      "list__row--not-changed": !this.props.data.isNew && this.props.data.isPresent && !this.props.data.isChanged,
       "list__row--delete": !this.props.data.isPresent
     });
     return (
