@@ -8,6 +8,9 @@ import ProjectMedia from "./project/Media.jsx";
 import ProjectSelect from "./project/SelectProject.jsx";
 import ProjectMediaManage from "./project/media/Manage.jsx";
 
+import ProjectFormElement from "./project/FormElement.jsx";
+import ProjectFormElementManage from "./project/formElement/Manage.jsx";
+
 class AppRouter extends React.Component {
   static propTypes= {
     history: React.PropTypes.object
@@ -18,6 +21,9 @@ class AppRouter extends React.Component {
         <Route component={Content}>
           <Route path="project" component={Project} >
             <Route path="select" component={ProjectSelect} />
+            <Route path="formElement" component={ProjectFormElement}>
+              <Route path="manage" component={ProjectFormElementManage} />
+            </Route>
             <Route path="media" component={ProjectMedia} >
               <Route path="manage/:hashPath" component={ProjectMediaManage} />
             </Route>

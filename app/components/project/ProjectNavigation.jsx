@@ -16,8 +16,13 @@ class ProjectNavigation extends React.Component {
 
     return (
       <div>
-        {this.props.project.name}
-        {this.props.project.path}
+        <div>
+          {this.props.project.name}
+          {this.props.project.path}
+        </div>
+        <div>
+          <button onClick={() => this.props.dispatch(push("project/formElement/manage"))}>form elements</button>
+        </div>
       </div>
     );
   }
