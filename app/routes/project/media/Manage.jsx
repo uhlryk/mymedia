@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import uuid from "uuid-v4";
 import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";

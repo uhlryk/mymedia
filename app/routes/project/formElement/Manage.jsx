@@ -1,10 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import uuid from "uuid-v4";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
+import { addNewElement } from "../../../actions/formElement";
 
 @connect(state => ({
+  formElement: state.formElement
 }))
 class Manage extends React.Component {
 
@@ -44,7 +45,8 @@ class Manage extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(push("project/media"));
+    this.props.dispatch(addNewElement(this.state.details.name, this.state.details.type));
+    //this.props.dispatch(push("project/media"));
   }
 
   validation() {
@@ -67,6 +69,10 @@ class Manage extends React.Component {
   }
 
   render() {
+    const fields = Object.keys(this.props.formElement).map(id => {
+      let element = this.props.formElement[id];
+      return <div key={element.id}>{element.name}</div>
+    });
     return (
       <div className="popup form">
         <form onSubmit={this.handleSubmit}>
@@ -87,6 +93,9 @@ class Manage extends React.Component {
           <button type="submit" className="form__button">Submit</button>
           <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
+        <div>
+          {fields}
+        </div>
       </div>
     );
   }
