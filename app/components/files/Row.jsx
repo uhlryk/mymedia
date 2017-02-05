@@ -41,36 +41,36 @@ class CustomRow extends React.Component {
     let toogleSizeLabel = this.state.short ? moreComponent : lessComponent;
     let descriptionComponent = this.props.data.description || <i>{DEFAULT_DESCRIPTION}</i>;
 
-    const className = classNames("list__row", {
-      "list__row--long": !this.state.short,
-      "list__row--new": this.props.data.isNew,
-      "list__row--not-changed": !this.props.data.isNew && this.props.data.isPresent && !this.props.data.isChanged,
-      "list__row--delete": !this.props.data.isPresent
+    const className = classNames("file-list__row", {
+      "file-list__row--long": !this.state.short,
+      "file-list__row--new": this.props.data.isNew,
+      "file-list__row--not-changed": !this.props.data.isNew && this.props.data.isPresent && !this.props.data.isChanged,
+      "file-list__row--delete": !this.props.data.isPresent
     });
     return (
       <div className={className}>
-        <div onDoubleClick={this.onOpenClick} className="list__name">{this.props.data.name}</div>
-        <div onDoubleClick={this.onOpenClick}  className="list__original-path">{this.props.data.path}</div>
-        <div className="list__additional">
-          <div className="list__meta">
-            <span className="list__meta-title">size: </span>
+        <div onDoubleClick={this.onOpenClick} className="file-list__name">{this.props.data.name}</div>
+        <div onDoubleClick={this.onOpenClick}  className="file-list__original-path">{this.props.data.path}</div>
+        <div className="file-list__additional">
+          <div className="file-list__meta">
+            <span className="file-list__meta-title">size: </span>
             <FileSize data={this.props.data.size} />
-            <span className="list__meta-title"> created: </span>
+            <span className="file-list__meta-title"> created: </span>
             <DateDisplay data={this.props.data.birthtime} />
           </div>
-          <div className="list__description">
+          <div className="file-list__description">
             {descriptionComponent}
           </div>
-          <div className="list__tags">
+          <div className="file-list__tags">
             { this.props.data.tags
               .map(tagName => <Tag tooltip="file-list" key={tagName} className="tag--inline" name={tagName} />)
               }
           </div>
         </div>
-        <div className="list__actions">
-          <div className="list__more" onClick={this.onToggleSize} >{toogleSizeLabel}</div>
-          <div className="list__open" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i> play</div>
-          <div className="list__manage" onClick={this.onManageClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i> manage</div>
+        <div className="file-list__actions">
+          <div className="file-list__more" onClick={this.onToggleSize} >{toogleSizeLabel}</div>
+          <div className="file-list__open" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i> play</div>
+          <div className="file-list__manage" onClick={this.onManageClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i> manage</div>
         </div>
       </div>
     );

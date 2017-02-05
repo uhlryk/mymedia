@@ -24,7 +24,7 @@ class Media extends React.Component {
           <div className="media__tags">
             <TagList />
           </div>
-          <Table className="media__list list" results={list} filters={{ tags: this.props.activeTagList }}/>
+          <Table className="media__file-list file-list" results={list} filters={{ tags: this.props.activeTagList }}/>
           <div className="media__popup">
             {this.props.children}
           </div>

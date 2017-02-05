@@ -1,4 +1,4 @@
-.list {
+.file-list {
   &__row {
     background-color: $near-white;
     border-bottom: 1px solid #dddddd;
@@ -7,7 +7,7 @@
 
     &--long {
       height: auto;
-      .list__additional {
+      .file-list__additional {
         height: auto;
       }
     }
