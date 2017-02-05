@@ -2,12 +2,13 @@ import { save } from "./index";
 export const ADD_NEW_ELEMENT = "form_element.new_add";
 export const LOAD_SAVED_ELEMENTS = "form_element.load_element";
 
-export function addNewElement(name, type, options) {
+export function addNewElement(name, type, settings) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_ELEMENT,
       name,
-      formType: type
+      formType: type,
+      settings
     });
     dispatch(save());
   };

@@ -5,6 +5,14 @@ import ValidationElementError from "../../../components/ValidationElementError.j
 import {Settings} from "../../../components/FormElement.jsx";
 import { addNewElement } from "../../../actions/formElement";
 
+const defaultState = {
+  details: {
+    name: "",
+    type: "",
+    settings: {}
+  },
+  validation: {}
+};
 
 @connect(state => ({
   formElement: state.formElement
@@ -13,15 +21,10 @@ class Manage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      details: {
-        name: "",
-        type: ""
-      },
-      validation: {}
-    };
+    this.state = defaultState;
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleSettingsChange = this.handleSettingsChange.bind(this);
     this.handleTypeChange = this.handleTypeChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -36,9 +39,15 @@ class Manage extends React.Component {
     });
   }
 
+  handleSettingsChange(settings) {
+    this.setState({
+      details: Object.assign({}, this.state.details, { settings: Object.assign({}, settings)})
+    });
+  }
+
   handleTypeChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { type: evt.target.value})
+      details: Object.assign({}, this.state.details, defaultState.details,{type: evt.target.value})
     });
   }
 
@@ -47,7 +56,8 @@ class Manage extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(addNewElement(this.state.details.name, this.state.details.type));
+    this.props.dispatch(addNewElement(this.state.details.name, this.state.details.type, this.state.details.settings));
+    this.setState(defaultState);
   }
 
   validation() {
@@ -74,6 +84,14 @@ class Manage extends React.Component {
       let element = this.props.formElement[id];
       return <div key={element.id}>{element.name}</div>
     });
+
+    let nameElement = (
+      <div className="form__group">
+        <label>Element name</label>
+        <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+        <ValidationElementError error={this.state.validation.name} />
+      </div>
+    );
     return (
       <div className="popup form">
         <div className="popup__header">
@@ -84,23 +102,19 @@ class Manage extends React.Component {
         </div>
         <form onSubmit={this.handleSubmit}>
           <div className="form__group">
-            <label>Element name</label>
-            <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
-            <ValidationElementError error={this.state.validation.name} />
-          </div>
-          <div className="form__group">
             <label>Element type</label>
-            <select value={this.state.details.type} onChange={this.handleTypeChange}>
+            <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
               <option value="">select type</option>
               <option value="input">input</option>
               <option value="rating">rating</option>
             </select>
             <ValidationElementError error={this.state.validation.type} />
           </div>
+          {this.state.details.type ? nameElement : null}
           <div className="form__group">
-            <Settings type={this.state.details.type} />
+            <Settings type={this.state.details.type} onChange={this.handleSettingsChange} />
           </div>
-          <button type="submit" className="form__button">Submit</button>
+          <button type="submit" className="form__button">Create</button>
         </form>
         <div>
           {fields}

@@ -8,8 +8,7 @@ export default function formElement(state = {}, action) {
     case LOAD_SAVED_ELEMENTS:
       newState = {};
       Object.keys(action.list).forEach(id => {
-        let formElement = _.cloneDeep(action.list[id]);
-        newState[id] = formElement;
+        newState[id] = _.cloneDeep(action.list[id]);
       });
       return newState;
     case ADD_NEW_ELEMENT:
@@ -18,7 +17,8 @@ export default function formElement(state = {}, action) {
       newState[id] = {
         id,
         name: action.name,
-        type: action.formType
+        type: action.formType,
+        settings: action.settings
       };
       return newState;
     default:
