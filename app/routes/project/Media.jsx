@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
-import Table from "../../components/list/Table.jsx";
+import Table from "../../components/files/Table.jsx";
 import TagList from "../../components/tags/TagList.jsx";
 
 @connect(state => ({
