@@ -104,6 +104,12 @@ class Manage extends React.Component {
     const suggestedTags = this.props.tagList.filter(tagName => this.state.details.tags.indexOf(tagName) === -1);
     return (
       <div className="popup form">
+        <div className="popup__header">
+          <div className="popup__title">Manage file</div>
+          <div className="popup__back-button-wrapper">
+            <button type="button" className="form__button" onClick={this.onCloseClick}>Back</button>
+          </div>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <div className="form__group">
             <label>Name</label>
@@ -122,7 +128,6 @@ class Manage extends React.Component {
             <TagInput onAddTag={this.handleAddTag} tagList={suggestedTags} />
           </div>
           <button type="submit" className="form__button">Submit</button>
-          <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
         <ReactTooltip place="top" type="info" effect="float" id="manage-component" class="tooltip"/>
       </div>

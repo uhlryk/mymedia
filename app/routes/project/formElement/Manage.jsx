@@ -75,6 +75,12 @@ class Manage extends React.Component {
     });
     return (
       <div className="popup form">
+        <div className="popup__header">
+          <div className="popup__title">Manage form elements</div>
+          <div className="popup__back-button-wrapper">
+            <button type="button" className="form__button" onClick={this.onCloseClick}>Back</button>
+          </div>
+        </div>
         <form onSubmit={this.handleSubmit}>
           <div className="form__group">
             <label>Element name</label>
@@ -91,7 +97,6 @@ class Manage extends React.Component {
             <ValidationElementError error={this.state.validation.type} />
           </div>
           <button type="submit" className="form__button">Submit</button>
-          <button type="button" className="form__button" onClick={this.onCloseClick}>Cancel</button>
         </form>
         <div>
           {fields}
