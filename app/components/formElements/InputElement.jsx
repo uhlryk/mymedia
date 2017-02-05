@@ -1,10 +1,12 @@
 import React from "react";
 
-export class Options extends React.Component {
+export class Settings extends React.Component {
 
-
+  render() {
+    return <div></div>
+  }
 }
 
 export class Element extends React.Component {
-  
+
 }

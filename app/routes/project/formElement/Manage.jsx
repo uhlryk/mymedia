@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
+import {Settings} from "../../../components/FormElement.jsx";
 import { addNewElement } from "../../../actions/formElement";
+
 
 @connect(state => ({
   formElement: state.formElement
@@ -46,7 +48,6 @@ class Manage extends React.Component {
       return;
     }
     this.props.dispatch(addNewElement(this.state.details.name, this.state.details.type));
-    //this.props.dispatch(push("project/media"));
   }
 
   validation() {
@@ -95,6 +96,9 @@ class Manage extends React.Component {
               <option value="rating">rating</option>
             </select>
             <ValidationElementError error={this.state.validation.type} />
+          </div>
+          <div className="form__group">
+            <Settings type={this.state.details.type} />
           </div>
           <button type="submit" className="form__button">Submit</button>
         </form>
