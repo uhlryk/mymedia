@@ -4,7 +4,7 @@ import { push } from "react-router-redux";
 import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
-import { saveMedia } from "../../../actions/index";
+import { updateFile } from "../../../actions/fileList";
 import ReactTooltip from "react-tooltip";
 
 @connect(state => ({
@@ -72,7 +72,7 @@ class Manage extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(saveMedia(this.state.hashPath, this.state.details));
+    this.props.dispatch(updateFile(this.state.hashPath, this.state.details));
     this.props.dispatch(push("project/media"));
   }
 
