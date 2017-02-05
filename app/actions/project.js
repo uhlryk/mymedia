@@ -9,7 +9,8 @@ import fileLoad from "../helpers/fileLoad";
 import { showLoader, hideLoader } from "./loader";
 import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
-import { addFiles, setProjectFiles } from "./fileList";
+import { addFiles, loadFiles } from "./fileList";
+import { loadElements } from "./formElement";
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
@@ -68,7 +69,8 @@ export function findProjectFile(path) {
               dispatch(hideLoader());
             }
             dispatch(initProject(path));
-            dispatch(setProjectFiles(projectData.media));
+            dispatch(loadElements(projectData.formElement));
+            dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
               dispatch(addFiles(files, true));
               dispatch(hideLoader());

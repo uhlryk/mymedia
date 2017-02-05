@@ -1,6 +1,6 @@
 import _ from "lodash";
 import md5 from "md5";
-import { ADD_NEW_BULK_FILES, SET_PROJECT_BULK_FILES, UPDATE_FILE } from "../actions/fileList";
+import { ADD_NEW_BULK_FILES, LOAD_SAVED_FILES, UPDATE_FILE } from "../actions/fileList";
 
 const DEFAULT_MEDIA_FILE = {
   tags: []
@@ -8,7 +8,7 @@ const DEFAULT_MEDIA_FILE = {
 export default function fileList(state = {}, action) {
   let newState;
   switch(action.type) {
-    case SET_PROJECT_BULK_FILES:
+    case LOAD_SAVED_FILES:
       newState = {};
       Object.keys(action.list).forEach(hashPath => {
         let file = _.cloneDeep(action.list[hashPath]);
