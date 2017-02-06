@@ -55,6 +55,14 @@ export class Settings extends React.Component {
   }
 }
 
-export class Element extends React.Component {
-
+export class FormElement extends React.Component {
+  static propsTypes = {
+    placeholder: React.PropTypes.string,
+    defaultValue: React.PropTypes.defaultValue
+  };
+  render() {
+    return (
+      <input type="text" className="form__element"  placeholder={this.props.placeholder} defaultValue={this.props.defaultValue} />
+    );
+  }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import { FormElement } from "../../../components/FormElement.jsx";
 import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
@@ -9,7 +10,8 @@ import ReactTooltip from "react-tooltip";
 
 @connect(state => ({
   fileList: state.fileList,
-  tagList: state.tagList
+  tagList: state.tagList,
+  formElement: state.formElement
 }))
 class Manage extends React.Component {
 
@@ -120,6 +122,13 @@ class Manage extends React.Component {
             <label>Description</label>
             <textarea className="form__element" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
           </div>
+          {Object.keys(this.props.formElement).map(elementId => {
+            let element = this.props.formElement[elementId];
+            console.log(element);
+            return (
+              <FormElement key={elementId} name={element.name} type={element.type} settings={element.settings} />
+            )
+          })}
           <div className="form__group">
             {tags}
           </div>
