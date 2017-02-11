@@ -1,9 +1,11 @@
 import React from "react";
 
-import * as InputElement from "./formElements/InputElement.jsx";
+import * as InputElement from "./formElements/Input.jsx";
+import * as TextAreaElement from "./formElements/TextArea.jsx";
 
 const components = {
-  "input": InputElement
+  "input": InputElement,
+  "textArea": TextAreaElement
 };
 function getComponent(mode, componentName, props = {}) {
   let componentClass = components[componentName];

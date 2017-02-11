@@ -17,11 +17,6 @@ class Manage extends React.Component {
 
   constructor(props) {
     super(props);
-    // let detailsFormElements = {};
-    // Object.keys(props.formElement).forEach(elementId => {
-    //   let element = props.formElement[elementId];
-    //   detailsFormElements[elementId] = element.defaultValue || "";
-    // });
     this.state = {
       details: Object.assign({}, props.fileList[props.params.hashPath]),
       hashPath: props.params.hashPath,

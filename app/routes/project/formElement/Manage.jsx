@@ -106,6 +106,7 @@ class Manage extends React.Component {
             <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
               <option value="">select type</option>
               <option value="input">input</option>
+              <option value="textArea">text area</option>
               <option value="rating">rating</option>
             </select>
             <ValidationElementError error={this.state.validation.type} />
