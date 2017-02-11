@@ -58,19 +58,31 @@ export class Settings extends React.Component {
 export class FormElement extends React.Component {
   static propsTypes = {
     placeholder: React.PropTypes.string,
-    defaultValue: React.PropTypes.defaultValue,
     onChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string.isRequired
+    value: React.PropTypes.string.isRequired,
+    defaultValue: React.PropTypes.string
   };
   render() {
+    let value = this.props.value || this.props.defaultValue || "";
     return (
       <input
         type="text"
         className="form__element"
         placeholder={this.props.placeholder}
-        value={this.props.value}
+        value={value}
         onChange={this.props.onChange}
       />
+    );
+  }
+}
+
+export class View extends React.Component {
+  static propsTypes = {
+    value: React.PropTypes.string.isRequired
+  };
+  render() {
+    return (
+      <div>{this.props.value}</div>
     );
   }
 }

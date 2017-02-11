@@ -2,12 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import classNames from "classnames";
+import { View } from "../FormElement.jsx";
 import { openFile } from "./../../actions/openFile";
 import FileSize from "./FileSize.jsx";
 import Tag from "../tags/Tag.jsx";
 import DateDisplay from "./DateDisplay.jsx";
 const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
-@connect(state => ({ }))
+@connect(state => ({
+  formElement: state.formElement
+}))
 class CustomRow extends React.Component {
 
   static propsTypes = {
@@ -61,6 +64,17 @@ class CustomRow extends React.Component {
           <div className="file-list__description">
             {descriptionComponent}
           </div>
+          {Object.keys(this.props.formElement).map(elementId => {
+            let element = this.props.formElement[elementId];
+            return (
+              <View
+                key={elementId}
+                value={this.props.data[elementId]}
+                name={element.name} type={element.type}
+                settings={element.settings}
+              />
+            )
+          })}
           <div className="file-list__tags">
             { this.props.data.tags
               .map(tagName => <Tag tooltip="file-list" key={tagName} className="tag--inline" name={tagName} />)

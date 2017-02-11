@@ -17,16 +17,16 @@ class Manage extends React.Component {
 
   constructor(props) {
     super(props);
-    let detailsFormElements = {};
-    Object.keys(props.formElement).forEach(elementId => {
-      detailsFormElements[elementId] = "";
-    });
+    // let detailsFormElements = {};
+    // Object.keys(props.formElement).forEach(elementId => {
+    //   let element = props.formElement[elementId];
+    //   detailsFormElements[elementId] = element.defaultValue || "";
+    // });
     this.state = {
-      details: Object.assign({}, detailsFormElements, props.fileList[props.params.hashPath]),
+      details: Object.assign({}, props.fileList[props.params.hashPath]),
       hashPath: props.params.hashPath,
       validation: {}
     };
-    console.log(this.state);
 
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
