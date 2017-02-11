@@ -37,7 +37,6 @@ export default function fileList(state = {}, action) {
       let newState = _.cloneDeep(state);
       let originalFile = newState[action.hashPath];
       Object.assign(originalFile, action.data, {isChanged: true, isNew: false});
-      console.log(originalFile);
       return newState;
     default:
       return state

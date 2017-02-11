@@ -33,14 +33,17 @@ export class Settings extends React.Component {
 export class FormElement extends React.Component {
   static propsTypes = {
     name: React.PropTypes.string.isRequired,
+    value: React.PropTypes.any.isRequired,
     type: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func.isRequired,
     settings: React.PropTypes.object
   };
   render() {
+    var props = Object.assign({}, this.props.settings, { onChange: this.props.onChange, value: this.props.value });
     return (
       <div className="form__group">
         <label>{this.props.name}</label>
-        {getComponent("FormElement", this.props.type, this.props.settings)}
+        {getComponent("FormElement", this.props.type, props)}
       </div>
     );
   }

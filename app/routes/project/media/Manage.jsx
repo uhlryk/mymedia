@@ -17,13 +17,20 @@ class Manage extends React.Component {
 
   constructor(props) {
     super(props);
+    let detailsFormElements = {};
+    Object.keys(props.formElement).forEach(elementId => {
+      detailsFormElements[elementId] = "";
+    });
     this.state = {
-      details: Object.assign({}, this.props.fileList[this.props.params.hashPath]),
-      hashPath: this.props.params.hashPath,
+      details: Object.assign({}, detailsFormElements, props.fileList[props.params.hashPath]),
+      hashPath: props.params.hashPath,
       validation: {}
     };
+    console.log(this.state);
+
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleAdditionalChange = this.handleAdditionalChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,6 +44,12 @@ class Manage extends React.Component {
   handleNameChange(evt) {
     this.setState({
       details: Object.assign({}, this.state.details, { name: evt.target.value})
+    });
+  }
+
+  handleAdditionalChange(elementId, value) {
+    this.setState({
+      details: Object.assign({}, this.state.details, { [elementId]: value})
     });
   }
 
@@ -115,7 +128,13 @@ class Manage extends React.Component {
         <form onSubmit={this.handleSubmit}>
           <div className="form__group">
             <label>Name</label>
-            <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
+            <input
+              type="text"
+              className="form__element"
+              value={this.state.details.name}
+              onChange={this.handleNameChange}
+              placeholder="Enter name"
+            />
             <ValidationElementError error={this.state.validation.name} />
           </div>
           <div className="form__group">
@@ -124,9 +143,14 @@ class Manage extends React.Component {
           </div>
           {Object.keys(this.props.formElement).map(elementId => {
             let element = this.props.formElement[elementId];
-            console.log(element);
             return (
-              <FormElement key={elementId} name={element.name} type={element.type} settings={element.settings} />
+              <FormElement
+                key={elementId}
+                onChange={evt => this.handleAdditionalChange(elementId, evt.target.value)}
+                value={this.state.details[elementId]}
+                name={element.name} type={element.type}
+                settings={element.settings}
+              />
             )
           })}
           <div className="form__group">
