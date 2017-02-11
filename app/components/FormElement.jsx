@@ -16,7 +16,7 @@ function getComponent(mode, componentName, props = {}) {
 }
 
 function getSettingsComponent(componentName, props = {}) {
-  return getComponent("Setting", componentName, props);
+  return getComponent("Settings", componentName, props);
 }
 function getFormElementComponent(componentName, props = {}) {
   return getComponent("FormElement", componentName, props);
