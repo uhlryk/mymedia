@@ -1,0 +1,12 @@
+.star-rating {
+  &__star {
+    @extend .fa;
+    @extend .fa-3x;
+    &--full {
+      @extend .fa-star;
+    }
+    &--empty {
+      @extend .fa-star-o;
+    }
+  }
+}
