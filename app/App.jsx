@@ -1,10 +1,11 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { syncHistoryWithStore, routerMiddleware, push } from "react-router-redux";
-import createStore from "./stores/index.js";
 import reducer from "./reducers/index.js";
-import { Router, Route, createMemoryHistory } from "react-router";
+import { createStore, applyMiddleware, compose } from "redux";
 import AppRouter from "./routes/AppRouter.jsx";
+import thunk from "redux-thunk";
+import { devToolsEnhancer } from "redux-devtools-extension";
 
 class App extends React.Component {
   static propsTypes = {
@@ -12,18 +13,17 @@ class App extends React.Component {
     config: React.PropTypes.object,
     initialState: React.PropTypes.object
   };
-  static childContextTypes = {
-    config: React.PropTypes.object
-  };
   constructor(props) {
     super(props);
-    this.store = createStore(reducer, this.props.initialState, [routerMiddleware(this.props.history)]);
+    this.store = createStore(
+      reducer,
+      this.props.initialState,
+      compose(
+        applyMiddleware(thunk, routerMiddleware(this.props.history)),
+        devToolsEnhancer()
+      )
+    );
     this.syncHistory= syncHistoryWithStore(this.props.history, this.store);
-  }
-  getChildContext() {
-    return {
-      config: this.props.config
-    }
   }
   render() {
     return (

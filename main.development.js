@@ -1,5 +1,11 @@
 import { app, BrowserWindow, Menu, shell, ipcMain } from "electron";
 import open from "open";
+import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
+
+installExtension(REDUX_DEVTOOLS)
+  .then((name) => console.log(`Added Extension:  ${name}`))
+  .catch((err) => console.log('An error occurred: ', err));
+
 let menu;
 let template;
 let mainWindow = null;
