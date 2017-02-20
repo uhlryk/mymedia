@@ -1,16 +1,12 @@
 import React from "react";
 
-import * as InputElement from "./formElements/Input.jsx";
-import * as TextAreaElement from "./formElements/TextArea.jsx";
-import * as RatingElement from "./formElements/Rating.jsx";
-
-const components = {
-  "input": InputElement,
-  "textArea": TextAreaElement,
-  "rating": RatingElement
-};
-function getComponent(mode, componentName, props = {}) {
-  let componentClass = components[componentName];
+function getComponent(extensions, mode, componentName, props = {}) {
+  let componentClass = extensions.getFormElementExtensions().find(extension => {
+    console.log("B1");
+    console.log(extension.getConfig());
+    console.log(componentName);
+    return extension.getConfig().key === componentName
+  });
   if(componentClass) {
     let component = React.createFactory(componentClass[mode]);
     return component(props);
@@ -19,16 +15,21 @@ function getComponent(mode, componentName, props = {}) {
   }
 }
 
-function getSettingsComponent(componentName, props = {}) {
-  return getComponent("Settings", componentName, props);
+function getSettingsComponent(extensions, componentName, props = {}) {
+  return getComponent(extensions, "Settings", componentName, props);
 }
-function getFormElementComponent(componentName, props = {}) {
-  return getComponent("FormElement", componentName, props);
+function getFormElementComponent(extensions, componentName, props = {}) {
+  return getComponent(extensions, "FormElement", componentName, props);
 }
-function getViewComponent(componentName, props = {}) {
-  return getComponent("View", componentName, props);
+function getViewComponent(extensions, componentName, props = {}) {
+  return getComponent(extensions, "View", componentName, props);
 }
+
 export class Settings extends React.Component {
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
+
   static propsTypes = {
     type: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func
@@ -37,13 +38,17 @@ export class Settings extends React.Component {
   render() {
     return (
       <div>
-        {getSettingsComponent(this.props.type, {onChange: this.props.onChange})}
+        {getSettingsComponent(this.context.extensions, this.props.type, {onChange: this.props.onChange})}
       </div>
     );
   }
 }
 
 export class FormElement extends React.Component {
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
+
   static propsTypes = {
     name: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
@@ -56,13 +61,17 @@ export class FormElement extends React.Component {
     return (
       <div className="form__group">
         <label>{this.props.name}</label>
-        {getFormElementComponent(this.props.type, props)}
+        {getFormElementComponent(this.context.extensions, this.props.type, props)}
       </div>
     );
   }
 }
 
 export class View extends React.Component {
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
+
   static propsTypes = {
     name: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
@@ -76,7 +85,7 @@ export class View extends React.Component {
     return (
       <div className="file-list__element">
         <small>{this.props.name}</small>
-        {getViewComponent(this.props.type, props)}
+        {getViewComponent(this.context.extensions, this.props.type, props)}
       </div>
     );
   }

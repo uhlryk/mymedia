@@ -1,5 +1,4 @@
 import React from "react";
-import StarRating from "../StarRating.jsx";
 
 const defaultState = {
   details: {
@@ -8,7 +7,7 @@ const defaultState = {
   }
 };
 
-export class Settings extends React.Component {
+export default class Settings extends React.Component {
   static propsTypes = {
     onChange: React.PropTypes.func
   };
@@ -52,43 +51,6 @@ export class Settings extends React.Component {
           <input type="number" className="form__element" placeholder="Enter default value" value={this.state.details.defaultValue} onChange={this.handleDefaultValueChange} />
         </div>
       </fieldset>
-    );
-  }
-}
-
-export class FormElement extends React.Component {
-  static propsTypes = {
-    starNumber: React.PropTypes.number,
-    onChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string.isRequired,
-    defaultValue: React.PropTypes.string
-  };
-
-  render() {
-    let value = this.props.value || this.props.defaultValue || 0;
-    return (
-      <StarRating
-        totalStars={this.props.starNumber}
-        editing={true}
-        value={value}
-        onChange={this.props.onChange}
-      />
-    );
-  }
-}
-
-export class View extends React.Component {
-  static propsTypes = {
-    value: React.PropTypes.string.isRequired,
-    starNumber: React.PropTypes.number
-  };
-  render() {
-    return (
-      <StarRating
-        totalStars={this.props.starNumber}
-        editing={false}
-        value={this.props.value}
-      />
     );
   }
 }
