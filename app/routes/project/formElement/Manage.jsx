@@ -19,6 +19,10 @@ const defaultState = {
 }))
 class Manage extends React.Component {
 
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
+
   constructor(props) {
     super(props);
     this.state = defaultState;
@@ -105,9 +109,12 @@ class Manage extends React.Component {
             <label>Element type</label>
             <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
               <option value="">select type</option>
-              <option value="input">input</option>
-              <option value="text-area">text area</option>
-              <option value="rating">rating</option>
+              {
+                this.context.extensions.getFormElementExtensions()
+                .map(extension => (
+                  <option key={extension.getConfig().key} value={extension.getConfig().key}>{extension.getConfig().name}</option>
+                ))
+              }
             </select>
             <ValidationElementError error={this.state.validation.type} />
           </div>

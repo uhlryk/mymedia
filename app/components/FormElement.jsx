@@ -2,9 +2,6 @@ import React from "react";
 
 function getComponent(extensions, mode, componentName, props = {}) {
   let componentClass = extensions.getFormElementExtensions().find(extension => {
-    console.log("B1");
-    console.log(extension.getConfig());
-    console.log(componentName);
     return extension.getConfig().key === componentName
   });
   if(componentClass) {
