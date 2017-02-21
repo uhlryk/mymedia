@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import classNames from "classnames";
-import { View } from "../FormElement.jsx";
+import View from "../formElements/View.jsx";
 import { openFile } from "./../../actions/openFile";
 import FileSize from "./FileSize.jsx";
 import Tag from "../tags/Tag.jsx";

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
-import {Settings} from "../../../components/FormElement.jsx";
+import Settings from "../../../components/formElements/Settings.jsx";
 import { addNewElement } from "../../../actions/formElement";
 
 const defaultState = {
