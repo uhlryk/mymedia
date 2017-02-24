@@ -5,7 +5,7 @@ function getComponent(extensions, componentName, props = {}) {
     return extension.getConfig().key === componentName
   });
   if(componentClass) {
-    let component = React.createFactory(componentClass.FormElement);
+    let component = React.createFactory(componentClass.getFormElement());
     return component(props);
   } else {
     return <div></div>;

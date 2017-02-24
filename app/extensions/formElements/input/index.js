@@ -17,7 +17,7 @@ function onRegister(extensionManager) {
 export default {
   getConfig,
   onRegister,
-  Settings,
-  FormElement,
-  View
+  getSettings: () => Settings,
+  getFormElement: () => FormElement,
+  getView: () => View
 }
