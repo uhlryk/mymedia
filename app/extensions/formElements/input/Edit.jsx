@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class FormElement extends React.Component {
+export default class Edit extends React.Component {
   static propsTypes = {
     placeholder: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,

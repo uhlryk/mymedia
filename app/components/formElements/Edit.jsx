@@ -1,18 +1,6 @@
 import React from "react";
 
-function getComponent(extensions, componentName, props = {}) {
-  let componentClass = extensions.getFormElementExtensions().find(extension => {
-    return extension.getConfig().key === componentName
-  });
-  if(componentClass) {
-    let component = React.createFactory(componentClass.getFormElement());
-    return component(props);
-  } else {
-    return <div></div>;
-  }
-}
-
-export default class FormElement extends React.Component {
+export default class Edit extends React.Component {
   static contextTypes = {
     extensions: React.PropTypes.object
   };
@@ -29,7 +17,7 @@ export default class FormElement extends React.Component {
     return (
       <div className="form__group">
         <label>{this.props.name}</label>
-        {getComponent(this.context.extensions, this.props.type, props)}
+        {this.context.extensions.getFormElements().getExtension(this.props.type).getEdit(props)}
       </div>
     );
   }

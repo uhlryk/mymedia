@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import FormElement from "../../../components/formElements/FormElement.jsx";
+import Edit from "../../../components/formElements/Edit.jsx";
 import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
@@ -139,7 +139,7 @@ class Manage extends React.Component {
           {Object.keys(this.props.formElement).map(elementId => {
             let element = this.props.formElement[elementId];
             return (
-              <FormElement
+              <Edit
                 key={elementId}
                 onChange={evt => this.handleAdditionalChange(elementId, evt.target.value)}
                 value={this.state.details[elementId]}

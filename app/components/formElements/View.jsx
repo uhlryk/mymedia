@@ -1,17 +1,5 @@
 import React from "react";
 
-function getComponent(extensions, componentName, props = {}) {
-  let componentClass = extensions.getFormElementExtensions().find(extension => {
-    return extension.getConfig().key === componentName
-  });
-  if(componentClass) {
-    let component = React.createFactory(componentClass.getView());
-    return component(props);
-  } else {
-    return <div></div>;
-  }
-}
-
 export default class View extends React.Component {
   static contextTypes = {
     extensions: React.PropTypes.object
@@ -30,7 +18,7 @@ export default class View extends React.Component {
     return (
       <div className="file-list__element">
         <small>{this.props.name}</small>
-        {getComponent(this.context.extensions, this.props.type, props)}
+        {this.context.extensions.getFormElements().getExtension(this.props.type).getView(props)}
       </div>
     );
   }

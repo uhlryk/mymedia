@@ -1,23 +1,20 @@
-export default class ExtensionManager {
-
-  constructor() {
-    this.extensions = [];
+import BaseExtensionManager from "./BaseExtensionManager";
+import FormElementsExtensionManager from "./formElements/FormElementsExtensionManager";
+export default class ExtensionManager extends BaseExtensionManager {
+  constructor () {
+    super();
+    this.formElementsExtensionManager = new FormElementsExtensionManager();
   }
-
   register(extension) {
-    this.extensions.push(extension);
-    extension.onRegister(this);
+    switch (extension.getType()) {
+      case FormElementsExtensionManager.TYPE:
+        this.formElementsExtensionManager.register(extension);
+        break;
+      default:
+        super.register(extension)
+    }
   }
-
-  getExtensions(type) {
-    return this.extensions.filter(extension => extension.getConfig().type === type);
-  }
-
-  getFormElementExtensions() {
-    return this.getExtensions("form-element");
-  }
-
-  getExtension(key) {
-    return this.extensions.find(extension => extension.getConfig().key === key);
+  getFormElements() {
+    return this.formElementsExtensionManager;
   }
 }

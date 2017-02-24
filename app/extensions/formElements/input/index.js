@@ -1,23 +1,15 @@
 import Settings from "./Settings.jsx";
-import FormElement from "./FormElement.jsx";
+import Edit from "./Edit.jsx";
 import View from "./View.jsx";
+import FormElementsExtension from "../FormElementsExtension";
 
-function getConfig() {
-  return {
-    name: "input",
-    key: "input",
-    type: "form-element"
-  };
-}
-
-function onRegister(extensionManager) {
-
-}
-
-export default {
-  getConfig,
-  onRegister,
-  getSettings: () => Settings,
-  getFormElement: () => FormElement,
-  getView: () => View
+export default class extends FormElementsExtension {
+  constructor () {
+    super();
+    this.setDisplayName("input");
+    this.setName("input");
+    this.setSettings(Settings);
+    this.setEdit(Edit);
+    this.setView(View);
+  }
 }
