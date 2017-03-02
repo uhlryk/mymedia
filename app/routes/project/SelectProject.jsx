@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as RB from "react-bootstrap";
 import { selectProjectPath } from "./../../actions/project";
 
 /**
@@ -25,7 +24,7 @@ class SelectProject extends React.Component {
         <div className="jumbotron">
           <p>Please Select Media directory <small>select directory where are your media files</small></p>
           <p>
-            <RB.Button bsStyle="primary" onClick={this.onProjectPath} >Select</RB.Button>
+            <button onClick={this.onProjectPath} className="form__button">Select</button>
           </p>
         </div>
       </div>

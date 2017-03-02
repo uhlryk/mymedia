@@ -6,7 +6,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import AppRouter from "./routes/AppRouter.jsx";
 import thunk from "redux-thunk";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import RegisterExtensions from "./extensions/RegisterExtensions.jsx"
+import RegisterExtensions from "./features/extensions/RegisterExtensions.jsx"
 import * as extensions from "./extensions";
 
 class App extends React.Component {

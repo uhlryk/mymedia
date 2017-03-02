@@ -104,7 +104,6 @@
     "postcss": "^5.0.21",
     "react": "^15.1.0",
     "react-autosuggest": "^8.0.0",
-    "react-bootstrap": "^0.30.5",
     "react-dom": "^15.1.0",
     "react-notification-system": "^0.2.7",
     "react-redux": "^4.4.5",

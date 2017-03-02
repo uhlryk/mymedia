@@ -1,5 +1,4 @@
 import React from "react";
-import * as RB from "react-bootstrap";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 

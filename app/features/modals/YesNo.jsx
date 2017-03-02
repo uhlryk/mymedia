@@ -1,5 +1,5 @@
 import React from "react";
-import * as RB from "react-bootstrap";
+import Modal from "./Modal.jsx";
 
 class YesNo extends React.Component {
 
@@ -14,6 +14,10 @@ class YesNo extends React.Component {
   };
 
   render() {
+    const buttons = [
+
+    ];
+
     return (
       <RB.Modal show={this.props.showModal} onHide={this.close}>
         <RB.Modal.Header>

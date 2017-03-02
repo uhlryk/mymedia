@@ -7,7 +7,7 @@ import fileList from "../helpers/fileList";
 import fileLoad from "../helpers/fileLoad";
 
 import { showLoader, hideLoader } from "./loader";
-import { showErrorModal, showYesNoModal } from "./modal";
+// import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
 import { addFiles, loadFiles } from "./fileList";
 import { loadElements } from "./formElement";
@@ -24,12 +24,12 @@ export function initProject(path) {
 
 export function askIfCreateNewProjectFile(path) {
   return (dispatch, getState) => {
-    dispatch(showYesNoModal(
-      "New  project",
-      "Do you want to create new project? There is no project file",
-      "create",
-      "cancel",
-      () => {
+    // dispatch(showYesNoModal(
+    //   "New  project",
+    //   "Do you want to create new project? There is no project file",
+    //   "create",
+    //   "cancel",
+    //   () => {
         dispatch(showLoader("finding files"));
         dispatch(initProject(path));
         fileList(path, (err, files) => {
@@ -38,11 +38,11 @@ export function askIfCreateNewProjectFile(path) {
           dispatch(save());
           dispatch(push("project/media"));
         });
-      },
-      () => {
-        //do nothing
-      }
-    ));
+    //   },
+    //   () => {
+    //     //do nothing
+    //   }
+    // ));
 
   };
 }
@@ -53,19 +53,19 @@ export function findProjectFile(path) {
     fileFind(path, PROJECT_FILE, (err, result) => {
       dispatch(hideLoader());
       if(err) {
-        dispatch(showErrorModal(err));
+        // dispatch(showErrorModal(err));
       } else if(result){
         dispatch(showLoader("load project"));
         fileLoad(path, PROJECT_FILE, (err, result) => {
           if(err) {
-            dispatch(showErrorModal(err));
+            //dispatch(showErrorModal(err));
             dispatch(hideLoader());
           } else if(result){
             let projectData = {};
             try {
               projectData = JSON.parse(result);
             } catch(err) {
-              dispatch(showErrorModal(err));
+         //     dispatch(showErrorModal(err));
               dispatch(hideLoader());
             }
             dispatch(initProject(path));

@@ -1,7 +1,6 @@
 import path from "path";
 import { PROJECT_FILE } from "../constants/general";
 import fileSave from "../helpers/fileSave";
-import { showErrorModal } from "./modal";
 import { showLoader, hideLoader } from "./loader";
 import { showNotification } from "./notification";
 
@@ -14,7 +13,6 @@ export function save() {
       formElement: getState().formElement
     }), (err) => {
       if(err) {
-        dispatch(showErrorModal(err));
       } else {
         showNotification("success", "save project");
       }

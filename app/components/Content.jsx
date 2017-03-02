@@ -1,20 +1,19 @@
 import React from "react";
 import Notification from "./Notification.jsx";
 import Loader from "./Loader.jsx";
-import Modal from "./modals/Modal.jsx";
+import RegisterModals from "../features/modals/RegisterModals.jsx"
 
 class Content extends React.Component {
 
   render() {
     return (
-      <div>
+      <RegisterModals>
         <div className="container">
           {this.props.children}
         </div>
         <Loader />
-        <Modal />
         <Notification />
-      </div>
+      </RegisterModals>
     );
   }
 }
