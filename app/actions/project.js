@@ -22,7 +22,7 @@ export function initProject(path) {
   }
 }
 
-export function askIfCreateNewProjectFile(path) {
+function askIfCreateNewProjectFile(path) {
   return (dispatch, getState) => {
     // dispatch(showYesNoModal(
     //   "New  project",
@@ -47,7 +47,7 @@ export function askIfCreateNewProjectFile(path) {
   };
 }
 
-export function findProjectFile(path) {
+function findProjectFile(path) {
   return (dispatch, getState) => {
     dispatch(showLoader("checking media directory"));
     fileFind(path, PROJECT_FILE, (err, result) => {
@@ -86,7 +86,7 @@ export function findProjectFile(path) {
   };
 }
 
-export function selectProjectPath() {
+export function openProject() {
   return (dispatch, getState) => {
     dispatch(showLoader("selecting media directory"));
     dialog.showOpenDialog({

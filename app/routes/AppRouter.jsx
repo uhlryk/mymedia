@@ -5,7 +5,8 @@ import Content from "./../components/Content.jsx";
 import Project from "./Project.jsx";
 import ProjectMedia from "./project/Media.jsx";
 
-import ProjectSelect from "./project/SelectProject.jsx";
+import ProjectMenu from "./project/ProjectMenu.jsx";
+import ProjectCreate from "./project/ProjectCreate.jsx";
 import ProjectMediaManage from "./project/media/Manage.jsx";
 
 import ProjectFormElement from "./project/FormElement.jsx";
@@ -20,7 +21,8 @@ class AppRouter extends React.Component {
       <Router history={this.props.history}>
         <Route component={Content}>
           <Route path="project" component={Project} >
-            <Route path="select" component={ProjectSelect} />
+            <Route path="menu" component={ProjectMenu} />
+            <Route path="create" component={ProjectCreate} />
             <Route path="formElement" component={ProjectFormElement}>
               <Route path="manage" component={ProjectFormElementManage} />
             </Route>
