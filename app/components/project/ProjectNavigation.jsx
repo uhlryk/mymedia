@@ -16,7 +16,7 @@ class ProjectNavigation extends React.Component {
     return (
       <div>
         <div>
-          {this.props.project.name}
+          <strong>{this.props.project.name}</strong>
           {this.props.project.path}
         </div>
         <div>
