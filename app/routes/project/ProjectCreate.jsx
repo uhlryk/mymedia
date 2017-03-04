@@ -85,6 +85,10 @@ class ProjectCreate extends React.Component {
                 Project is private</label>
             </div>
           </div>
+          <div className="form__group">
+            <div><small>Project location</small></div>
+            <div><strong>{decodeURIComponent(this.props.params.encodedPath)}</strong></div>
+          </div>
           <button type="submit" className="form__button">Create</button>
         </form>
       </div>

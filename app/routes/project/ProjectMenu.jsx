@@ -11,32 +11,28 @@ class ProjectMenu extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onSelectProjectPath = this.onSelectProjectPath.bind(this);
-    this.onCreateProject = this.onCreateProject.bind(this);
+    this.onOpenProjectPath = this.onOpenProjectPath.bind(this);
   }
 
-  onSelectProjectPath() {
+  onOpenProjectPath() {
     this.props.dispatch(openProject());
   }
 
-  onCreateProject() {
-    this.props.dispatch(push("project/create"));
-  }
 
   render() {
     return (
       <div>
         <div className="row">
           <div className="col-xs-8">
-            <h2>Create new project</h2>
+            <p>Open collection directory</p>
           </div>
           <div className="col-xs-4">
-            <button onClick={this.onCreateProject} className="form__button">Select Path</button>
+            <button onClick={this.onOpenProjectPath} className="form__button">Open directory</button>
           </div>
         </div>
         <div className="row">
           <div className="col-xs-12">
-            <h2>Select project:</h2>
+            <p>Select project:</p>
           </div>
         </div>
         <div className="row">
@@ -61,14 +57,6 @@ class ProjectMenu extends React.Component {
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-xs-8">
-            <h2>Open existing project</h2>
-          </div>
-          <div className="col-xs-4">
-            <button onClick={this.onSelectProjectPath} className="form__button">Select Path</button>
           </div>
         </div>
       </div>

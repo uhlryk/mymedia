@@ -47,6 +47,7 @@ function askIfCreateNewProjectFile(path) {
   };
 }
 
+
 function findProjectFile(path) {
   return (dispatch, getState) => {
     dispatch(showLoader("checking media directory"));
@@ -80,7 +81,7 @@ function findProjectFile(path) {
           }
         });
       } else {
-        dispatch(askIfCreateNewProjectFile(path));
+        dispatch(push("project/create/" + encodeURIComponent(path)));
       }
     });
   };

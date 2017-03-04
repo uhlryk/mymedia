@@ -22,7 +22,7 @@ class AppRouter extends React.Component {
         <Route component={Content}>
           <Route path="project" component={Project} >
             <Route path="menu" component={ProjectMenu} />
-            <Route path="create" component={ProjectCreate} />
+            <Route path="create/:encodedPath" component={ProjectCreate} />
             <Route path="formElement" component={ProjectFormElement}>
               <Route path="manage" component={ProjectFormElementManage} />
             </Route>
