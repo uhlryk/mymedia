@@ -15,61 +15,52 @@ import { loadElements } from "./formElement";
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
 
-export function initProject(path) {
+export function initProject(path, name, isHidden) {
   return {
     type: INIT_PROJECT,
-    path
+    path,
+    name,
+    isHidden
   }
 }
 
-function askIfCreateNewProjectFile(path) {
-  return (dispatch, getState) => {
-    // dispatch(showYesNoModal(
-    //   "New  project",
-    //   "Do you want to create new project? There is no project file",
-    //   "create",
-    //   "cancel",
-    //   () => {
+function createProjectFile(name, isHidden) {
+  return (path, result) => {
+    return (dispatch, getState) => {
+      if (result) {
+        //TODO: show error form that on this directory appear project file
+      } else {
         dispatch(showLoader("finding files"));
-        dispatch(initProject(path));
+        dispatch(initProject(path, name, isHidden));
         fileList(path, (err, files) => {
           dispatch(addFiles(files));
           dispatch(hideLoader());
           dispatch(save());
           dispatch(push("project/media"));
         });
-    //   },
-    //   () => {
-    //     //do nothing
-    //   }
-    // ));
-
+      }
+    };
   };
 }
 
-
-function findProjectFile(path) {
-  return (dispatch, getState) => {
-    dispatch(showLoader("checking media directory"));
-    fileFind(path, PROJECT_FILE, (err, result) => {
-      dispatch(hideLoader());
-      if(err) {
-        // dispatch(showErrorModal(err));
-      } else if(result){
+function findCollectionFiles() {
+  return (path, result) => {
+    return (dispatch, getState) => {
+      if (result) {
         dispatch(showLoader("load project"));
         fileLoad(path, PROJECT_FILE, (err, result) => {
-          if(err) {
+          if (err) {
             //dispatch(showErrorModal(err));
             dispatch(hideLoader());
-          } else if(result){
+          } else if (result) {
             let projectData = {};
             try {
               projectData = JSON.parse(result);
-            } catch(err) {
-         //     dispatch(showErrorModal(err));
+            } catch (err) {
+              //     dispatch(showErrorModal(err));
               dispatch(hideLoader());
             }
-            dispatch(initProject(path));
+            dispatch(initProject(path, projectData.project.name, projectData.project.isHidden));
             dispatch(loadElements(projectData.formElement));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
@@ -83,8 +74,28 @@ function findProjectFile(path) {
       } else {
         dispatch(push("project/create/" + encodeURIComponent(path)));
       }
+    };
+  };
+}
+
+function findProjectFile(path, callback) {
+  return (dispatch, getState) => {
+    dispatch(showLoader("checking media directory"));
+    fileFind(path, PROJECT_FILE, (err, result) => {
+      dispatch(hideLoader());
+      if(err) {
+        //TODO: show error message in error popup
+      } else {
+        dispatch(callback(path, result));
+      }
     });
   };
+}
+
+export function createProject(path, name, isHidden) {
+  return (dispatch, getState) => {
+    dispatch(findProjectFile(path, createProjectFile(name, isHidden)));
+  }
 }
 
 export function openProject() {
@@ -95,7 +106,7 @@ export function openProject() {
     }, (fileNames) => {
       dispatch(hideLoader());
       if(fileNames && fileNames.length > 0) {
-        dispatch(findProjectFile(fileNames[0]));
+        dispatch(findProjectFile(fileNames[0], findCollectionFiles()));
       }
     });
   }

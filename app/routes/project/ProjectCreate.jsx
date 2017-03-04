@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createProject } from "./../../actions/project";
-import { push } from "react-router-redux";
 import ValidationElementError from "../../components/ValidationElementError.jsx";
 const defaultState = {
   details: {
     name: "",
-    private: false,
+    isHidden: false,
     path: null
   },
   validation: {}
@@ -19,8 +18,9 @@ class ProjectCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = defaultState;
+    this.state.details.path = decodeURIComponent(this.props.params.encodedPath);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handlePrivateChange = this.handlePrivateChange.bind(this);
+    this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -30,9 +30,9 @@ class ProjectCreate extends React.Component {
     });
   }
 
-  handlePrivateChange(evt) {
+  handleVisibilityChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { private: !this.state.details.private})
+      details: Object.assign({}, this.state.details, { isHidden: !this.state.details.isHidden})
     });
   }
 
@@ -41,7 +41,7 @@ class ProjectCreate extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(createProject(this.state.details.name, this.state.details.private, this.state.details.path));
+    this.props.dispatch(createProject(this.state.details.path, this.state.details.name, this.state.details.isHidden));
   }
 
   validation() {
@@ -79,15 +79,15 @@ class ProjectCreate extends React.Component {
               <label>
               <input
                 type="checkbox"
-                checked={this.state.details.private}
-                onChange={this.handlePrivateChange}
+                checked={this.state.details.isHidden}
+                onChange={this.handleVisibilityChange}
               />
-                Project is private</label>
+                hidden project</label>
             </div>
           </div>
           <div className="form__group">
             <div><small>Project location</small></div>
-            <div><strong>{decodeURIComponent(this.props.params.encodedPath)}</strong></div>
+            <div><strong>{this.state.details.path}</strong></div>
           </div>
           <button type="submit" className="form__button">Create</button>
         </form>

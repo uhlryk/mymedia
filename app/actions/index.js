@@ -8,6 +8,7 @@ export function save() {
   return (dispatch, getState) => {
     dispatch(showLoader("saving data"));
     fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
+      project: getState().project,
       media: getState().fileList,
       tagList: getState().tagList,
       formElement: getState().formElement
