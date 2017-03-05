@@ -6,7 +6,8 @@ const defaultState = {
   details: {
     name: "",
     isHidden: false,
-    path: null
+    path: null,
+    project: null
   },
   validation: {}
 };
@@ -14,6 +15,10 @@ const defaultState = {
 @connect(state => ({
 }))
 class ProjectCreate extends React.Component {
+
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
 
   constructor(props) {
     super(props);
@@ -36,12 +41,18 @@ class ProjectCreate extends React.Component {
     });
   }
 
+  handleProjectChange(project) {
+    this.setState({
+      details: Object.assign({}, this.state.details, { project: project})
+    });
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(createProject(this.state.details.path, this.state.details.name, this.state.details.isHidden));
+    this.props.dispatch(createProject(this.state.details.path, this.state.details.name, this.state.details.isHidden, this.state.details.project));
   }
 
   validation() {
@@ -50,6 +61,10 @@ class ProjectCreate extends React.Component {
     if(!this.state.details.name || this.state.details.name === "") {
       isValid = false;
       newValidation.name = 'Field is required';
+    }
+    if(!this.state.details.project) {
+      isValid = false;
+      newValidation.project = 'Field is required';
     }
     if(isValid === false) {
       this.setState({
@@ -86,7 +101,28 @@ class ProjectCreate extends React.Component {
             </div>
           </div>
           <div className="form__group">
-            <div><small>Project location</small></div>
+            <label>Select project type</label>
+            {
+              this.context.extensions.getProjects().getExtensions()
+                .map(extension => (
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        value={extension.getName()}
+                        checked={this.state.details.project === extension.getName()}
+                        onChange={() => this.handleProjectChange(extension.getName())}
+                      />
+                      <div><strong>{extension.getDisplayName()}</strong></div>
+                      <div><small>{extension.getDescription()}</small></div>
+                    </label>
+                  </div>
+                ))
+            }
+            <ValidationElementError error={this.state.validation.project} />
+          </div>
+          <div className="form__group">
+            <div><label>Project location</label></div>
             <div><strong>{this.state.details.path}</strong></div>
           </div>
           <button type="submit" className="form__button">Create</button>

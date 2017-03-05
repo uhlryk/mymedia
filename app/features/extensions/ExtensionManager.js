@@ -4,8 +4,8 @@ import ProjectsExtensionManager from "./projects/ProjectsExtensionManager";
 export default class ExtensionManager extends BaseExtensionManager {
   constructor () {
     super();
-    this.formElementsExtensionManager = new FormElementsExtensionManager();
-    this.projectsExtensionManager = new ProjectsExtensionManager();
+    this.formElementsExtensionManager = new FormElementsExtensionManager(this);
+    this.projectsExtensionManager = new ProjectsExtensionManager(this);
   }
   register(extension) {
     switch (extension.getType()) {

@@ -15,23 +15,24 @@ import { loadElements } from "./formElement";
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
 
-export function initProject(path, name, isHidden) {
+export function initProject(path, name, isHidden, projectType) {
   return {
     type: INIT_PROJECT,
     path,
     name,
-    isHidden
+    isHidden,
+    projectType
   }
 }
 
-function createProjectFile(name, isHidden) {
+function createProjectFile(name, isHidden, projectType) {
   return (path, result) => {
     return (dispatch, getState) => {
       if (result) {
         //TODO: show error form that on this directory appear project file
       } else {
         dispatch(showLoader("finding files"));
-        dispatch(initProject(path, name, isHidden));
+        dispatch(initProject(path, name, isHidden, projectType));
         fileList(path, (err, files) => {
           dispatch(addFiles(files));
           dispatch(hideLoader());
@@ -60,7 +61,7 @@ function findCollectionFiles() {
               //     dispatch(showErrorModal(err));
               dispatch(hideLoader());
             }
-            dispatch(initProject(path, projectData.project.name, projectData.project.isHidden));
+            dispatch(initProject(path, projectData.project.name, projectData.project.isHidden, projectData.project.projectType));
             dispatch(loadElements(projectData.formElement));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
@@ -92,9 +93,9 @@ function findProjectFile(path, callback) {
   };
 }
 
-export function createProject(path, name, isHidden) {
+export function createProject(path, name, isHidden, projectType) {
   return (dispatch, getState) => {
-    dispatch(findProjectFile(path, createProjectFile(name, isHidden)));
+    dispatch(findProjectFile(path, createProjectFile(name, isHidden, projectType)));
   }
 }
 

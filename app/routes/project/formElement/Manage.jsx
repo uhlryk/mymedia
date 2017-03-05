@@ -110,9 +110,9 @@ class Manage extends React.Component {
             <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
               <option value="">select type</option>
               {
-                this.context.extensions.getFormElementExtensions()
+                this.context.extensions.getFormElements().getExtensions()
                 .map(extension => (
-                  <option key={extension.getConfig().key} value={extension.getConfig().key}>{extension.getConfig().name}</option>
+                  <option key={extension.getName()} value={extension.getName()}>{extension.getDisplayName()}</option>
                 ))
               }
             </select>
@@ -120,7 +120,7 @@ class Manage extends React.Component {
           </div>
           {this.state.details.type ? nameElement : null}
           <div className="form__group">
-            <Settings type={this.state.details.type} onChange={this.handleSettingsChange} />
+            { this.state.details.type ? <Settings type={this.state.details.type} onChange={this.handleSettingsChange}/> : false }
           </div>
           <button type="submit" className="form__button">Create</button>
         </form>

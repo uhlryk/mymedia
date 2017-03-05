@@ -7,6 +7,7 @@ export default function project(state = false, action) {
         name: action.name,
         isHidden: action.isHidden,
         path: action.path,
+        projectType: action.projectType,
         existingFiles: [],
         newFiles: []
       };

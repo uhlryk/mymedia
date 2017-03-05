@@ -1,6 +1,8 @@
 import React from "react";
 import BaseExtension from "../BaseExtension";
 import ProjectsExtensionManager from "./ProjectsExtensionManager";
+import path from "path";
+
 export default class ProjectsExtension extends BaseExtension {
 
   constructor () {
@@ -31,7 +33,8 @@ export default class ProjectsExtension extends BaseExtension {
       this.rules.push(rule);
     }
   }
-  isFileExtension (fileExtension) {
-    return (this.fileExtensions.indexOf(fileExtension) === -1 ? false : true) || (rules.some(rule => rule.test(fileExtension)));
+  isFileSupported (fileName) {
+    const fileExtension = path.extname(fileName);
+    return (this.fileExtensions.indexOf(fileExtension) === -1 ? false : true) || (this.rules.some(rule => rule.test(fileName)));
   }
 }

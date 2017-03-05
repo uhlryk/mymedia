@@ -6,5 +6,7 @@ export default class extends ProjectsExtension {
     this.setDisplayName("file");
     this.setName("file");
     this.setDescription("Any files");
+
+    this.addRule(".*");//all files
   }
 }
