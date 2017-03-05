@@ -7,8 +7,6 @@ export default class extends ProjectsExtension {
     this.setName("video");
     this.setDescription("Any video files");
 
-    this.addRule(".*");//all files
-
     this.addFileExtension(".mp4");
     this.addFileExtension(".wmv");
     this.addFileExtension(".avi");
