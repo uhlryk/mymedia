@@ -52,7 +52,7 @@ class ProjectCreate extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(createProject(this.state.details.path, this.state.details.name, this.state.details.isHidden, this.state.details.project));
+    this.props.dispatch(createProject(this.state.details));
   }
 
   validation() {
@@ -105,7 +105,7 @@ class ProjectCreate extends React.Component {
             {
               this.context.extensions.getProjects().getExtensions()
                 .map(extension => (
-                  <div className="radio">
+                  <div className="radio" key={extension.getName()}>
                     <label>
                       <input
                         type="radio"
