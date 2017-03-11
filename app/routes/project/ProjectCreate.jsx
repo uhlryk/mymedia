@@ -7,7 +7,7 @@ const defaultState = {
     name: "",
     isHidden: false,
     path: null,
-    project: null
+    projectType: null
   },
   validation: {}
 };
@@ -41,9 +41,9 @@ class ProjectCreate extends React.Component {
     });
   }
 
-  handleProjectChange(project) {
+  handleProjectTypeChange(projectType) {
     this.setState({
-      details: Object.assign({}, this.state.details, { project: project})
+      details: Object.assign({}, this.state.details, { projectType: projectType})
     });
   }
 
@@ -62,9 +62,9 @@ class ProjectCreate extends React.Component {
       isValid = false;
       newValidation.name = 'Field is required';
     }
-    if(!this.state.details.project) {
+    if(!this.state.details.projectType) {
       isValid = false;
-      newValidation.project = 'Field is required';
+      newValidation.projectType = 'Field is required';
     }
     if(isValid === false) {
       this.setState({
@@ -110,8 +110,8 @@ class ProjectCreate extends React.Component {
                       <input
                         type="radio"
                         value={extension.getName()}
-                        checked={this.state.details.project === extension.getName()}
-                        onChange={() => this.handleProjectChange(extension.getName())}
+                        checked={this.state.details.projectType === extension.getName()}
+                        onChange={() => this.handleProjectTypeChange(extension.getName())}
                       />
                       <div><strong>{extension.getDisplayName()}</strong></div>
                       <div><small>{extension.getDescription()}</small></div>
@@ -119,7 +119,7 @@ class ProjectCreate extends React.Component {
                   </div>
                 ))
             }
-            <ValidationElementError error={this.state.validation.project} />
+            <ValidationElementError error={this.state.validation.projectType} />
           </div>
           <div className="form__group">
             <div><label>Project location</label></div>
