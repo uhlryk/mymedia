@@ -6,8 +6,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import AppRouter from "./routes/AppRouter.jsx";
 import thunk from "redux-thunk";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import RegisterExtensions from "./features/extensions/RegisterExtensions.jsx"
-import * as extensions from "./extensions";
+
 
 class App extends React.Component {
   static propsTypes = {
@@ -30,9 +29,7 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={this.store}>
-        <RegisterExtensions list={extensions}>
           <AppRouter history={this.syncHistory} />
-        </RegisterExtensions>
       </Provider>
     );
   }

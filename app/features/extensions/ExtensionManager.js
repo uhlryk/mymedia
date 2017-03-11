@@ -2,10 +2,10 @@ import BaseExtensionManager from "./BaseExtensionManager";
 import FormElementsExtensionManager from "./formElements/FormElementsExtensionManager";
 import ProjectsExtensionManager from "./projects/ProjectsExtensionManager";
 export default class ExtensionManager extends BaseExtensionManager {
-  constructor () {
-    super();
-    this.formElementsExtensionManager = new FormElementsExtensionManager(this);
-    this.projectsExtensionManager = new ProjectsExtensionManager(this);
+  constructor (store) {
+    super(store);
+    this.formElementsExtensionManager = new FormElementsExtensionManager(store, this);
+    this.projectsExtensionManager = new ProjectsExtensionManager(store, this);
   }
   register(extension) {
     switch (extension.getType()) {
@@ -19,10 +19,18 @@ export default class ExtensionManager extends BaseExtensionManager {
         super.register(extension)
     }
   }
+
   getFormElements() {
     return this.formElementsExtensionManager;
   }
+
   getProjects() {
     return this.projectsExtensionManager;
+  }
+
+  onStoreChange(store) {
+    super.onStoreChange(store);
+    this.getFormElements().onStoreChange(store);
+    this.getProjects().onStoreChange(store);
   }
 }

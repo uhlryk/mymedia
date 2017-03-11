@@ -1,12 +1,25 @@
 export default class BaseExtensionManager {
 
-  constructor(parent = null) {
+  constructor(store, parent = null) {
     this.extensions = [];
+    this.store = store;
     this.parent = parent;
   }
 
   getParent() {
     return this.parent;
+  }
+
+  setStore(store) {
+    this.store = store;
+  }
+
+  getStore() {
+    return this.store;
+  }
+
+  onStoreChange(store) {
+    this.setStore(store);
   }
 
   register(extension) {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Router, Route } from "react-router";
 
-import Content from "./../components/Content.jsx";
+import Content from "./../Content.jsx";
 import Project from "./Project.jsx";
 import ProjectMedia from "./project/Media.jsx";
 
