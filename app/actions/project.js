@@ -9,16 +9,18 @@ import fileLoad from "../helpers/fileLoad";
 import { showLoader, hideLoader } from "./loader";
 // import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
+import * as STATUS from "../constants/status";
 import { addFiles, loadFiles } from "./fileList";
 import { loadElements } from "./formElement";
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
 
-export function initProject(data) {
+export function initProject(data, status) {
   return {
     type: INIT_PROJECT,
-    ...data
+    ...data,
+    status
   }
 }
 
@@ -29,7 +31,7 @@ function createProjectFile(data) {
         //TODO: show error form that on this directory appear project file
       } else {
         dispatch(showLoader("finding files"));
-        dispatch(initProject(data));
+        dispatch(initProject(data, STATUS.NEW));
         fileList(path, (err, files) => {
           dispatch(addFiles(files));
           dispatch(hideLoader());
@@ -58,7 +60,7 @@ function findCollectionFiles() {
               //     dispatch(showErrorModal(err));
               dispatch(hideLoader());
             }
-            dispatch(initProject(projectData.project));
+            dispatch(initProject(projectData.project, STATUS.STANDARD));
             dispatch(loadElements(projectData.formElement));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {

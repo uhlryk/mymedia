@@ -1,4 +1,6 @@
 import BaseExtensionManager from "../BaseExtensionManager";
+import * as STATUS from "../../../constants/status";
+
 export default class ProjectsExtensionManager extends BaseExtensionManager {
   static TYPE = "projectsExtension";
 
@@ -19,6 +21,13 @@ export default class ProjectsExtensionManager extends BaseExtensionManager {
       (!this.currentProjectExtension || this.currentProjectExtension.getName() !== store.project.projectType)
     ) {
       this.currentProjectExtension = this.getExtension(store.project.projectType);
+      this.onProjectChange(store.project.status === STATUS.NEW);
+    }
+  }
+
+  onProjectChange(isNew) {
+    if (isNew) {
+      this.getCurrent().onCreate();
     }
   }
 

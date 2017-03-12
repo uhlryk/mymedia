@@ -37,4 +37,8 @@ export default class ProjectsExtension extends BaseExtension {
     const fileExtension = path.extname(fileName);
     return (this.fileExtensions.indexOf(fileExtension) === -1 ? false : true) || (this.rules.some(rule => rule.test(fileName)));
   }
+
+  onCreate () {
+    console.log(`project ${this.getName()} started`)
+  }
 }
