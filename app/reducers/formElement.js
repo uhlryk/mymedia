@@ -13,7 +13,12 @@ export default function formElement(state = {}, action) {
       return newState;
     case ADD_NEW_ELEMENT:
       newState = _.cloneDeep(state);
-      const id = uuid();
+      let id;
+      if (action.id) {
+        id = action.id
+      } else {
+        id = uuid();
+      }
       newState[id] = {
         id,
         name: action.name,

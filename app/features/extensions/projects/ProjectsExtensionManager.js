@@ -1,5 +1,6 @@
 import BaseExtensionManager from "../BaseExtensionManager";
 import * as STATUS from "../../../constants/status";
+import { addNewElementWithId } from "../../../actions/formElement";
 
 export default class ProjectsExtensionManager extends BaseExtensionManager {
   static TYPE = "projectsExtension";
@@ -27,7 +28,10 @@ export default class ProjectsExtensionManager extends BaseExtensionManager {
 
   onProjectChange(isNew) {
     if (isNew) {
-      this.getCurrent().onCreate();
+      this.getCurrent().onCreate(
+        extension => this.getParent().register(extension),
+        (id, name, type, settings) => this.getStore().dispatch(addNewElementWithId(id, name, type, settings))
+      );
     }
   }
 

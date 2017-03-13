@@ -14,6 +14,18 @@ export function addNewElement(name, type, settings) {
   };
 }
 
+export function addNewElementWithId(id, name, type, settings) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ADD_NEW_ELEMENT,
+      name,
+      formType: type,
+      settings
+    });
+    dispatch(save());
+  };
+}
+
 export function loadElements(list) {
   return (dispatch, getState) => {
     dispatch({

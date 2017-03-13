@@ -1,6 +1,6 @@
-import ProjectsExtension from "../ProjectsExtension";
+import FileProjectExtension from "../file/index";
 
-export default class extends ProjectsExtension {
+export default class extends FileProjectExtension {
   constructor () {
     super();
     this.setDisplayName("music");

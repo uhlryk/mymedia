@@ -38,7 +38,7 @@ export default class ProjectsExtension extends BaseExtension {
     return (this.fileExtensions.indexOf(fileExtension) === -1 ? false : true) || (this.rules.some(rule => rule.test(fileName)));
   }
 
-  onCreate () {
-    console.log(`project ${this.getName()} started`)
+  onCreate (registerExtension, createFormElement) {
+    console.log(`project ${this.getName()} started`);
   }
 }
