@@ -13,13 +13,15 @@ export default class extends ProjectsExtension {
     this.addRule(".*");//all files
   }
 
-
-  onCreate (registerExtension, createFormElement) {
-    super.onCreate(registerExtension, createFormElement);
+  registerExtensions (registerExtension) {
+    super.registerExtensions(registerExtension);
     registerExtension(new InputExtension());
     registerExtension(new TextAreaExtension());
     registerExtension(new RatingExtension());
+  }
 
+  onCreate (createFormElement) {
+    super.onCreate(createFormElement);
     createFormElement("quality-id", "quality", RatingExtension.TYPE, {
       starNumber: 5,
       defaultValue: 5

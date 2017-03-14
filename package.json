@@ -87,6 +87,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.0",
     "bootstrap-sass": "^3.3.6",
     "classnames": "^2.2.5",
     "compass-mixins": "^0.12.10",

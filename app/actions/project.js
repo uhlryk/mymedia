@@ -24,7 +24,7 @@ export function initProject(data, status) {
   }
 }
 
-function createProjectFile(data) {
+function createProjectFile(data, extensions) {
   return (path, result) => {
     return (dispatch, getState) => {
       if (result) {
@@ -32,6 +32,8 @@ function createProjectFile(data) {
       } else {
         dispatch(showLoader("finding files"));
         dispatch(initProject(data, STATUS.NEW));
+        extensions.getProjects().registerExtensions();
+        extensions.getProjects().onProjectCreate();
         fileList(path, (err, files) => {
           dispatch(addFiles(files));
           dispatch(hideLoader());
@@ -43,7 +45,7 @@ function createProjectFile(data) {
   };
 }
 
-function findCollectionFiles() {
+function findCollectionFiles(extensions) {
   return (path, result) => {
     return (dispatch, getState) => {
       if (result) {
@@ -61,6 +63,7 @@ function findCollectionFiles() {
               dispatch(hideLoader());
             }
             dispatch(initProject(projectData.project, STATUS.STANDARD));
+            extensions.getProjects().registerExtensions();
             dispatch(loadElements(projectData.formElement));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
@@ -92,13 +95,13 @@ function findProjectFile(path, callback) {
   };
 }
 
-export function createProject(data) {
+export function createProject(data, extensions) {
   return (dispatch, getState) => {
-    dispatch(findProjectFile(data.path, createProjectFile(data)));
+    dispatch(findProjectFile(data.path, createProjectFile(data, extensions)));
   }
 }
 
-export function openProject() {
+export function openProject(extensions) {
   return (dispatch, getState) => {
     dispatch(showLoader("selecting media directory"));
     dialog.showOpenDialog({
@@ -106,7 +109,7 @@ export function openProject() {
     }, (fileNames) => {
       dispatch(hideLoader());
       if(fileNames && fileNames.length > 0) {
-        dispatch(findProjectFile(fileNames[0], findCollectionFiles()));
+        dispatch(findProjectFile(fileNames[0], findCollectionFiles(extensions)));
       }
     });
   }

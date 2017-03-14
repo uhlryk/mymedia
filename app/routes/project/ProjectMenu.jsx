@@ -9,13 +9,17 @@ import { push } from "react-router-redux";
 }))
 class ProjectMenu extends React.Component {
 
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
+
   constructor(props) {
     super(props);
     this.onOpenProjectPath = this.onOpenProjectPath.bind(this);
   }
 
   onOpenProjectPath() {
-    this.props.dispatch(openProject());
+    this.props.dispatch(openProject(this.context.extensions));
   }
 
 

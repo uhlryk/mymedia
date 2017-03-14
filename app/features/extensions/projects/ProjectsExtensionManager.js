@@ -1,5 +1,4 @@
 import BaseExtensionManager from "../BaseExtensionManager";
-import * as STATUS from "../../../constants/status";
 import { addNewElementWithId } from "../../../actions/formElement";
 
 export default class ProjectsExtensionManager extends BaseExtensionManager {
@@ -7,32 +6,18 @@ export default class ProjectsExtensionManager extends BaseExtensionManager {
 
   constructor(store, parent) {
     super(store, parent);
-    this.currentProjectExtension = null;
   }
 
-  /**
-   * This method is called each time store is changed. And it is checking if current project is changed and set
-   * return this.currentProjectExtension with reference to current project extension
-   * @param redux store
-     */
-  onStoreChange(store) {
-    super.onStoreChange(store);
-    if (
-      (store.project && store.project.projectType) &&
-      (!this.currentProjectExtension || this.currentProjectExtension.getName() !== store.project.projectType)
-    ) {
-      this.currentProjectExtension = this.getExtension(store.project.projectType);
-      this.onProjectChange(store.project.status === STATUS.NEW);
-    }
+  registerExtensions() {
+    this.getCurrent().registerExtensions(extension => this.getParent().register(extension))
   }
 
-  onProjectChange(isNew) {
-    if (isNew) {
-      this.getCurrent().onCreate(
-        extension => this.getParent().register(extension),
-        (id, name, type, settings) => this.getStore().dispatch(addNewElementWithId(id, name, type, settings))
-      );
-    }
+  onProjectCreate() {
+    this.getCurrent().onCreate(
+      (id, name, type, settings) => this.getStore().dispatch(
+        addNewElementWithId(id, name, type, settings)
+      )
+    );
   }
 
   /**
@@ -42,6 +27,6 @@ export default class ProjectsExtensionManager extends BaseExtensionManager {
    * @returns {ProjectExtension|null}
      */
   getCurrent() {
-    return this.currentProjectExtension;
+    return this.getExtension(this.getStore().project.projectType);
   }
 }

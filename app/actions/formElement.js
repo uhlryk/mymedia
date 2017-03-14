@@ -18,6 +18,7 @@ export function addNewElementWithId(id, name, type, settings) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_ELEMENT,
+      id,
       name,
       formType: type,
       settings
