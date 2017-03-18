@@ -25,7 +25,7 @@ class Manage extends React.Component {
 
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleAdditionalChange = this.handleAdditionalChange.bind(this);
+    this.onFormElementChange = this.onFormElementChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -42,7 +42,7 @@ class Manage extends React.Component {
     });
   }
 
-  handleAdditionalChange(elementId, value) {
+  onFormElementChange(elementId, value) {
     this.setState({
       details: Object.assign({}, this.state.details, { [elementId]: value})
     });
@@ -141,7 +141,7 @@ class Manage extends React.Component {
             return (
               <Edit
                 key={elementId}
-                onChange={evt => this.handleAdditionalChange(elementId, evt.target.value)}
+                onChange={evt => this.onFormElementChange(elementId, evt.target.value)}
                 value={this.state.details[elementId]}
                 name={element.name} type={element.type}
                 settings={element.settings}

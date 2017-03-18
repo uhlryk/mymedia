@@ -14,7 +14,7 @@ export default class Edit extends React.Component {
     return (
       <StarRating
         totalStars={this.props.starNumber}
-        editing={true}
+        editing={!this.props.disableEdit}
         value={value}
         onChange={this.props.onChange}
       />

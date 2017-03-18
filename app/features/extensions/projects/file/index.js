@@ -24,6 +24,11 @@ export default class extends ProjectsExtension {
     super.onCreate(createFormElement);
     createFormElement("quality-id", "quality", RatingExtension.TYPE, {
       starNumber: 5,
+      defaultValue: 5,
+      disableEdit: true
+    });
+    createFormElement("quality-id2", "quality2", RatingExtension.TYPE, {
+      starNumber: 5,
       defaultValue: 5
     });
   }

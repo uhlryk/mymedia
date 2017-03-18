@@ -15,6 +15,7 @@ export default class Edit extends React.Component {
         className="form__element"
         placeholder={this.props.placeholder}
         value={value}
+        disabled={this.props.disableEdit}
         onChange={this.props.onChange}
       />
     );
