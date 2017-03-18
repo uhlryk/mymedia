@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 
 export default class Edit extends React.Component {
   static contextTypes = {
@@ -15,7 +16,7 @@ export default class Edit extends React.Component {
   render() {
     let props = Object.assign({}, this.props.settings, { onChange: this.props.onChange, value: this.props.value });
     return (
-      <div className="form__group">
+      <div className={classNames("form__group", {[this.props.settings.className]: !!this.props.settings.className})}>
         <label>{this.props.name}</label>
         {this.context.extensions.getFormElements().getExtension(this.props.type).getEdit(props)}
       </div>

@@ -1,6 +1,5 @@
 import React from "react";
 import classNames from "classnames";
-import ReactTooltip from 'react-tooltip'
 
 class Tag extends React.Component {
 
