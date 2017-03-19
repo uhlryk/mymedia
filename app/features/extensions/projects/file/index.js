@@ -25,5 +25,9 @@ export default class extends ProjectsExtension {
     createFormElement("description-id", "Description", TextAreaExtension.TYPE, {
       viewClassName: "file-list__description"
     });
+
+    createFormElement("test-id", "test", TextAreaExtension.TYPE, {
+      disableEdit: true
+    });
   }
 }
