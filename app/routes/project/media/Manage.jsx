@@ -26,7 +26,6 @@ class Manage extends React.Component {
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.onFormElementChange = this.onFormElementChange.bind(this);
-    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
@@ -45,12 +44,6 @@ class Manage extends React.Component {
   onFormElementChange(elementId, value) {
     this.setState({
       details: Object.assign({}, this.state.details, { [elementId]: value})
-    });
-  }
-
-  handleDescriptionChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { description: evt.target.value})
     });
   }
 
@@ -140,10 +133,6 @@ class Manage extends React.Component {
               placeholder="Enter name"
             />
             <ValidationElementError error={this.state.validation.name} />
-          </div>
-          <div className="form__group">
-            <label>Description</label>
-            <textarea className="form__element" rows="3" value={this.state.details.description} onChange={this.handleDescriptionChange} />
           </div>
           {Object.keys(this.props.formElement).map(elementId => {
             let element = this.props.formElement[elementId];

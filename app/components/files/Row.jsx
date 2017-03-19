@@ -42,7 +42,6 @@ class CustomRow extends React.Component {
     const moreComponent = <span>&#9658; More</span>;
     const lessComponent = <span>&#9660; Less</span>;
     let toogleSizeLabel = this.state.short ? moreComponent : lessComponent;
-    let descriptionComponent = this.props.data.description || <i>{DEFAULT_DESCRIPTION}</i>;
 
     const className = classNames("file-list__row", {
       "file-list__row--long": !this.state.short,
@@ -60,9 +59,6 @@ class CustomRow extends React.Component {
             <FileSize data={this.props.data.size} />
             <span className="file-list__meta-title"> created: </span>
             <DateDisplay data={this.props.data.birthtime} />
-          </div>
-          <div className="file-list__description">
-            {descriptionComponent}
           </div>
           {Object.keys(this.props.formElement).map(elementId => {
             let element = this.props.formElement[elementId];
