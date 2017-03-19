@@ -31,7 +31,7 @@ export default class Edit extends React.Component {
   render() {
     let props = Object.assign({}, this.props.settings, { onChange: this.onFormElementChange, value: this.props.value });
     const className = classNames("form__group", {
-      [this.props.settings.className]: !!this.props.settings.className,
+      [this.props.settings.editClassName]: !!this.props.settings.editClassName,
       "form__group--disabled-edit": this.props.settings.disableEdit
     });
     return (
