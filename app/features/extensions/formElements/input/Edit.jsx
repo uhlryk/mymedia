@@ -7,14 +7,29 @@ export default class Edit extends React.Component {
     value: React.PropTypes.string.isRequired,
     defaultValue: React.PropTypes.string
   };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: this.props.value || this.props.defaultValue || ""
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.state.value !== nextProps.value) {
+      this.setState({
+        value: nextProps.value
+      });
+    }
+  }
+
   render() {
-    let value = this.props.value || this.props.defaultValue || "";
     return (
       <input
         type="text"
         className="form__element"
         placeholder={this.props.placeholder}
-        value={value}
+        value={this.state.value}
         disabled={this.props.disableEdit}
         onChange={this.props.onChange}
       />

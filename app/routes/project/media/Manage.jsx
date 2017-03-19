@@ -7,7 +7,7 @@ import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { updateFile } from "../../../actions/fileList";
 import ReactTooltip from "react-tooltip";
-
+import FormElementExtensionManager from "../../../features/extensions/formElements/FormElementsExtensionManager";
 @connect(state => ({
   fileList: state.fileList,
   tagList: state.tagList,
@@ -89,10 +89,19 @@ class Manage extends React.Component {
   validation() {
     let newValidation = {};
     let isValid = true;
-    if(!this.state.details.name || this.state.details.name === "") {
+    if(!this.state.details.name) {
       isValid = false;
-      newValidation.name = 'Field is required';
+      newValidation.name = "Field is required";
     }
+
+    Object.keys(this.props.formElement).map(elementId => {
+      let element = this.props.formElement[elementId];
+      const validationResult = FormElementExtensionManager.validate(element, this.state.details[elementId]);
+      if(validationResult !== true) {
+        isValid = false;
+        newValidation[elementId] = "Field is required";
+      }
+    });
 
     if(isValid === false) {
       this.setState({
@@ -145,6 +154,7 @@ class Manage extends React.Component {
                 value={this.state.details[elementId]}
                 name={element.name} type={element.type}
                 settings={element.settings}
+                validation={this.state.validation[elementId]}
               />
             )
           })}

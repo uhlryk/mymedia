@@ -22,14 +22,14 @@ export default class extends ProjectsExtension {
 
   onCreate (createFormElement) {
     super.onCreate(createFormElement);
-    createFormElement("quality-id", "quality", RatingExtension.TYPE, {
-      starNumber: 5,
-      defaultValue: 5,
-      disableEdit: true
+    createFormElement("quality-id", "quality", InputExtension.TYPE, {
+      defaultValue: "AAAA",
+      isRequired: true
     });
     createFormElement("quality-id2", "quality2", RatingExtension.TYPE, {
       starNumber: 5,
-      defaultValue: 5
+      defaultValue: 5,
+      isRequired: true
     });
   }
 }

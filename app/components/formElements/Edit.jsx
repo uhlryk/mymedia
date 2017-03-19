@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import ValidationElementError from "../ValidationElementError.jsx";
 
 export default class Edit extends React.Component {
   static contextTypes = {
@@ -9,6 +10,7 @@ export default class Edit extends React.Component {
   static propsTypes = {
     name: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
+    validation: React.PropTypes.string,
     type: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
     settings: React.PropTypes.object
@@ -36,6 +38,7 @@ export default class Edit extends React.Component {
       <div className={className}>
         <label>{this.props.name}</label>
         {this.context.extensions.getFormElements().getExtension(this.props.type).getEdit(props)}
+        <ValidationElementError error={this.props.validation} />
       </div>
     );
   }
