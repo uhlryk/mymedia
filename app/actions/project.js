@@ -24,8 +24,8 @@ export function initProject(data, status) {
   }
 }
 
-function createProjectFile(data, extensions) {
-  return (path, result) => {
+function createProjectFile(data) {
+  return (path, result, extensions) => {
     return (dispatch, getState) => {
       if (result) {
         //TODO: show error form that on this directory appear project file
@@ -35,6 +35,7 @@ function createProjectFile(data, extensions) {
         extensions.getProjects().registerExtensions();
         extensions.getProjects().onProjectCreate();
         fileList(path, (err, files) => {
+          files = extensions.getProjects().prepareProjectFiles(files);
           dispatch(addFiles(files));
           dispatch(hideLoader());
           dispatch(save());
@@ -45,8 +46,8 @@ function createProjectFile(data, extensions) {
   };
 }
 
-function findCollectionFiles(extensions) {
-  return (path, result) => {
+function findCollectionFiles() {
+  return (path, result, extensions) => {
     return (dispatch, getState) => {
       if (result) {
         dispatch(showLoader("load project"));
@@ -67,6 +68,7 @@ function findCollectionFiles(extensions) {
             dispatch(loadElements(projectData.formElement));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
+              files = extensions.getProjects().prepareProjectFiles(files);
               dispatch(addFiles(files, true));
               dispatch(hideLoader());
               dispatch(save());
@@ -81,7 +83,7 @@ function findCollectionFiles(extensions) {
   };
 }
 
-function findProjectFile(path, callback) {
+function findProjectFile(path, extensions, callback) {
   return (dispatch, getState) => {
     dispatch(showLoader("checking media directory"));
     fileFind(path, PROJECT_FILE, (err, result) => {
@@ -89,7 +91,7 @@ function findProjectFile(path, callback) {
       if(err) {
         //TODO: show error message in error popup
       } else {
-        dispatch(callback(path, result));
+        dispatch(callback(path, result, extensions));
       }
     });
   };
@@ -97,7 +99,7 @@ function findProjectFile(path, callback) {
 
 export function createProject(data, extensions) {
   return (dispatch, getState) => {
-    dispatch(findProjectFile(data.path, createProjectFile(data, extensions)));
+    dispatch(findProjectFile(data.path, extensions, createProjectFile(data)));
   }
 }
 
@@ -109,7 +111,7 @@ export function openProject(extensions) {
     }, (fileNames) => {
       dispatch(hideLoader());
       if(fileNames && fileNames.length > 0) {
-        dispatch(findProjectFile(fileNames[0], findCollectionFiles(extensions)));
+        dispatch(findProjectFile(fileNames[0], extensions, findCollectionFiles()));
       }
     });
   }

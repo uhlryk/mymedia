@@ -24,18 +24,22 @@ export default class ProjectsExtension extends BaseExtension {
     return this.description;
   }
   addFileExtension (fileExtension) {
-    if (this.fileExtensions.indexOf(fileExtension) === -1) {
+    if (!this.fileExtensions.includes(fileExtension)) {
       this.fileExtensions.push(fileExtension);
     }
   }
   addRule (rule) {
-    if (this.rules.indexOf(rule) === -1) {
+    if (!this.rules.includes(rule)) {
       this.rules.push(rule);
     }
   }
+  clearRules () {
+    this.rules = [];
+  }
+
   isFileSupported (fileName) {
     const fileExtension = path.extname(fileName);
-    return (this.fileExtensions.indexOf(fileExtension) === -1 ? false : true) || (this.rules.some(rule => rule.test(fileName)));
+    return this.fileExtensions.includes(fileExtension) || (this.rules.some(rule => rule.test(fileName)));
   }
 
   registerExtensions (registerExtension) {
