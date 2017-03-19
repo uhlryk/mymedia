@@ -27,7 +27,7 @@ export default class extends ProjectsExtension {
     });
 
     createFormElement("test-id", "test", TextAreaExtension.TYPE, {
-      disableEdit: true
+      alwaysVisible: true
     });
   }
 }

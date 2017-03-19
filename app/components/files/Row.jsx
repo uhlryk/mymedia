@@ -51,6 +51,20 @@ class CustomRow extends React.Component {
     });
     return (
       <div className={className}>
+        {Object.keys(this.props.formElement).map(elementId => {
+          let element = this.props.formElement[elementId];
+          if(element.settings.alwaysVisible === false) {
+            return false;
+          }
+          return (
+            <View
+              key={elementId}
+              value={this.props.data[elementId]}
+              name={element.name} type={element.type}
+              settings={element.settings}
+            />
+          )
+        })}
         <div onDoubleClick={this.onOpenClick} className="file-list__name">{this.props.data.name}</div>
         <div onDoubleClick={this.onOpenClick}  className="file-list__original-path">{this.props.data.path}</div>
         <div className="file-list__additional">
@@ -62,6 +76,10 @@ class CustomRow extends React.Component {
           </div>
           {Object.keys(this.props.formElement).map(elementId => {
             let element = this.props.formElement[elementId];
+            console.log(element);
+            if(element.settings.alwaysVisible === true) {
+              return false;
+            }
             return (
               <View
                 key={elementId}
