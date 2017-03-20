@@ -48,4 +48,8 @@ export default class ProjectsExtension extends BaseExtension {
   onCreate (createFormElement) {
     console.log(`project ${this.getName()} created`);
   }
+
+  mapFileProperties (file) {
+    return file;
+  }
 }

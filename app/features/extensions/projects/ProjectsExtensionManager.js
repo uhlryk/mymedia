@@ -14,7 +14,9 @@ export default class ProjectsExtensionManager extends BaseExtensionManager {
 
   prepareProjectFiles(files) {
     const currentExtension = this.getCurrent();
-    return files.filter(file => currentExtension.isFileSupported(file.name))
+    return files
+      .filter(file => currentExtension.isFileSupported(file.name))
+      .map(file => currentExtension.mapFileProperties(file))
   }
 
   onProjectCreate() {

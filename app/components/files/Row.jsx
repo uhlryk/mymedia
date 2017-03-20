@@ -53,7 +53,7 @@ class CustomRow extends React.Component {
       <div className={className}>
         {Object.keys(this.props.formElement).map(elementId => {
           let element = this.props.formElement[elementId];
-          if(element.settings.alwaysVisible === false) {
+          if(!element.settings.alwaysVisible) {
             return false;
           }
           return (

@@ -40,5 +40,7 @@ export default class extends ProjectsExtension {
     });
   }
 
-
+  mapFileProperties (file) {
+    return Object.assign({}, file, {"description-id": "AAAA"});
+  }
 }
