@@ -28,12 +28,19 @@ export default class extends ProjectsExtension {
    *   editClassName css class for edit part of element
    *   isRequired if required then in edit field can't be empty
    *   alwaysVisible it is visible always in resource otherwise only after more button
+   *   disableEdit disable editing file, it will not show on form
    */
   onCreate (createFormElement) {
     super.onCreate(createFormElement);
     createFormElement("name-id", "", InputExtension.TYPE, {
       viewClassName: "file-list__name",
       alwaysVisible: true
+    });
+
+    createFormElement("path-id", "", InputExtension.TYPE, {
+      viewClassName: "file-list__original-path",
+      alwaysVisible: true,
+      disableEdit: true
     });
 
     createFormElement("description-id", "Description", TextAreaExtension.TYPE, {
@@ -44,6 +51,9 @@ export default class extends ProjectsExtension {
   }
 
   mapFileProperties (file) {
-    return Object.assign({}, file, {"name-id": file.name});
+    return Object.assign({}, file, {
+      "name-id": file.name,
+      "path-id": file.path
+    });
   }
 }

@@ -65,7 +65,6 @@ class CustomRow extends React.Component {
             />
           )
         })}
-        <div onDoubleClick={this.onOpenClick}  className="file-list__original-path">{this.props.data.path}</div>
         <div className="file-list__additional">
           <div className="file-list__meta">
             <span className="file-list__meta-title">size: </span>
