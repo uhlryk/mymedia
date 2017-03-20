@@ -1,4 +1,5 @@
 import React from "react";
+import FileSize from "./FileSize.jsx";
 
 export default class View extends React.Component {
   static propsTypes = {
@@ -6,7 +7,7 @@ export default class View extends React.Component {
   };
   render() {
     return (
-      <div>{this.props.value}</div>
+      <div><FileSize value={this.props.value} /></div>
     );
   }
 }

@@ -49,13 +49,15 @@ export default class extends ProjectsExtension {
       viewClassName: "file-list__description"
     });
 
+    createFormElement("file-size-id", "Size", FileSize.TYPE, {});
 
   }
 
   mapFileProperties (file) {
     return Object.assign({}, file, {
       "name-id": file.name,
-      "path-id": file.path
+      "path-id": file.path,
+      "file-size-id": file.size
     });
   }
 }

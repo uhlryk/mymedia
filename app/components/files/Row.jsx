@@ -4,10 +4,8 @@ import { push } from "react-router-redux";
 import classNames from "classnames";
 import View from "../formElements/View.jsx";
 import { openFile } from "./../../actions/openFile";
-import FileSize from "./FileSize.jsx";
 import Tag from "../tags/Tag.jsx";
 import DateDisplay from "./DateDisplay.jsx";
-const DEFAULT_DESCRIPTION = "No description. Please edit and add new.";
 @connect(state => ({
   formElement: state.formElement
 }))
@@ -67,8 +65,6 @@ class CustomRow extends React.Component {
         })}
         <div className="file-list__additional">
           <div className="file-list__meta">
-            <span className="file-list__meta-title">size: </span>
-            <FileSize data={this.props.data.size} />
             <span className="file-list__meta-title"> created: </span>
             <DateDisplay data={this.props.data.birthtime} />
           </div>
