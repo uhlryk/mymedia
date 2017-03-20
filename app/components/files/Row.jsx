@@ -5,7 +5,6 @@ import classNames from "classnames";
 import View from "../formElements/View.jsx";
 import { openFile } from "./../../actions/openFile";
 import Tag from "../tags/Tag.jsx";
-import DateDisplay from "./DateDisplay.jsx";
 @connect(state => ({
   formElement: state.formElement
 }))
@@ -64,10 +63,6 @@ class CustomRow extends React.Component {
           )
         })}
         <div className="file-list__additional">
-          <div className="file-list__meta">
-            <span className="file-list__meta-title"> created: </span>
-            <DateDisplay data={this.props.data.birthtime} />
-          </div>
           {Object.keys(this.props.formElement).map(elementId => {
             let element = this.props.formElement[elementId];
             if(element.settings.alwaysVisible === true) {

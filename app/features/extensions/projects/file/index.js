@@ -3,6 +3,7 @@ import InputExtension from "../../formElements/input/index";
 import TextAreaExtension from "../../formElements/textArea/index";
 import RatingExtension from "../../formElements/rating/index";
 import FileSize from "../../formElements/fileSize/index";
+import Date from "../../formElements/date/index";
 
 export default class extends ProjectsExtension {
   constructor () {
@@ -20,6 +21,7 @@ export default class extends ProjectsExtension {
     registerExtension(new TextAreaExtension());
     registerExtension(new RatingExtension());
     registerExtension(new FileSize());
+    registerExtension(new Date());
   }
 
   /**
@@ -50,6 +52,7 @@ export default class extends ProjectsExtension {
     });
 
     createFormElement("file-size-id", "Size", FileSize.TYPE, {});
+    createFormElement("create-date-id", "Created", Date.TYPE, {});
 
   }
 
@@ -57,7 +60,8 @@ export default class extends ProjectsExtension {
     return Object.assign({}, file, {
       "name-id": file.name,
       "path-id": file.path,
-      "file-size-id": file.size
+      "file-size-id": file.stat.size,
+      "create-date-id": file.stat.birthtime
     });
   }
 }

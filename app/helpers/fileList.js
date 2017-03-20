@@ -22,9 +22,7 @@ export default function fileList(baseDir, done) {
               results.push({
                 name: path.basename(file),
                 path: path.relative(baseDir, file),
-                stat: stat,
-                size: stat.size,
-                birthtime: stat.birthtime
+                stat: stat
               });
             }
             if (!--pending) done(null, results);
