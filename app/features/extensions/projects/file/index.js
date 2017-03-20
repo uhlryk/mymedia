@@ -2,6 +2,7 @@ import ProjectsExtension from "../ProjectsExtension";
 import InputExtension from "../../formElements/input/index";
 import TextAreaExtension from "../../formElements/textArea/index";
 import RatingExtension from "../../formElements/rating/index";
+import FileSize from "../../formElements/fileSize/index";
 
 export default class extends ProjectsExtension {
   constructor () {
@@ -18,6 +19,7 @@ export default class extends ProjectsExtension {
     registerExtension(new InputExtension());
     registerExtension(new TextAreaExtension());
     registerExtension(new RatingExtension());
+    registerExtension(new FileSize());
   }
 
   /**

@@ -110,7 +110,7 @@ class Manage extends React.Component {
             <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
               <option value="">select type</option>
               {
-                this.context.extensions.getFormElements().getExtensions()
+                this.context.extensions.getFormElements().getExtensions().filter(extension => !extension.isOnlyProjectExtensionUse())
                 .map(extension => (
                   <option key={extension.getName()} value={extension.getName()}>{extension.getDisplayName()}</option>
                 ))

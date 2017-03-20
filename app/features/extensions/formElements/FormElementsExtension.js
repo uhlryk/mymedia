@@ -9,6 +9,14 @@ export default class FormElementsExtension extends BaseExtension {
     this.SettingsComponent = () => false;
     this.EditComponent = () => false;
     this.ViewComponent = () => false;
+    this.onlyProjectExtensionUse = false;
+  }
+  setOnlyProjectExtensionUse() {
+    this.onlyProjectExtensionUse = true;
+  }
+
+  isOnlyProjectExtensionUse() {
+    return this.onlyProjectExtensionUse;
   }
   setDisplayName (displayName) {
     this.displayName = displayName;

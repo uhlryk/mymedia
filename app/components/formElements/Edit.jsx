@@ -33,13 +33,14 @@ export default class Edit extends React.Component {
     const className = classNames("form__group", {
       [this.props.settings.editClassName]: !!this.props.settings.editClassName
     });
-    if(this.props.settings.disableEdit) {
+    const extension = this.context.extensions.getFormElements().getExtension(this.props.type);
+    if(this.props.settings.disableEdit || extension.isOnlyProjectExtensionUse()) {
       return false;
     }
     return (
       <div className={className}>
         <label>{this.props.name}</label>
-        {this.context.extensions.getFormElements().getExtension(this.props.type).getEdit(props)}
+        {extension.getEdit(props)}
         <ValidationElementError error={this.props.validation} />
       </div>
     );
