@@ -45,7 +45,7 @@
   }
   &__name {
     cursor: pointer;
-    padding:5px 50px 5px 0px;
+    padding:5px 5px 5px 0px;
     font-weight: bold;
     font-size: 15px;
   }
@@ -61,7 +61,7 @@
   &__meta-title {
     font-weight: normal;
   }
-  &__name {
+  &__name div{
     white-space: nowrap;
     width: 100%;
     overflow: hidden;

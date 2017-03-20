@@ -31,16 +31,19 @@ export default class extends ProjectsExtension {
    */
   onCreate (createFormElement) {
     super.onCreate(createFormElement);
+    createFormElement("name-id", "", InputExtension.TYPE, {
+      viewClassName: "file-list__name",
+      alwaysVisible: true
+    });
+
     createFormElement("description-id", "Description", TextAreaExtension.TYPE, {
       viewClassName: "file-list__description"
     });
 
-    createFormElement("test-id", "test", TextAreaExtension.TYPE, {
-      alwaysVisible: true
-    });
+
   }
 
   mapFileProperties (file) {
-    return Object.assign({}, file, {"description-id": "AAAA"});
+    return Object.assign({}, file, {"name-id": file.name});
   }
 }
