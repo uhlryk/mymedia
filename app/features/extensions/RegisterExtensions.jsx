@@ -17,7 +17,7 @@ class RegisterExtensions extends React.Component {
     this.extensions = new ExtensionManager(props);
     Object.keys(this.props.list).forEach(elemName => {
       let Extension = this.props.list[elemName];
-      this.extensions.register(new Extension())
+      this.extensions.registerExtension(new Extension())
     });
   }
 

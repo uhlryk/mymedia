@@ -7,16 +7,16 @@ export default class ExtensionManager extends BaseExtensionManager {
     this.formElementsExtensionManager = new FormElementsExtensionManager(store, this);
     this.projectsExtensionManager = new ProjectsExtensionManager(store, this);
   }
-  register(extension) {
+  registerExtension(extension) {
     switch (extension.getType()) {
       case FormElementsExtensionManager.TYPE:
-        this.formElementsExtensionManager.register(extension);
+        this.formElementsExtensionManager.registerExtension(extension);
         break;
       case ProjectsExtensionManager.TYPE:
-        this.projectsExtensionManager.register(extension);
+        this.projectsExtensionManager.registerExtension(extension);
         break;
       default:
-        super.register(extension)
+        super.registerExtension(extension)
     }
   }
 

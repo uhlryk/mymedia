@@ -9,7 +9,7 @@ export default class ProjectsExtensionManager extends BaseExtensionManager {
   }
 
   registerExtensions() {
-    this.getCurrent().registerExtensions(extension => this.getParent().register(extension))
+    this.getCurrent().registerExtensions(extension => this.getParent().registerExtension(extension))
   }
 
   prepareProjectFiles(files) {

@@ -22,7 +22,7 @@ export default class BaseExtensionManager {
     this.setStore(store);
   }
 
-  register(extension) {
+  registerExtension(extension) {
     this.extensions.push(extension);
     extension.onRegister(this);
   }
