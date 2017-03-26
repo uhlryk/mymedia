@@ -2,25 +2,23 @@ import { save } from "./index";
 export const ADD_NEW_ELEMENT = "form_element.new_add";
 export const LOAD_SAVED_ELEMENTS = "form_element.load_element";
 
-export function addNewElement(name, type, settings) {
+export function addNewElement(extensionName, settings) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_ELEMENT,
-      name,
-      formType: type,
+      extensionName: extensionName,
       settings
     });
     dispatch(save());
   };
 }
 
-export function addNewElementWithId(id, name, type, settings) {
+export function addNewElementWithId(id, extensionName, settings) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_ELEMENT,
       id,
-      name,
-      formType: type,
+      extensionName: extensionName,
       settings
     });
     dispatch(save());

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import ExtensionManager from "./ExtensionManager";
+import StoreExtensionManager from "./StoreExtensionManager";
 
 @connect(state => state)
 class RegisterExtensions extends React.Component {
@@ -14,7 +14,7 @@ class RegisterExtensions extends React.Component {
 
   constructor(props) {
     super(props);
-    this.extensions = new ExtensionManager(props);
+    this.extensions = new StoreExtensionManager(props);
     Object.keys(this.props.list).forEach(elemName => {
       let Extension = this.props.list[elemName];
       this.extensions.registerExtension(new Extension())
@@ -28,7 +28,7 @@ class RegisterExtensions extends React.Component {
   }
 
   componentWillUpdate(nextprops, nextstate) {
-    this.extensions.onStoreChange(nextprops)
+    this.extensions.callEvent("STORE_CHANGE", nextprops)
   }
 
   render() {

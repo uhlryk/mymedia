@@ -32,10 +32,9 @@ function createProjectFile(data) {
       } else {
         dispatch(showLoader("finding files"));
         dispatch(initProject(data, STATUS.NEW));
-        extensions.getProjects().registerExtensions();
-        extensions.getProjects().onProjectCreate();
+        extensions.callEvent("PROJECT_CREATE");
         fileList(path, (err, files) => {
-          files = extensions.getProjects().prepareProjectFiles(files);
+          files = extensions.callEvent("FILTER_FILES", files);
           dispatch(addFiles(files));
           dispatch(hideLoader());
           dispatch(save());
@@ -64,10 +63,10 @@ function findCollectionFiles() {
               dispatch(hideLoader());
             }
             dispatch(initProject(projectData.project, STATUS.STANDARD));
-            extensions.getProjects().registerExtensions();
             dispatch(loadElements(projectData.formElement));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
+              files = extensions.callEvent("FILTER_FILES", files);
               files = extensions.getProjects().prepareProjectFiles(files);
               dispatch(addFiles(files, true));
               dispatch(hideLoader());
