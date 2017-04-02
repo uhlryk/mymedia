@@ -6,14 +6,14 @@ export default class Settings extends React.Component {
   };
 
   static propsTypes = {
-    type: React.PropTypes.string.isRequired,
+    attributeExtensionName: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func
   };
 
   render() {
     return (
       <div>
-        {this.context.extensions.getFormElements().getExtension(this.props.type).getSettings(this.props)}
+        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName === this.props.attributeExtensionName).getSettings(this.props)}
       </div>
     );
   }

@@ -8,20 +8,20 @@ export default class Edit extends React.Component {
   };
 
   static propsTypes = {
-    name: React.PropTypes.string.isRequired,
+    displayName: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
     validation: React.PropTypes.string,
-    type: React.PropTypes.string.isRequired,
+    attributeExtensionName: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
     settings: React.PropTypes.object
   };
 
   constructor(props) {
     super(props);
-    this.onFormElementChange = this.onFormElementChange.bind(this);
+    this.onAttributeChange = this.onAttributeChange.bind(this);
   }
 
-  onFormElementChange(evt) {
+  onAttributeChange(evt) {
     if(this.props.settings.disableEdit === true) {
       return;
     }
@@ -29,17 +29,17 @@ export default class Edit extends React.Component {
   }
 
   render() {
-    let props = Object.assign({}, this.props.settings, { onChange: this.onFormElementChange, value: this.props.value });
+    let props = Object.assign({}, this.props.settings, { onChange: this.onAttributeChange, value: this.props.value });
     const className = classNames("form__group", {
       [this.props.settings.editClassName]: !!this.props.settings.editClassName
     });
-    const extension = this.context.extensions.getFormElements().getExtension(this.props.type);
+    const extension = this.context.extensions.attributes.getExtension(this.props.attributeExtensionName);
     if(this.props.settings.disableEdit || extension.isOnlyProjectExtensionUse()) {
       return false;
     }
     return (
       <div className={className}>
-        <label>{this.props.name}</label>
+        <label>{this.props.displayName}</label>
         {extension.getEdit(props)}
         <ValidationElementError error={this.props.validation} />
       </div>

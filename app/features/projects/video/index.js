@@ -4,6 +4,8 @@ import path from "path";
 export default class extends FileProjectExtension {
   constructor () {
     super("video");
+    this.setDisplayName("Video files");
+    this.setDescription("Project for video files");
   }
 
   collectProjectFiles (files) {
@@ -12,15 +14,5 @@ export default class extends FileProjectExtension {
       const fileExtension = path.extname(file.name);
       return FILE_EXTENSIONS.includes(fileExtension);
     });
-  }
-
-  onListProjects (projects) {
-    projects = projects || [];
-    projects.push({
-      extensionName: this.getName(),
-      displayName: "Video files",
-      description: "Project for video files"
-    });
-    return projects;
   }
 }

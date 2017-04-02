@@ -1,15 +1,12 @@
 import Settings from "./Settings.jsx";
 import Edit from "./Edit.jsx";
 import View from "./View.jsx";
-import FormElementsExtension from "../FormElementsExtension";
+import AttributesExtension from "../AttributesExtension";
 
-
-export default class RatingFormElementsExtension extends FormElementsExtension {
-  static TYPE = "rating";
+export default class RatingAttributesExtension extends AttributesExtension {
   constructor () {
-    super();
+    super("rating");
     this.setDisplayName("rating");
-    this.setName(RatingFormElementsExtension.TYPE);
     this.setSettings(Settings);
     this.setEdit(Edit);
     this.setView(View);

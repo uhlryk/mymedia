@@ -1,13 +1,15 @@
 import ProjectExtension from "../ProjectExtension";
-import InputExtension from "../../extensions/formElements/input/index";
-import TextAreaExtension from "../../extensions/formElements/textArea/index";
-import RatingExtension from "../../extensions/formElements/rating/index";
-import FileSize from "../../extensions/formElements/fileSize/index";
-import Date from "../../extensions/formElements/date/index";
+import InputExtension from "../../attributes/input/index";
+import TextAreaExtension from "../../attributes/textArea/index";
+import RatingExtension from "../../attributes/rating/index";
+import FileSize from "../../attributes/fileSize/index";
+import Date from "../../attributes/date/index";
 
 export default class extends ProjectExtension {
   constructor () {
     super("file");
+    this.setDisplayName("Any files");
+    this.setDescription("Project for various files");
   }
 
   init (manager) {
@@ -21,41 +23,31 @@ export default class extends ProjectExtension {
 
   createProject () {
     super.createProject();
-    this.createFormElement("name-id", InputExtension.TYPE, {
+    this.createAttribute("name-id", InputExtension.TYPE, {
       viewClassName: "file-list__name",
       alwaysVisible: true
     });
 
-    this.createFormElement("path-id", InputExtension.TYPE, {
+    this.createAttribute("path-id", InputExtension.TYPE, {
       viewClassName: "file-list__original-path",
       alwaysVisible: true,
       disableEdit: true
     });
 
-    this.createFormElement("description-id", TextAreaExtension.TYPE, {
+    this.createAttribute("description-id", TextAreaExtension.TYPE, {
       displayName: "Description",
       viewClassName: "file-list__description"
     });
 
-    this.createFormElement("file-size-id", FileSize.TYPE, {
+    this.createAttribute("file-size-id", FileSize.TYPE, {
       displayName: "Size"
     });
-    this.createFormElement("create-date-id", Date.TYPE, {
+    this.createAttribute("create-date-id", Date.TYPE, {
       displayName: "Created"
     });
   }
 
   collectProjectFiles (files) {
     return files;
-  }
-
-  onListProjects (projects) {
-    projects = projects || [];
-    projects.push({
-      extensionName: this.getName(),
-      displayName: "Any files",
-      description: "Project for various files"
-    });
-    return projects;
   }
 }

@@ -1,14 +1,12 @@
 import Settings from "./Settings.jsx";
 import Edit from "./Edit.jsx";
 import View from "./View.jsx";
-import FormElementsExtension from "../FormElementsExtension";
+import AttributesExtension from "../AttributesExtension";
 
-export default class TextAreaFormElementsExtension extends FormElementsExtension {
-  static TYPE = "textArea";
+export default class TextAreaAttributesExtension extends AttributesExtension {
   constructor () {
-    super();
+    super("textArea");
     this.setDisplayName("text area");
-    this.setName(TextAreaFormElementsExtension.TYPE);
     this.setSettings(Settings);
     this.setEdit(Edit);
     this.setView(View);

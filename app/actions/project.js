@@ -10,7 +10,7 @@ import { showLoader, hideLoader } from "./loader";
 import { save } from "./index";
 import * as STATUS from "../constants/status";
 import { addFiles, loadFiles } from "./fileList";
-import { loadElements } from "./formElement";
+import { loadElements } from "./attributes";
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
@@ -62,7 +62,7 @@ function findCollectionFiles() {
               dispatch(hideLoader());
             }
             dispatch(initProject(projectData.project, STATUS.STANDARD));
-            dispatch(loadElements(projectData.formElement));
+            dispatch(loadElements(projectData.attributes));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
               files = extensions.callEvent("FILTER_FILES", files);

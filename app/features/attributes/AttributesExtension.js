@@ -1,11 +1,7 @@
-import React from "react";
-import BaseExtension from "../BaseExtension";
-import FormElementsExtensionManager from "./FormElementsExtensionManager";
-export default class FormElementsExtension extends BaseExtension {
-
-  constructor () {
-    super();
-    this.setType(FormElementsExtensionManager.TYPE);
+import Extensioner from "extensioner";
+export default class AttributesExtension extends Extensioner.Extension {
+  constructor (name) {
+    super(name);
     this.SettingsComponent = () => false;
     this.EditComponent = () => false;
     this.ViewComponent = () => false;

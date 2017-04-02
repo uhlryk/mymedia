@@ -3,6 +3,8 @@ import FileProjectExtension from "../file/index";
 export default class extends FileProjectExtension {
   constructor () {
     super("document");
+    this.setDisplayName("Document files");
+    this.setDescription("Project for document files");
   }
 
   collectProjectFiles (files) {
@@ -11,15 +13,5 @@ export default class extends FileProjectExtension {
       const fileExtension = path.extname(file.name);
       return FILE_EXTENSIONS.includes(fileExtension);
     });
-  }
-
-  onListProjects (projects) {
-    projects = projects || [];
-    projects.push({
-      extensionName: this.getName(),
-      displayName: "Document files",
-      description: "Project for document files"
-    });
-    return projects;
   }
 }

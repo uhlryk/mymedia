@@ -1,8 +1,8 @@
 import _ from "lodash";
 import uuid from "uuid-v4";
-import { ADD_NEW_ELEMENT, LOAD_SAVED_ELEMENTS } from "../actions/formElement";
+import { ADD_NEW_ELEMENT, LOAD_SAVED_ELEMENTS } from "../actions/attributes";
 
-export default function formElement(state = {}, action) {
+export default function attributes(state = {}, action) {
   let newState;
   switch(action.type) {
     case LOAD_SAVED_ELEMENTS:

@@ -7,9 +7,9 @@ export default class View extends React.Component {
   };
 
   static propsTypes = {
-    name: React.PropTypes.string.isRequired,
+    displayName: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
-    type: React.PropTypes.string.isRequired,
+    attributeExtensionName: React.PropTypes.string.isRequired,
     settings: React.PropTypes.object
   }
   render() {
@@ -23,8 +23,8 @@ export default class View extends React.Component {
 
     return (
       <div className={className}>
-        <small>{this.props.name}</small>
-        {this.context.extensions.getFormElements().getExtension(this.props.type).getView(props)}
+        <small>{this.props.displayName}</small>
+        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName === this.props.attributeExtensionName).getView(this.props)}
       </div>
     );
   }

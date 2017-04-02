@@ -105,16 +105,16 @@ class ProjectCreate extends React.Component {
             {
               this.context.extensions.projects.getExtensions()
                 .map(extension => (
-                  <div className="radio" key={extension.extensionName}>
+                  <div className="radio" key={extension.getName()}>
                     <label>
                       <input
                         type="radio"
-                        value={extension.extensionName}
-                        checked={this.state.details.projectExtensionName === extension.extensionName}
-                        onChange={() => this.handleProjectExtensionChange(extension.extensionName)}
+                        value={extension.getName()}
+                        checked={this.state.details.projectExtensionName === extension.getName()}
+                        onChange={() => this.handleProjectExtensionChange(extension.getName())}
                       />
-                      <div><strong>{extension.displayName}</strong></div>
-                      <div><small>{extension.description}</small></div>
+                      <div><strong>{extension.getDisplayName()}</strong></div>
+                      <div><small>{extension.getDescription()}</small></div>
                     </label>
                   </div>
                 ))

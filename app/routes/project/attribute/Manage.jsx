@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
-import Settings from "../../../components/formElements/Settings.jsx";
-import { addNewElement } from "../../../actions/formElement";
+import Settings from "../../../components/attributes/Settings.jsx";
+import { addNewElement } from "../../../actions/attributes";
 
 const defaultState = {
   details: {
@@ -15,7 +15,7 @@ const defaultState = {
 };
 
 @connect(state => ({
-  formElement: state.formElement
+  attributes: state.attributes
 }))
 class Manage extends React.Component {
 
@@ -84,8 +84,8 @@ class Manage extends React.Component {
   }
 
   render() {
-    const fields = Object.keys(this.props.formElement).map(id => {
-      let element = this.props.formElement[id];
+    const fields = Object.keys(this.props.attributes).map(id => {
+      let element = this.props.attributes[id];
       return <div key={element.id}>{element.name}</div>
     });
 

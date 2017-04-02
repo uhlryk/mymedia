@@ -1,17 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import Edit from "../../../components/formElements/Edit.jsx";
+import Edit from "../../../components/attributes/Edit.jsx";
 import TagInput from "../../../components/tags/TagInput.jsx";
 import RemovableTag from "../../../components/tags/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { updateFile } from "../../../actions/fileList";
 import ReactTooltip from "react-tooltip";
-import FormElementExtensionManager from "../../../features/extensions/formElements/FormElementsExtensionManager";
+import AttributesExtensionManager from "../../../features/attributes/AttributesExtensionManager";
 @connect(state => ({
   fileList: state.fileList,
   tagList: state.tagList,
-  formElement: state.formElement
+  attributes: state.attributes
 }))
 class Manage extends React.Component {
 
@@ -25,7 +25,7 @@ class Manage extends React.Component {
 
     this.onCloseClick = this.onCloseClick.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
-    this.onFormElementChange = this.onFormElementChange.bind(this);
+    this.onAttributeChange = this.onAttributeChange.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRemoveTag = this.handleRemoveTag.bind(this);
@@ -41,9 +41,9 @@ class Manage extends React.Component {
     });
   }
 
-  onFormElementChange(elementId, value) {
+  onAttributeChange(attributeId, value) {
     this.setState({
-      details: Object.assign({}, this.state.details, { [elementId]: value})
+      details: Object.assign({}, this.state.details, { [attributeId]: value})
     });
   }
 
@@ -87,12 +87,12 @@ class Manage extends React.Component {
       newValidation.name = "Field is required";
     }
 
-    Object.keys(this.props.formElement).map(elementId => {
-      let element = this.props.formElement[elementId];
-      const validationResult = FormElementExtensionManager.validate(element, this.state.details[elementId]);
+    Object.keys(this.props.attributes).map(attributeId => {
+      let element = this.props.attributes[attributeId];
+      const validationResult = AttributesExtensionManager.validate(element, this.state.details[attributeId]);
       if(validationResult !== true) {
         isValid = false;
-        newValidation[elementId] = "Field is required";
+        newValidation[attributeId] = "Field is required";
       }
     });
 
@@ -134,16 +134,16 @@ class Manage extends React.Component {
             />
             <ValidationElementError error={this.state.validation.name} />
           </div>
-          {Object.keys(this.props.formElement).map(elementId => {
-            let element = this.props.formElement[elementId];
+          {Object.keys(this.props.attributes).map(attributeId => {
+            let attribute = this.props.attributes[attributeId];
             return (
               <Edit
-                key={elementId}
-                onChange={evt => this.onFormElementChange(elementId, evt.target.value)}
-                value={this.state.details[elementId]}
-                name={element.name} type={element.type}
-                settings={element.settings}
-                validation={this.state.validation[elementId]}
+                key={attributeId}
+                onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
+                value={this.state.details[attributeId]}
+                displayName={attribute.displayName} attributeExtensionName={attribute.attributeExtensionName}
+                settings={attribute.settings}
+                validation={this.state.validation[attributeId]}
               />
             )
           })}

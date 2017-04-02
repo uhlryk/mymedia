@@ -11,7 +11,7 @@ export function save() {
       project: getState().project,
       media: getState().fileList,
       tagList: getState().tagList,
-      formElement: getState().formElement
+      attributes: getState().attributes
     }), (err) => {
       if(err) {
       } else {

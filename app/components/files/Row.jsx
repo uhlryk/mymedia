@@ -2,11 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import classNames from "classnames";
-import View from "../formElements/View.jsx";
+import View from "../attributes/View.jsx";
 import { openFile } from "./../../actions/openFile";
 import Tag from "../tags/Tag.jsx";
 @connect(state => ({
-  formElement: state.formElement
+  attributes: state.attributes
 }))
 class CustomRow extends React.Component {
 
@@ -48,32 +48,32 @@ class CustomRow extends React.Component {
     });
     return (
       <div className={className}>
-        {Object.keys(this.props.formElement).map(elementId => {
-          let element = this.props.formElement[elementId];
-          if(!element.settings.alwaysVisible) {
+        {Object.keys(this.props.attributes).map(attributeId => {
+          let attribute = this.props.attributes[attributeId];
+          if(!attribute.settings.alwaysVisible) {
             return false;
           }
           return (
             <View
-              key={elementId}
-              value={this.props.data[elementId]}
-              name={element.name} type={element.type}
-              settings={element.settings}
+              key={attributeId}
+              value={this.props.data[attributeId]}
+              name={attribute.name} type={attribute.type}
+              settings={attribute.settings}
             />
           )
         })}
         <div className="file-list__additional">
-          {Object.keys(this.props.formElement).map(elementId => {
-            let element = this.props.formElement[elementId];
-            if(element.settings.alwaysVisible === true) {
+          {Object.keys(this.props.attributes).map(attributeId => {
+            let attribute = this.props.attributes[attributeId];
+            if(attribute.settings.alwaysVisible === true) {
               return false;
             }
             return (
               <View
-                key={elementId}
-                value={this.props.data[elementId]}
-                name={element.name} type={element.type}
-                settings={element.settings}
+                key={attributeId}
+                value={this.props.data[attributeId]}
+                name={attribute.name} type={attribute.type}
+                settings={attribute.settings}
               />
             )
           })}

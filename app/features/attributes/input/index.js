@@ -1,14 +1,13 @@
 import Settings from "./Settings.jsx";
 import Edit from "./Edit.jsx";
 import View from "./View.jsx";
-import FormElementsExtension from "../FormElementsExtension";
+import AttributesExtension from "../AttributesExtension";
 
-export default class InputFormElementsExtension extends FormElementsExtension {
+export default class InputAttributesExtension extends AttributesExtension {
   static TYPE = "input";
   constructor () {
-    super();
+    super("input");
     this.setDisplayName("input");
-    this.setName(InputFormElementsExtension.TYPE);
     this.setSettings(Settings);
     this.setEdit(Edit);
     this.setView(View);
