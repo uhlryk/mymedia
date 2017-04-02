@@ -1,9 +1,9 @@
 import ProjectExtension from "../ProjectExtension";
-import InputExtension from "../../formElements/input/index";
-import TextAreaExtension from "../../formElements/textArea/index";
-import RatingExtension from "../../formElements/rating/index";
-import FileSize from "../../formElements/fileSize/index";
-import Date from "../../formElements/date/index";
+import InputExtension from "../../extensions/formElements/input/index";
+import TextAreaExtension from "../../extensions/formElements/textArea/index";
+import RatingExtension from "../../extensions/formElements/rating/index";
+import FileSize from "../../extensions/formElements/fileSize/index";
+import Date from "../../extensions/formElements/date/index";
 
 export default class extends ProjectExtension {
   constructor () {
@@ -12,15 +12,15 @@ export default class extends ProjectExtension {
 
   init (manager) {
     super.init(manager);
-    manager.registerExtension(new InputExtension());
-    manager.registerExtension(new TextAreaExtension());
-    manager.registerExtension(new RatingExtension());
-    manager.registerExtension(new FileSize());
-    manager.registerExtension(new Date());
+    this.getManager().getRootManager().registerExtension(new InputExtension());
+    this.getManager().getRootManager().registerExtension(new TextAreaExtension());
+    this.getManager().getRootManager().registerExtension(new RatingExtension());
+    this.getManager().getRootManager().registerExtension(new FileSize());
+    this.getManager().getRootManager().registerExtension(new Date());
   }
 
-  onCreateProject () {
-    super.onCreateProject();
+  createProject () {
+    super.createProject();
     this.createFormElement("name-id", InputExtension.TYPE, {
       viewClassName: "file-list__name",
       alwaysVisible: true
@@ -45,8 +45,7 @@ export default class extends ProjectExtension {
     });
   }
 
-  onFilterFiles (filteredFiles, initialFiles) {
-    let files = filteredFiles || initialFiles;
+  collectProjectFiles (files) {
     return files;
   }
 

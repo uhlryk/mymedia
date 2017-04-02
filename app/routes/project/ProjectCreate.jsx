@@ -7,7 +7,7 @@ const defaultState = {
     name: "",
     isHidden: false,
     path: null,
-    projectType: null
+    projectExtensionName: null
   },
   validation: {}
 };
@@ -41,9 +41,9 @@ class ProjectCreate extends React.Component {
     });
   }
 
-  handleProjectTypeChange(projectType) {
+  handleProjectExtensionChange(projectExtensionName) {
     this.setState({
-      details: Object.assign({}, this.state.details, { projectType: projectType})
+      details: Object.assign({}, this.state.details, { projectExtensionName: projectExtensionName})
     });
   }
 
@@ -62,9 +62,9 @@ class ProjectCreate extends React.Component {
       isValid = false;
       newValidation.name = 'Field is required';
     }
-    if(!this.state.details.projectType) {
+    if(!this.state.details.projectExtensionName) {
       isValid = false;
-      newValidation.projectType = 'Field is required';
+      newValidation.projectExtensionName = 'Field is required';
     }
     if(isValid === false) {
       this.setState({
@@ -103,23 +103,23 @@ class ProjectCreate extends React.Component {
           <div className="form__group">
             <label>Select project type</label>
             {
-              this.context.extensions.callEvent("LIST_PROJECTS")
-                .map(extensionResponse => (
-                  <div className="radio" key={extensionResponse.extensionName}>
+              this.context.extensions.projects.getExtensions()
+                .map(extension => (
+                  <div className="radio" key={extension.extensionName}>
                     <label>
                       <input
                         type="radio"
-                        value={extensionResponse.extensionName}
-                        checked={this.state.details.projectType === extensionResponse.extensionName}
-                        onChange={() => this.handleProjectTypeChange(extensionResponse.extensionName)}
+                        value={extension.extensionName}
+                        checked={this.state.details.projectExtensionName === extension.extensionName}
+                        onChange={() => this.handleProjectExtensionChange(extension.extensionName)}
                       />
-                      <div><strong>{extensionResponse.displayName}</strong></div>
-                      <div><small>{extensionResponse.description}</small></div>
+                      <div><strong>{extension.displayName}</strong></div>
+                      <div><small>{extension.description}</small></div>
                     </label>
                   </div>
                 ))
             }
-            <ValidationElementError error={this.state.validation.projectType} />
+            <ValidationElementError error={this.state.validation.projectExtensionName} />
           </div>
           <div className="form__group">
             <div><label>Project location</label></div>

@@ -7,7 +7,6 @@ import fileList from "../helpers/fileList";
 import fileLoad from "../helpers/fileLoad";
 
 import { showLoader, hideLoader } from "./loader";
-// import { showErrorModal, showYesNoModal } from "./modal";
 import { save } from "./index";
 import * as STATUS from "../constants/status";
 import { addFiles, loadFiles } from "./fileList";
@@ -24,17 +23,17 @@ export function initProject(data, status) {
   }
 }
 
-function createProjectFile(data) {
+function createProjectFile(newProjectData) {
   return (path, result, extensions) => {
     return (dispatch, getState) => {
       if (result) {
         //TODO: show error form that on this directory appear project file
       } else {
         dispatch(showLoader("finding files"));
-        dispatch(initProject(data, STATUS.NEW));
-        extensions.callEvent("PROJECT_CREATE");
+        dispatch(initProject(newProjectData, STATUS.NEW));
+        extensions.projects.getActive().createProject();
         fileList(path, (err, files) => {
-          files = extensions.callEvent("FILTER_FILES", files);
+          files = extensions.projects.getActive().collectProjectFiles(files);
           dispatch(addFiles(files));
           dispatch(hideLoader());
           dispatch(save());
@@ -96,9 +95,9 @@ function findProjectFile(path, extensions, callback) {
   };
 }
 
-export function createProject(data, extensions) {
+export function createProject(newProjectData, extensions) {
   return (dispatch, getState) => {
-    dispatch(findProjectFile(data.path, extensions, createProjectFile(data)));
+    dispatch(findProjectFile(newProjectData.path, extensions, createProjectFile(newProjectData)));
   }
 }
 

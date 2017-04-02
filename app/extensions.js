@@ -1,5 +1,8 @@
+import file from "./features/projects/file/index";
+import video from "./features/projects/video/index";
+import document from "./features/projects/document/index";
+import music from "./features/projects/music/index";
 
-export file from "./features/extensions/projects/file/index";
-export video from "./features/extensions/projects/video/index";
-export document from "./features/extensions/projects/document/index";
-export music from "./features/extensions/projects/music/index";
+export const projects = {
+  file, video, document, music
+};
