@@ -36,6 +36,8 @@ class RegisterExtensions extends React.Component {
   }
 
   componentWillUpdate(nextprops, nextstate) {
+    console.log("A0");
+    console.log(this.extensions);
     this.extensions.callEvent("STORE_CHANGE", nextprops)
   }
 

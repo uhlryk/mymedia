@@ -3,7 +3,8 @@ import path from "path";
 
 export default class extends FileProjectExtension {
   constructor () {
-    super("video");
+    super();
+    this.setName("video");
     this.setDisplayName("Video files");
     this.setDescription("Project for video files");
   }

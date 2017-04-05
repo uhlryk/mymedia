@@ -2,7 +2,8 @@ import FileProjectExtension from "../file/index";
 
 export default class extends FileProjectExtension {
   constructor () {
-    super("document");
+    super();
+    this.setName("document");
     this.setDisplayName("Document files");
     this.setDescription("Project for document files");
   }

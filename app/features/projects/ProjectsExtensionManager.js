@@ -8,7 +8,9 @@ export default class ProjectExtensionManager extends Extensioner.Manager {
     return this._rootManager;
   }
   getActive() {
-    let project = this.getStore().project;
-    return this.getExtensions().find(extension => extension.getName === project.projectExtensionName);
+    let project = this.getRootManager().getStore().project;
+    console.log(this.getExtensions());
+    console.log(project);
+    return this.getExtensions().find(extension => extension.getName() === project.projectExtensionName);
   }
 }

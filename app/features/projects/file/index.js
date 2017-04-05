@@ -7,7 +7,8 @@ import Date from "../../attributes/date/index";
 
 export default class extends ProjectExtension {
   constructor () {
-    super("file");
+    super();
+    this.setName("file");
     this.setDisplayName("Any files");
     this.setDescription("Project for various files");
   }
