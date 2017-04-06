@@ -17,6 +17,9 @@ export default class ProjectExtension extends Extensioner.Extension {
   collectProjectFiles (files) {
     return files;
   }
+  mapFilesProperties (files) {
+    return files;
+  }
   createAttribute (id, extensionName, settings) {
     this.getManager().getRootManager().getStore().dispatch(
       addNewElementWithId(id, extensionName, settings)

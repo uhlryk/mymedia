@@ -34,6 +34,7 @@ function createProjectFile(newProjectData) {
         extensions.projects.getActive().createProject();
         fileList(path, (err, files) => {
           files = extensions.projects.getActive().collectProjectFiles(files);
+          files = extensions.projects.getActive().mapFilesProperties(files);
           dispatch(addFiles(files));
           dispatch(hideLoader());
           dispatch(save());
@@ -66,6 +67,7 @@ function findCollectionFiles() {
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
               files = extensions.projects.getActive().collectProjectFiles(files);
+              files = extensions.projects.getActive().mapFilesProperties(files);
               dispatch(addFiles(files, true));
               dispatch(hideLoader());
               dispatch(save());
