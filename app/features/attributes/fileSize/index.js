@@ -3,7 +3,8 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class FileSizeAttributesExtension extends AttributesExtension {
   constructor () {
-    super("fileSize");
+    super();
+    this.setName ("fileSize");
     this.setView(View);
     this.setOnlyProjectExtensionUse();
   }

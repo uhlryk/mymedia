@@ -1,8 +1,8 @@
 import React from "react";
 import Extensioner from "extensioner";
 export default class AttributesExtension extends Extensioner.Extension {
-  constructor (name) {
-    super(name);
+  constructor () {
+    super();
     this.SettingsComponent = () => false;
     this.EditComponent = () => false;
     this.ViewComponent = () => false;

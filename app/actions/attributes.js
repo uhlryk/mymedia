@@ -1,6 +1,6 @@
 import { save } from "./index";
-export const ADD_NEW_ELEMENT = "form_element.new_add";
-export const LOAD_SAVED_ELEMENTS = "form_element.load_element";
+export const ADD_NEW_ELEMENT = "attribute.new_add";
+export const LOAD_SAVED_ELEMENTS = "attribute.load_element";
 
 export function addNewElement(extensionName, settings) {
   return (dispatch, getState) => {

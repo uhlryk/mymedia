@@ -5,7 +5,8 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class RatingAttributesExtension extends AttributesExtension {
   constructor () {
-    super("rating");
+    super();
+    this.setName ("rating");
     this.setDisplayName("rating");
     this.setSettings(Settings);
     this.setEdit(Edit);

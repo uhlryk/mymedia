@@ -21,8 +21,7 @@ export default function attributes(state = {}, action) {
       }
       newState[id] = {
         id,
-        name: action.name,
-        type: action.formType,
+        extensionName: action.extensionName,
         settings: action.settings
       };
       return newState;

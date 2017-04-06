@@ -20,11 +20,11 @@ export default class View extends React.Component {
     const className = classNames("file-list__element", {
       [this.props.settings.viewClassName]: !!this.props.settings.viewClassName
     });
-
+    console.log(this.context.extensions.attributes.getExtensions());
     return (
       <div className={className}>
         <small>{this.props.displayName}</small>
-        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName === this.props.attributeExtensionName).getView(this.props)}
+        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attributeExtensionName).getView(this.props)}
       </div>
     );
   }

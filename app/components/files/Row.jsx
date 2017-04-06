@@ -57,7 +57,7 @@ class CustomRow extends React.Component {
             <View
               key={attributeId}
               value={this.props.data[attributeId]}
-              name={attribute.name} type={attribute.type}
+              displayName={attribute.settings.displayName} attributeExtensionName={attribute.extensionName}
               settings={attribute.settings}
             />
           )
@@ -72,7 +72,7 @@ class CustomRow extends React.Component {
               <View
                 key={attributeId}
                 value={this.props.data[attributeId]}
-                name={attribute.name} type={attribute.type}
+                displayName={attribute.settings.displayName} attributeExtensionName={attribute.extensionName}
                 settings={attribute.settings}
               />
             )

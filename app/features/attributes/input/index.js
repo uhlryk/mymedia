@@ -4,9 +4,9 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class InputAttributesExtension extends AttributesExtension {
-  static TYPE = "input";
   constructor () {
-    super("input");
+    super();
+    this.setName ("input");
     this.setDisplayName("input");
     this.setSettings(Settings);
     this.setEdit(Edit);

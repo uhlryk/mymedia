@@ -15,35 +15,41 @@ export default class extends ProjectExtension {
 
   init (manager) {
     super.init(manager);
-    this.getManager().getRootManager().registerExtension(new InputExtension());
-    this.getManager().getRootManager().registerExtension(new TextAreaExtension());
-    this.getManager().getRootManager().registerExtension(new RatingExtension());
-    this.getManager().getRootManager().registerExtension(new FileSize());
-    this.getManager().getRootManager().registerExtension(new Date());
+    this.inputExtension = new InputExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.inputExtension);
+    this.textAreaExtension = new TextAreaExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.textAreaExtension);
+    this.ratingExtension = new RatingExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.ratingExtension);
+    this.fileSizeExtension = new FileSize();
+    this.getManager().getRootManager().attributes.registerExtension(this.fileSizeExtension);
+    this.dateExtension = new Date();
+    this.getManager().getRootManager().attributes.registerExtension(this.dateExtension);
   }
 
   createProject () {
     super.createProject();
-    this.createAttribute("name-id", InputExtension.TYPE, {
+    this.createAttribute("name-id", this.inputExtension.getName(), {
       viewClassName: "file-list__name",
       alwaysVisible: true
     });
 
-    this.createAttribute("path-id", InputExtension.TYPE, {
+    this.createAttribute("path-id", this.inputExtension.getName(), {
       viewClassName: "file-list__original-path",
       alwaysVisible: true,
       disableEdit: true
     });
 
-    this.createAttribute("description-id", TextAreaExtension.TYPE, {
+    this.createAttribute("description-id", this.textAreaExtension.getName(), {
       displayName: "Description",
       viewClassName: "file-list__description"
     });
 
-    this.createAttribute("file-size-id", FileSize.TYPE, {
+    this.createAttribute("file-size-id", this.fileSizeExtension.getName(), {
       displayName: "Size"
     });
-    this.createAttribute("create-date-id", Date.TYPE, {
+
+    this.createAttribute("create-date-id", this.dateExtension.getName(), {
       displayName: "Created"
     });
   }
