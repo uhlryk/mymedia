@@ -65,8 +65,7 @@ function findCollectionFiles() {
             dispatch(loadElements(projectData.attributes));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
-              files = extensions.callEvent("FILTER_FILES", files);
-              files = extensions.getProjects().prepareProjectFiles(files);
+              files = extensions.projects.getActive().collectProjectFiles(files);
               dispatch(addFiles(files, true));
               dispatch(hideLoader());
               dispatch(save());
