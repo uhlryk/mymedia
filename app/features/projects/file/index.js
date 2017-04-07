@@ -58,12 +58,12 @@ export default class extends ProjectExtension {
     return files;
   }
 
-  mapFilesProperties (files) {
-    return files.map(file => Object.assign({}, file, {
+  mapFileProperties (file) {
+    return {
       "name-id": file.name,
       "path-id": file.path,
       "file-size-id": file.stat.size,
       "create-date-id": file.stat.birthtime
-    }));
+    };
   }
 }

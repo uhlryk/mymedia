@@ -18,7 +18,10 @@ export default class ProjectExtension extends Extensioner.Extension {
     return files;
   }
   mapFilesProperties (files) {
-    return files;
+    return files.map(file => Object.assign({}, file, this.mapFileProperties(file)));
+  }
+  mapFileProperties (file) {
+    return file;
   }
   createAttribute (id, extensionName, settings) {
     this.getManager().getRootManager().getStore().dispatch(
