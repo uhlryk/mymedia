@@ -7,9 +7,8 @@ import { addNewAttribute } from "../../../actions/attributes";
 
 const defaultState = {
   details: {
-    name: "",
-    type: "",
-    settings: {}
+    displayName: "",
+    extensionName: ""
   },
   validation: {}
 };
@@ -27,9 +26,9 @@ class Manage extends React.Component {
     super(props);
     this.state = defaultState;
     this.onCloseClick = this.onCloseClick.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleDisplayNameChange = this.handleDisplayNameChange.bind(this);
     this.handleSettingsChange = this.handleSettingsChange.bind(this);
-    this.handleTypeChange = this.handleTypeChange.bind(this);
+    this.handleExtensionChange = this.handleExtensionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -37,21 +36,21 @@ class Manage extends React.Component {
     this.props.dispatch(push("project/media"));
   }
 
-  handleNameChange(evt) {
+  handleDisplayNameChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, { name: evt.target.value})
+      details: Object.assign({}, this.state.details, { displayName: evt.target.value})
     });
   }
 
   handleSettingsChange(settings) {
     this.setState({
-      details: Object.assign({}, this.state.details, { settings: Object.assign({}, settings)})
+      details: Object.assign({}, this.state.details, settings)
     });
   }
 
-  handleTypeChange(evt) {
+  handleExtensionChange(evt) {
     this.setState({
-      details: Object.assign({}, this.state.details, defaultState.details,{type: evt.target.value})
+      details: Object.assign({}, this.state.details, defaultState.details, { extensionName: evt.target.value})
     });
   }
 
@@ -60,20 +59,20 @@ class Manage extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(addNewAttribute(this.state.details.name, this.state.details.type, this.state.details.settings));
+    this.props.dispatch(addNewAttribute(this.state.details.extensionName, this.state.details));
     this.setState(defaultState);
   }
 
   validation() {
     let newValidation = {};
     let isValid = true;
-    if(!this.state.details.name || this.state.details.name === "") {
+    if(!this.state.details.displayName || this.state.details.displayName === "") {
       isValid = false;
-      newValidation.name = 'Field is required';
+      newValidation.displayName = 'Field is required';
     }
-    if(!this.state.details.type || this.state.details.type === "") {
+    if(!this.state.details.extensionName || this.state.details.extensionName === "") {
       isValid = false;
-      newValidation.type = 'Field is required';
+      newValidation.extensionName = 'Field is required';
     }
     if(isValid === false) {
       this.setState({
@@ -85,15 +84,15 @@ class Manage extends React.Component {
 
   render() {
     const fields = Object.keys(this.props.attributes).map(id => {
-      let element = this.props.attributes[id];
-      return <div key={element.id}>{element.name}</div>
+      let attribute = this.props.attributes[id];
+      return <div key={attribute.id}>{attribute.displayName}</div>
     });
 
-    let nameElement = (
+    let attributeDisplayNameInput = (
       <div className="form__group">
-        <label>Element name</label>
-        <input type="text" className="form__element" value={this.state.details.name} onChange={this.handleNameChange} placeholder="Enter name" />
-        <ValidationElementError error={this.state.validation.name} />
+        <label>Display name</label>
+        <input type="text" className="form__element" value={this.state.details.displayName} onChange={this.handleDisplayNameChange} placeholder="Enter name" />
+        <ValidationElementError error={this.state.validation.displayName} />
       </div>
     );
     return (
@@ -106,8 +105,8 @@ class Manage extends React.Component {
         </div>
         <form onSubmit={this.handleSubmit}>
           <div className="form__group">
-            <label>Element type</label>
-            <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
+            <label>Attribute type</label>
+            <select value={this.state.details.extensionName} onChange={this.handleExtensionChange} className="form__element">
               <option value="">select type</option>
               {
                 this.context.extensions.attributes.getExtensions().filter(extension => !extension.isOnlyProjectExtensionUse())
@@ -116,11 +115,11 @@ class Manage extends React.Component {
                 ))
               }
             </select>
-            <ValidationElementError error={this.state.validation.type} />
+            <ValidationElementError error={this.state.validation.extensionName} />
           </div>
-          {this.state.details.type ? nameElement : null}
+          {this.state.details.extensionName ? attributeDisplayNameInput : null}
           <div className="form__group">
-            { this.state.details.type ? <Settings type={this.state.details.type} onChange={this.handleSettingsChange}/> : false }
+            { this.state.details.extensionName ? <Settings attributeExtensionName={this.state.details.extensionName} onChange={this.handleSettingsChange}/> : false }
           </div>
           <button type="submit" className="form__button">Create</button>
         </form>

@@ -41,7 +41,7 @@ export default class Settings extends React.Component {
   render() {
     return (
       <fieldset className="form__subform">
-        <legend>Input settings</legend>
+        <legend>TextArea settings</legend>
         <div className="form__group">
           <label>Placeholder</label>
           <input type="text" className="form__element" placeholder="Enter placeholder" value={this.state.details.placeholder} onChange={this.handlePlaceholderChange} />

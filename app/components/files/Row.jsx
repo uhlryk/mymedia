@@ -50,30 +50,28 @@ class CustomRow extends React.Component {
       <div className={className}>
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
-          if(!attribute.settings.alwaysVisible) {
+          if(!attribute.alwaysVisible) {
             return false;
           }
           return (
             <View
               key={attributeId}
               value={this.props.data[attributeId]}
-              displayName={attribute.settings.displayName} attributeExtensionName={attribute.extensionName}
-              settings={attribute.settings}
+              attribute={attribute}
             />
           )
         })}
         <div className="file-list__additional">
           {Object.keys(this.props.attributes).map(attributeId => {
             let attribute = this.props.attributes[attributeId];
-            if(attribute.settings.alwaysVisible === true) {
+            if(attribute.alwaysVisible === true) {
               return false;
             }
             return (
               <View
                 key={attributeId}
                 value={this.props.data[attributeId]}
-                displayName={attribute.settings.displayName} attributeExtensionName={attribute.extensionName}
-                settings={attribute.settings}
+                attribute={attribute}
               />
             )
           })}

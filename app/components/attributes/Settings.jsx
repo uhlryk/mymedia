@@ -13,7 +13,7 @@ export default class Settings extends React.Component {
   render() {
     return (
       <div>
-        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName === this.props.attributeExtensionName).getSettings(this.props)}
+        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attributeExtensionName).getSettings(this.props)}
       </div>
     );
   }

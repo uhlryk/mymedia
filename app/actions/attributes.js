@@ -7,7 +7,7 @@ export function addNewAttribute(extensionName, settings) {
     dispatch({
       type: ADD_NEW_ATTRIBUTE,
       extensionName: extensionName,
-      settings
+      ...settings
     });
     dispatch(save());
   };
@@ -19,7 +19,7 @@ export function addNewAttributeWithId(id, extensionName, settings) {
       type: ADD_NEW_ATTRIBUTE,
       id,
       extensionName: extensionName,
-      settings
+      ...settings
     });
     dispatch(save());
   };

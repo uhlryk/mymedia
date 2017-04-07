@@ -41,7 +41,7 @@ export default class Settings extends React.Component {
   render() {
     return (
       <fieldset className="form__subform">
-        <legend>Input settings</legend>
+        <legend>Rating settings</legend>
         <div className="form__group">
           <label>Number of stars</label>
           <input type="number" className="form__element" placeholder="Enter star number" value={this.state.details.starNumber} onChange={this.handleStarNumberChange} />

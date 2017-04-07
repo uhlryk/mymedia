@@ -12,6 +12,16 @@ export default function attributes(state = {}, action) {
       });
       return newState;
     case ADD_NEW_ATTRIBUTE:
+      const {type, ...attributeData} = action;
+      /**
+       * attributeData:
+       * - extensionName name of extension attribute
+       * - displayName what should be shown
+       * - viewClassName
+       * - alwaysVisible it will be visible on top of resource
+       * - disableEdit it will not be visible in edit mode
+       *
+       */
       newState = _.cloneDeep(state);
       let id;
       if (action.id) {
@@ -21,8 +31,7 @@ export default function attributes(state = {}, action) {
       }
       newState[id] = {
         id,
-        extensionName: action.extensionName,
-        settings: action.settings
+        ...attributeData
       };
       return newState;
     default:

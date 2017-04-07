@@ -7,24 +7,21 @@ export default class View extends React.Component {
   };
 
   static propsTypes = {
-    displayName: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
-    attributeExtensionName: React.PropTypes.string.isRequired,
-    settings: React.PropTypes.object
+    attribute: React.PropTypes.object
   }
   render() {
-    let value = this.props.value || (this.props.settings && this.props.settings.defaultValue);
+    let value = this.props.value || (this.props.attribute && this.props.attribute.defaultValue);
     if(!value) return false;
-    var props = Object.assign({}, this.props.settings, { value });
+    var attributeOptions = Object.assign({}, this.props.attribute, { value });
 
     const className = classNames("file-list__element", {
-      [this.props.settings.viewClassName]: !!this.props.settings.viewClassName
+      [this.props.attribute.viewClassName]: !!this.props.attribute.viewClassName
     });
-    console.log(this.context.extensions.attributes.getExtensions());
     return (
       <div className={className}>
-        <small>{this.props.displayName}</small>
-        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attributeExtensionName).getView(this.props)}
+        <small>{this.props.attribute.displayName}</small>
+        {this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName).getView(attributeOptions)}
       </div>
     );
   }
