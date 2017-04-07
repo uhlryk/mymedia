@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import Settings from "../../../components/attributes/Settings.jsx";
-import { addNewElement } from "../../../actions/attributes";
+import { addNewAttribute } from "../../../actions/attributes";
 
 const defaultState = {
   details: {
@@ -60,7 +60,7 @@ class Manage extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(addNewElement(this.state.details.name, this.state.details.type, this.state.details.settings));
+    this.props.dispatch(addNewAttribute(this.state.details.name, this.state.details.type, this.state.details.settings));
     this.setState(defaultState);
   }
 
@@ -110,7 +110,7 @@ class Manage extends React.Component {
             <select value={this.state.details.type} onChange={this.handleTypeChange} className="form__element">
               <option value="">select type</option>
               {
-                this.context.extensions.getFormElements().getExtensions().filter(extension => !extension.isOnlyProjectExtensionUse())
+                this.context.extensions.attributes.getExtensions().filter(extension => !extension.isOnlyProjectExtensionUse())
                 .map(extension => (
                   <option key={extension.getName()} value={extension.getName()}>{extension.getDisplayName()}</option>
                 ))

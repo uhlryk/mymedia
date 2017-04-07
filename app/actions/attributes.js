@@ -1,11 +1,11 @@
 import { save } from "./index";
-export const ADD_NEW_ELEMENT = "attribute.new_add";
-export const LOAD_SAVED_ELEMENTS = "attribute.load_element";
+export const ADD_NEW_ATTRIBUTE = "attribute.new_add";
+export const LOAD_SAVED_ATTRIBUTES = "attribute.load_element";
 
-export function addNewElement(extensionName, settings) {
+export function addNewAttribute(extensionName, settings) {
   return (dispatch, getState) => {
     dispatch({
-      type: ADD_NEW_ELEMENT,
+      type: ADD_NEW_ATTRIBUTE,
       extensionName: extensionName,
       settings
     });
@@ -13,10 +13,10 @@ export function addNewElement(extensionName, settings) {
   };
 }
 
-export function addNewElementWithId(id, extensionName, settings) {
+export function addNewAttributeWithId(id, extensionName, settings) {
   return (dispatch, getState) => {
     dispatch({
-      type: ADD_NEW_ELEMENT,
+      type: ADD_NEW_ATTRIBUTE,
       id,
       extensionName: extensionName,
       settings
@@ -25,10 +25,10 @@ export function addNewElementWithId(id, extensionName, settings) {
   };
 }
 
-export function loadElements(list) {
+export function loadAttributes(list) {
   return (dispatch, getState) => {
     dispatch({
-      type: LOAD_SAVED_ELEMENTS,
+      type: LOAD_SAVED_ATTRIBUTES,
       list
     });
   };

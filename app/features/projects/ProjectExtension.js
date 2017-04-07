@@ -1,4 +1,4 @@
-import { addNewElementWithId } from "../../actions/attributes";
+import { addNewAttributeWithId } from "../../actions/attributes";
 import Extensioner from "extensioner";
 export default class ProjectExtension extends Extensioner.Extension {
   setDisplayName(displayName) {
@@ -25,7 +25,7 @@ export default class ProjectExtension extends Extensioner.Extension {
   }
   createAttribute (id, extensionName, settings) {
     this.getManager().getRootManager().getStore().dispatch(
-      addNewElementWithId(id, extensionName, settings)
+      addNewAttributeWithId(id, extensionName, settings)
     )
   }
 }

@@ -10,7 +10,7 @@ import { showLoader, hideLoader } from "./loader";
 import { save } from "./index";
 import * as STATUS from "../constants/status";
 import { addFiles, loadFiles } from "./fileList";
-import { loadElements } from "./attributes";
+import { loadAttributes } from "./attributes";
 
 export const INIT_PROJECT = "project.init";
 export const CLEAR_PROJECT = "project.clear";
@@ -63,7 +63,7 @@ function findCollectionFiles() {
               dispatch(hideLoader());
             }
             dispatch(initProject(projectData.project, STATUS.STANDARD));
-            dispatch(loadElements(projectData.attributes));
+            dispatch(loadAttributes(projectData.attributes));
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
               files = extensions.projects.getActive().collectProjectFiles(files);
