@@ -4,6 +4,7 @@ import TextAreaExtension from "../../attributes/textArea/index";
 import RatingExtension from "../../attributes/rating/index";
 import FileSize from "../../attributes/fileSize/index";
 import Date from "../../attributes/date/index";
+import Tag from "../../attributes/tag/index";
 
 export default class extends ProjectExtension {
   constructor () {
@@ -25,6 +26,8 @@ export default class extends ProjectExtension {
     this.getManager().getRootManager().attributes.registerExtension(this.fileSizeExtension);
     this.dateExtension = new Date();
     this.getManager().getRootManager().attributes.registerExtension(this.dateExtension);
+    this.tagExtension = new Tag();
+    this.getManager().getRootManager().attributes.registerExtension(this.tagExtension);
   }
 
   createProject () {

@@ -2,15 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import Edit from "../../../components/attributes/Edit.jsx";
-import TagInput from "../../../components/tags/TagInput.jsx";
-import RemovableTag from "../../../components/tags/RemovableTag.jsx";
+import TagInput from "../../../features/attributes/tag/TagInput.jsx";
+import RemovableTag from "../../../features/attributes/tag/RemovableTag.jsx";
 import ValidationElementError from "../../../components/ValidationElementError.jsx";
 import { updateFile } from "../../../actions/fileList";
 import ReactTooltip from "react-tooltip";
 import AttributesExtensionManager from "../../../features/attributes/AttributesExtensionManager";
 @connect(state => ({
   fileList: state.fileList,
-  tagList: state.tagList,
   attributes: state.attributes
 }))
 class Manage extends React.Component {
@@ -25,9 +24,7 @@ class Manage extends React.Component {
 
     this.onCloseClick = this.onCloseClick.bind(this);
     this.onAttributeChange = this.onAttributeChange.bind(this);
-    this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleRemoveTag = this.handleRemoveTag.bind(this);
   }
 
   onCloseClick() {
@@ -35,32 +32,8 @@ class Manage extends React.Component {
   }
 
   onAttributeChange(attributeId, value) {
-    console.log("Manage.onAttributeChange");
     this.setState({
       details: Object.assign({}, this.state.details, { [attributeId]: value})
-    });
-  }
-
-  handleAddTag(name) {
-    if(!name) {
-      return;
-    }
-    this.setState({
-      details: Object.assign({}, this.state.details, {
-        tags: [...new Set([name].concat(this.state.details.tags))]
-      })
-    }, () => {
-      ReactTooltip.rebuild();
-    });
-
-  }
-
-  handleRemoveTag(name) {
-    ReactTooltip.hide();
-    this.setState({
-      details: Object.assign({}, this.state.details, {
-        tags: this.state.details.tags.filter(tagName => tagName !== name)
-      })
     });
   }
 
@@ -95,16 +68,6 @@ class Manage extends React.Component {
   }
 
   render() {
-    console.log("Manage.render");
-    const tags = this.state.details.tags
-      .map(name =>
-          <RemovableTag
-            tooltip="manage-component"
-            key={name} className="tag--inline"
-            onClick={() => this.handleRemoveTag(name)}
-            name={name}/>
-      );
-    const suggestedTags = this.props.tagList.filter(tagName => this.state.details.tags.indexOf(tagName) === -1);
     return (
       <div className="popup form">
         <div className="popup__header">
@@ -126,13 +89,6 @@ class Manage extends React.Component {
               />
             )
           })}
-          <div className="form__group">
-            {tags}
-          </div>
-          <div className="form__group">
-            <label>Add Label</label>
-            <TagInput onAddTag={this.handleAddTag} tagList={suggestedTags} />
-          </div>
           <button type="submit" className="form__button">Submit</button>
         </form>
         <ReactTooltip place="top" type="info" effect="float" id="manage-component" class="tooltip"/>

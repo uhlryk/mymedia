@@ -19,12 +19,7 @@ export default class Edit extends React.Component {
     this.onAttributeChange = this.onAttributeChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log("Attributes.Edit.componentWillReceiveProps", nextProps);
-  }
-
   onAttributeChange(evt) {
-    console.log("Attributes.Edit.onAttributeChange");
     if(this.props.attribute.disableEdit === true) {
       return;
     }
@@ -33,7 +28,6 @@ export default class Edit extends React.Component {
 
   render() {
     let props = Object.assign({}, this.props.attribute, { onChange: this.onAttributeChange, value: this.props.value });
-    console.log("Attributes.Edit.render", props);
     const className = classNames("form__group", {
       [this.props.attribute.editClassName]: !!this.props.attribute.editClassName
     });

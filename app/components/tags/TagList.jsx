@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import TagSelect from "./TagSelect.jsx";
-import RemovableTag from "./RemovableTag.jsx";
+import RemovableTag from "../../features/attributes/tag/RemovableTag.jsx";
 import { addActiveTag, removeActiveTag } from "./../../actions/activeTagList";
 import ReactTooltip from "react-tooltip";
 

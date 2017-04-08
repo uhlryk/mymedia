@@ -4,7 +4,7 @@ import { push } from "react-router-redux";
 import classNames from "classnames";
 import View from "../attributes/View.jsx";
 import { openFile } from "./../../actions/openFile";
-import Tag from "../tags/Tag.jsx";
+import Tag from "../../features/attributes/tag/Tag.jsx";
 @connect(state => ({
   attributes: state.attributes
 }))
