@@ -24,7 +24,6 @@ class Manage extends React.Component {
     };
 
     this.onCloseClick = this.onCloseClick.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
     this.onAttributeChange = this.onAttributeChange.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,13 +34,8 @@ class Manage extends React.Component {
     this.props.dispatch(push("project/media"));
   }
 
-  handleNameChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { name: evt.target.value})
-    });
-  }
-
   onAttributeChange(attributeId, value) {
+    console.log("Manage.onAttributeChange");
     this.setState({
       details: Object.assign({}, this.state.details, { [attributeId]: value})
     });
@@ -82,14 +76,10 @@ class Manage extends React.Component {
   validation() {
     let newValidation = {};
     let isValid = true;
-    if(!this.state.details.name) {
-      isValid = false;
-      newValidation.name = "Field is required";
-    }
 
     Object.keys(this.props.attributes).map(attributeId => {
-      let element = this.props.attributes[attributeId];
-      const validationResult = AttributesExtensionManager.validate(element, this.state.details[attributeId]);
+      let attribute = this.props.attributes[attributeId];
+      const validationResult = AttributesExtensionManager.validate(attribute, this.state.details[attributeId]);
       if(validationResult !== true) {
         isValid = false;
         newValidation[attributeId] = "Field is required";
@@ -105,6 +95,7 @@ class Manage extends React.Component {
   }
 
   render() {
+    console.log("Manage.render");
     const tags = this.state.details.tags
       .map(name =>
           <RemovableTag
@@ -123,17 +114,6 @@ class Manage extends React.Component {
           </div>
         </div>
         <form onSubmit={this.handleSubmit}>
-          <div className="form__group">
-            <label>Name</label>
-            <input
-              type="text"
-              className="form__element"
-              value={this.state.details.name}
-              onChange={this.handleNameChange}
-              placeholder="Enter name"
-            />
-            <ValidationElementError error={this.state.validation.name} />
-          </div>
           {Object.keys(this.props.attributes).map(attributeId => {
             let attribute = this.props.attributes[attributeId];
             return (
@@ -141,8 +121,7 @@ class Manage extends React.Component {
                 key={attributeId}
                 onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
                 value={this.state.details[attributeId]}
-                displayName={attribute.displayName} attributeExtensionName={attribute.attributeExtensionName}
-                settings={attribute.settings}
+                attribute={attribute}
                 validation={this.state.validation[attributeId]}
               />
             )

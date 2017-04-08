@@ -10,7 +10,7 @@ export default class AttributesExtensionManager extends Extensioner.Manager {
   }
 
   static validate(attribute, value) {
-    if (attribute.settings.isRequired && (value === "" || (value === undefined && !attribute.settings.defaultValue))) {
+    if (attribute.isRequired && (value === "" || (value === undefined && !attribute.defaultValue))) {
       return "Field is required";
     }
     return true;

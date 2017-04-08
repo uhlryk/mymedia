@@ -16,14 +16,16 @@ export default class Edit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("Input.Edit.componentWillReceiveProps", this.state.value);
     if(this.state.value !== nextProps.value) {
       this.setState({
-        value: nextProps.value
+        value: nextProps.value || this.props.defaultValue || ""
       });
     }
   }
 
   render() {
+    console.log("Input.Edit.render", this.state.value, this.props.displayName);
     return (
       <input
         type="text"

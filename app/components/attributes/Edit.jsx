@@ -8,12 +8,10 @@ export default class Edit extends React.Component {
   };
 
   static propsTypes = {
-    displayName: React.PropTypes.string.isRequired,
     value: React.PropTypes.any.isRequired,
     validation: React.PropTypes.string,
-    attributeExtensionName: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func.isRequired,
-    settings: React.PropTypes.object
+    attribute: React.PropTypes.object
   };
 
   constructor(props) {
@@ -21,25 +19,31 @@ export default class Edit extends React.Component {
     this.onAttributeChange = this.onAttributeChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log("Attributes.Edit.componentWillReceiveProps", nextProps);
+  }
+
   onAttributeChange(evt) {
-    if(this.props.settings.disableEdit === true) {
+    console.log("Attributes.Edit.onAttributeChange");
+    if(this.props.attribute.disableEdit === true) {
       return;
     }
     this.props.onChange(evt)
   }
 
   render() {
-    let props = Object.assign({}, this.props.settings, { onChange: this.onAttributeChange, value: this.props.value });
+    let props = Object.assign({}, this.props.attribute, { onChange: this.onAttributeChange, value: this.props.value });
+    console.log("Attributes.Edit.render", props);
     const className = classNames("form__group", {
-      [this.props.settings.editClassName]: !!this.props.settings.editClassName
+      [this.props.attribute.editClassName]: !!this.props.attribute.editClassName
     });
-    const extension = this.context.extensions.attributes.getExtension(this.props.attributeExtensionName);
-    if(this.props.settings.disableEdit || extension.isOnlyProjectExtensionUse()) {
+    const extension = this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName);
+    if(this.props.attribute.disableEdit || extension.isOnlyProjectExtensionUse()) {
       return false;
     }
     return (
       <div className={className}>
-        <label>{this.props.displayName}</label>
+        <label>{this.props.attribute.displayName}</label>
         {extension.getEdit(props)}
         <ValidationElementError error={this.props.validation} />
       </div>

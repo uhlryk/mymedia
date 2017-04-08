@@ -20,6 +20,7 @@ export default function attributes(state = {}, action) {
        * - viewClassName
        * - alwaysVisible it will be visible on top of resource
        * - disableEdit it will not be visible in edit mode
+       * - editClassName
        *
        */
       newState = _.cloneDeep(state);
