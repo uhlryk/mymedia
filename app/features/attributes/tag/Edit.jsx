@@ -7,6 +7,7 @@ export default class Edit extends React.Component {
   static propsTypes = {
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
+    suggested: React.PropTypes.array.isRequired
   };
 
   constructor(props) {
@@ -40,8 +41,8 @@ export default class Edit extends React.Component {
   }
 
   render() {
-    let suggestedTags = [];
-    // const suggestedTags = this.props.tagList.filter(tagName => this.state.details.tags.indexOf(tagName) === -1);
+    this.state.value.forEach(tag => this.props.suggested.delete(tag));
+    const suggestedTags = Array.from(this.props.suggested);
     const tags = this.state.value
       .map(name =>
         <RemovableTag
@@ -53,7 +54,7 @@ export default class Edit extends React.Component {
     return (
       <div>
         {tags}
-        <TagInput onAddTag={this.handleAddTag} tagList={suggestedTags} />
+        <TagInput onAddTag={this.handleAddTag} tagList={Array.from(suggestedTags)} />
       </div>
     );
   }
