@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
 import Table from "../../components/files/Table.jsx";
-import TagList from "../../components/tags/TagList.jsx";
 
 @connect(state => ({
   fileList: state.fileList,
@@ -22,7 +21,6 @@ class Media extends React.Component {
             <ProjectNavigation />
           </div>
           <div className="media__tags">
-            <TagList />
           </div>
           <Table className="media__file-list file-list" results={list} filters={{ tags: this.props.activeTagList }}/>
           <div className="media__popup">

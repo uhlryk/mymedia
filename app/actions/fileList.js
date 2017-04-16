@@ -1,4 +1,3 @@
-import { updateTags } from "./tagList";
 import { save } from "./index";
 export const ADD_NEW_BULK_FILES = "file_list.bulk_new_add";
 export const LOAD_SAVED_FILES = "file_list.bulk_project_set";
@@ -11,7 +10,6 @@ export function addFiles(list, markAsNew = false) {
       list,
       markAsNew
     });
-    dispatch(updateTags());
   };
 }
 
@@ -21,7 +19,6 @@ export function loadFiles(list) {
       type: LOAD_SAVED_FILES,
       list
     });
-    dispatch(updateTags());
   };
 }
 
@@ -32,7 +29,6 @@ export function updateFile(hashPath, data) {
       data,
       hashPath
     });
-    dispatch(updateTags());
     dispatch(save());
   };
 }
