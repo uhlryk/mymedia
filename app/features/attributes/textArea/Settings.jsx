@@ -15,24 +15,23 @@ export default class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = defaultState;
-    this.sendChange = this.sendChange.bind(this);
     this.handlePlaceholderChange = this.handlePlaceholderChange.bind(this);
     this.handleDefaultValueChange = this.handleDefaultValueChange.bind(this);
   }
 
   handlePlaceholderChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { placeholder: evt.target.value})
-    }, this.sendChange);
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { placeholder: evt.target.value})
+    }));
   }
 
   handleDefaultValueChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { defaultValue: evt.target.value})
-    }, this.sendChange);
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { defaultValue: evt.target.value})
+    }));
   }
 
-  sendChange() {
+  componentDidUpdate() {
     if(this.props.onChange) {
       this.props.onChange(this.state.details);
     }

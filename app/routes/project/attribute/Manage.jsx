@@ -37,21 +37,21 @@ class Manage extends React.Component {
   }
 
   handleDisplayNameChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { displayName: evt.target.value})
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { displayName: evt.target.value})
+    }));
   }
 
   handleSettingsChange(settings) {
-    this.setState({
-      details: Object.assign({}, this.state.details, settings)
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, settings)
+    }));
   }
 
   handleExtensionChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, defaultState.details, { extensionName: evt.target.value})
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, defaultState.details, { extensionName: evt.target.value})
+    }));
   }
 
   handleSubmit(evt) {
@@ -60,7 +60,7 @@ class Manage extends React.Component {
       return;
     }
     this.props.dispatch(addNewAttribute(this.state.details.extensionName, this.state.details));
-    this.setState(defaultState);
+    this.setState((prevState, props) => defaultState);
   }
 
   validation() {
@@ -75,9 +75,9 @@ class Manage extends React.Component {
       newValidation.extensionName = 'Field is required';
     }
     if(isValid === false) {
-      this.setState({
+      this.setState((prevState, props) => ({
         validation: newValidation
-      });
+      }));
     }
     return isValid;
   }

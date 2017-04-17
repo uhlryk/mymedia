@@ -16,9 +16,9 @@ class RegisterModals extends React.Component {
     this.modals = {
       showModal: (props) => {
         const id = uuid();
-        this.setState({
-          modals: Object.assign({}, this.state.modals, { [id]: props})
-        });
+        this.setState(prevState => ({
+          modals: Object.assign({}, prevState.modals, { [id]: props})
+        }));
         return id;
       }
     }

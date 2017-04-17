@@ -17,9 +17,9 @@ export default class Edit extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if(this.state.value !== nextProps.value) {
-      this.setState({
-        value: nextProps.value || this.props.defaultValue || ""
-      });
+      this.setState((prevState, props) => ({
+        value: props.value || props.defaultValue || ""
+      }));
     }
   }
 

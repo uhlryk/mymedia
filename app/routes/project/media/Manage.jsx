@@ -32,9 +32,9 @@ class Manage extends React.Component {
   }
 
   onAttributeChange(attributeId, value) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { [attributeId]: value})
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { [attributeId]: value})
+    }));
   }
 
   handleSubmit(evt) {
@@ -60,9 +60,9 @@ class Manage extends React.Component {
     });
 
     if(isValid === false) {
-      this.setState({
+      this.setState((prevState, props) => ({
         validation: newValidation
-      });
+      }));
     }
     return isValid;
   }

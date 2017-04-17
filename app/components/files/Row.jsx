@@ -25,9 +25,9 @@ class CustomRow extends React.Component {
   }
 
   onToggleSize() {
-    this.setState({
-      short: !this.state.short
-    })
+    this.setState((prevState, props) => ({
+      short: !prevState.short
+    }));
   }
   onOpenClick() {
     this.props.dispatch(openFile(this.props.data.path));

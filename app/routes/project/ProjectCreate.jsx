@@ -30,21 +30,21 @@ class ProjectCreate extends React.Component {
   }
 
   handleNameChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { name: evt.target.value})
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { name: evt.target.value})
+    }));
   }
 
   handleVisibilityChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { isHidden: !this.state.details.isHidden})
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { isHidden: !prevState.details.isHidden})
+    }));
   }
 
   handleProjectExtensionChange(projectExtensionName) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { projectExtensionName: projectExtensionName})
-    });
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { projectExtensionName: projectExtensionName})
+    }));
   }
 
   handleSubmit(evt) {
@@ -67,9 +67,9 @@ class ProjectCreate extends React.Component {
       newValidation.projectExtensionName = 'Field is required';
     }
     if(isValid === false) {
-      this.setState({
+      this.setState((prevState, props) => ({
         validation: newValidation
-      });
+      }));
     }
     return isValid;
   }

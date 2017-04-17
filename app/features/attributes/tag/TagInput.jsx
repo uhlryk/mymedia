@@ -34,16 +34,16 @@ class TagInput extends React.Component {
   };
 
   onChange(event, { newValue }) {
-    this.setState({
+    this.setState((prevState, props) => ({
       value: newValue
-    });
+    }));
   };
 
   onClick() {
     this.props.onAddTag(this.state.value);
-    this.setState({
+    this.setState((prevState, props) => ({
       value: ""
-    });
+    }));
   }
 
   onKeyPress(event) {
@@ -51,31 +51,31 @@ class TagInput extends React.Component {
       event.stopPropagation()
       event.preventDefault();
       this.props.onAddTag(this.state.value);
-      this.setState({
+      this.setState((prevState, props) => ({
         value: ""
-      });
+      }));
     }
   }
 
   onTagsFetchRequested({ value }) {
-    this.setState({
+    this.setState((prevState, props) => ({
       tagList: this.getTags(value)
-    });
+    }));
   };
 
   onTagsClearRequested() {
-    this.setState({
+    this.setState((prevState, props) => ({
       tagList: []
-    });
+    }));
   };
 
   onTagSelected(event, { suggestionValue }) {
     event.stopPropagation();
     event.preventDefault();
     this.props.onAddTag(suggestionValue);
-    this.setState({
+    this.setState((prevState, props) => ({
       value: ""
-    });
+    }));
   }
 
   componentDidMount() {

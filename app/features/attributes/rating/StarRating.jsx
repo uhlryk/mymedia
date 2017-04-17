@@ -15,23 +15,32 @@ class StarRating extends React.Component {
       hoverValue: 0
     }
     this.onMouseOverHandler = this.onMouseOverHandler.bind(this);
+    this.onMouseOutHandler = this.onMouseOutHandler.bind(this);
   }
 
   onMouseOverHandler(value) {
-    this.setState({
+    this.setState((prevState, props) => ({
       hoverValue: value
-    });
+    }));
+  }
+
+  onMouseOutHandler() {
+    this.setState((prevState, props) => ({
+      hoverValue: 0
+    }));
   }
 
   render() {
     let stars = [];
-    let onClick = () => {};
-    let onMouseOver = () => {};
+    let onClick = () => {
+    };
+    let onMouseOver = () => {
+    };
 
-    for(let i = 0; i < this.props.totalStars; i++) {
-      if(this.props.editing) {
+    for (let i = 0; i < this.props.totalStars; i++) {
+      if (this.props.editing) {
         onClick = (evt) => {
-          if(this.props.onChange) {
+          if (this.props.onChange) {
             evt.target.value = i + 1;
             this.props.onChange(evt)
           }
@@ -53,7 +62,7 @@ class StarRating extends React.Component {
       )
     }
     return (
-      <div className="star-rating" onMouseOut={() => this.setState({ hoverValue : 0 })}>
+      <div className="star-rating" onMouseOut={this.onMouseOutHandler}>
         {stars}
       </div>
     );

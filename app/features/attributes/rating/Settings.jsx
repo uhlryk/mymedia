@@ -21,18 +21,18 @@ export default class Settings extends React.Component {
   }
 
   handleStarNumberChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { starNumber: evt.target.value})
-    }, this.sendChange);
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { starNumber: evt.target.value})
+    }));
   }
 
   handleDefaultValueChange(evt) {
-    this.setState({
-      details: Object.assign({}, this.state.details, { defaultValue: evt.target.value})
-    }, this.sendChange);
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { defaultValue: evt.target.value})
+    }));
   }
 
-  sendChange() {
+  componentDidUpdate() {
     if(this.props.onChange) {
       this.props.onChange(this.state.details);
     }

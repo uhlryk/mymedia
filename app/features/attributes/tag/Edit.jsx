@@ -20,24 +20,26 @@ export default class Edit extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.state.value !== nextProps.value) {
-      this.setState({
-        value: nextProps.value ||  []
-      }, () => {
-        ReactTooltip.rebuild();
-      });
+    if (this.state.value !== nextProps.value) {
+      this.setState((prevState, props) => ({
+        value: props.value || []
+      }));
     }
   }
 
   handleRemoveTag(name) {
-    this.props.onChange({ target: { value: this.state.value.filter(tag => tag !== name )}});
+    this.props.onChange({target: {value: this.state.value.filter(tag => tag !== name)}});
   }
 
   handleAddTag(name) {
-    if(!name) {
+    if (!name) {
       return;
     }
-    this.props.onChange({ target: { value: [...new Set([name].concat(this.state.value))]}});
+    this.props.onChange({target: {value: [...new Set([name].concat(this.state.value))]}});
+  }
+
+  componentDidUpdate() {
+    ReactTooltip.rebuild();
   }
 
   render() {
@@ -54,7 +56,7 @@ export default class Edit extends React.Component {
     return (
       <div>
         {tags}
-        <TagInput onAddTag={this.handleAddTag} tagList={Array.from(suggestedTags)} />
+        <TagInput onAddTag={this.handleAddTag} tagList={Array.from(suggestedTags)}/>
       </div>
     );
   }

@@ -20,15 +20,15 @@ class TagSelect extends React.Component {
     if (this.props.onChange) {
       this.props.onChange(name);
     }
-    this.setState({
+    this.setState((prevState, props) => ({
       value: name
-    });
+    }));
   };
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      tagList: prepareTags(nextProps.tagList)
-    });
+    this.setState((prevState, props) => ({
+      tagList: prepareTags(props.tagList)
+    }));
   }
 
   render () {
