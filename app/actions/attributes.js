@@ -6,8 +6,10 @@ export function addNewAttribute(extensionName, settings) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_ATTRIBUTE,
-      extensionName: extensionName,
-      ...settings
+      payload: {
+        extensionName: extensionName,
+        ...settings
+      }
     });
     dispatch(save());
   };
@@ -17,9 +19,11 @@ export function addNewAttributeWithId(id, extensionName, settings) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_ATTRIBUTE,
-      id,
-      extensionName: extensionName,
-      ...settings
+      payload: {
+        id,
+        extensionName: extensionName,
+        ...settings
+      }
     });
     dispatch(save());
   };
@@ -29,7 +33,9 @@ export function loadAttributes(list) {
   return (dispatch, getState) => {
     dispatch({
       type: LOAD_SAVED_ATTRIBUTES,
-      list
+      payload: {
+        list
+      }
     });
   };
 }

@@ -6,7 +6,9 @@ export function showLoader(message) {
   return (dispatch, getState) => {
     dispatch({
       type: SHOW_LOADER,
-      message
+      payload: {
+        message
+      }
     });
   };
 }

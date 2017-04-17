@@ -4,9 +4,9 @@ export default function notification(state = false, action) {
   switch(action.type) {
     case SHOW_NOTIFICATION:
       return {
-        message: action.message,
-        title: action.title,
-        level: action.level
+        message: action.payload.message,
+        title: action.payload.title,
+        level: action.payload.level
       };
     case CLOSE_NOTIFICATION:
       return false;

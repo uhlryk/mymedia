@@ -10,8 +10,8 @@ export default function fileList(state = {}, action) {
   switch(action.type) {
     case LOAD_SAVED_FILES:
       newState = {};
-      Object.keys(action.list).forEach(hashPath => {
-        let file = _.cloneDeep(action.list[hashPath]);
+      Object.keys(action.payload.list).forEach(hashPath => {
+        let file = _.cloneDeep(action.payload.list[hashPath]);
         file.isPresent = false;
         file.isNew = false;
         newState[hashPath] = file;
@@ -19,7 +19,7 @@ export default function fileList(state = {}, action) {
       return newState;
     case ADD_NEW_BULK_FILES:
       newState = _.cloneDeep(state);
-      action.list.forEach(file => {
+      action.payload.list.forEach(file => {
         let hashPath = md5(file.path);
         let fileFromProject = newState[hashPath];
         if(fileFromProject) {
@@ -35,8 +35,8 @@ export default function fileList(state = {}, action) {
       return newState;
     case UPDATE_FILE:
       let newState = _.cloneDeep(state);
-      let originalFile = newState[action.hashPath];
-      Object.assign(originalFile, action.data, {isChanged: true, isNew: false});
+      let originalFile = newState[action.payload.hashPath];
+      Object.assign(originalFile, action.payload.data, {isChanged: true, isNew: false});
       return newState;
     default:
       return state

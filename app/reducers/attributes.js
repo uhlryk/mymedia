@@ -7,12 +7,12 @@ export default function attributes(state = {}, action) {
   switch(action.type) {
     case LOAD_SAVED_ATTRIBUTES:
       newState = {};
-      Object.keys(action.list).forEach(id => {
-        newState[id] = _.cloneDeep(action.list[id]);
+      Object.keys(action.payload.list).forEach(id => {
+        newState[id] = _.cloneDeep(action.payload.list[id]);
       });
       return newState;
     case ADD_NEW_ATTRIBUTE:
-      const {type, ...attributeData} = action;
+      // const {type, ...attributeData} = action;
       /**
        * attributeData:
        * - extensionName name of extension attribute
@@ -25,14 +25,14 @@ export default function attributes(state = {}, action) {
        */
       newState = _.cloneDeep(state);
       let id;
-      if (action.id) {
-        id = action.id
+      if (action.payload.id) {
+        id = action.payload.id
       } else {
         id = uuid();
       }
       newState[id] = {
         id,
-        ...attributeData
+        ...action.payload
       };
       return newState;
     default:

@@ -18,8 +18,11 @@ export const CLEAR_PROJECT = "project.clear";
 export function initProject(data, status) {
   return {
     type: INIT_PROJECT,
-    ...data,
-    status
+    payload: {
+      ...data,
+      status
+    }
+
   }
 }
 

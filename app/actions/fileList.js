@@ -7,8 +7,10 @@ export function addFiles(list, markAsNew = false) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_BULK_FILES,
-      list,
-      markAsNew
+      payload: {
+        list,
+        markAsNew
+      }
     });
   };
 }
@@ -17,7 +19,10 @@ export function loadFiles(list) {
   return (dispatch, getState) => {
     dispatch({
       type: LOAD_SAVED_FILES,
-      list
+      payload: {
+        list
+      }
+
     });
   };
 }
@@ -26,8 +31,10 @@ export function updateFile(hashPath, data) {
   return (dispatch, getState) => {
     dispatch({
       type: UPDATE_FILE,
-      data,
-      hashPath
+      payload: {
+        data,
+        hashPath
+      }
     });
     dispatch(save());
   };
