@@ -10,7 +10,6 @@ export function save() {
     fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
       project: getState().project,
       media: getState().fileList,
-      tagList: getState().tagList,
       attributes: getState().attributes
     }), (err) => {
       if(err) {
