@@ -10,7 +10,7 @@ export default class extends FileProjectExtension {
   }
 
   collectProjectFiles (files) {
-    const FILE_EXTENSIONS = ["mp3"];
+    const FILE_EXTENSIONS = [".mp3"];
     return files.filter(file => {
       const fileExtension = path.extname(file.name);
       return FILE_EXTENSIONS.includes(fileExtension);

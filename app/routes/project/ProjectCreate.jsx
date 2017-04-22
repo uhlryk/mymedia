@@ -30,8 +30,9 @@ class ProjectCreate extends React.Component {
   }
 
   handleNameChange(evt) {
+    const value = evt.target.value;
     this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, { name: evt.target.value})
+      details: Object.assign({}, prevState.details, { name: value })
     }));
   }
 

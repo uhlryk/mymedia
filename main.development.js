@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, shell, ipcMain } from "electron";
 import open from "open";
 import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
+import childProcess from "child_process";
 
 installExtension(REDUX_DEVTOOLS)
   .then((name) => console.log(`Added Extension:  ${name}`))
@@ -41,6 +42,13 @@ app.on("ready", () => {
 
   ipcMain.on("open", (evt, arg) => {
     open(arg);
+  });
+
+  ipcMain.on("shell", (evt, cmd) => {
+    var exec = childProcess.exec;
+    exec(cmd, function(error, stdout, stderr) {
+      evt.sender.send('shell-reply', error, stdout, stderr);
+    });
   });
 
   if (process.env.NODE_ENV === "development") {
