@@ -2,6 +2,8 @@ import { app, BrowserWindow, Menu, shell, ipcMain } from "electron";
 import open from "open";
 import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import childProcess from "child_process";
+import exiftool from "node-exiftool";
+import exiftoolBin from "dist-exiftool";
 
 installExtension(REDUX_DEVTOOLS)
   .then((name) => console.log(`Added Extension:  ${name}`))
@@ -42,6 +44,19 @@ app.on("ready", () => {
 
   ipcMain.on("open", (evt, arg) => {
     open(arg);
+  });
+
+  ipcMain.on("exif", (evt, filepath) => {
+    const ep = new exiftool.ExiftoolProcess(exiftoolBin);
+    ep
+      .open()
+      .then((pid) => console.log('Started exiftool process %s', pid))
+      .then(() => ep.readMetadata(filepath))
+      .then(metadata => {
+        ep.close();
+        evt.sender.send('exif-reply', metadata);
+      })
+      .catch(console.error)
   });
 
   ipcMain.on("shell", (evt, cmd) => {

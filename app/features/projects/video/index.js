@@ -24,6 +24,15 @@ export default class extends FileProjectExtension {
     this.createAttribute("video-duration-id", this.inputExtension.getName(), {
       displayName: "Duration"
     });
+    this.createAttribute("video-width-id", this.inputExtension.getName(), {
+      displayName: "Resolution Width"
+    });
+    this.createAttribute("video-height-id", this.inputExtension.getName(), {
+      displayName: "Resolution Height"
+    });
+    this.createAttribute("video-framerate-id", this.inputExtension.getName(), {
+      displayName: "Frame rate"
+    });
   }
 
   mapFileProperties (file) {
@@ -31,17 +40,19 @@ export default class extends FileProjectExtension {
       .then(file => {
         return this.getMetadata (path.join(this.getManager().getRootManager().getStore().project.path, file.path))
           .then(metadata => Object.assign({}, file, {
-            "video-duration-id": metadata.duration
+            "video-duration-id": metadata.Duration,
+            "video-width-id": metadata.ImageWidth,
+            "video-height-id": metadata.ImageHeight,
+            "video-framerate-id": metadata.FrameRate
           }))
       })
   }
 
   getMetadata (filepath) {
     return new p(resolve => {
-      ipcRenderer.send("shell", "ffprobe -v quiet -print_format json -show_format " + filepath);
-      ipcRenderer.once('shell-reply', (event, error, stdout, stderr) => {
-        let metadata = JSON.parse(stdout);
-        resolve(metadata.format);
+      ipcRenderer.send("exif", filepath);
+      ipcRenderer.once('exif-reply', (event, metadata) => {
+        resolve(metadata.data[0]);
       })
     });
   }
