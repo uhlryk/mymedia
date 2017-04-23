@@ -1,5 +1,6 @@
 import { addNewAttributeWithId } from "../../actions/attributes";
 import Extensioner from "extensioner";
+import p from "bluebird";
 export default class ProjectExtension extends Extensioner.Extension {
   setDisplayName(displayName) {
     this._displayName = displayName;
@@ -18,10 +19,10 @@ export default class ProjectExtension extends Extensioner.Extension {
     return files;
   }
   mapFilesProperties (files) {
-    return files.map(file => Object.assign({}, file, this.mapFileProperties(file)));
+    return p.mapSeries(files, file => this.mapFileProperties(file));
   }
   mapFileProperties (file) {
-    return file;
+    return p.resolve(file);
   }
   createAttribute (id, extensionName, settings) {
     this.getManager().getRootManager().getStore().dispatch(

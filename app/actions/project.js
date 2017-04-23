@@ -37,11 +37,13 @@ function createProjectFile(newProjectData) {
         extensions.projects.getActive().createProject();
         fileList(path, (err, files) => {
           files = extensions.projects.getActive().collectProjectFiles(files);
-          files = extensions.projects.getActive().mapFilesProperties(files);
-          dispatch(addFiles(files));
-          dispatch(hideLoader());
-          dispatch(save());
-          dispatch(push("project/media"));
+          extensions.projects.getActive().mapFilesProperties(files)
+            .then(files => {
+              dispatch(addFiles(files));
+              dispatch(hideLoader());
+              dispatch(save());
+              dispatch(push("project/media"));
+            });
         });
       }
     };
@@ -70,11 +72,14 @@ function findCollectionFiles() {
             dispatch(loadFiles(projectData.media));
             fileList(path, (err, files) => {
               files = extensions.projects.getActive().collectProjectFiles(files);
-              files = extensions.projects.getActive().mapFilesProperties(files);
-              dispatch(addFiles(files, true));
-              dispatch(hideLoader());
-              dispatch(save());
-              dispatch(push("project/media"));
+              extensions.projects.getActive().mapFilesProperties(files)
+                .then(files => {
+                  console.log("findCollectionFiles", files);
+                  dispatch(addFiles(files, true));
+                  dispatch(hideLoader());
+                  dispatch(save());
+                  dispatch(push("project/media"));
+                });
             });
           }
         });

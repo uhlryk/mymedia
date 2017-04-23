@@ -62,11 +62,12 @@ export default class extends ProjectExtension {
   }
 
   mapFileProperties (file) {
-    return {
-      "name-id": file.name,
-      "path-id": file.path,
-      "file-size-id": file.stat.size,
-      "create-date-id": file.stat.birthtime
-    };
+    return super.mapFileProperties(file)
+      .then(file => Object.assign({}, file, {
+        "name-id": file.name,
+        "path-id": file.path,
+        "file-size-id": file.stat.size,
+        "create-date-id": file.stat.birthtime
+      }));
   }
 }

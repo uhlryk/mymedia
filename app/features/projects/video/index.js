@@ -1,4 +1,5 @@
 import FileProjectExtension from "../file/index";
+import p from "bluebird";
 import path from "path";
 import { ipcRenderer } from "electron";
 
@@ -26,17 +27,22 @@ export default class extends FileProjectExtension {
   }
 
   mapFileProperties (file) {
-    this.getMetadata(path.join(this.getManager().getRootManager().getStore().project.path, file.path));
-    return Object.assign({}, super.mapFileProperties(file), {
-
-    });
+    return super.mapFileProperties(file)
+      .then(file => {
+        return this.getMetadata (path.join(this.getManager().getRootManager().getStore().project.path, file.path))
+          .then(metadata => Object.assign({}, file, {
+            "video-duration-id": metadata.duration
+          }))
+      })
   }
 
   getMetadata (filepath) {
-    ipcRenderer.send("shell", "ffprobe -v quiet -print_format json -show_format " + filepath);
-    ipcRenderer.on('shell-reply', (event, error, stdout, stderr) => {
-      let metadata = JSON.parse(stdout);
-      console.log("duration", metadata.format.duration);
-    })
+    return new p(resolve => {
+      ipcRenderer.send("shell", "ffprobe -v quiet -print_format json -show_format " + filepath);
+      ipcRenderer.once('shell-reply', (event, error, stdout, stderr) => {
+        let metadata = JSON.parse(stdout);
+        resolve(metadata.format);
+      })
+    });
   }
 }
