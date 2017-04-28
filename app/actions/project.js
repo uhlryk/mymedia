@@ -10,6 +10,7 @@ import { showLoader, hideLoader } from "./loader";
 import { save } from "./index";
 import * as STATUS from "../constants/status";
 import { addFiles, loadFiles } from "./fileList";
+import { saveProjects } from "./projects";
 import { loadAttributes } from "./attributes";
 
 export const INIT_PROJECT = "project.init";
@@ -42,6 +43,7 @@ function createProjectFile(newProjectData) {
               dispatch(addFiles(files));
               dispatch(hideLoader());
               dispatch(save());
+              dispatch(saveProjects(newProjectData));
               dispatch(push("project/media"));
             });
         });
@@ -78,6 +80,7 @@ function findCollectionFiles() {
                   dispatch(addFiles(files, true));
                   dispatch(hideLoader());
                   dispatch(save());
+                  dispatch(saveProjects(projectData.project));
                   dispatch(push("project/media"));
                 });
             });

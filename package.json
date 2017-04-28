@@ -95,6 +95,8 @@
     "dist-exiftool": "^10.33.1",
     "electron-debug": "^1.0.0",
     "electron-devtools-installer": "^2.1.0",
+    "electron-json-storage": "^3.0.5",
+    "extensioner": "^1.6.0",
     "filesize": "^3.3.0",
     "font-awesome": "^4.7.0",
     "fs": "0.0.2",
