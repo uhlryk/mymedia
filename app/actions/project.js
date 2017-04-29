@@ -126,3 +126,9 @@ export function openProject(extensions) {
     });
   }
 }
+
+export function openProjectByPath (extensions, path) {
+  return (dispatch, getState) => {
+    dispatch(findProjectFile(path, extensions, findCollectionFiles()));
+  };
+}

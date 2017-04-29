@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { openProject } from "./../../actions/project";
+import { openProject, openProjectByPath } from "./../../actions/project";
 import { loadProjectsFromPesistence, clearProjects } from "./../../actions/projects";
 import { push } from "react-router-redux";
 
@@ -19,11 +19,16 @@ class ProjectMenu extends React.Component {
   constructor(props) {
     super(props);
     this.onOpenProjectPath = this.onOpenProjectPath.bind(this);
+    this.onOpenProjectFromList = this.onOpenProjectFromList.bind(this);
     this.onClearProjectPath = this.onClearProjectPath.bind(this);
   }
 
   onOpenProjectPath() {
     this.props.dispatch(openProject(this.context.extensions));
+  }
+
+  onOpenProjectFromList(path) {
+    this.props.dispatch(openProjectByPath(this.context.extensions, path));
   }
 
   onClearProjectPath() {
@@ -37,7 +42,7 @@ class ProjectMenu extends React.Component {
 
   render() {
     const projects = this.props.projects.map(project => (
-      <tr key={project.path}>
+      <tr key={project.path} onClick={() => this.onOpenProjectFromList(project.path)}>
         <td>{project.name}</td>
         <td>{project.path}</td>
         <td>{project.projectExtensionName}</td>
