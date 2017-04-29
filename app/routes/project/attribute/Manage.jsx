@@ -37,8 +37,9 @@ class Manage extends React.Component {
   }
 
   handleDisplayNameChange(evt) {
+    const value = evt.target.value;
     this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, { displayName: evt.target.value})
+      details: Object.assign({}, prevState.details, { displayName: value})
     }));
   }
 
@@ -49,8 +50,9 @@ class Manage extends React.Component {
   }
 
   handleExtensionChange(evt) {
+    const value = evt.target.value;
     this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, defaultState.details, { extensionName: evt.target.value})
+      details: Object.assign({}, prevState.details, defaultState.details, { extensionName: value})
     }));
   }
 
