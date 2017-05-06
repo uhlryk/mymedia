@@ -58,6 +58,11 @@ export default class extends ProjectExtension {
     this.createAttribute("create-date-id", this.dateExtension.getName(), {
       displayName: "Created"
     });
+
+    this.createAttribute("original-name-id", this.inputExtension.getName(), {
+      displayName: "Original name",
+      disableEdit: true
+    });
   }
 
   mapFileProperties (file) {
@@ -66,7 +71,8 @@ export default class extends ProjectExtension {
         "name-id": file.name,
         "path-id": this.convertPathToFolderArray(file.path),
         "file-size-id": file.stat.size,
-        "create-date-id": file.stat.birthtime
+        "create-date-id": file.stat.birthtime,
+        "original-name-id": file.name
       }));
   }
 
