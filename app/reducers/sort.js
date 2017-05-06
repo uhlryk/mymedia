@@ -4,7 +4,7 @@ export default function project(state = [], action) {
   let newState;
   switch(action.type) {
     case ADD_SORT_ATTRIBUTE:
-      newState = state.slice();
+      newState = [];
       newState.push(action.payload);
       return newState;
     default:
