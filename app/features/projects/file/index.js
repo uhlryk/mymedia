@@ -37,18 +37,24 @@ export default class extends ProjectExtension {
   createProject () {
     super.createProject();
     this.createAttribute("name-id", this.inputExtension.getName(), {
+      displayName: "File name",
+      disableViewDisplayName: true,
       viewClassName: "file-list__name",
       alwaysVisible: true
     });
 
     this.createAttribute("path-id", this.hierarchicalTagExtension.getName(), {
+      displayName: "File path",
+      disableViewDisplayName: true,
       viewClassName: "file-list__original-path",
-      alwaysVisible: true
+      alwaysVisible: true,
+      disableSort: true
     });
 
     this.createAttribute("description-id", this.textAreaExtension.getName(), {
       displayName: "Description",
-      viewClassName: "file-list__description"
+      viewClassName: "file-list__description",
+      disableSort: true
     });
 
     this.createAttribute("file-size-id", this.fileSizeExtension.getName(), {

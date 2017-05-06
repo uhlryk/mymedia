@@ -20,7 +20,7 @@ export default class View extends React.Component {
     });
     return (
       <div className={className}>
-        <small>{this.props.attribute.displayName}</small>
+        <small>{this.props.attribute.disableViewDisplayName ? "" : this.props.attribute.displayName}</small>
         {this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName).getView(attributeOptions)}
       </div>
     );
