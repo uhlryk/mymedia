@@ -1,10 +1,12 @@
 import ProjectExtension from "../ProjectExtension";
+import path from "path";
 import InputExtension from "../../attributes/input/index";
 import TextAreaExtension from "../../attributes/textArea/index";
 import RatingExtension from "../../attributes/rating/index";
 import FileSize from "../../attributes/fileSize/index";
 import Date from "../../attributes/date/index";
 import Tag from "../../attributes/tag/index";
+import HierarchicalTag from "../../attributes/hierarchicalTag/index";
 
 export default class extends ProjectExtension {
   constructor () {
@@ -28,6 +30,8 @@ export default class extends ProjectExtension {
     this.getManager().getRootManager().attributes.registerExtension(this.dateExtension);
     this.tagExtension = new Tag();
     this.getManager().getRootManager().attributes.registerExtension(this.tagExtension);
+    this.hierarchicalTagExtension = new HierarchicalTag();
+    this.getManager().getRootManager().attributes.registerExtension(this.hierarchicalTagExtension);
   }
 
   createProject () {
@@ -37,10 +41,9 @@ export default class extends ProjectExtension {
       alwaysVisible: true
     });
 
-    this.createAttribute("path-id", this.inputExtension.getName(), {
+    this.createAttribute("path-id", this.hierarchicalTagExtension.getName(), {
       viewClassName: "file-list__original-path",
-      alwaysVisible: true,
-      disableEdit: true
+      alwaysVisible: true
     });
 
     this.createAttribute("description-id", this.textAreaExtension.getName(), {
@@ -57,17 +60,18 @@ export default class extends ProjectExtension {
     });
   }
 
-  collectProjectFiles (files) {
-    return files;
-  }
-
   mapFileProperties (file) {
     return super.mapFileProperties(file)
       .then(file => Object.assign({}, file, {
         "name-id": file.name,
-        "path-id": file.path,
+        "path-id": this.convertPathToFolderArray(file.path),
         "file-size-id": file.stat.size,
         "create-date-id": file.stat.birthtime
       }));
+  }
+
+  convertPathToFolderArray (filePath) {
+    console.log("AAA", filePath, filePath.split(path.sep), filePath.split(path.sep).slice(0,-1));
+    return filePath.split(path.sep).slice(0,-1);
   }
 }

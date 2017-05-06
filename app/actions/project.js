@@ -76,7 +76,6 @@ function findCollectionFiles() {
               files = extensions.projects.getActive().collectProjectFiles(files);
               extensions.projects.getActive().mapFilesProperties(files)
                 .then(files => {
-                  console.log("findCollectionFiles", files);
                   dispatch(addFiles(files, true));
                   dispatch(hideLoader());
                   dispatch(save());

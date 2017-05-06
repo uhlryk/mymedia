@@ -8,7 +8,7 @@ export default class StoreExtensionManager extends Extensioner.Manager {
     this.projects =  new ProjectsExtensionManager(this);
     this.attributes =  new AttributesExtensionManager(this);
     this.registerEventListener("STORE_CHANGE", store => {
-      this._store = store
+      this._store = store.getValue();
     });
   }
 
