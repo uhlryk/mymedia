@@ -7,6 +7,7 @@ import loader from "./loader";
 import filters from "./filters";
 import fileList from "./fileList";
 import attributes from "./attributes";
+import sort from "./sort";
 
 
 export default combineReducers({
@@ -17,6 +18,7 @@ export default combineReducers({
   attributes,
   notification,
   loader,
+  sort,
   routing: routerReducer
 });
 
