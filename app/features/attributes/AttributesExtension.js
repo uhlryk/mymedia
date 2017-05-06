@@ -25,18 +25,18 @@ export default class AttributesExtension extends Extensioner.Extension {
     this.SettingsComponent = React.createFactory(Settings);
   }
   getSettings (props) {
-    return this.SettingsComponent(props);
+    return this.SettingsComponent(Object.assign({}, props, { extension: this}));
   }
   setEdit (Edit) {
     this.EditComponent = React.createFactory(Edit);
   }
   getEdit (props) {
-    return this.EditComponent(props);
+    return this.EditComponent(Object.assign({}, props, { extension: this}));
   }
   setView (View) {
     this.ViewComponent = React.createFactory(View);
   }
   getView (props) {
-    return this.ViewComponent(props);
+    return this.ViewComponent(Object.assign({}, props, { extension: this}));
   }
 }

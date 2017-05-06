@@ -71,7 +71,6 @@ export default class extends ProjectExtension {
   }
 
   convertPathToFolderArray (filePath) {
-    console.log("AAA", filePath, filePath.split(path.sep), filePath.split(path.sep).slice(0,-1));
     return filePath.split(path.sep).slice(0,-1);
   }
 }
