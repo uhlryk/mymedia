@@ -1,5 +1,30 @@
 .breadcrumbs {
-  &__element {
+  display: block;
+  margin: 3px;
+  position: relative;
 
+  &__element {
+    display: inline-block;
+    background: #3498db;
+    white-space: nowrap;
+    width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 2px 5px 2px 5px;
+    font-size: 10px;
+
+    box-sizing: border-box;
+    text-align: center;
+    color: white;
+
+    -webkit-transform: skew(165deg);
+    -moz-transform: skew(165deg);
+    -o-transform: skew(165deg);
+    letter-spacing: 2px;
+    margin-right: 3px;
+    &--root {
+      width: 25px;
+      background: #ad30db;
+    }
   }
 }
