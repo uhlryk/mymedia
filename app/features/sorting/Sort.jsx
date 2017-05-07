@@ -8,10 +8,6 @@ import { addSort } from "../../actions/sort";
 }))
 class Sort extends React.Component {
 
-  static contextTypes = {
-    extensions: React.PropTypes.object
-  };
-
   constructor(props) {
     super(props);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);

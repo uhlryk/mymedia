@@ -6,15 +6,22 @@ import Table from "../../components/files/Table.jsx";
 
 @connect(state => ({
   fileList: state.fileList,
-  activeTagList: state.activeTagList
+  sort: state.sort,
+  attributes: state.attributes
 }))
 class Media extends React.Component {
+
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
 
   render() {
     let list = Object.keys(this.props.fileList).map(filePath => {
       return this.props.fileList[filePath];
     });
-    if(list.length) {
+    let sortedList = sortResources(list, this.props.sort, this.props.attributes, this.context.extensions);
+
+    if(sortedList.length) {
       return (
         <div className="media">
           <div className="media__project">
@@ -22,7 +29,7 @@ class Media extends React.Component {
           </div>
           <div className="media__tags">
           </div>
-          <Table className="media__file-list file-list" results={list} filters={{ tags: this.props.activeTagList }}/>
+          <Table className="media__file-list file-list" results={sortedList}/>
           <div className="media__popup">
             {this.props.children}
           </div>
@@ -40,3 +47,12 @@ class Media extends React.Component {
 }
 
 export default Media;
+
+function sortResources (resources, sortList, attributes, extensions) {
+  return sortList.reduce((sortedList, sortAttribute) => sortedList.sort(
+    extensions.attributes
+      .getExtensions()
+      .find(extension => extension.getName() === attributes[sortAttribute.id].extensionName)
+      .getSortFunction(sortAttribute.id, sortAttribute.order)
+  ), resources);
+}

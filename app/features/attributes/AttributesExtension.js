@@ -39,4 +39,12 @@ export default class AttributesExtension extends Extensioner.Extension {
   getView (props) {
     return this.ViewComponent(Object.assign({}, props, { extension: this}));
   }
+
+  getSortFunction (attributeId, order) {
+    return (a, b) => {
+      if(a[attributeId] < b[attributeId]) return -1;
+      if(a[attributeId] > b[attributeId]) return 1;
+      return 0;
+    };
+  }
 }
