@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-import Sort from "../Sort";
+import Sort from "../../features/sorting/Sort";
 
 @connect(state => ({
   project: state.project

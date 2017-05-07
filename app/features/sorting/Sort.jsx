@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addSort } from "../actions/sort";
+import { addSort } from "../../actions/sort";
 
 @connect(state => ({
   attributes: state.attributes,

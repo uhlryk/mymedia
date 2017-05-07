@@ -35,8 +35,12 @@ class RegisterExtensions extends React.Component {
     }
   }
 
-  componentWillUpdate(nextprops, nextstate) {
+  componentWillReceiveProps(nextprops, nextstate) {
     this.extensions.callEvent("STORE_CHANGE", nextprops)
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
   }
 
   render() {
