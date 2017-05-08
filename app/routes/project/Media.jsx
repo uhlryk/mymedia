@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
 import Table from "../../components/files/Table.jsx";
+import sortResources from "../../features/sorting/sortResources";
 
 @connect(state => ({
   fileList: state.fileList,
@@ -47,12 +48,3 @@ class Media extends React.Component {
 }
 
 export default Media;
-
-function sortResources (resources, sortList, attributes, extensions) {
-  return sortList.reduce((sortedList, sortAttribute) => sortedList.sort(
-    extensions.attributes
-      .getExtensions()
-      .find(extension => extension.getName() === attributes[sortAttribute.id].extensionName)
-      .getSortFunction(sortAttribute.id, sortAttribute.order)
-  ), resources);
-}
