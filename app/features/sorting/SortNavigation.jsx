@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addSort, removeSort } from "../../actions/sort";
+import { addSort, removeSort, changeOrderSort } from "../../actions/sort";
 
 @connect(state => ({
   attributes: state.attributes,
@@ -12,6 +12,7 @@ class Sort extends React.Component {
     super(props);
     this.handleAttributeChange = this.handleAttributeChange.bind(this);
     this.handleAttributeRemove = this.handleAttributeRemove.bind(this);
+    this.handleAttributeChangeOrder = this.handleAttributeChangeOrder.bind(this);
   }
 
   handleAttributeChange(evt) {
@@ -23,6 +24,9 @@ class Sort extends React.Component {
     this.props.dispatch(removeSort(attributeId));
   }
 
+  handleAttributeChangeOrder(attributeId) {
+    this.props.dispatch(changeOrderSort(attributeId));
+  }
   render() {
 
     return (
@@ -31,7 +35,7 @@ class Sort extends React.Component {
           <tbody>
           {this.props.sort.map(sortObj => (
             <tr key={sortObj.id}>
-              <td>{sortObj.order}</td>
+              <td onClick={()=>this.handleAttributeChangeOrder(sortObj.id)}>{sortObj.order}</td>
               <td>{this.props.attributes[sortObj.id].displayName}</td>
               <td onClick={()=>this.handleAttributeRemove(sortObj.id)}><i className="fa fa-times" aria-hidden="true"></i></td>
             </tr>
