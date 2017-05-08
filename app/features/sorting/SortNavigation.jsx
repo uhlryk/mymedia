@@ -20,19 +20,32 @@ class Sort extends React.Component {
 
 
   render() {
-    const id = this.props.sort[0] && this.props.sort[0].id;
+
     return (
-      <select  value={id} onChange={this.handleAttributeChange}  className="form__element">
-        <option value="">select type</option>
-        {
-          Object.keys(this.props.attributes)
-            .map(attributeId => this.props.attributes[attributeId])
-            .filter(attribute => !attribute.disableSort)
-            .map(attribute => (
-              <option key={attribute.id} value={attribute.id}>{attribute.displayName}</option>
-            ))
-        }
-      </select>
+      <div>
+        <table className="table table-striped table-condensed table-hover">
+          <tbody>
+          {this.props.sort.map(sortObj => (
+            <tr key={sortObj.id}>
+              <td>{sortObj.order}</td>
+              <td>{this.props.attributes[sortObj.id].displayName}</td>
+              <td><i className="fa fa-times" aria-hidden="true"></i></td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
+        <select  value={0} onChange={this.handleAttributeChange}  className="form__element">
+          <option value="">select type</option>
+          {
+            Object.keys(this.props.attributes)
+              .map(attributeId => this.props.attributes[attributeId])
+              .filter(attribute => !attribute.disableSort && !this.props.sort.find(sortObj => attribute.id === sortObj.id))
+              .map(attribute => (
+                <option key={attribute.id} value={attribute.id}>{attribute.displayName}</option>
+              ))
+          }
+        </select>
+      </div>
     );
   }
 }
