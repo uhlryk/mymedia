@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
 import Table from "../../components/files/Table.jsx";
 import sortResources from "../../features/sorting/sortResources";
+import Sort from "../../features/sorting/SortNavigation";
 
 @connect(state => ({
   fileList: state.fileList,
@@ -22,27 +23,32 @@ class Media extends React.Component {
     });
     let sortedList = sortResources(list, this.props.sort, this.props.attributes, this.context.extensions);
 
+    let showResources;
     if(sortedList.length) {
-      return (
-        <div className="media">
-          <div className="media__project">
-            <ProjectNavigation />
-          </div>
-          <div className="media__tags">
-          </div>
-          <Table className="media__file-list file-list" results={sortedList}/>
-          <div className="media__popup">
-            {this.props.children}
-          </div>
-        </div>
-      );
+      showResources = <Table className="media__file-list file-list" results={sortedList}/>
     } else {
-      return (
+      showResources = (
         <div className="row">
           <h2>Empty List</h2>
         </div>
       );
     }
+    return (
+      <div className="media">
+        <div className="media__project">
+          <ProjectNavigation />
+        </div>
+        <div className="media__sidebar">
+          <div>
+            <Sort />
+          </div>
+        </div>
+        {showResources}
+        <div className="media__popup">
+          {this.props.children}
+        </div>
+      </div>
+    );
   }
 
 }
