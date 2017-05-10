@@ -43,11 +43,11 @@ export default class AttributesExtension extends Extensioner.Extension {
   getSortFunction (attributeId, order) {
     return (a, b) => {
       if (order === "ASC") {
-        if (a[attributeId] < b[attributeId]) return -1;
-        if (a[attributeId] > b[attributeId]) return 1;
+        if (a < b) return -1;
+        if (a > b) return 1;
       } else {
-        if (a[attributeId] < b[attributeId]) return 1;
-        if (a[attributeId] > b[attributeId]) return -1;
+        if (a < b) return 1;
+        if (a > b) return -1;
       }
       return 0;
     };

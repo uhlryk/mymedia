@@ -1,8 +1,12 @@
 export default function sortResources (resources, sortList, attributes, extensions) {
   return sortList.reduce((sortedList, sortAttribute) => sortedList.sort(
-    extensions.attributes
-      .getExtensions()
-      .find(extension => extension.getName() === attributes[sortAttribute.id].extensionName)
-      .getSortFunction(sortAttribute.id, sortAttribute.order)
-  ), resources);
+    (a, b) => {
+      var aAttribute = a[sortAttribute.id] || attributes[sortAttribute.id].defaultValue || 0;
+      var bAttribute = b[sortAttribute.id] || attributes[sortAttribute.id].defaultValue || 0;
+
+      return extensions.attributes
+        .getExtensions()
+        .find(extension => extension.getName() === attributes[sortAttribute.id].extensionName)
+        .getSortFunction(sortAttribute.order)(aAttribute, bAttribute)
+    }), resources);
 }

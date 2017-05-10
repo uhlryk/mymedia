@@ -15,6 +15,7 @@ export default class Settings extends React.Component {
   constructor(props) {
     super(props);
     this.state = defaultState;
+    this.onChange = this.onChange.bind(this);
     this.handlePlaceholderChange = this.handlePlaceholderChange.bind(this);
     this.handleDefaultValueChange = this.handleDefaultValueChange.bind(this);
   }
@@ -22,16 +23,16 @@ export default class Settings extends React.Component {
   handlePlaceholderChange(evt) {
     this.setState((prevState, props) => ({
       details: Object.assign({}, prevState.details, { placeholder: evt.target.value})
-    }));
+    }), this.onChange);
   }
 
   handleDefaultValueChange(evt) {
     this.setState((prevState, props) => ({
       details: Object.assign({}, prevState.details, { defaultValue: evt.target.value})
-    }));
+    }), this.onChange);
   }
 
-  componentDidUpdate() {
+  onChange() {
     if(this.props.onChange) {
       this.props.onChange(this.state.details);
     }

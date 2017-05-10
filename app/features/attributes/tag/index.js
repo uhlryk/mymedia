@@ -2,7 +2,7 @@ import Edit from "./Edit.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
-export default class InputAttributesExtension extends AttributesExtension {
+export default class TagAttributesExtension extends AttributesExtension {
   constructor () {
     super();
     this.setName ("tag");

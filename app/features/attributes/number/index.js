@@ -9,8 +9,8 @@ export default class NumberAttributesExtension extends InputAttributesExtension 
 
   getSortFunction (attributeId, order) {
     return (a, b) => {
-      const aNum = Number(a[attributeId]);
-      const bNum = Number(b[attributeId]);
+      const aNum = Number(a);
+      const bNum = Number(b);
       if (order === "ASC") {
         return aNum - bNum;
       } else {
