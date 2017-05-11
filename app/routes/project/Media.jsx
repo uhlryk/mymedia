@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
 import Table from "../../components/files/Table.jsx";
 import sortResources from "../../features/sorting/sortResources";
-import Sort from "../../features/sorting/SortNavigation";
+import SortNavigation from "../../features/sorting/SortNavigation";
+import SearchNavigation from "../../features/searching/SearchNavigation";
 
 @connect(state => ({
   fileList: state.fileList,
@@ -40,7 +41,8 @@ class Media extends React.Component {
         </div>
         <div className="media__sidebar">
           <div>
-            <Sort />
+            <SortNavigation />
+            <SearchNavigation />
           </div>
         </div>
         {showResources}

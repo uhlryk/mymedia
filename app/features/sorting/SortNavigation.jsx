@@ -6,7 +6,7 @@ import { addSort, removeSort, changeOrderSort } from "../../actions/sort";
   attributes: state.attributes,
   sort: state.sort
 }))
-class Sort extends React.Component {
+class SortNavigation extends React.Component {
 
   constructor(props) {
     super(props);
@@ -69,4 +69,4 @@ class Sort extends React.Component {
   }
 }
 
-export default Sort;
+export default SortNavigation;
