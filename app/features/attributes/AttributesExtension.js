@@ -15,6 +15,12 @@ export default class AttributesExtension extends Extensioner.Extension {
   isOnlyProjectExtensionUse() {
     return this.onlyProjectExtensionUse;
   }
+  disableSortable() {
+    this._disableSortable = true;
+  }
+  isSortableDisabled() {
+    return this._disableSortable;
+  }
   setDisplayName (displayName) {
     this.displayName = displayName;
   }

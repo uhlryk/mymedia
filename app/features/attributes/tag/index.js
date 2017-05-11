@@ -9,6 +9,7 @@ export default class TagAttributesExtension extends AttributesExtension {
     this.setDisplayName("tag");
     this.setEdit(Edit);
     this.setView(View);
+    this.disableSortable();
   }
 
   getEdit (props) {

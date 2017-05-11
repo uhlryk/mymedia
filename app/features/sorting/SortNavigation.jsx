@@ -15,6 +15,10 @@ class Sort extends React.Component {
     this.handleAttributeChangeOrder = this.handleAttributeChangeOrder.bind(this);
   }
 
+  static contextTypes = {
+    extensions: React.PropTypes.object
+  };
+
   handleAttributeChange(evt) {
     const value = evt.target.value;
     this.props.dispatch(addSort(value));
@@ -47,7 +51,14 @@ class Sort extends React.Component {
           {
             Object.keys(this.props.attributes)
               .map(attributeId => this.props.attributes[attributeId])
-              .filter(attribute => !attribute.disableSort && !this.props.sort.find(sortObj => attribute.id === sortObj.id))
+              .filter(attribute => (
+                !attribute.disableSort &&
+                !this.props.sort.find(sortObj => attribute.id === sortObj.id)) &&
+                !this.context.extensions.attributes
+                  .getExtensions()
+                  .find(extension => extension.getName() === attribute.extensionName)
+                  .isSortableDisabled()
+              )
               .map(attribute => (
                 <option key={attribute.id} value={attribute.id}>{attribute.displayName}</option>
               ))
