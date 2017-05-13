@@ -18,6 +18,9 @@ export default class AttributesExtension extends Extensioner.Extension {
   disableSortable() {
     this._disableSortable = true;
   }
+  enableSortable() {
+    this._disableSortable = false;
+  }
   isSortableDisabled() {
     return this._disableSortable;
   }
@@ -46,7 +49,7 @@ export default class AttributesExtension extends Extensioner.Extension {
     return this.ViewComponent(Object.assign({}, props, { extension: this}));
   }
 
-  getSortFunction (attributeId, order) {
+  getSortFunction (order) {
     return (a, b) => {
       if (order === "ASC") {
         if (a < b) return -1;

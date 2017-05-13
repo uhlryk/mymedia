@@ -7,7 +7,7 @@ export default class NumberAttributesExtension extends InputAttributesExtension 
     this.setDisplayName("number");
   }
 
-  getSortFunction (attributeId, order) {
+  getSortFunction (order) {
     return (a, b) => {
       const aNum = Number(a);
       const bNum = Number(b);

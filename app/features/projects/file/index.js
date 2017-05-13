@@ -47,8 +47,7 @@ export default class extends ProjectExtension {
       displayName: "File path",
       disableViewDisplayName: true,
       viewClassName: "file-list__original-path",
-      alwaysVisible: true,
-      disableSort: true
+      alwaysVisible: true
     });
 
     this.createAttribute("description-id", this.textAreaExtension.getName(), {
