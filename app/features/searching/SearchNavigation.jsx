@@ -30,7 +30,6 @@ class SearchNavigation extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
     const value = this.state.details.quickSearch;
-    console.log("AAAAA", value);
     this.setState((prevState, props) => defaultState, () => this.props.dispatch(addSearch("quickSearch", value)));
   }
 

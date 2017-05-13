@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
 import Table from "../../components/files/Table.jsx";
 import sortResources from "../../features/sorting/sortResources";
+import filterResources from "../../features/searching/filterResources";
 import SortNavigation from "../../features/sorting/SortNavigation";
 import SearchNavigation from "../../features/searching/SearchNavigation";
 
 @connect(state => ({
   fileList: state.fileList,
   sort: state.sort,
+  search: state.search,
   attributes: state.attributes
 }))
 class Media extends React.Component {
@@ -23,10 +25,10 @@ class Media extends React.Component {
       return this.props.fileList[filePath];
     });
     let sortedList = sortResources(list, this.props.sort, this.props.attributes, this.context.extensions);
-
+    let filteredSortedList = filterResources(sortedList, this.props.search, this.props.attributes, this.context.extensions);
     let showResources;
-    if(sortedList.length) {
-      showResources = <Table className="media__file-list file-list" results={sortedList}/>
+    if(filteredSortedList.length) {
+      showResources = <Table className="media__file-list file-list" results={filteredSortedList}/>
     } else {
       showResources = (
         <div className="row">
