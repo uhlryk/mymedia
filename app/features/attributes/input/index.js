@@ -12,4 +12,11 @@ export default class InputAttributesExtension extends AttributesExtension {
     this.setEdit(Edit);
     this.setView(View);
   }
+
+  getQuickSearchFunction (search) {
+    return (value) => {
+      console.log("A", value)
+      return String(value).toLowerCase().includes(search.toLowerCase());
+    }
+  }
 }

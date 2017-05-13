@@ -64,7 +64,7 @@ export default class AttributesExtension extends Extensioner.Extension {
 
   getQuickSearchFunction (search) {
     return (value) => {
-      return true;
+      return false;
     }
   }
 

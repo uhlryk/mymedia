@@ -2,12 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { addSearch } from "../../actions/search";
 
-const defaultState = {
-  details: {
-    quickSearch: ""
-  }
-};
-
 @connect(state => ({
   search: state.sort
 }))
@@ -15,7 +9,11 @@ class SearchNavigation extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = defaultState;
+    this.state = {
+      details: {
+        quickSearch: this.props.search.quickSearch || ""
+      }
+    };
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,7 +28,13 @@ class SearchNavigation extends React.Component {
   handleSubmit(evt) {
     evt.preventDefault();
     const value = this.state.details.quickSearch;
-    this.setState((prevState, props) => defaultState, () => this.props.dispatch(addSearch("quickSearch", value)));
+    this.props.dispatch(addSearch("quickSearch", value));
+  }
+
+  componentWillReceiveProps(nextprops, nextstate) {
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { quickSearch: this.props.search.quickSearch || ""})
+    }));
   }
 
   render() {
