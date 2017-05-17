@@ -26,4 +26,10 @@ export default class TagAttributesExtension extends AttributesExtension {
       return sum;
     }, new Set());
   }
+
+  getQuickSearchFunction (search) {
+    return (values = []) => {
+      return values.find(value => value.toLowerCase().includes(search.toLowerCase()));
+    }
+  }
 }
