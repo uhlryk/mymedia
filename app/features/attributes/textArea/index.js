@@ -12,4 +12,10 @@ export default class TextAreaAttributesExtension extends AttributesExtension {
     this.setEdit(Edit);
     this.setView(View);
   }
+
+  getQuickSearchFunction (search) {
+    return (value) => {
+      return String(value).toLowerCase().includes(search.toLowerCase());
+    }
+  }
 }

@@ -15,7 +15,6 @@ export default class InputAttributesExtension extends AttributesExtension {
 
   getQuickSearchFunction (search) {
     return (value) => {
-      console.log("A", value)
       return String(value).toLowerCase().includes(search.toLowerCase());
     }
   }
