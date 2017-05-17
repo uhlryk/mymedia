@@ -24,4 +24,10 @@ export default class HierarchicalTagAttributesExtension extends AttributesExtens
       return 0;
     };
   }
+
+  getQuickSearchFunction (search) {
+    return (values = []) => {
+      return values.find(value => value.toLowerCase().includes(search.toLowerCase()));
+    }
+  }
 }
