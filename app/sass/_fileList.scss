@@ -5,6 +5,9 @@
     width:100%;
     padding: 5px;
 
+    &--add-new-row {
+      background: #aaaaaa;
+    }
     &--long {
       height: auto;
       .file-list__additional {
