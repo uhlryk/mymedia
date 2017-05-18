@@ -35,6 +35,7 @@ class SortNavigation extends React.Component {
 
     return (
       <div>
+        <label>Select order</label>
         <table className="table table-striped table-condensed table-hover">
           <tbody>
           {this.props.sort.map(sortObj => (
