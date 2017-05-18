@@ -27,7 +27,7 @@ class AppRouter extends React.Component {
               <Route path="manage" component={ProjectAttributeManage} />
             </Route>
             <Route path="media" component={ProjectMedia} >
-              <Route path="manage/:hashPath" component={ProjectMediaManage} />
+              <Route path="manage(/:hashPath)" component={ProjectMediaManage} />
             </Route>
           </Route>
         </Route>

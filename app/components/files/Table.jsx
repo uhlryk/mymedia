@@ -1,7 +1,10 @@
 import React from "react";
 import Row from "./Row.jsx";
 import ReactTooltip from "react-tooltip";
+import { connect } from "react-redux";
+import { push } from "react-router-redux";
 
+@connect(state => ({}))
 class Table extends React.Component {
 
   static propsTypes = {
@@ -23,7 +26,7 @@ class Table extends React.Component {
     return (
       <div className={this.props.className} >
         <div className="file-list__row file-list__row--add-new-row">
-          <button>Add new</button>
+          <button onClick={() => this.props.dispatch(push("project/media/manage"))}>Add new</button>
         </div>
         {rows}
         <ReactTooltip place="top" type="info" effect="float" id="file-list" class="tooltip"/>

@@ -11,7 +11,7 @@ import Tag from "../../features/attributes/tag/Tag.jsx";
 class CustomRow extends React.Component {
 
   static propsTypes = {
-    data: React.PropTypes.Object
+    data: React.PropTypes.object
   };
 
   constructor(props) {
