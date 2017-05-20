@@ -1,6 +1,7 @@
 import _ from "lodash";
 import md5 from "md5";
-import { ADD_NEW_BULK_FILES, LOAD_SAVED_FILES, UPDATE_FILE } from "../actions/fileList";
+import uuid from "uuid-v4";
+import { ADD_NEW_BULK_FILES, LOAD_SAVED_FILES, UPDATE_RESOURCE, ADD_RESOURCE } from "../actions/fileList";
 
 const DEFAULT_MEDIA_FILE = {
   tags: []
@@ -33,10 +34,15 @@ export default function fileList(state = {}, action) {
         }
       });
       return newState;
-    case UPDATE_FILE:
-      let newState = _.cloneDeep(state);
+    case ADD_RESOURCE:
+      newState = _.cloneDeep(state);
+      let hashPath = uuid();
+      newState[hashPath] =  Object.assign({}, action.payload, { hashPath });
+      return newState;
+    case UPDATE_RESOURCE:
+      newState = _.cloneDeep(state);
       let originalFile = newState[action.payload.hashPath];
-      Object.assign(originalFile, action.payload.data, {isChanged: true, isNew: false});
+      Object.assign(originalFile, action.payload, {isChanged: true, isNew: false});
       return newState;
     default:
       return state

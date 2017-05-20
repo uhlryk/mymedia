@@ -4,7 +4,6 @@ import { push } from "react-router-redux";
 import classNames from "classnames";
 import View from "../attributes/View.jsx";
 import { openFile } from "./../../actions/openFile";
-import Tag from "../../features/attributes/tag/Tag.jsx";
 @connect(state => ({
   attributes: state.attributes
 }))
@@ -75,11 +74,6 @@ class CustomRow extends React.Component {
               />
             )
           })}
-          <div className="file-list__tags">
-            { this.props.data.tags
-              .map(tagName => <Tag tooltip="file-list" key={tagName} className="tag--inline" name={tagName} />)
-              }
-          </div>
         </div>
         <div className="file-list__actions">
           <div className="file-list__more" onClick={this.onToggleSize} >{toogleSizeLabel}</div>

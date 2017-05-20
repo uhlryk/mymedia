@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import Form from "../../../components/files/Form.jsx";
 import * as formType from "../../../constants/formType";
-import { updateFile } from "../../../actions/fileList";
+import { updateResource, addResource } from "../../../actions/fileList";
 import ReactTooltip from "react-tooltip";
 @connect(state => ({
   fileList: state.fileList
@@ -24,7 +24,14 @@ class Manage extends React.Component {
   }
 
   handleSubmit(details) {
-    this.props.dispatch(updateFile(this.props.params.hashPath, details));
+    switch(this.state.mode) {
+      case formType.EDIT:
+        this.props.dispatch(updateResource(this.props.params.hashPath, details));
+        break;
+      case formType.CREATE:
+        this.props.dispatch(addResource(details));
+        break;
+    }
     this.props.dispatch(push("project/media"));
   }
 
