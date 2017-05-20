@@ -2,4 +2,17 @@
   width: 100%;
   height: 100px;
   background: #ddd;
+  padding:10px;
+  border: 1px solid #333;
+  &--drag-over {
+    background: #ddf;
+  }
+  &__border {
+    width: 100%;
+    height: 100%;
+    border: 2px dashed #333;
+    text-align: center;
+    line-height: 77px;
+    font-size: 15px;
+  }
 }

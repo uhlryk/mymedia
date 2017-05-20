@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 
 export default class DropFile extends React.Component {
   static propsTypes = {
@@ -13,11 +14,30 @@ export default class DropFile extends React.Component {
     this.state = {
       value: this.props.value || this.props.defaultValue || ""
     }
+    this.handleDragOver = this.handleDragOver.bind(this);
+    this.handleDragLeave = this.handleDragLeave.bind(this);
+  }
+
+  handleDragOver() {
+    this.setState((prevState, props) => ({
+      dragOver: true
+    }));
+  }
+
+  handleDragLeave() {
+    this.setState((prevState, props) => ({
+      dragOver: false
+    }));
   }
 
   render() {
+    const className = classNames("drop-file", this.props.className, {
+      "drop-file--drag-over": this.state.dragOver
+    });
     return (
-      <div className="drop-file">{this.props.label}</div>
+      <div className={className} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave}>
+        <div className="drop-file__border">{this.props.label}</div>
+      </div>
     );
   }
 }
