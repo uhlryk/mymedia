@@ -1,7 +1,7 @@
 import React from "react";
 import StarRating from "./StarRating.jsx";
 
-export default class Edit extends React.Component {
+export default class Form extends React.Component {
   static propsTypes = {
     starNumber: React.PropTypes.number,
     onChange: React.PropTypes.func.isRequired,

@@ -21,7 +21,9 @@ export default function attributes(state = {}, action) {
        * - viewClassName
        * - alwaysVisible it will be visible on top of resource
        * - disableEdit it will not be visible in edit mode
+       * - disableCreate it will not be visible in create mode
        * - editClassName
+       * - createClassName
        * - disableSort if true this attribute will not be sortable
        */
       newState = _.cloneDeep(state);

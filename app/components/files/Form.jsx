@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import Edit from "../attributes/Edit.jsx";
+import Create from "../attributes/Create.jsx";
+import * as formType from "../../constants/formType";
 import AttributesExtensionManager from "../../features/attributes/AttributesExtensionManager";
 @connect(state => ({
   attributes: state.attributes
@@ -64,15 +66,28 @@ class Form extends React.Component {
       <form onSubmit={this.handleSubmit}>
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
-          return (
-            <Edit
-              key={attributeId}
-              onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
-              value={this.state.details[attributeId]}
-              attribute={attribute}
-              validation={this.state.validation[attributeId]}
-            />
-          )
+          switch(this.props.mode) {
+            case formType.CREATE:
+              return (
+                <Create
+                  key={attributeId}
+                  onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
+                  value={this.state.details[attributeId]}
+                  attribute={attribute}
+                  validation={this.state.validation[attributeId]}
+                />
+              )
+            case formType.EDIT:
+              return (
+                <Edit
+                  key={attributeId}
+                  onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
+                  value={this.state.details[attributeId]}
+                  attribute={attribute}
+                  validation={this.state.validation[attributeId]}
+                />
+              )
+          }
         })}
         <button type="submit" className="form__button">Submit</button>
       </form>

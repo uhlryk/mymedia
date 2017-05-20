@@ -5,6 +5,7 @@ export default class AttributesExtension extends Extensioner.Extension {
     super();
     this.SettingsComponent = () => false;
     this.EditComponent = () => false;
+    this.CreateComponent = () => false;
     this.ViewComponent = () => false;
     this.onlyProjectExtensionUse = false;
   }
@@ -41,6 +42,12 @@ export default class AttributesExtension extends Extensioner.Extension {
   }
   getEdit (props) {
     return this.EditComponent(Object.assign({}, props, { extension: this}));
+  }
+  setCreate (Create) {
+    this.CreateComponent = React.createFactory(Create);
+  }
+  getCreate (props) {
+    return this.CreateComponent(Object.assign({}, props, { extension: this}));
   }
   setView (View) {
     this.ViewComponent = React.createFactory(View);

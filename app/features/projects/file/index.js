@@ -66,7 +66,8 @@ export default class extends ProjectExtension {
 
     this.createAttribute("original-name-id", this.inputExtension.getName(), {
       displayName: "Original name",
-      disableEdit: true
+      disableEdit: true,
+      disableCreate: true,
     });
   }
 

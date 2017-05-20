@@ -1,4 +1,4 @@
-import Edit from "./Edit.jsx";
+import Form from "./Form.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
@@ -7,12 +7,17 @@ export default class TagAttributesExtension extends AttributesExtension {
     super();
     this.setName ("tag");
     this.setDisplayName("tag");
-    this.setEdit(Edit);
+    this.setEdit(Form);
+    this.setCreate(Form);
     this.setView(View);
     this.disableSortable();
   }
 
   getEdit (props) {
+    return super.getEdit(Object.assign({}, props, { suggested: this.getExistingTags(props.id) }));
+  }
+
+  getCreate (props) {
     return super.getEdit(Object.assign({}, props, { suggested: this.getExistingTags(props.id) }));
   }
 
