@@ -21,14 +21,16 @@ export default class Settings extends React.Component {
   }
 
   handlePlaceholderChange(evt) {
+    const value = evt.target.value;
     this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, { placeholder: evt.target.value})
+      details: Object.assign({}, prevState.details, { placeholder: value})
     }), this.onChange);
   }
 
   handleDefaultValueChange(evt) {
+    const value = evt.target.value;
     this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, { defaultValue: evt.target.value})
+      details: Object.assign({}, prevState.details, { defaultValue: value})
     }), this.onChange);
   }
 
