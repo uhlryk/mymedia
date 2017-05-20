@@ -16,9 +16,11 @@ export default class DropFile extends React.Component {
     }
     this.handleDragOver = this.handleDragOver.bind(this);
     this.handleDragLeave = this.handleDragLeave.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   }
 
-  handleDragOver() {
+  handleDragOver(event) {
+    event.preventDefault();
     this.setState((prevState, props) => ({
       dragOver: true
     }));
@@ -30,12 +32,23 @@ export default class DropFile extends React.Component {
     }));
   }
 
+  handleDrop(event) {
+    event.preventDefault();
+
+    console.log(event.dataTransfer.files);
+    const file = event.dataTransfer.files[0];
+    if(file) {
+      
+    }
+
+  }
+
   render() {
     const className = classNames("drop-file", this.props.className, {
       "drop-file--drag-over": this.state.dragOver
     });
     return (
-      <div className={className} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave}>
+      <div className={className} onDragOver={this.handleDragOver} onDragLeave={this.handleDragLeave} onDrop={this.handleDrop}>
         <div className="drop-file__border">{this.props.label}</div>
       </div>
     );
