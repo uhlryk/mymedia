@@ -15,12 +15,18 @@ export default class View extends React.Component {
     if(!value) return false;
     var attributeOptions = Object.assign({}, this.props.attribute, { value });
 
-    const className = classNames("file-list__element", {
-      [this.props.attribute.viewClassName]: !!this.props.attribute.viewClassName
-    });
+    const attributeClassName = this.props.attribute.view.className ||  this.props.attribute.className || undefined;
+    const className = classNames("file-list__element", attributeClassName);
+
+    if(this.props.attribute.view.hidden) {
+      return false;
+    }
+
+    const displayName = this.props.attribute.view.displayName !== undefined ? this.props.attribute.view.displayName : this.props.attribute.displayName;
+
     return (
       <div className={className}>
-        <small>{this.props.attribute.disableViewDisplayName ? "" : this.props.attribute.displayName}</small>
+        <small>{displayName}</small>
         {this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName).getView(attributeOptions)}
       </div>
     );

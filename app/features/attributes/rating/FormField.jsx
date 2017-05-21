@@ -1,11 +1,12 @@
 import React from "react";
 import StarRating from "./StarRating.jsx";
 
-export default class Form extends React.Component {
+export default class FormField extends React.Component {
   static propsTypes = {
     starNumber: React.PropTypes.number,
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
+    disabled: React.PropTypes.bool,
     defaultValue: React.PropTypes.string
   };
 
@@ -14,7 +15,7 @@ export default class Form extends React.Component {
     return (
       <StarRating
         totalStars={this.props.starNumber}
-        editing={!this.props.disableEdit}
+        editing={!this.props.disabled}
         value={value}
         onChange={this.props.onChange}
       />

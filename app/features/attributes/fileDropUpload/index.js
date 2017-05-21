@@ -1,5 +1,5 @@
 import Settings from "./Settings.jsx";
-import Form from "./Form.jsx";
+import FormField from "./FormField.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
@@ -9,8 +9,8 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
     this.setName ("fileDropUpload");
     this.setDisplayName("file drop upload");
     this.setSettings(Settings);
-    this.setEdit(Form);
-    this.setCreate(Form);
+    this.setEdit(FormField);
+    this.setCreate(FormField);
     this.setView(View);
   }
 }

@@ -1,5 +1,5 @@
 import Settings from "./Settings.jsx";
-import Form from "./Form.jsx";
+import FormField from "./FormField.jsx";
 import View from "./View.jsx";
 import NumberAttributesExtension from "../number/index";
 
@@ -9,8 +9,8 @@ export default class RatingAttributesExtension extends NumberAttributesExtension
     this.setName ("rating");
     this.setDisplayName("rating");
     this.setSettings(Settings);
-    this.setEdit(Form);
-    this.setCreate(Form);
+    this.setEdit(FormField);
+    this.setCreate(FormField);
     this.setView(View);
   }
 }

@@ -53,7 +53,7 @@ class SortNavigation extends React.Component {
             Object.keys(this.props.attributes)
               .map(attributeId => this.props.attributes[attributeId])
               .filter(attribute => (
-                !attribute.disableSort &&
+                !attribute.sort.disable &&
                 !this.props.sort.find(sortObj => attribute.id === sortObj.id)) &&
                 !this.context.extensions.attributes
                   .getExtensions()

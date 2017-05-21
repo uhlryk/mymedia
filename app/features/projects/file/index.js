@@ -41,22 +41,30 @@ export default class extends ProjectExtension {
     super.createProject();
     this.createAttribute("name-id", this.inputExtension.getName(), {
       displayName: "File name",
-      disableViewDisplayName: true,
-      viewClassName: "file-list__name",
-      alwaysVisible: true
+      view: {
+        displayName: null,
+        className: "file-list__name",
+        listing: true
+      }
     });
 
     this.createAttribute("path-id", this.hierarchicalTagExtension.getName(), {
       displayName: "File path",
-      disableViewDisplayName: true,
-      viewClassName: "file-list__original-path",
-      alwaysVisible: true
+      view: {
+        displayName: null,
+        className: "file-list__original-path",
+        listing: true
+      }
     });
 
     this.createAttribute("description-id", this.textAreaExtension.getName(), {
       displayName: "Description",
-      viewClassName: "file-list__description",
-      disableSort: true
+      view: {
+        className: "file-list__description",
+      },
+      sort: {
+        disabled: true
+      }
     });
 
     this.createAttribute("file-size-id", this.fileSizeExtension.getName(), {
@@ -69,8 +77,12 @@ export default class extends ProjectExtension {
 
     this.createAttribute("original-name-id", this.inputExtension.getName(), {
       displayName: "Original name",
-      disableEdit: true,
-      disableCreate: true,
+      edit: {
+        disabled: true
+      },
+      create: {
+        disabled: true
+      }
     });
   }
 

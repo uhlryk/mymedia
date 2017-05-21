@@ -58,19 +58,23 @@ In `init` method of project extension
 - **attributeExtensionName** *each extension has it name which is unique id of extension*
 - **configuration** 
   - **extensionName** *name of extension attribute*
-  - **all** *it affects all modes*
-    - **displayName**
-    - **className**
-  - **view** *affects only view mode, override all for view*
+  - **displayName**
+  - **className**
+  - **view** *affects only view mode*
     - **displayName**
     - **className**
     - **hidden** bool **false** *will be hidden in listing and details view*
     - **listing** bool **false** *will be visible in row list* 
-  - **edit** *affects only edit mode, override all for edit*
+  - **edit** *affects only edit mode*
+    - **displayName**
+    - **className**
+    - **disabled** bool **false** *can be visible in form but not editable*
+    - **hidden** bool **false** will be not visible in form
+  - **create** *affects only create mode*
     - **displayName**
     - **className**
     - **disabled** bool **false** *can be visible in form but not editable*
     - **hidden** bool **false** will be not visible in form
   - **settings** 
   - **sort**  
-    - **disable** bool **false** disallow sort by this attribute
+    - **disabled** bool **false** disallow sort by this attribute

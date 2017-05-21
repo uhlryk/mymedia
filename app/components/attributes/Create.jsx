@@ -20,24 +20,29 @@ export default class Create extends React.Component {
   }
 
   onAttributeChange(evt) {
-    if(this.props.attribute.disableCreate === true) {
+    if(this.props.attribute.create.disabled) {
       return;
     }
     this.props.onChange(evt)
   }
 
   render() {
-    let props = Object.assign({}, this.props.attribute, { onChange: this.onAttributeChange, value: this.props.value });
-    const className = classNames("form__group", {
-      [this.props.attribute.createClassName]: !!this.props.attribute.createClassName
+    let props = Object.assign({}, this.props.attribute, {
+      onChange: this.onAttributeChange,
+      value: this.props.value,
+      disabled: this.props.attribute.create.disabled
     });
+    const attributeClassName = this.props.attribute.create.className ||  this.props.attribute.className || undefined;
+    const className = classNames("form__group", attributeClassName);
+
     const extension = this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName);
-    if(this.props.attribute.disableCreate || extension.isOnlyProjectExtensionUse()) {
+    if(this.props.attribute.create.hidden || extension.isOnlyProjectExtensionUse()) {
       return false;
     }
+    const displayName = this.props.attribute.create.displayName !== undefined ? this.props.attribute.create.displayName : this.props.attribute.displayName;
     return (
       <div className={className}>
-        <label>{this.props.attribute.displayName}</label>
+        <label>{displayName}</label>
         {extension.getCreate(props)}
         <ValidationElementError error={this.props.validation} />
       </div>

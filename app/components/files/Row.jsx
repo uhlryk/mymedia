@@ -49,7 +49,7 @@ class CustomRow extends React.Component {
       <div className={className}>
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
-          if(!attribute.alwaysVisible) {
+          if(!attribute.view.listing) {
             return false;
           }
           return (
@@ -63,7 +63,7 @@ class CustomRow extends React.Component {
         <div className="file-list__additional">
           {Object.keys(this.props.attributes).map(attributeId => {
             let attribute = this.props.attributes[attributeId];
-            if(attribute.alwaysVisible === true) {
+            if(attribute.view.listing === true) {
               return false;
             }
             return (

@@ -3,11 +3,12 @@ import TagInput from "./TagInput.jsx";
 import RemovableTag from "./RemovableTag.jsx";
 import ReactTooltip from "react-tooltip";
 
-export default class Form extends React.Component {
+export default class FormField extends React.Component {
   static propsTypes = {
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
-    suggested: React.PropTypes.array.isRequired
+    suggested: React.PropTypes.array.isRequired,
+    disabled: React.PropTypes.bool
   };
 
   constructor(props) {

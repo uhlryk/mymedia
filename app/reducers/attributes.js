@@ -21,7 +21,7 @@ export default function attributes(state = {}, action) {
       }
       newState[id] = {
         id,
-        ...action.payload
+        ...Object.assign({ edit: {}, create: {}, view: {}, sort: {}}, action.payload)
       };
       return newState;
     default:

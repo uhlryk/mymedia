@@ -20,24 +20,28 @@ export default class Edit extends React.Component {
   }
 
   onAttributeChange(evt) {
-    if(this.props.attribute.disableEdit === true) {
+    if(this.props.attribute.edit.disabled) {
       return;
     }
     this.props.onChange(evt)
   }
 
   render() {
-    let props = Object.assign({}, this.props.attribute, { onChange: this.onAttributeChange, value: this.props.value });
-    const className = classNames("form__group", {
-      [this.props.attribute.editClassName]: !!this.props.attribute.editClassName
+    let props = Object.assign({}, this.props.attribute, {
+      onChange: this.onAttributeChange,
+      value: this.props.value,
+      disabled: this.props.attribute.edit.disabled
     });
+    const attributeClassName = this.props.attribute.edit.className ||  this.props.attribute.className || undefined;
+    const className = classNames("form__group", attributeClassName);
     const extension = this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName);
-    if(this.props.attribute.disableEdit || extension.isOnlyProjectExtensionUse()) {
+    if(this.props.attribute.edit.hidden || extension.isOnlyProjectExtensionUse()) {
       return false;
     }
+    const displayName = this.props.attribute.create.displayName !== undefined ? this.props.attribute.create.displayName : this.props.attribute.displayName;
     return (
       <div className={className}>
-        <label>{this.props.attribute.displayName}</label>
+        <label>{displayName}</label>
         {extension.getEdit(props)}
         <ValidationElementError error={this.props.validation} />
       </div>

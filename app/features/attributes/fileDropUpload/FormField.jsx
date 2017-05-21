@@ -1,10 +1,12 @@
 import React from "react";
+import DropFile from "./DropFile";
 
-export default class Form extends React.Component {
+export default class FormField extends React.Component {
   static propsTypes = {
     placeholder: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
+    disabled: React.PropTypes.bool,
     defaultValue: React.PropTypes.string
   };
 
@@ -25,14 +27,12 @@ export default class Form extends React.Component {
 
   render() {
     return (
-      <input
-        type="text"
-        className="form__element"
-        placeholder={this.props.placeholder}
+      <DropFile
+        label={this.props.label}
         value={this.state.value}
-        disabled={this.props.disableEdit}
+        disabled={this.props.disabled}
         onChange={this.props.onChange}
-      />
+        />
     );
   }
 }
