@@ -7,7 +7,7 @@ import FileSize from "../../attributes/fileSize/index";
 import Date from "../../attributes/date/index";
 import Tag from "../../attributes/tag/index";
 import HierarchicalTag from "../../attributes/hierarchicalTag/index";
-import FileUpload from "../../attributes/fileUpload/index";
+import FileDropUpload from "../../attributes/fileDropUpload/index";
 
 export default class extends ProjectExtension {
   constructor () {
@@ -27,8 +27,8 @@ export default class extends ProjectExtension {
     this.getManager().getRootManager().attributes.registerExtension(this.ratingExtension);
     this.fileSizeExtension = new FileSize();
     this.getManager().getRootManager().attributes.registerExtension(this.fileSizeExtension);
-    this.fileUploadExtension = new FileUpload();
-    this.getManager().getRootManager().attributes.registerExtension(this.fileUploadExtension);
+    this.fileDropUploadExtension = new FileDropUpload();
+    this.getManager().getRootManager().attributes.registerExtension(this.fileDropUploadExtension);
     this.dateExtension = new Date();
     this.getManager().getRootManager().attributes.registerExtension(this.dateExtension);
     this.tagExtension = new Tag();

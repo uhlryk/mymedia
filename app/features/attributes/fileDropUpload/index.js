@@ -3,11 +3,11 @@ import Form from "./Form.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
-export default class FileUploadAttributesExtension extends AttributesExtension {
+export default class FileDropUploadAttributesExtension extends AttributesExtension {
   constructor () {
     super();
-    this.setName ("fileUpload");
-    this.setDisplayName("file upload");
+    this.setName ("fileDropUpload");
+    this.setDisplayName("file drop upload");
     this.setSettings(Settings);
     this.setEdit(Form);
     this.setCreate(Form);
