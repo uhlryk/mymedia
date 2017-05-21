@@ -23,18 +23,29 @@ $ npm run package-all
 
 ### Attribute Extensions 
 
-#### Create attribute extension instance in project
+Class which extending AttributeExtension
 
+#### Create new attribute Extension
+
+
+#### Register attribute extension instance in project extension
+
+In `init` method of project extension 
+
+```
+  this.someExtension = new SomeAttributeExtension()
+  this.getManager().getRootManager().attributes.registerExtension(this.someExtension);
+```
 
 #### Create attribute from attribute extension instance
 
-##### From project extension
+##### In project extension
 
 ```
   this.createAttribute(<attributeId>, <attributeExtensionName>, <configuration>);
 ```
 
-##### From any location with dispatch
+##### In any location with dispatch
 
 ```
   import { addNewAttributeWithId } from "./actions/attributes";
