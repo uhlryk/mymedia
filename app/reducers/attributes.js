@@ -12,20 +12,6 @@ export default function attributes(state = {}, action) {
       });
       return newState;
     case ADD_NEW_ATTRIBUTE:
-      // const {type, ...attributeData} = action;
-      /**
-       * attributeData:
-       * - extensionName name of extension attribute
-       * - displayName what should be shown
-       * - disableViewDisplayName - if true displayName will not be shown in View
-       * - viewClassName
-       * - alwaysVisible it will be visible on top of resource
-       * - disableEdit it will not be visible in edit mode
-       * - disableCreate it will not be visible in create mode
-       * - editClassName
-       * - createClassName
-       * - disableSort if true this attribute will not be sortable
-       */
       newState = _.cloneDeep(state);
       let id;
       if (action.payload.id) {
