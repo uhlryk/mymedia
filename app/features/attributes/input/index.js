@@ -4,14 +4,22 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class InputAttributesExtension extends AttributesExtension {
-  constructor () {
-    super();
-    this.setName ("input");
-    this.setDisplayName("input");
-    this.setSettings(Settings);
-    this.setEdit(FormField);
-    this.setCreate(FormField);
-    this.setView(View);
+  constructor (extensionName, configuration = {}) {
+    super(extensionName || "input", AttributesExtension.mergeConfiguration({
+      displayName: "input",
+      view: {
+        component: View
+      },
+      settings: {
+        component: Settings
+      },
+      edit: {
+        component: FormField
+      },
+      create: {
+        component: FormField
+      }
+    }, configuration));
   }
 
   getQuickSearchFunction (search) {

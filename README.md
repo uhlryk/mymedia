@@ -27,6 +27,30 @@ Class which extending AttributeExtension
 
 #### Create new attribute Extension
 
+Class extends `AttributesExtension`
+
+##### In constructor :
+
+```
+super(<attributeExtensionName>, <configuration>)
+```
+
+- **attributeExtensionName** *each extension has it name which is unique id of extension*
+- **configuration** 
+  - **displayName**
+  - **view** 
+    - **component** **null** react component which render attribute view
+  - **edit** 
+    - **component** **null** react component which render attribute edit
+  - **create** 
+    - **component** **null** react component which render attribute create
+  - **settings** - in future settings will not have component
+    - **createDisabled** **false** disallow creating new attribute
+    - **editDisabled** **false** disallow editing attribute
+    - **deleteDisabled** **false** disallow deleting attribute
+    - **component** **null** react component which render attribute settings
+  - **sort**
+    - **disabled** **false** 
 
 #### Register attribute extension instance in project extension
 
@@ -57,7 +81,8 @@ In `init` method of project extension
 - **attributeId** *unique identifier for attribute. e.g. description, quality, attributes created dynamically* 
 - **attributeExtensionName** *each extension has it name which is unique id of extension*
 - **configuration** 
-  - **extensionName** *name of extension attribute*
+  - [auto]**id** = **attributeId**
+  - [auto]**extensionName** = **attributeExtensionName**
   - **displayName**
   - **className**
   - **view** *affects only view mode*

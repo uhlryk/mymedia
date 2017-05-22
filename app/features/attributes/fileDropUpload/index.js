@@ -4,13 +4,21 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class FileDropUploadAttributesExtension extends AttributesExtension {
-  constructor () {
-    super();
-    this.setName ("fileDropUpload");
-    this.setDisplayName("file drop upload");
-    this.setSettings(Settings);
-    this.setEdit(FormField);
-    this.setCreate(FormField);
-    this.setView(View);
+  constructor (extensionName, configuration = {}) {
+    super(extensionName || "fileDropUpload", AttributesExtension.mergeConfiguration({
+      displayName: "file drop upload",
+      view: {
+        component: View
+      },
+      settings: {
+        component: Settings
+      },
+      edit: {
+        component: FormField
+      },
+      create: {
+        component: FormField
+      }
+    }, configuration));
   }
 }

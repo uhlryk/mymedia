@@ -4,14 +4,23 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class TextAreaAttributesExtension extends AttributesExtension {
-  constructor () {
-    super();
-    this.setName ("textArea");
-    this.setDisplayName("text area");
-    this.setSettings(Settings);
-    this.setEdit(FormField);
-    this.setCreate(FormField);
-    this.setView(View);
+
+  constructor (extensionName, configuration = {}) {
+    super(extensionName || "textArea", AttributesExtension.mergeConfiguration({
+      displayName: "text area",
+      view: {
+        component: View
+      },
+      settings: {
+        component: Settings
+      },
+      edit: {
+        component: FormField
+      },
+      create: {
+        component: FormField
+      }
+    }, configuration));
   }
 
   getQuickSearchFunction (search) {

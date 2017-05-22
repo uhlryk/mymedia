@@ -1,11 +1,18 @@
 import View from "./View.jsx";
 import NumberAttributesExtension from "../number/index";
+import AttributesExtension from "../AttributesExtension";
 
 export default class FileSizeAttributesExtension extends NumberAttributesExtension {
-  constructor () {
-    super();
-    this.setName ("fileSize");
-    this.setView(View);
-    this.setOnlyProjectExtensionUse();
+  constructor (extensionName, configuration = {}) {
+    super(extensionName || "fileSize", AttributesExtension.mergeConfiguration({
+      view: {
+        component: View
+      },
+      settings: {
+        createDisabled: true,
+        editDisabled: true,
+        deleteDisabled: true
+      }
+    }, configuration));
   }
 }

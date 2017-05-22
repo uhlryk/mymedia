@@ -1,10 +1,11 @@
 import InputAttributesExtension from "../input/index";
+import AttributesExtension from "../AttributesExtension";
 
 export default class NumberAttributesExtension extends InputAttributesExtension {
-  constructor () {
-    super();
-    this.setName ("number");
-    this.setDisplayName("number");
+  constructor (extensionName, configuration = {}) {
+    super(extensionName || "number", AttributesExtension.mergeConfiguration({
+      displayName: "number"
+    }, configuration));
   }
 
   getSortFunction (order) {

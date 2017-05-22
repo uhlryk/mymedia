@@ -3,14 +3,23 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class TagAttributesExtension extends AttributesExtension {
-  constructor () {
-    super();
-    this.setName ("tag");
-    this.setDisplayName("tag");
-    this.setEdit(FormField);
-    this.setCreate(FormField);
-    this.setView(View);
-    this.disableSortable();
+
+  constructor (extensionName, configuration = {}) {
+    super(extensionName || "tag", AttributesExtension.mergeConfiguration({
+      displayName: "tag",
+      view: {
+        component: View
+      },
+      edit: {
+        component: FormField
+      },
+      create: {
+        component: FormField
+      },
+      sort: {
+        disabled: true
+      }
+    }, configuration));
   }
 
   getEdit (props) {
