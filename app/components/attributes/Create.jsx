@@ -36,7 +36,7 @@ export default class Create extends React.Component {
     const className = classNames("form__group", attributeClassName);
 
     const extension = this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName);
-    if(this.props.attribute.create.hidden || extension.isOnlyProjectExtensionUse()) {
+    if(this.props.attribute.create.hidden || !extension.hasCreate()) {
       return false;
     }
     const displayName = this.props.attribute.create.displayName !== undefined ? this.props.attribute.create.displayName : this.props.attribute.displayName;

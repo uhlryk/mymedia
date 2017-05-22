@@ -7,11 +7,11 @@ export default class TextAreaAttributesExtension extends AttributesExtension {
 
   constructor (extensionName, configuration = {}) {
     super(extensionName || "textArea", AttributesExtension.mergeConfiguration({
-      displayName: "text area",
       view: {
         component: View
       },
       settings: {
+        displayName: "text area",
         component: Settings
       },
       edit: {

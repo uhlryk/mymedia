@@ -4,7 +4,7 @@ import baseConfig from './webpack.config.base';
 export default {
   ...baseConfig,
 
-  devtool: 'source-map',
+  devtool: 'eval-source-map',
 
   entry: './main.development',
 

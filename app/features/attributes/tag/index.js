@@ -6,7 +6,7 @@ export default class TagAttributesExtension extends AttributesExtension {
 
   constructor (extensionName, configuration = {}) {
     super(extensionName || "tag", AttributesExtension.mergeConfiguration({
-      displayName: "tag",
+
       view: {
         component: View
       },
@@ -15,6 +15,9 @@ export default class TagAttributesExtension extends AttributesExtension {
       },
       create: {
         component: FormField
+      },
+      settings: {
+        displayName: "tag",
       },
       sort: {
         disabled: true

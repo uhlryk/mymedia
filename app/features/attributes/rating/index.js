@@ -7,11 +7,11 @@ import AttributesExtension from "../AttributesExtension";
 export default class RatingAttributesExtension extends NumberAttributesExtension {
   constructor (extensionName, configuration = {}) {
     super(extensionName || "rating", AttributesExtension.mergeConfiguration({
-      displayName: "rating",
       view: {
         component: View
       },
       settings: {
+        displayName: "rating",
         component: Settings
       },
       edit: {

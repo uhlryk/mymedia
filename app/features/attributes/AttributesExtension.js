@@ -6,7 +6,7 @@ export default class AttributesExtension extends Extensioner.Extension {
     super();
     this.setName (extensionName);
     this.setConfig(configuration);
-
+    console.log(this._configuration);
     // this.SettingsComponent = () => false;
     // this.EditComponent = () => false;
     // this.CreateComponent = () => false;
@@ -17,16 +17,36 @@ export default class AttributesExtension extends Extensioner.Extension {
   setConfig(configuration) {
     this._configuration = AttributesExtension.mergeConfiguration({
       edit: {
-        component: null
+        set component(val) {
+          this._component = React.createFactory(val);
+        },
+        get component() {
+          return this._component;
+        }
       },
       view: {
-        component: null
+        set component(val) {
+          this._component = React.createFactory(val);
+        },
+        get component() {
+          return this._component;
+        }
       },
       create: {
-        component: null
+        set component(val) {
+          this._component = React.createFactory(val);
+        },
+        get component() {
+          return this._component;
+        }
       },
       settings: {
-        component: null
+        set component(val) {
+          this._component = React.createFactory(val);
+        },
+        get component() {
+          return this._component;
+        }
       },
       sort: {
 
@@ -39,61 +59,38 @@ export default class AttributesExtension extends Extensioner.Extension {
     return this._configuration;
   }
 
-  getComponent(coponentType) {
-    if (this.getConfig()[coponentType].component) {
-      return this.getConfig()[coponentType].component;
+  getComponent(componentType) {
+    if (this.getConfig()[componentType].component) {
+      return this.getConfig()[componentType].component;
     } else {
       return () => false;
     }
   }
 
-
-  // setOnlyProjectExtensionUse() {
-  //   this.onlyProjectExtensionUse = true;
-  // }
-  //
-  // isOnlyProjectExtensionUse() {
-  //   return this.onlyProjectExtensionUse;
-  // }
-  // disableSortable() {
-  //   this._disableSortable = true;
-  // }
-  // enableSortable() {
-  //   this._disableSortable = false;
-  // }
-  // isSortableDisabled() {
-  //   return this._disableSortable;
-  // }
-  // setDisplayName (displayName) {
-  //   this.displayName = displayName;
-  // }
-  // getDisplayName () {
-  //   return this.displayName;
-  // }
-  // setSettings (Settings) {
-  //   this.SettingsComponent = React.createFactory(Settings);
-  // }
+  hasSettings () {
+    return this.getConfig().settings.component;
+  }
   getSettings (props) {
     return this.getComponent("settings")(Object.assign({}, props, { extension: this}));
   }
-  // setEdit (Edit) {
-  //   this.EditComponent = React.createFactory(Edit);
-  // }
+
+  hasEdit () {
+    return this.getConfig().edit.component;
+  }
   getEdit (props) {
     return this.getComponent("edit")(Object.assign({}, props, { extension: this}));
   }
 
-  // setCreate (Create) {
-  //   this.CreateComponent = React.createFactory(Create);
-  // }
-
+  hasCreate () {
+    return this.getConfig().create.component;
+  }
   getCreate (props) {
     return this.getComponent("create")(Object.assign({}, props, { extension: this}));
   }
 
-  // setView (View) {
-  //   this.ViewComponent = React.createFactory(View);
-  // }
+  hasView () {
+    return this.getConfig().view.component;
+  }
   getView (props) {
     return this.getComponent("view")(Object.assign({}, props, { extension: this}));
   }

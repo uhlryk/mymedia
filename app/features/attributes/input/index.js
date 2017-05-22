@@ -6,11 +6,11 @@ import AttributesExtension from "../AttributesExtension";
 export default class InputAttributesExtension extends AttributesExtension {
   constructor (extensionName, configuration = {}) {
     super(extensionName || "input", AttributesExtension.mergeConfiguration({
-      displayName: "input",
       view: {
         component: View
       },
       settings: {
+        displayName: "input",
         component: Settings
       },
       edit: {

@@ -4,7 +4,9 @@ import AttributesExtension from "../AttributesExtension";
 export default class NumberAttributesExtension extends InputAttributesExtension {
   constructor (extensionName, configuration = {}) {
     super(extensionName || "number", AttributesExtension.mergeConfiguration({
-      displayName: "number"
+      settings: {
+        displayName: "number"
+      }
     }, configuration));
   }
 

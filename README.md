@@ -37,7 +37,6 @@ super(<attributeExtensionName>, <configuration>)
 
 - **attributeExtensionName** *each extension has it name which is unique id of extension*
 - **configuration** 
-  - **displayName**
   - **view** 
     - **component** **null** react component which render attribute view
   - **edit** 
@@ -45,6 +44,7 @@ super(<attributeExtensionName>, <configuration>)
   - **create** 
     - **component** **null** react component which render attribute create
   - **settings** - in future settings will not have component
+    - **displayName**
     - **createDisabled** **false** disallow creating new attribute
     - **editDisabled** **false** disallow editing attribute
     - **deleteDisabled** **false** disallow deleting attribute

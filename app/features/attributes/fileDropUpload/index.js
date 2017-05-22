@@ -6,11 +6,11 @@ import AttributesExtension from "../AttributesExtension";
 export default class FileDropUploadAttributesExtension extends AttributesExtension {
   constructor (extensionName, configuration = {}) {
     super(extensionName || "fileDropUpload", AttributesExtension.mergeConfiguration({
-      displayName: "file drop upload",
       view: {
         component: View
       },
       settings: {
+        displayName: "file drop upload",
         component: Settings
       },
       edit: {
