@@ -1,11 +1,13 @@
 import FileProjectExtension from "../file/index";
+import ProjectExtension from "../ProjectExtension";
 
 export default class extends FileProjectExtension {
-  constructor () {
-    super();
-    this.setName("document");
-    this.setDisplayName("Document files");
-    this.setDescription("Project for document files");
+
+  constructor (extensionName = null, configuration = {}) {
+    super(extensionName || "document", ProjectExtension.mergeConfiguration({
+      displayName: "Document files",
+      description: "Project for document files"
+    }, configuration));
   }
 
   collectProjectFiles (files) {

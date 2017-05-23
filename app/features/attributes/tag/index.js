@@ -4,7 +4,7 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class TagAttributesExtension extends AttributesExtension {
 
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "tag", AttributesExtension.mergeConfiguration({
 
       view: {

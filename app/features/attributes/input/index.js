@@ -4,7 +4,7 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class InputAttributesExtension extends AttributesExtension {
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "input", AttributesExtension.mergeConfiguration({
       view: {
         component: View

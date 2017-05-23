@@ -3,7 +3,7 @@ import NumberAttributesExtension from "../number/index";
 import AttributesExtension from "../AttributesExtension";
 
 export default class FileSizeAttributesExtension extends NumberAttributesExtension {
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "fileSize", AttributesExtension.mergeConfiguration({
       view: {
         component: View

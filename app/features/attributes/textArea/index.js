@@ -5,7 +5,7 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class TextAreaAttributesExtension extends AttributesExtension {
 
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "textArea", AttributesExtension.mergeConfiguration({
       view: {
         component: View

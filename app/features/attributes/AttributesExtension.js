@@ -6,12 +6,6 @@ export default class AttributesExtension extends Extensioner.Extension {
     super();
     this.setName (extensionName);
     this.setConfig(configuration);
-    console.log(this._configuration);
-    // this.SettingsComponent = () => false;
-    // this.EditComponent = () => false;
-    // this.CreateComponent = () => false;
-    // this.ViewComponent = () => false;
-    // this.onlyProjectExtensionUse = false;
   }
 
   setConfig(configuration) {

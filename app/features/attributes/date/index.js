@@ -2,7 +2,7 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class DateAttributesExtension extends AttributesExtension {
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "date", AttributesExtension.mergeConfiguration({
       view: {
         component: View

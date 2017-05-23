@@ -114,8 +114,8 @@ class ProjectCreate extends React.Component {
                         checked={this.state.details.projectExtensionName === extension.getName()}
                         onChange={() => this.handleProjectExtensionChange(extension.getName())}
                       />
-                      <div><strong>{extension.getDisplayName()}</strong></div>
-                      <div><small>{extension.getDescription()}</small></div>
+                      <div><strong>{extension.getConfig().displayName}</strong></div>
+                      <div><small>{extension.getConfig().description}</small></div>
                     </label>
                   </div>
                 ))

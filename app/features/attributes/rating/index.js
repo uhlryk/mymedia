@@ -5,7 +5,7 @@ import NumberAttributesExtension from "../number/index";
 import AttributesExtension from "../AttributesExtension";
 
 export default class RatingAttributesExtension extends NumberAttributesExtension {
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "rating", AttributesExtension.mergeConfiguration({
       view: {
         component: View

@@ -3,7 +3,7 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class HierarchicalTagAttributesExtension extends AttributesExtension {
 
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "hierarchicalTag", AttributesExtension.mergeConfiguration({
       view: {
         component: View

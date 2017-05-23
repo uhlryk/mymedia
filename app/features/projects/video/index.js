@@ -1,14 +1,16 @@
 import FileProjectExtension from "../file/index";
+import ProjectExtension from "../ProjectExtension";
 import p from "bluebird";
 import path from "path";
 import { ipcRenderer } from "electron";
 
 export default class extends FileProjectExtension {
-  constructor () {
-    super();
-    this.setName("video");
-    this.setDisplayName("Video files");
-    this.setDescription("Project for video files");
+
+  constructor (extensionName = null, configuration = {}) {
+    super(extensionName || "video", ProjectExtension.mergeConfiguration({
+      displayName: "Video files",
+      description: "Project for video files"
+    }, configuration));
   }
 
   collectProjectFiles (files) {

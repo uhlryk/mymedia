@@ -2,18 +2,20 @@ import { addNewAttributeWithId } from "../../actions/attributes";
 import Extensioner from "extensioner";
 import p from "bluebird";
 export default class ProjectExtension extends Extensioner.Extension {
-  setDisplayName(displayName) {
-    this._displayName = displayName;
+  constructor(extensionName, configuration = {}) {
+    super();
+    this.setName(extensionName);
+    this.setConfig(configuration);
   }
-  getDisplayName() {
-    return this._displayName;
+
+  setConfig(configuration) {
+    this._configuration = ProjectExtension.mergeConfiguration({}, configuration);
   }
-  setDescription(description) {
-    this._description = description;
+
+  getConfig() {
+    return this._configuration;
   }
-  getDescription() {
-    return this._description;
-  }
+
   createProject (response, initialValue) {}
   collectProjectFiles (files) {
     return files;
@@ -28,5 +30,9 @@ export default class ProjectExtension extends Extensioner.Extension {
     this.getManager().getRootManager().getStore().dispatch(
       addNewAttributeWithId(id, extensionName, settings)
     )
+  }
+
+  static mergeConfiguration(source, target) {
+    return _.merge(source, target);
   }
 }

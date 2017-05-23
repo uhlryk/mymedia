@@ -2,7 +2,7 @@ import InputAttributesExtension from "../input/index";
 import AttributesExtension from "../AttributesExtension";
 
 export default class NumberAttributesExtension extends InputAttributesExtension {
-  constructor (extensionName, configuration = {}) {
+  constructor (extensionName = null, configuration = {}) {
     super(extensionName || "number", AttributesExtension.mergeConfiguration({
       settings: {
         displayName: "number"

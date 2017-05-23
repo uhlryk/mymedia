@@ -10,11 +10,12 @@ import HierarchicalTag from "../../attributes/hierarchicalTag/index";
 import FileDropUpload from "../../attributes/fileDropUpload/index";
 
 export default class extends ProjectExtension {
-  constructor () {
-    super();
-    this.setName("file");
-    this.setDisplayName("Any files");
-    this.setDescription("Project for various files");
+
+  constructor (extensionName = null, configuration = {}) {
+      super(extensionName || "file", ProjectExtension.mergeConfiguration({
+      displayName: "Any files",
+      description: "Project for various files"
+    }, configuration));
   }
 
   init (manager) {

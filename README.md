@@ -20,10 +20,28 @@ $ npm run package-all
 
 ## Development
 
+### Project Extensions
+
+This is a class which extending ProjectExtension.
+
+#### Create new project Extension
+
+Class extends `ProjectExtension`
+
+##### In constructor :
+
+```
+super(<projectExtensionName>, <configuration>)
+```
+
+- **projectExtensionName** *each extension has it name which is unique id of extension*
+- **configuration** 
+  - **displayName**
+  - **description**
 
 ### Attribute Extensions 
 
-Class which extending AttributeExtension
+This is a class which extending AttributeExtension. It is responsible for creating resource attributes.
 
 #### Create new attribute Extension
 
