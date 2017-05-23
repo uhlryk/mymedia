@@ -71,7 +71,7 @@ class Form extends React.Component {
               return (
                 <Create
                   key={attributeId}
-                  onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
+                  onChange={evt => this.onAttributeChange(attributeId, value)}
                   value={this.state.details[attributeId]}
                   attribute={attribute}
                   validation={this.state.validation[attributeId]}
@@ -81,7 +81,7 @@ class Form extends React.Component {
               return (
                 <Edit
                   key={attributeId}
-                  onChange={evt => this.onAttributeChange(attributeId, evt.target.value)}
+                  onChange={value => this.onAttributeChange(attributeId, value)}
                   value={this.state.details[attributeId]}
                   attribute={attribute}
                   validation={this.state.validation[attributeId]}

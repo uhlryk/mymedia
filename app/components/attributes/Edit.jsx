@@ -19,11 +19,11 @@ export default class Edit extends React.Component {
     this.onAttributeChange = this.onAttributeChange.bind(this);
   }
 
-  onAttributeChange(evt) {
+  onAttributeChange(value) {
     if(this.props.attribute.edit.disabled) {
       return;
     }
-    this.props.onChange(evt)
+    this.props.onChange(value)
   }
 
   render() {

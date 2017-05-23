@@ -11,6 +11,7 @@ export default class FormField extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onChange = this.onChange.bind(this);
     this.state = {
       value: this.props.value || this.props.defaultValue || ""
     }
@@ -24,6 +25,10 @@ export default class FormField extends React.Component {
     }
   }
 
+  onChange (evt) {
+    this.props.onChange(evt.target.value);
+  }
+
   render() {
     return (
       <input
@@ -32,7 +37,7 @@ export default class FormField extends React.Component {
         placeholder={this.props.placeholder}
         value={this.state.value}
         disabled={this.props.disabled}
-        onChange={this.props.onChange}
+        onChange={this.onChange}
       />
     );
   }

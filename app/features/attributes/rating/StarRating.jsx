@@ -39,10 +39,9 @@ class StarRating extends React.Component {
 
     for (let i = 0; i < this.props.totalStars; i++) {
       if (this.props.editing) {
-        onClick = (evt) => {
+        onClick = () => {
           if (this.props.onChange) {
-            evt.target.value = i + 1;
-            this.props.onChange(evt)
+            this.props.onChange(i + 1);
           }
         };
         onMouseOver = () => this.onMouseOverHandler(i + 1);

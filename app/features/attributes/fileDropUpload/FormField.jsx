@@ -3,26 +3,33 @@ import DropFile from "./DropFile";
 
 export default class FormField extends React.Component {
   static propsTypes = {
-    placeholder: React.PropTypes.string,
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
     disabled: React.PropTypes.bool,
-    defaultValue: React.PropTypes.string
+    label: React.PropTypes.string,
+    uploadPath: React.PropTypes.string
   };
 
   constructor(props) {
     super(props);
+    console.log(props)
+    this.onChange = this.onChange.bind(this);
     this.state = {
-      value: this.props.value || this.props.defaultValue || ""
+      value: this.props.value || null
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.state.value !== nextProps.value) {
       this.setState((prevState, props) => ({
-        value: props.value || props.defaultValue || ""
+        value: props.value || null
       }));
     }
+  }
+
+  onChange(file) {
+    console.log(file);
+    this.props.onChange(file.name);
   }
 
   render() {
@@ -31,8 +38,8 @@ export default class FormField extends React.Component {
         label={this.props.label}
         value={this.state.value}
         disabled={this.props.disabled}
-        onChange={this.props.onChange}
-        />
+        onChange={this.onChange}
+      />
     );
   }
 }

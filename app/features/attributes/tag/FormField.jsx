@@ -36,7 +36,7 @@ export default class FormField extends React.Component {
     if (!name) {
       return;
     }
-    this.props.onChange({target: {value: [...new Set([name].concat(this.state.value))]}});
+    this.props.onChange([...new Set([name].concat(this.state.value))]);
   }
 
   componentDidUpdate() {

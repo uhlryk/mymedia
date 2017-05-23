@@ -49,6 +49,10 @@ export default class extends ProjectExtension {
       }
     });
 
+    this.createAttribute("file-resource-id", this.fileDropUploadExtension.getName(), {
+      label: "some file"
+    });
+
     this.createAttribute("path-id", this.hierarchicalTagExtension.getName(), {
       displayName: "File path",
       view: {
