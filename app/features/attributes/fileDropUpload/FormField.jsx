@@ -6,8 +6,7 @@ export default class FormField extends React.Component {
     onChange: React.PropTypes.func.isRequired,
     value: React.PropTypes.string.isRequired,
     disabled: React.PropTypes.bool,
-    label: React.PropTypes.string,
-    uploadPath: React.PropTypes.string
+    label: React.PropTypes.string
   };
 
   constructor(props) {

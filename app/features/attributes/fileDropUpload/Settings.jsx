@@ -17,20 +17,12 @@ export default class Settings extends React.Component {
     this.state = defaultState;
     this.onChange = this.onChange.bind(this);
     this.handleLabelChange = this.handleLabelChange.bind(this);
-    this.handleUploadPath = this.handleUploadPath.bind(this);
   }
 
   handleLabelChange(evt) {
     const value = evt.target.value;
     this.setState((prevState, props) => ({
       details: Object.assign({}, prevState.details, { label: value})
-    }), this.onChange);
-  }
-
-  handleUploadPath(evt) {
-    const value = evt.target.value;
-    this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, { uploadPath: value})
     }), this.onChange);
   }
 
@@ -47,10 +39,6 @@ export default class Settings extends React.Component {
         <div className="form__group">
           <label>Label</label>
           <input type="text" className="form__element" placeholder="Enter label" value={this.state.details.label} onChange={this.handleLabelChange} />
-        </div>
-        <div className="form__group">
-          <label>Upload path</label>
-          <input type="text" className="form__element" placeholder="Enter upload path" value={this.state.details.uploadPath} onChange={this.handleUploadPath} />
         </div>
       </fieldset>
     );
