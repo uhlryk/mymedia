@@ -18,7 +18,7 @@ export function loadProjectsFromPesistence() {
             }
           });
         });
-      }  else {
+      } else {
         dispatch(hideLoader());
       }
     })

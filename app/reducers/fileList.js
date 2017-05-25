@@ -37,7 +37,7 @@ export default function fileList(state = {}, action) {
     case ADD_RESOURCE:
       newState = _.cloneDeep(state);
       let hashPath = uuid();
-      newState[hashPath] =  Object.assign({}, action.payload, { hashPath });
+      newState[hashPath] = Object.assign({}, action.payload, { hashPath });
       return newState;
     case UPDATE_RESOURCE:
       newState = _.cloneDeep(state);

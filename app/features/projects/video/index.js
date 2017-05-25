@@ -53,7 +53,7 @@ export default class extends FileProjectExtension {
   getMetadata (filepath) {
     return new p(resolve => {
       ipcRenderer.send("exif", filepath);
-      ipcRenderer.once('exif-reply', (event, metadata) => {
+      ipcRenderer.once("exif-reply", (event, metadata) => {
         resolve(metadata.data[0]);
       })
     });

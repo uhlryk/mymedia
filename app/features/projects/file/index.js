@@ -12,7 +12,7 @@ import FileDropUpload from "../../attributes/fileDropUpload/index";
 export default class extends ProjectExtension {
 
   constructor (extensionName = null, configuration = {}) {
-      super(extensionName || "file", ProjectExtension.mergeConfiguration({
+    super(extensionName || "file", ProjectExtension.mergeConfiguration({
       displayName: "Any files",
       description: "Project for various files"
     }, configuration));
