@@ -1,4 +1,5 @@
 import { save } from "./index";
+import { showNotification } from "./notification";
 export const ADD_NEW_BULK_FILES = "file_list.bulk_new_add";
 export const LOAD_SAVED_FILES = "file_list.bulk_project_set";
 export const UPDATE_RESOURCE = "resources.update_resource";
@@ -37,6 +38,8 @@ export function addResource(data) {
       }
     });
     dispatch(save());
+    dispatch(showNotification("Resource created with great success", "great success"));
+
   };
 }
 
@@ -50,5 +53,6 @@ export function updateResource(hashPath, data) {
       }
     });
     dispatch(save());
+    dispatch(showNotification("Resource updated", "success"));
   };
 }

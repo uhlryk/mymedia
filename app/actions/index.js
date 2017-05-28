@@ -14,7 +14,6 @@ export function save() {
     }), (err) => {
       if(err) {
       } else {
-        showNotification("success", "save project");
       }
       dispatch(hideLoader());
     });

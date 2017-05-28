@@ -4,15 +4,18 @@ export const CLOSE_NOTIFICATION = "notification.close";
 
 export function showNotification(message, title, level) {
   return (dispatch, getState) => {
-    dispatch({
-      type: SHOW_NOTIFICATION,
-      payload: {
-        message,
-        title,
-        level: level || "info"
-      }
+    setTimeout(() => {
+      dispatch({
+        type: SHOW_NOTIFICATION,
+        payload: {
+          message,
+          title,
+          level: level || "info"
+        }
 
-    });
-    setTimeout(() => dispatch({ type: CLOSE_NOTIFICATION }), 1000);
+      });
+    }, 0);
+
+    // setTimeout(() => dispatch({ type: CLOSE_NOTIFICATION }), 1000);
   };
 }
