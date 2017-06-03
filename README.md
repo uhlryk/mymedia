@@ -20,6 +20,14 @@ $ npm run package-all
 
 ## Development
 
+### Notifications
+
+to show notification:
+
+```
+dispatch(showNotification("<message>", "<title>", "<level def "info">"))
+```
+
 ### Project Extensions
 
 This is a class which extending ProjectExtension.
