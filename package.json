@@ -87,6 +87,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "bluebird": "^3.5.0",
     "bootstrap-sass": "^3.3.6",
     "classnames": "^2.2.5",
@@ -100,6 +101,7 @@
     "filesize": "^3.3.0",
     "font-awesome": "^4.7.0",
     "fs": "0.0.2",
+    "fs-promise": "^2.0.3",
     "lodash": "^4.13.1",
     "md5": "^2.1.0",
     "node-exiftool": "^2.1.1",

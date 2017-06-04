@@ -91,15 +91,16 @@ export default class extends ProjectExtension {
     });
   }
 
-  mapFileProperties (file) {
-    return super.mapFileProperties(file)
-      .then(file => Object.assign({}, file, {
-        "name-id": file.name,
-        "path-id": this.convertPathToFolderArray(file.path),
-        "file-size-id": file.stat.size,
-        "create-date-id": file.stat.birthtime,
-        "original-name-id": file.name
-      }));
+  async mapFileProperties (file) {
+    file = await super.mapFileProperties(file);
+
+    return Object.assign({}, file, {
+      "name-id": file.name,
+      "path-id": this.convertPathToFolderArray(file.path),
+      "file-size-id": file.stat.size,
+      "create-date-id": file.stat.birthtime,
+      "original-name-id": file.name
+    });
   }
 
   convertPathToFolderArray (filePath) {

@@ -37,17 +37,15 @@ export default class extends FileProjectExtension {
     });
   }
 
-  mapFileProperties (file) {
-    return super.mapFileProperties(file)
-      .then(file => {
-        return this.getMetadata (path.join(this.getManager().getRootManager().getStore().project.path, file.path))
-          .then(metadata => Object.assign({}, file, {
-            "video-duration-id": metadata.Duration,
-            "video-width-id": metadata.ImageWidth,
-            "video-height-id": metadata.ImageHeight,
-            "video-framerate-id": metadata.FrameRate
-          }))
-      })
+  async mapFileProperties (file) {
+    file = await super.mapFileProperties(file);
+    var metadata = await this.getMetadata (path.join(this.getManager().getRootManager().getStore().project.path, file.path));
+    return Object.assign({}, file, {
+      "video-duration-id": metadata.Duration,
+      "video-width-id": metadata.ImageWidth,
+      "video-height-id": metadata.ImageHeight,
+      "video-framerate-id": metadata.FrameRate
+    })
   }
 
   getMetadata (filepath) {

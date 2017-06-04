@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import { remote} from "electron";
 const dialog = remote.dialog;
 import { push } from "react-router-redux";
@@ -52,58 +53,39 @@ function createProjectFile(newProjectData) {
   };
 }
 
-function findCollectionFiles() {
-  return (path, result, extensions) => {
-    return (dispatch, getState) => {
-      if (result) {
-        dispatch(showLoader("load project"));
-        fileLoad(path, PROJECT_FILE, (err, result) => {
-          if (err) {
-            //dispatch(showErrorModal(err));
-            dispatch(hideLoader());
-          } else if (result) {
-            let projectData = {};
-            try {
-              projectData = JSON.parse(result);
-            } catch (err) {
-              //     dispatch(showErrorModal(err));
-              dispatch(hideLoader());
-            }
-            dispatch(initProject(projectData.project, STATUS.STANDARD));
-            dispatch(loadAttributes(projectData.attributes));
-            dispatch(loadFiles(projectData.media));
-            fileList(path, (err, files) => {
-              files = extensions.projects.getActive().collectProjectFiles(files);
-              extensions.projects.getActive().mapFilesProperties(files)
-                .then(files => {
-                  dispatch(addFiles(files, true));
-                  dispatch(hideLoader());
-                  dispatch(save());
-                  dispatch(saveProjects(projectData.project));
-                  dispatch(push("project/media"));
-                });
-            });
-          }
+async function findCollectionFiles(dispatch, path, projectFile, extensions) {
+  if (projectFile) {
+    let projectData = {};
+    try {
+      projectData = JSON.parse(projectFile);
+    } catch (err) {
+      //     dispatch(showErrorModal(err));
+      dispatch(hideLoader());
+    }
+    dispatch(initProject(projectData.project, STATUS.STANDARD));
+    dispatch(loadAttributes(projectData.attributes));
+    dispatch(loadFiles(projectData.media));
+    fileList(path, (err, files) => {
+      files = extensions.projects.getActive().collectProjectFiles(files);
+      extensions.projects.getActive().mapFilesProperties(files)
+        .then(files => {
+          dispatch(addFiles(files, true));
+          dispatch(hideLoader());
+          dispatch(save());
+          dispatch(saveProjects(projectData.project));
+          dispatch(push("project/media"));
         });
-      } else {
-        dispatch(push("project/create/" + encodeURIComponent(path)));
-      }
-    };
-  };
+    });
+  } else {
+    dispatch(push("project/create/" + encodeURIComponent(path)));
+  }
 }
 
-function findProjectFile(path, extensions, callback) {
-  return (dispatch, getState) => {
-    dispatch(showLoader("checking media directory"));
-    fileFind(path, PROJECT_FILE, (err, result) => {
-      dispatch(hideLoader());
-      if(err) {
-        //TODO: show error message in error popup
-      } else {
-        dispatch(callback(path, result, extensions));
-      }
-    });
-  };
+async function findProjectFile(dispatch, path) {
+  dispatch(showLoader("checking media directory"));
+  let result = await fileFind(path, PROJECT_FILE);
+  dispatch(hideLoader());
+  return result;
 }
 
 export function createProject(newProjectData, extensions) {
@@ -127,7 +109,12 @@ export function openProject(extensions) {
 }
 
 export function openProjectByPath (extensions, path) {
-  return (dispatch, getState) => {
-    dispatch(findProjectFile(path, extensions, findCollectionFiles()));
+  return async (dispatch, getState) => {
+    try {
+      let projectFile = await findProjectFile(dispatch, path);
+      await findCollectionFiles(dispatch, path, projectFile, extensions);
+    } catch (err) {
+      //handle errors
+    }
   };
 }

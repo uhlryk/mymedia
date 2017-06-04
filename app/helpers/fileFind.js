@@ -1,21 +1,14 @@
-import fs from "fs";
+import fsp from "fs-promise";
 import path from "path";
 
-export default function findFile(dir, name, done) {
-
-  let result = false;
-  let dirName = path.join(dir, name);
-  fs.readdir(dir, function (err, list) {
-    if (err) return done(err);
-    var pending = list.length;
-    list.forEach(function (file) {
-      file = path.resolve(dir, file);
-      fs.stat(file, function (err, stat) {
-        if (stat && stat.isFile() && file === dirName) {
-          result = true;
-        }
-        if (!--pending) done(null, result);
-      });
-    });
-  });
+export default async function fileFind(dir, name) {
+  let files = await fsp.readdir(dir);
+  for (let file of files) {
+    let dirName = path.resolve(dir, file);
+    let stat = await fsp.stat(dirName);
+    if (stat.isFile() && file === name) {
+      return await fsp.readFile(dirName);
+    }
+  }
+  return null;
 }

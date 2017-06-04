@@ -1,6 +1,6 @@
 import { addNewAttributeWithId } from "../../actions/attributes";
 import Extensioner from "extensioner";
-import p from "bluebird";
+//import p from "bluebird";
 export default class ProjectExtension extends Extensioner.Extension {
   constructor(extensionName, configuration = {}) {
     super();
@@ -20,12 +20,13 @@ export default class ProjectExtension extends Extensioner.Extension {
   collectProjectFiles (files) {
     return files;
   }
-  mapFilesProperties (files) {
-    return p.mapSeries(files, file => this.mapFileProperties(file));
+  async mapFilesProperties (files) {
+    return files.map(await this.mapFileProperties)
   }
-  mapFileProperties (file) {
-    return p.resolve(file);
+  async mapFileProperties (file) {
+    return file;
   }
+
   createAttribute (id, extensionName, settings) {
     this.getManager().getRootManager().getStore().dispatch(
       addNewAttributeWithId(id, extensionName, settings)
