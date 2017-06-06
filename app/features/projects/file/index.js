@@ -16,6 +16,7 @@ export default class extends ProjectExtension {
       displayName: "Any files",
       description: "Project for various files"
     }, configuration));
+    this.mapFileProperties = this.mapFileProperties.bind(this);
   }
 
   init (manager) {

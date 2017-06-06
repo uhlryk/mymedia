@@ -86,23 +86,33 @@ function openDialog() {
 
 export function createProject(newProjectData, extensions) {
   return async (dispatch, getState) => {
-    let projectFile = await findProjectFile(dispatch, newProjectData.path);
-    if (projectFile) {
-      //show error because in new project path there is other project file
-    } else {
-      await createProjectFile(dispatch, extensions, newProjectData);
+    try {
+      let projectFile = await findProjectFile(dispatch, newProjectData.path);
+      if (projectFile) {
+        //show error because in new project path there is other project file
+      } else {
+        await createProjectFile(dispatch, extensions, newProjectData);
+      }
+    } catch (err) {
+      console.error(err);
+      dispatch(hideLoader());
     }
   }
 }
 
 export function openProject(extensions) {
   return async (dispatch, getState) => {
-    dispatch(showLoader("selecting media directory"));
-    let fileNames = await openDialog();
-    dispatch(hideLoader());
-    if(fileNames && fileNames.length > 0) {
-      let projectPath = fileNames[0];
-      await findCollectionFiles(dispatch, extensions, projectPath);
+    try {
+      dispatch(showLoader("selecting media directory"));
+      let fileNames = await openDialog();
+      dispatch(hideLoader());
+      if (fileNames && fileNames.length > 0) {
+        let projectPath = fileNames[0];
+        await findCollectionFiles(dispatch, extensions, projectPath);
+      }
+    } catch (err) {
+      console.log(err);
+      dispatch(hideLoader());
     }
   }
 }
@@ -112,7 +122,8 @@ export function openProjectByPath (extensions, projectPath) {
     try {
       await findCollectionFiles(dispatch, extensions, projectPath);
     } catch (err) {
-      //handle errors
+      console.log(err);
+      dispatch(hideLoader());
     }
   };
 }

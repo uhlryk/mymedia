@@ -21,7 +21,11 @@ export default class ProjectExtension extends Extensioner.Extension {
     return files;
   }
   async mapFilesProperties (files) {
-    return files.map(await this.mapFileProperties)
+    let mappedFiles = [];
+    for (let file of files) {
+      mappedFiles.push(await this.mapFileProperties(file))
+    }
+    return mappedFiles;
   }
   async mapFileProperties (file) {
     return file;

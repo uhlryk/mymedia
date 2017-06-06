@@ -5,13 +5,12 @@ export const LOAD_SAVED_FILES = "file_list.bulk_project_set";
 export const UPDATE_RESOURCE = "resources.update_resource";
 export const ADD_RESOURCE = "resources.add_resource";
 
-export function addFiles(list, markAsNew = false) {
+export function addFiles(list) {
   return (dispatch, getState) => {
     dispatch({
       type: ADD_NEW_BULK_FILES,
       payload: {
-        list,
-        markAsNew
+        list
       }
     });
   };
