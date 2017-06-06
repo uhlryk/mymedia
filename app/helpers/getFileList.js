@@ -4,7 +4,6 @@ import path from "path";
 async function walk(baseDir, dir) {
   let results = [];
   let fileList = await fse.readdir(dir);
-  console.log(baseDir, dir, fileList);
   for (let fileName of fileList) {
     let filePath = path.resolve(dir, fileName);
     let fileStat = await fse.stat(filePath);

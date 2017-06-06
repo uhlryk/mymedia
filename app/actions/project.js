@@ -35,9 +35,9 @@ async function createProjectFile(dispatch, extensions, newProjectData) {
   files = extensions.projects.getActive().collectProjectFiles(files);
   files = await extensions.projects.getActive().mapFilesProperties(files);
   dispatch(addFiles(files));
-  dispatch(hideLoader());
   dispatch(save());
   dispatch(saveProjects(newProjectData));
+  dispatch(hideLoader());
   dispatch(push("project/media"));
 }
 
@@ -51,6 +51,7 @@ async function findProjectFile(dispatch, path) {
 async function findCollectionFiles(dispatch, extensions, projectPath) {
   let projectFile = await findProjectFile(dispatch, projectPath);
   if (projectFile) {
+    dispatch(showLoader("loading resources"));
     let projectData = {};
     try {
       projectData = JSON.parse(projectFile);

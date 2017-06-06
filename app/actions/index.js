@@ -6,7 +6,6 @@ import { showNotification } from "./notification";
 
 export function save() {
   return (dispatch, getState) => {
-    dispatch(showLoader("saving data"));
     fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
       project: getState().project,
       media: getState().fileList,
@@ -15,7 +14,6 @@ export function save() {
       if(err) {
       } else {
       }
-      dispatch(hideLoader());
     });
   };
 }

@@ -11,7 +11,6 @@ export function addNewAttribute(extensionName, settings) {
         ...settings
       }
     });
-    dispatch(save());
   };
 }
 
@@ -25,7 +24,6 @@ export function addNewAttributeWithId(id, extensionName, settings) {
         ...settings
       }
     });
-    dispatch(save());
   };
 }
 
