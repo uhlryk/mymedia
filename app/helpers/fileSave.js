@@ -1,8 +1,5 @@
-import fs from "fs";
+import fse from "fs-extra";
 
-export default function fileSave(dir, content, done) {
-  fs.writeFile(dir, content, (err) => {
-    if (err) done(err);
-    done();
-  });
+export default async function fileSave(dir, content) {
+  await fse.writeFile(dir, content);
 }

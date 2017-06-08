@@ -11,6 +11,7 @@ export function addNewAttribute(extensionName, settings) {
         ...settings
       }
     });
+    dispatch(save());
   };
 }
 

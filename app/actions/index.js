@@ -5,16 +5,12 @@ import { showLoader, hideLoader } from "./loader";
 import { showNotification } from "./notification";
 
 export function save() {
-  return (dispatch, getState) => {
-    fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
+  return async (dispatch, getState) => {
+    await fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
       project: getState().project,
       media: getState().fileList,
       attributes: getState().attributes
-    }), (err) => {
-      if(err) {
-      } else {
-      }
-    });
+    }));
   };
 }
 

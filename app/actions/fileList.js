@@ -29,21 +29,21 @@ export function loadFiles(list) {
 }
 
 export function addResource(data) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({
       type: ADD_RESOURCE,
       payload: {
         ...data,
       }
     });
-    dispatch(save());
+    dispatch(await save());
     dispatch(showNotification("Resource created with great success", "great success"));
 
   };
 }
 
 export function updateResource(hashPath, data) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch({
       type: UPDATE_RESOURCE,
       payload: {
@@ -51,7 +51,7 @@ export function updateResource(hashPath, data) {
         hashPath
       }
     });
-    dispatch(save());
+    dispatch(await save());
     dispatch(showNotification("Resource updated", "success"));
   };
 }
