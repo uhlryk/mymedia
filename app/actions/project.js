@@ -48,31 +48,34 @@ async function findProjectFile(dispatch, path) {
   return result;
 }
 
-async function findCollectionFiles(dispatch, extensions, projectPath) {
-  let projectFile = await findProjectFile(dispatch, projectPath);
-  if (projectFile) {
-    dispatch(showLoader("loading resources"));
-    let projectData = {};
-    try {
-      projectData = JSON.parse(projectFile);
-    } catch (err) {
-      //     dispatch(showErrorModal(err));
+async function findCollectionFiles(extensions, projectPath) {
+  return async dispatch => {
+    let projectFile = await findProjectFile(dispatch, projectPath);
+    if (projectFile) {
+      dispatch(showLoader("loading resources"));
+      let projectData = {};
+      try {
+        projectData = JSON.parse(projectFile);
+      } catch (err) {
+        //     dispatch(showErrorModal(err));
+        dispatch(hideLoader());
+      }
+      throw Error("AAAA");
+      dispatch(initProject(projectData.project, STATUS.STANDARD));
+      dispatch(loadAttributes(projectData.attributes));
+      dispatch(loadFiles(projectData.media));
+      let files = await getFileList(projectPath);
+      files = extensions.projects.getActive().collectProjectFiles(files);
+      files = await extensions.projects.getActive().mapFilesProperties(files);
+      dispatch(addFiles(files, true));
       dispatch(hideLoader());
+      dispatch(await save());
+      dispatch(await saveProjects(projectData.project));
+      dispatch(push("project/media"));
+    } else {
+      dispatch(push("project/create/" + encodeURIComponent(projectPath)));
     }
-    dispatch(initProject(projectData.project, STATUS.STANDARD));
-    dispatch(loadAttributes(projectData.attributes));
-    dispatch(loadFiles(projectData.media));
-    let files = await getFileList(projectPath);
-    files = extensions.projects.getActive().collectProjectFiles(files);
-    files = await extensions.projects.getActive().mapFilesProperties(files);
-    dispatch(addFiles(files, true));
-    dispatch(hideLoader());
-    dispatch(await save());
-    dispatch(await saveProjects(projectData.project));
-    dispatch(push("project/media"));
-  } else {
-    dispatch(push("project/create/" + encodeURIComponent(projectPath)));
-  }
+  };
 }
 
 function openDialog() {
@@ -87,44 +90,29 @@ function openDialog() {
 
 export function createProject(newProjectData, extensions) {
   return async (dispatch, getState) => {
-    try {
-      let projectFile = await findProjectFile(dispatch, newProjectData.path);
-      if (projectFile) {
-        //show error because in new project path there is other project file
-      } else {
-        await createProjectFile(dispatch, extensions, newProjectData);
-      }
-    } catch (err) {
-      console.error(err);
-      dispatch(hideLoader());
+    let projectFile = await findProjectFile(dispatch, newProjectData.path);
+    if (projectFile) {
+      //show error because in new project path there is other project file
+    } else {
+      await createProjectFile(dispatch, extensions, newProjectData);
     }
   }
 }
 
 export function openProject(extensions) {
   return async (dispatch, getState) => {
-    try {
-      dispatch(showLoader("selecting media directory"));
-      let fileNames = await openDialog();
-      dispatch(hideLoader());
-      if (fileNames && fileNames.length > 0) {
-        let projectPath = fileNames[0];
-        await findCollectionFiles(dispatch, extensions, projectPath);
-      }
-    } catch (err) {
-      console.log(err);
-      dispatch(hideLoader());
+    dispatch(showLoader("selecting media directory"));
+    let fileNames = await openDialog();
+    dispatch(hideLoader());
+    if (fileNames && fileNames.length > 0) {
+      let projectPath = fileNames[0];
+      dispatch(await findCollectionFiles(extensions, projectPath));
     }
   }
 }
 
 export function openProjectByPath (extensions, projectPath) {
   return async (dispatch, getState) => {
-    try {
-      await findCollectionFiles(dispatch, extensions, projectPath);
-    } catch (err) {
-      console.log(err);
-      dispatch(hideLoader());
-    }
+    dispatch(await findCollectionFiles(extensions, projectPath));
   };
 }

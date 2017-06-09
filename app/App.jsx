@@ -5,10 +5,10 @@ import { syncHistoryWithStore, routerMiddleware, push } from "react-router-redux
 import reducer from "./reducers/index.js";
 import { createStore, applyMiddleware, compose } from "redux";
 import AppRouter from "./routes/AppRouter.jsx";
-import thunk from "redux-thunk";
 import { devToolsEnhancer } from "redux-devtools-extension";
 import RegisterExtensions from "./features/RegisterExtensions.jsx"
 import * as extensions from "./extensions";
+import thunk from "./middlewares/thunk";
 
 class App extends React.Component {
   static propsTypes = {
@@ -22,7 +22,7 @@ class App extends React.Component {
       reducer,
       this.props.initialState,
       compose(
-        applyMiddleware(thunk, routerMiddleware(this.props.history)),
+        applyMiddleware(thunk.createThunk(), routerMiddleware(this.props.history)),
         devToolsEnhancer()
       )
     );
