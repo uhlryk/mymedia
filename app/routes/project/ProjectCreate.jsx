@@ -53,7 +53,7 @@ class ProjectCreate extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.dispatch(createProject(this.state.details, this.context.extensions));
+    this.props.dispatch(createProject(this.state.details));
   }
 
   validation() {

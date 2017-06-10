@@ -6,7 +6,8 @@ import reducer from "./reducers/index.js";
 import { createStore, applyMiddleware, compose } from "redux";
 import AppRouter from "./routes/AppRouter.jsx";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import RegisterExtensions from "./features/RegisterExtensions.jsx"
+import RegisterExtensions from "./features/RegisterExtensions.jsx";
+import StoreExtensionManager from "./features/StoreExtensionManager";
 import * as extensions from "./extensions";
 import thunk from "./middlewares/thunk";
 
@@ -18,20 +19,22 @@ class App extends React.Component {
   };
   constructor(props) {
     super(props);
+    this.extensionManager = new StoreExtensionManager(this.store);
     this.store = createStore(
       reducer,
       this.props.initialState,
       compose(
-        applyMiddleware(thunk.createThunk(), routerMiddleware(this.props.history)),
+        applyMiddleware(thunk.createThunk(console, this.extensionManager), routerMiddleware(this.props.history)),
         devToolsEnhancer()
       )
     );
+    this.extensionManager.setStore(this.store);
     this.syncHistory= syncHistoryWithStore(this.props.history, this.store);
   }
   render() {
     return (
       <Provider store={this.store}>
-        <RegisterExtensions list={extensions}>
+        <RegisterExtensions list={extensions} extensionManager={this.extensionManager}>
           <AppRouter history={this.syncHistory} />
         </RegisterExtensions>
       </Provider>

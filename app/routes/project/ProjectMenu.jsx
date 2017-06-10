@@ -24,11 +24,11 @@ class ProjectMenu extends React.Component {
   }
 
   onOpenProjectPath() {
-    this.props.dispatch(openProject(this.context.extensions));
+    this.props.dispatch(openProject);
   }
 
   onOpenProjectFromList(path) {
-    this.props.dispatch(openProjectByPath(this.context.extensions, path));
+    this.props.dispatch(openProjectByPath(path));
   }
 
   onClearProjectPath() {

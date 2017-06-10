@@ -27,18 +27,20 @@ export function initProject(data, status) {
   }
 }
 
-async function createProjectFile(dispatch, extensions, newProjectData) {
-  dispatch(showLoader("finding files"));
-  dispatch(initProject(newProjectData, STATUS.NEW));
-  extensions.projects.getActive().createProject();
-  let files = await getFileList(newProjectData.path);
-  files = extensions.projects.getActive().collectProjectFiles(files);
-  files = await extensions.projects.getActive().mapFilesProperties(files);
-  dispatch(addFiles(files));
-  dispatch(await save());
-  dispatch(await saveProjects(newProjectData));
-  dispatch(hideLoader());
-  dispatch(push("project/media"));
+async function createProjectFile(newProjectData) {
+  return async (dispatch, getState, extensionManager) => {
+    dispatch(showLoader("finding files"));
+    dispatch(initProject(newProjectData, STATUS.NEW));
+    extensionManager.projects.getActive().createProject();
+    let files = await getFileList(newProjectData.path);
+    files = extensionManager.projects.getActive().collectProjectFiles(files);
+    files = await extensionManager.projects.getActive().mapFilesProperties(files);
+    dispatch(addFiles(files));
+    dispatch(await save());
+    dispatch(await saveProjects(newProjectData));
+    dispatch(hideLoader());
+    dispatch(push("project/media"));
+  };
 }
 
 async function findProjectFile(dispatch, path) {
@@ -48,8 +50,8 @@ async function findProjectFile(dispatch, path) {
   return result;
 }
 
-async function findCollectionFiles(extensions, projectPath) {
-  return async dispatch => {
+async function findCollectionFiles(projectPath) {
+  return async (dispatch, getState, extensionManager) => {
     let projectFile = await findProjectFile(dispatch, projectPath);
     if (projectFile) {
       dispatch(showLoader("loading resources"));
@@ -64,8 +66,8 @@ async function findCollectionFiles(extensions, projectPath) {
       dispatch(loadAttributes(projectData.attributes));
       dispatch(loadFiles(projectData.media));
       let files = await getFileList(projectPath);
-      files = extensions.projects.getActive().collectProjectFiles(files);
-      files = await extensions.projects.getActive().mapFilesProperties(files);
+      files = extensionManager.projects.getActive().collectProjectFiles(files);
+      files = await extensionManager.projects.getActive().mapFilesProperties(files);
       dispatch(addFiles(files, true));
       dispatch(hideLoader());
       dispatch(await save());
@@ -87,31 +89,31 @@ function openDialog() {
   });
 }
 
-export function createProject(newProjectData, extensions) {
-  return async (dispatch, getState) => {
+export function createProject(newProjectData) {
+  return async (dispatch) => {
     let projectFile = await findProjectFile(dispatch, newProjectData.path);
     if (projectFile) {
       //show error because in new project path there is other project file
     } else {
-      await createProjectFile(dispatch, extensions, newProjectData);
+      dispatch(await createProjectFile(newProjectData));
     }
   }
 }
 
-export function openProject(extensions) {
-  return async (dispatch, getState) => {
+export function openProject() {
+  return async (dispatch) => {
     dispatch(showLoader("selecting media directory"));
     let fileNames = await openDialog();
     dispatch(hideLoader());
     if (fileNames && fileNames.length > 0) {
       let projectPath = fileNames[0];
-      dispatch(await findCollectionFiles(extensions, projectPath));
+      dispatch(await findCollectionFiles(projectPath));
     }
   }
 }
 
-export function openProjectByPath (extensions, projectPath) {
-  return async (dispatch, getState) => {
-    dispatch(await findCollectionFiles(extensions, projectPath));
+export function openProjectByPath (projectPath) {
+  return async (dispatch) => {
+    dispatch(await findCollectionFiles(projectPath));
   };
 }
