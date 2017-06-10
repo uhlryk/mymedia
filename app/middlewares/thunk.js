@@ -5,7 +5,6 @@ export default {
         if (typeof action === "function") {
           const result = action(dispatch, getState, extraArgument);
           if (result && result.catch) {
-            console.log(typeof result);
             result
               .catch(err => {
                 logger.error(err);

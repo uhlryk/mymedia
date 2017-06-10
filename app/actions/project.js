@@ -60,7 +60,6 @@ async function findCollectionFiles(extensions, projectPath) {
         //     dispatch(showErrorModal(err));
         dispatch(hideLoader());
       }
-      throw Error("AAAA");
       dispatch(initProject(projectData.project, STATUS.STANDARD));
       dispatch(loadAttributes(projectData.attributes));
       dispatch(loadFiles(projectData.media));
