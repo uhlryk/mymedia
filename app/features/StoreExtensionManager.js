@@ -15,4 +15,17 @@ export default class StoreExtensionManager extends Extensioner.Manager {
   getStore() {
     return this._store.getState();
   }
+
+  createStoreEnhancer() {
+    return (createStore) => (reducer, preloadedState, enhancer) => {
+      var store = createStore(reducer, preloadedState, enhancer);
+      var dispatch = store.dispatch;
+
+      return {
+        ...store,
+        dispatch
+      };
+    }
+  }
+
 }

@@ -25,6 +25,7 @@ class App extends React.Component {
       this.props.initialState,
       compose(
         applyMiddleware(thunk.createThunk(console, this.extensionManager), routerMiddleware(this.props.history)),
+        this.extensionManager.createStoreEnhancer(),
         devToolsEnhancer()
       )
     );
