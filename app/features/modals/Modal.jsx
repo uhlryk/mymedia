@@ -3,7 +3,8 @@ import classNames from "classnames";
 
 class Modal extends React.Component {
   static propsTypes = {
-    title: React.PropTypes.any.isRequired,
+    id: React.PropTypes.number.isRequired,
+    title: React.PropTypes.string.isRequired,
     message: React.PropTypes.string,
     body: React.PropTypes.element,
     onCloseClick: React.PropTypes.func.isRequired,
@@ -23,12 +24,12 @@ class Modal extends React.Component {
   }
 
   render() {
-     return (
+    return (
       <div className="modal" tabIndex="-1" role="dialog">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <button type="button" className="close" onClick={this.props.onClick} data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <button type="button" className="close" onClick={this.props.onCloseClick} data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 className="modal-title">{this.props.title}</h4>
             </div>
             <div className="modal-body">

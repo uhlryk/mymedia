@@ -13,6 +13,10 @@ class CustomRow extends React.Component {
     data: React.PropTypes.object
   };
 
+  static contextTypes = {
+    modals: React.PropTypes.object
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +36,8 @@ class CustomRow extends React.Component {
     this.props.dispatch(openFile(this.props.data.path));
   }
   onManageClick() {
-    this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
+    // this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
+    this.context.modals.showModal();
   }
   render() {
     const moreComponent = <span>&#9658; More</span>;
