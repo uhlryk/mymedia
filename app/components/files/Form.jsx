@@ -2,12 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import Edit from "../attributes/Edit.jsx";
 import Create from "../attributes/Create.jsx";
-import * as formType from "../../constants/formType";
 import AttributesExtensionManager from "../../features/attributes/AttributesExtensionManager";
 @connect(state => ({
   attributes: state.attributes
 }))
 class Form extends React.Component {
+
+  static EDIT = "form_mode.edit";
+  static CREATE = "form_mode.create";
 
   static propsTypes = {
     submit: React.PropTypes.func.isRequired,
@@ -67,7 +69,7 @@ class Form extends React.Component {
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
           switch(this.props.mode) {
-            case formType.CREATE:
+            case Form.CREATE:
               return (
                 <Create
                   key={attributeId}
@@ -77,7 +79,7 @@ class Form extends React.Component {
                   validation={this.state.validation[attributeId]}
                 />
               )
-            case formType.EDIT:
+            case Form.EDIT:
               return (
                 <Edit
                   key={attributeId}

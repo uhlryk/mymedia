@@ -7,7 +7,7 @@ import ProjectMedia from "./project/Media.jsx";
 
 import ProjectMenu from "./project/ProjectMenu.jsx";
 import ProjectCreate from "./project/ProjectCreate.jsx";
-import ProjectMediaManage from "./project/media/Manage.jsx";
+// import ProjectMediaManage from "./project/media/Manage.jsx";
 
 import ProjectAttribute from "./project/Attribute.jsx";
 import ProjectAttributeManage from "./project/attribute/Manage.jsx";
@@ -27,7 +27,6 @@ class AppRouter extends React.Component {
               <Route path="manage" component={ProjectAttributeManage} />
             </Route>
             <Route path="media" component={ProjectMedia} >
-              <Route path="manage(/:hashPath)" component={ProjectMediaManage} />
             </Route>
           </Route>
         </Route>

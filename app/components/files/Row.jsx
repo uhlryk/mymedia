@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
+import Form from "./Form.jsx";
 import classNames from "classnames";
 import View from "../attributes/View.jsx";
 import { openFile } from "./../../actions/openFile";
@@ -20,7 +21,8 @@ class CustomRow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      short: true
+      short: true,
+      validate: false
     };
     this.onToggleSize = this.onToggleSize.bind(this);
     this.onOpenClick = this.onOpenClick.bind(this);
@@ -37,7 +39,24 @@ class CustomRow extends React.Component {
   }
   onManageClick() {
     // this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
-    this.context.modals.showModal();
+    this.context.modals.showModal({
+      body: React.createFactory(Form)({
+        data: this.props.data,
+        mode: Form.EDIT,
+        validate: this.state.validate
+      }),
+      buttons: [{
+        className: "button",
+        label: "submit",
+        onClick: ()=>{
+          this.setState((prevState, props) => ({
+            short: !prevState.short,
+            validate: true
+          }));
+        },
+        key: "submitForm"
+      }]
+    });
   }
   render() {
     const moreComponent = <span>&#9658; More</span>;

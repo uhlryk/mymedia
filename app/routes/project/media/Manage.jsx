@@ -17,6 +17,7 @@ class Manage extends React.Component {
     this.state = {
       mode : this.props.params.hashPath ? formType.EDIT : formType.CREATE
     }
+    console.log("A1");
   }
 
   onCloseClick() {

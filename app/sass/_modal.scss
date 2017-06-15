@@ -6,3 +6,7 @@
 .modal {
   display: block;
 }
+.modal-dialog {
+  height:100%;
+  overflow: auto;
+}
