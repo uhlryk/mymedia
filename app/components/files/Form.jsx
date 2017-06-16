@@ -76,32 +76,36 @@ class Form extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        {Object.keys(this.props.attributes).map(attributeId => {
-          let attribute = this.props.attributes[attributeId];
-          switch(this.props.mode) {
-            case Form.CREATE:
-              return (
-                <Create
-                  key={attributeId}
-                  onChange={value => this.onAttributeChange(attributeId, value)}
-                  value={this.state.details[attributeId]}
-                  attribute={attribute}
-                  validation={this.state.validation[attributeId]}
-                />
-              )
-            case Form.EDIT:
-              return (
-                <Edit
-                  key={attributeId}
-                  onChange={value => this.onAttributeChange(attributeId, value)}
-                  value={this.state.details[attributeId]}
-                  attribute={attribute}
-                  validation={this.state.validation[attributeId]}
-                />
-              )
-          }
-        })}
-        <button type="submit" className="form__button">Submit</button>
+        <div className="modal__body">
+          {Object.keys(this.props.attributes).map(attributeId => {
+            let attribute = this.props.attributes[attributeId];
+            switch(this.props.mode) {
+              case Form.CREATE:
+                return (
+                  <Create
+                    key={attributeId}
+                    onChange={value => this.onAttributeChange(attributeId, value)}
+                    value={this.state.details[attributeId]}
+                    attribute={attribute}
+                    validation={this.state.validation[attributeId]}
+                  />
+                )
+              case Form.EDIT:
+                return (
+                  <Edit
+                    key={attributeId}
+                    onChange={value => this.onAttributeChange(attributeId, value)}
+                    value={this.state.details[attributeId]}
+                    attribute={attribute}
+                    validation={this.state.validation[attributeId]}
+                  />
+                )
+            }
+          })}
+        </div>
+        <div className="modal__footer">
+          <button type="submit" className="form__button">Submit</button>
+        </div>
       </form>
     );
   }

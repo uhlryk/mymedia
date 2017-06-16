@@ -22,15 +22,13 @@ class FormModal extends React.Component {
 
   render() {
     return (
-      <div className="modal" tabIndex="-1" role="dialog">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" onClick={this.props.onCloseClick} data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">{this.props.title}</h4>
-            </div>
-            <this.props.body.Component {...this.props.body.props} closeModal={this.props.closeModal}/>
+      <div className="modal">
+        <div className="modal__content">
+          <div className="modal__header">
+            <h4 className="modal__title">{this.props.title}</h4>
+            <button type="button" className="modal__button-close" onClick={this.props.onCloseClick} ><i className="fa fa-times fa-2x" aria-hidden="true"></i></button>
           </div>
+          <this.props.body.Component {...this.props.body.props} closeModal={this.props.closeModal}/>
         </div>
       </div>
     );

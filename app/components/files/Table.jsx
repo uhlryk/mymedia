@@ -23,6 +23,7 @@ class Table extends React.Component {
 
   onAddNewClick() {
     this.context.modals.showModal("formModal", {
+      title: "Create resource",
       body: {
         Component: Form,
         props: {

@@ -5,8 +5,57 @@
 }
 .modal {
   display: block;
-}
-.modal-dialog {
-  height:100%;
-  overflow: auto;
+  position: fixed;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  &__content {
+    background-color: white;
+    position: absolute;
+    top:20px;
+    bottom: 20px;
+    left: 50px;
+    right: 50px;
+    padding: 0px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+  }
+  &__header {
+    position: relative;
+    padding: 10px;
+    border-bottom: 1px solid #aaa;
+    height:56px;
+  }
+  &__title {
+    width:100%;
+    padding-right:50px;
+  }
+  &__button-close {
+    position: absolute;
+    right: 10px;
+    top:10px;
+    border: 0px solid white;
+    background-color: transparent;
+  }
+  &__body {
+    overflow: auto;
+    position: absolute;
+    top: 56px;
+    bottom:56px;
+    left:0;
+    right:0;
+    padding: 10px;
+  }
+  &__footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right:0;
+    height:56px;
+    padding: 10px;
+    border-top: 1px solid #aaa;
+  }
 }

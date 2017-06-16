@@ -38,6 +38,7 @@ class CustomRow extends React.Component {
   }
   onManageClick() {
     this.context.modals.showModal("formModal", {
+      title: "Edit resource",
       body: {
         Component: Form,
         props: {
