@@ -1,11 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 
-class Modal extends React.Component {
+class FormModal extends React.Component {
   static propsTypes = {
     id: React.PropTypes.number.isRequired,
     title: React.PropTypes.string.isRequired,
-    message: React.PropTypes.string,
     body:React.PropTypes.arrayOf(React.PropTypes.shape({
       Component: React.PropTypes.component,
       props: React.PropTypes.object
@@ -36,7 +35,7 @@ class Modal extends React.Component {
               <h4 className="modal-title">{this.props.title}</h4>
             </div>
             <div className="modal-body">
-              {this.props.body ? <this.props.body.Component {...this.props.body.props}/> : this.props.message }
+              <this.props.body.Component {...this.props.body.props}/> : this.props.message }
             </div>
             <div className="modal-footer">
               {
@@ -52,4 +51,4 @@ class Modal extends React.Component {
   }
 }
 
-export default Modal;
+export default FormModal;

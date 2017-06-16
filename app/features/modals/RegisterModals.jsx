@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from "./Modal.jsx";
+import FormModal from "./FormModal.jsx";
 import uuid from "uuid-v4";
 
 class RegisterModals extends React.Component {
@@ -12,12 +12,18 @@ class RegisterModals extends React.Component {
     super(props);
     const self = this;
     this.state = {
-      list: []
+      list: [],
+      modals: {
+        "formModal": FormModal
+      }
     };
     this.modals = {
-      showModal (props = {}) {
+      showModal (modalTypeName, modalProps = {}) {
+        const props = {};
         props.id = props.id || uuid();
-        props.onCloseClick = props.onCloseClick || this.hideModal.bind(this, props.id);
+        props.onCloseClick = modalProps.onCloseClick || this.hideModal.bind(this, props.id);
+        props.modalProps = modalProps;
+        props.modalTypeName = modalTypeName;
         self.setState(prevState => ({
           list: prevState.list.concat(props)
         }));
@@ -49,7 +55,11 @@ class RegisterModals extends React.Component {
     return (
       <div>
         {this.props.children}
-        {this.state.list.map(props => <Modal key={props.id} {...props} />)}
+        {this.state.list.map(props => React.createFactory(this.state.modals[props.modalTypeName])({
+          key: props.id,
+          onCloseClick: props.onCloseClick,
+          ...props.modalProps
+        }))}
       </div>
     )
   }

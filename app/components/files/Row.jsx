@@ -39,7 +39,7 @@ class CustomRow extends React.Component {
   }
   onManageClick() {
     // this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
-    this.context.modals.showModal({
+    this.context.modals.showModal("formModal", {
       body: {
         Component: Form,
         props: {
