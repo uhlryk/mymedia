@@ -35,7 +35,7 @@ class FormModal extends React.Component {
               <h4 className="modal-title">{this.props.title}</h4>
             </div>
             <div className="modal-body">
-              <this.props.body.Component {...this.props.body.props}/> : this.props.message }
+              <this.props.body.Component {...this.props.body.props}/>
             </div>
             <div className="modal-footer">
               {
