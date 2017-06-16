@@ -20,8 +20,10 @@ class RegisterModals extends React.Component {
     this.modals = {
       showModal (modalTypeName, modalProps = {}) {
         const props = {};
-        props.id = props.id || uuid();
-        props.onCloseClick = modalProps.onCloseClick || this.hideModal.bind(this, props.id);
+        props.id = modalProps.id || uuid();
+        modalProps.id = props.id;
+        props.closeModal = this.hideModal.bind(this, props.id);
+        props.onCloseClick = modalProps.onCloseClick || props.closeModal;
         props.modalProps = modalProps;
         props.modalTypeName = modalTypeName;
         self.setState(prevState => ({
@@ -57,6 +59,7 @@ class RegisterModals extends React.Component {
         {this.props.children}
         {this.state.list.map(props => React.createFactory(this.state.modals[props.modalTypeName])({
           key: props.id,
+          closeModal: props.closeModal,
           onCloseClick: props.onCloseClick,
           ...props.modalProps
         }))}

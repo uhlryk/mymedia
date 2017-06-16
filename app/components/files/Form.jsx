@@ -1,4 +1,5 @@
 import React from "react";
+import { updateResource, addResource } from "../../actions/fileList";
 import { connect } from "react-redux";
 import Edit from "../attributes/Edit.jsx";
 import Create from "../attributes/Create.jsx";
@@ -14,7 +15,8 @@ class Form extends React.Component {
   static propsTypes = {
     submit: React.PropTypes.func.isRequired,
     data: React.PropTypes.object,
-    mode: React.PropTypes.string
+    mode: React.PropTypes.string,
+    closeModal: React.PropTypes.function,
   };
 
   constructor(props) {
@@ -39,7 +41,15 @@ class Form extends React.Component {
     if(this.validation() === false) {
       return;
     }
-    this.props.submit(this.state.details);
+    switch(this.props.mode) {
+      case Form.EDIT:
+        this.props.dispatch(updateResource(this.props.data.hashPath, this.state.details));
+        break;
+      case Form.CREATE:
+        this.props.dispatch(addResource(this.state.details));
+        break;
+    }
+    this.props.closeModal();
   }
 
   validation() {

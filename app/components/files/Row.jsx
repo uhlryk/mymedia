@@ -46,18 +46,7 @@ class CustomRow extends React.Component {
           data: this.props.data,
           mode: Form.EDIT,
         }
-      },
-      buttons: [{
-        className: "button",
-        label: "submit",
-        onClick: ()=>{
-          this.setState((prevState, props) => ({
-            short: !prevState.short,
-            validate: true
-          }));
-        },
-        key: "submitForm"
-      }]
+      }
     });
   }
   render() {
