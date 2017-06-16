@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { push } from "react-router-redux";
 import Form from "./Form.jsx";
 import classNames from "classnames";
 import View from "../attributes/View.jsx";
@@ -38,7 +37,6 @@ class CustomRow extends React.Component {
     this.props.dispatch(openFile(this.props.data.path));
   }
   onManageClick() {
-    // this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
     this.context.modals.showModal("formModal", {
       body: {
         Component: Form,

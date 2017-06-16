@@ -7,7 +7,6 @@ import ProjectMedia from "./project/Media.jsx";
 
 import ProjectMenu from "./project/ProjectMenu.jsx";
 import ProjectCreate from "./project/ProjectCreate.jsx";
-// import ProjectMediaManage from "./project/media/Manage.jsx";
 
 import ProjectAttribute from "./project/Attribute.jsx";
 import ProjectAttributeManage from "./project/attribute/Manage.jsx";
