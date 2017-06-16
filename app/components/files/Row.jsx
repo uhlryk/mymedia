@@ -40,11 +40,13 @@ class CustomRow extends React.Component {
   onManageClick() {
     // this.props.dispatch(push("project/media/manage/" + this.props.data.hashPath));
     this.context.modals.showModal({
-      body: React.createFactory(Form)({
-        data: this.props.data,
-        mode: Form.EDIT,
-        validate: this.state.validate
-      }),
+      body: {
+        Component: Form,
+        props: {
+          data: this.props.data,
+          mode: Form.EDIT,
+        }
+      },
       buttons: [{
         className: "button",
         label: "submit",

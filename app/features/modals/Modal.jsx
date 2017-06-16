@@ -6,7 +6,10 @@ class Modal extends React.Component {
     id: React.PropTypes.number.isRequired,
     title: React.PropTypes.string.isRequired,
     message: React.PropTypes.string,
-    body: React.PropTypes.element,
+    body:React.PropTypes.arrayOf(React.PropTypes.shape({
+      Component: React.PropTypes.component,
+      props: React.PropTypes.object
+    })),
     onCloseClick: React.PropTypes.func.isRequired,
     buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
       className: React.PropTypes.string.isRequired,
@@ -33,7 +36,7 @@ class Modal extends React.Component {
               <h4 className="modal-title">{this.props.title}</h4>
             </div>
             <div className="modal-body">
-              {this.props.body ? this.props.body : this.props.message }
+              {this.props.body ? <this.props.body.Component {...this.props.body.props}/> : this.props.message }
             </div>
             <div className="modal-footer">
               {
