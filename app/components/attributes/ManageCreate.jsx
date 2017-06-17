@@ -22,6 +22,10 @@ class ManageForm extends React.Component {
     extensions: React.PropTypes.object
   };
 
+  static propsTypes = {
+    closeModal: React.PropTypes.function
+  }
+
   constructor(props) {
     super(props);
     this.state = defaultState;
@@ -57,7 +61,7 @@ class ManageForm extends React.Component {
       return;
     }
     this.props.dispatch(addNewAttribute(this.state.details.extensionName, this.state.details));
-    this.setState((prevState, props) => defaultState);
+    this.props.closeModal();
   }
 
   validation() {

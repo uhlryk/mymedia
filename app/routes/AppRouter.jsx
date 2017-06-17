@@ -8,9 +8,6 @@ import ProjectMedia from "./project/Media.jsx";
 import ProjectMenu from "./project/ProjectMenu.jsx";
 import ProjectCreate from "./project/ProjectCreate.jsx";
 
-import ProjectAttribute from "./project/Attribute.jsx";
-import ProjectAttributeManage from "./project/attribute/Manage.jsx";
-
 class AppRouter extends React.Component {
   static propTypes= {
     history: React.PropTypes.object
@@ -22,9 +19,6 @@ class AppRouter extends React.Component {
           <Route path="project" component={Project} >
             <Route path="menu" component={ProjectMenu} />
             <Route path="create/:encodedPath" component={ProjectCreate} />
-            <Route path="attribute" component={ProjectAttribute}>
-              <Route path="manage" component={ProjectAttributeManage} />
-            </Route>
             <Route path="media" component={ProjectMedia} >
             </Route>
           </Route>

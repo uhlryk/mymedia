@@ -13,10 +13,9 @@ class ManageForm extends React.Component {
   static CREATE = "form_mode.create";
 
   static propsTypes = {
-    submit: React.PropTypes.func.isRequired,
     data: React.PropTypes.object,
     mode: React.PropTypes.string,
-    closeModal: React.PropTypes.function,
+    closeModal: React.PropTypes.function
   };
 
   constructor(props) {
