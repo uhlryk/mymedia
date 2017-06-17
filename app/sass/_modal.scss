@@ -27,24 +27,25 @@
     position: relative;
     padding: 10px;
     border-bottom: 1px solid #aaa;
-    height:56px;
+    height:40px;
   }
   &__title {
+    margin: 0px;
     width:100%;
     padding-right:50px;
   }
   &__button-close {
     position: absolute;
     right: 10px;
-    top:10px;
+    top:7px;
     border: 0px solid white;
     background-color: transparent;
   }
   &__body {
     overflow: auto;
     position: absolute;
-    top: 56px;
-    bottom:56px;
+    top: 40px;
+    bottom:54px;
     left:0;
     right:0;
     padding: 10px;
@@ -54,8 +55,12 @@
     bottom: 0px;
     left: 0;
     right:0;
-    height:56px;
-    padding: 10px;
+    height:54px;
+    padding: 10px 10px;
     border-top: 1px solid #aaa;
+
+    button {
+      float: right;
+    }
   }
 }

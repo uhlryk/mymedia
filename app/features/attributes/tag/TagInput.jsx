@@ -108,7 +108,7 @@ class TagInput extends React.Component {
           inputProps={inputProps}
           onSuggestionSelected={this.onTagSelected}
         />
-        <button type="button" className="form__button" onClick={this.onClick}>Add</button>
+        <button type="button" className="button button--secondary" onClick={this.onClick}>Add</button>
       </div>
     );
   }

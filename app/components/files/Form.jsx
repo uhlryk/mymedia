@@ -104,7 +104,7 @@ class Form extends React.Component {
           })}
         </div>
         <div className="modal__footer">
-          <button type="submit" className="form__button">Submit</button>
+          <button type="submit" className="button button--primary">Submit</button>
         </div>
       </form>
     );

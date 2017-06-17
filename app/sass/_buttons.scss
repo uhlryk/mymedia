@@ -1,0 +1,13 @@
+
+.button {
+  @extend .btn;
+  @extend .btn-default;
+
+  &--primary {
+    @extend .btn-primary;
+  }
+
+  &--secondary {
+    @extend .btn-success;
+  }
+}

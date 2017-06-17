@@ -26,7 +26,7 @@ class FormModal extends React.Component {
         <div className="modal__content">
           <div className="modal__header">
             <h4 className="modal__title">{this.props.title}</h4>
-            <button type="button" className="modal__button-close" onClick={this.props.onCloseClick} ><i className="fa fa-times fa-2x" aria-hidden="true"></i></button>
+            <button type="button" className="modal__button-close" onClick={this.props.onCloseClick} ><i className="fa fa-times fa-lg" aria-hidden="true"></i></button>
           </div>
           <this.props.body.Component {...this.props.body.props} closeModal={this.props.closeModal}/>
         </div>
