@@ -17,7 +17,10 @@ class ManageList extends React.Component {
         <tr key={attribute.id}>
           <td>{attribute.displayName}</td>
           <td>{attribute.extensionName}</td>
-          <td></td>
+          <td className="button-list">
+            <button className="button button--secondary" onClick={() => {}}>Edit</button>
+            <button className="button button--danger" onClick={() => {}}>Delete</button>
+          </td>
         </tr>
       );
     });
@@ -27,8 +30,8 @@ class ManageList extends React.Component {
           <thead>
             <tr>
               <th className="col-md-6 col-sm-6">Name</th>
-              <th className="col-md-2 col-sm-2">Type</th>
-              <th className="col-md-4 col-sm-4">Actions</th>
+              <th className="col-md-3 col-sm-3">Type</th>
+              <th className="col-md-3 col-sm-3">Actions</th>
             </tr>
           </thead>
           <tbody>

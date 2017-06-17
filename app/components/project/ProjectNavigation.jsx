@@ -25,7 +25,12 @@ class ProjectNavigation extends React.Component {
         props: {
           data: this.props.data
         }
-      }
+      },
+      buttons: [{
+        className: "button--primary",
+        label: "Create attribute",
+        onClick: () => {}
+      }]
     });
   }
 

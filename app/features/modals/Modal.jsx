@@ -36,6 +36,11 @@ class FormModal extends React.Component {
           </div>
           <this.props.body.Component {...this.props.body.props} closeModal={this.props.closeModal}/>
           <div className="modal__footer">
+            {
+              this.props.buttons && this.props.buttons.map(button => (
+                <button onClick={button.onClick} key={button.key || (button.className + button.label)} type="button" className={classNames("button", button.className)}>{button.label}</button>
+              ))
+            }
           </div>
         </div>
       </div>
