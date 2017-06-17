@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { push } from "react-router-redux";
 import ManageList from "../attributes/ManageList.jsx";
+import ManageCreate from "../attributes/ManageCreate.jsx";
 
 @connect(state => ({
   project: state.project
@@ -27,9 +27,15 @@ class ProjectNavigation extends React.Component {
         }
       },
       buttons: [{
-        className: "button--primary",
+        className: "modal__button-action modal__button-action--secondary",
         label: "Create attribute",
-        onClick: () => {}
+        onClick: () => this.context.modals.showModal("formModal", {
+          title: "Create attributes",
+          body: {
+            Component: ManageCreate,
+            props: {}
+          }
+        })
       }]
     });
   }

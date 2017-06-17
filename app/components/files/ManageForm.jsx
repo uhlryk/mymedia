@@ -104,7 +104,7 @@ class ManageForm extends React.Component {
           })}
         </div>
         <div className="modal__footer">
-          <button type="submit" className="button button--primary">Submit</button>
+          <button type="submit" className="modal__button-action">Submit</button>
         </div>
       </form>
     );
