@@ -49,9 +49,9 @@ class RegisterModals extends React.Component {
 
   componentDidUpdate() {
     if (this.state.list.length) {
-      document.body.classList.toggle("body__modal--no-scroll", true);
+      document.body.classList.toggle("body-modal--no-scroll", true);
     } else {
-      document.body.classList.toggle("body__modal--no-scroll", false);
+      document.body.classList.toggle("body-modal--no-scroll", false);
     }
   }
 
@@ -59,15 +59,23 @@ class RegisterModals extends React.Component {
     return (
       <div>
         {this.props.children}
-        {this.state.list.map(props => React.createFactory(this.state.modals[props.modalTypeName])({
-          key: props.id,
-          closeModal: props.closeModal,
-          onCloseClick: props.onCloseClick,
-          ...props.modalProps
-        }))}
+        {this.state.list.map((props, index) => (
+          <div key={props.id} >
+            {this.state.list.length -1 === index ? <div className="modal-background" /> : null}
+            {createModal(this.state.modals[props.modalTypeName], props)}
+          </div>
+        ))}
       </div>
     )
   }
+}
+
+function createModal (Component, props) {
+  return  React.createFactory(Component)({
+    closeModal: props.closeModal,
+    onCloseClick: props.onCloseClick,
+    ...props.modalProps
+  });
 }
 
 export default RegisterModals;
