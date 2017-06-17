@@ -13,7 +13,7 @@ export default class StoreExtensionManager extends Extensioner.Manager {
   }
 
   getStore() {
-    return this._store.getState();
+    return this._store;
   }
 
   createStoreEnhancer() {

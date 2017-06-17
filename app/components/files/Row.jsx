@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import Form from "./Form.jsx";
+import ManageForm from "./ManageForm.jsx";
 import classNames from "classnames";
 import View from "../attributes/View.jsx";
 import { openFile } from "./../../actions/openFile";
@@ -40,10 +40,10 @@ class CustomRow extends React.Component {
     this.context.modals.showModal("formModal", {
       title: "Edit resource",
       body: {
-        Component: Form,
+        Component: ManageForm,
         props: {
           data: this.props.data,
-          mode: Form.EDIT,
+          mode: ManageForm.EDIT,
         }
       }
     });

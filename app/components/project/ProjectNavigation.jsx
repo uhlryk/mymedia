@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { push } from "react-router-redux";
-
+import ManageList from "../attributes/ManageList.jsx";
 
 @connect(state => ({
   project: state.project
@@ -10,6 +10,23 @@ class ProjectNavigation extends React.Component {
 
   constructor(props) {
     super(props);
+    this.onManageClick = this.onManageClick.bind(this);
+  }
+
+  static contextTypes = {
+    modals: React.PropTypes.object
+  };
+
+  onManageClick() {
+    this.context.modals.showModal("modal", {
+      title: "Manage attributes",
+      body: {
+        Component: ManageList,
+        props: {
+          data: this.props.data
+        }
+      }
+    });
   }
 
   render() {
@@ -21,7 +38,7 @@ class ProjectNavigation extends React.Component {
           {this.props.project.path}
         </div>
         <div>
-          <button onClick={() => this.props.dispatch(push("project/attribute/manage"))}>attributes</button>
+          <button className="button" onClick={this.onManageClick}>attributes</button>
         </div>
       </div>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import FormModal from "./FormModal.jsx";
+import Modal from "./Modal.jsx";
 import uuid from "uuid-v4";
 
 class RegisterModals extends React.Component {
@@ -14,7 +15,8 @@ class RegisterModals extends React.Component {
     this.state = {
       list: [],
       modals: {
-        "formModal": FormModal
+        "formModal": FormModal,
+        "modal": Modal
       }
     };
     this.modals = {

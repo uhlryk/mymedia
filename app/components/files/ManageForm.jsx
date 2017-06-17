@@ -7,7 +7,7 @@ import AttributesExtensionManager from "../../features/attributes/AttributesExte
 @connect(state => ({
   attributes: state.attributes
 }))
-class Form extends React.Component {
+class ManageForm extends React.Component {
 
   static EDIT = "form_mode.edit";
   static CREATE = "form_mode.create";
@@ -42,10 +42,10 @@ class Form extends React.Component {
       return;
     }
     switch(this.props.mode) {
-      case Form.EDIT:
+      case ManageForm.EDIT:
         this.props.dispatch(updateResource(this.props.data.hashPath, this.state.details));
         break;
-      case Form.CREATE:
+      case ManageForm.CREATE:
         this.props.dispatch(addResource(this.state.details));
         break;
     }
@@ -75,12 +75,12 @@ class Form extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="form">
         <div className="modal__body">
           {Object.keys(this.props.attributes).map(attributeId => {
             let attribute = this.props.attributes[attributeId];
             switch(this.props.mode) {
-              case Form.CREATE:
+              case ManageForm.CREATE:
                 return (
                   <Create
                     key={attributeId}
@@ -90,7 +90,7 @@ class Form extends React.Component {
                     validation={this.state.validation[attributeId]}
                   />
                 )
-              case Form.EDIT:
+              case ManageForm.EDIT:
                 return (
                   <Edit
                     key={attributeId}
@@ -111,4 +111,4 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+export default ManageForm;

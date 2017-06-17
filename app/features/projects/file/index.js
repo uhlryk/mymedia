@@ -51,6 +51,7 @@ export default class extends ProjectExtension {
     });
 
     this.createAttribute("file-resource-id", this.fileDropUploadExtension.getName(), {
+      displayName: "File resource",
       label: "some file"
     });
 

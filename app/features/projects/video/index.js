@@ -39,7 +39,7 @@ export default class extends FileProjectExtension {
 
   async mapFileProperties (file) {
     file = await super.mapFileProperties(file);
-    var metadata = await this.getMetadata (path.join(this.getManager().getRootManager().getStore().project.path, file.path));
+    var metadata = await this.getMetadata (path.join(this.getManager().getRootManager().getStore().getState().project.path, file.path));
     return Object.assign({}, file, {
       "video-duration-id": metadata.Duration,
       "video-width-id": metadata.ImageWidth,

@@ -34,7 +34,7 @@ export default class TagAttributesExtension extends AttributesExtension {
   }
 
   getExistingTags (attributeId) {
-    const fileList = this.getManager().getRootManager().getStore().fileList;
+    const fileList = this.getManager().getRootManager().getStore().getState().fileList;
     return Object.keys(fileList).reduce((sum, fileName) => {
       const tagAttribute = fileList[fileName][attributeId];
       if(tagAttribute) {

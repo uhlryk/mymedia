@@ -2,7 +2,7 @@ import React from "react";
 import Row from "./Row.jsx";
 import ReactTooltip from "react-tooltip";
 import { connect } from "react-redux";
-import Form from "./Form.jsx";
+import ManageForm from "./ManageForm.jsx";
 
 @connect(state => ({}))
 class Table extends React.Component {
@@ -25,10 +25,10 @@ class Table extends React.Component {
     this.context.modals.showModal("formModal", {
       title: "Create resource",
       body: {
-        Component: Form,
+        Component: ManageForm,
         props: {
           data: {},
-          mode: Form.CREATE,
+          mode: ManageForm.CREATE,
         }
       }
     });
