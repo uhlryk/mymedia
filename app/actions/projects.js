@@ -39,6 +39,18 @@ function setProject (project) {
   })
 }
 
+function removeProject () {
+  return new Promise((resolve, reject) => {
+    storage.remove("projects", (err, res) => {
+      if (err) {
+        return reject(err);
+      } else {
+        return resolve(res);
+      }
+    })
+  })
+}
+
 export function loadProjectsFromPesistence() {
   return async (dispatch, getState) => {
     try {
@@ -85,7 +97,7 @@ export function saveProjects(project) {
 export function clearProjects() {
   return async (dispatch, getState) => {
     dispatch(showLoader("clearing projects"));
-    await promisifiedStorage.remove("projects");
+    await removeProject();
     dispatch(hideLoader());
     dispatch({
       type: LOAD_PROJECTS,

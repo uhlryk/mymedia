@@ -24,7 +24,7 @@ class ProjectMenu extends React.Component {
   }
 
   onOpenProjectPath() {
-    this.props.dispatch(openProject);
+    this.props.dispatch(openProject());
   }
 
   onOpenProjectFromList(path) {
