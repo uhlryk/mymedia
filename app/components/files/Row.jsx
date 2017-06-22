@@ -39,14 +39,13 @@ class CustomRow extends React.Component {
       }
     });
   }
-  onViewClick(attributes, data) {
+  onViewClick(resourceId) {
     this.context.modals.showModal("modal", {
       title: "View resource",
       body: {
         Component: ViewDetails,
         props: {
-          data,
-          attributes
+          resourceId
         }
       },
       buttons: [{
@@ -67,7 +66,7 @@ class CustomRow extends React.Component {
       "file-list__row--delete": !this.props.data.isPresent
     });
     return (
-      <div className={className} onClick={this.onViewClick.bind(this, this.props.attributes, this.props.data)}>
+      <div className={className} onClick={() => this.onViewClick(this.props.data.hashPath)}>
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
           if(!attribute.view.listing) {

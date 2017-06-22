@@ -1,19 +1,24 @@
 import React from "react";
 import View from "../attributes/View.jsx";
+import { connect } from "react-redux";
+@connect(state => ({
+  fileList: state.fileList,
+  attributes: state.attributes
+}))
 class ViewDetails extends React.Component {
 
   static propsTypes = {
-    data: React.PropTypes.object,
-    attributes: React.PropTypes.object
+    resourceId: React.PropTypes.string
   };
 
   render() {
+    const resource = this.props.fileList[this.props.resourceId];
     const attributes = Object.keys(this.props.attributes).map(attributeId => {
       let attribute = this.props.attributes[attributeId];
       return (
         <View
           key={attributeId}
-          value={this.props.data[attributeId]}
+          value={resource[attributeId]}
           attribute={attribute}
         />
       )

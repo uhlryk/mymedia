@@ -26,7 +26,7 @@ export default class View extends React.Component {
 
     return (
       <div className={className}>
-        <small>{displayName}</small>
+        {displayName? <label>{displayName}</label> : null}
         {extension.getView(props)}
       </div>
     );

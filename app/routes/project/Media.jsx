@@ -48,9 +48,6 @@ class Media extends React.Component {
           </div>
         </div>
         {showResources}
-        <div className="media__popup">
-          {this.props.children}
-        </div>
       </div>
     );
   }
