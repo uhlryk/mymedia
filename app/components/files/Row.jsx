@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ManageForm from "./ManageForm.jsx";
 import classNames from "classnames";
 import View from "../attributes/View.jsx";
+import ViewDetails from "./ViewDetails.jsx";
 import { openFile } from "./../../actions/openFile";
 @connect(state => ({
   attributes: state.attributes
@@ -19,20 +20,10 @@ class CustomRow extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      short: true,
-      validate: false
-    };
-    this.onToggleSize = this.onToggleSize.bind(this);
     this.onOpenClick = this.onOpenClick.bind(this);
     this.onManageClick = this.onManageClick.bind(this);
   }
 
-  onToggleSize() {
-    this.setState((prevState, props) => ({
-      short: !prevState.short
-    }));
-  }
   onOpenClick() {
     this.props.dispatch(openFile(this.props.data.path));
   }
@@ -48,19 +39,35 @@ class CustomRow extends React.Component {
       }
     });
   }
+  onViewClick(attributes, data) {
+    this.context.modals.showModal("modal", {
+      title: "View resource",
+      body: {
+        Component: ViewDetails,
+        props: {
+          data,
+          attributes
+        }
+      },
+      buttons: [{
+        className: "modal__button-action",
+        label: "Open",
+        onClick: () => this.onOpenClick()
+      }, {
+        className: "modal__button-action modal__button-action--secondary",
+        label: "Manage",
+        onClick: () => this.onManageClick()
+      }]
+    });
+  }
   render() {
-    const moreComponent = <span>&#9658; More</span>;
-    const lessComponent = <span>&#9660; Less</span>;
-    let toogleSizeLabel = this.state.short ? moreComponent : lessComponent;
-
     const className = classNames("file-list__row", {
-      "file-list__row--long": !this.state.short,
       "file-list__row--new": this.props.data.isNew,
       "file-list__row--not-changed": !this.props.data.isNew && this.props.data.isPresent && !this.props.data.isChanged,
       "file-list__row--delete": !this.props.data.isPresent
     });
     return (
-      <div className={className}>
+      <div className={className} onClick={this.onViewClick.bind(this, this.props.attributes, this.props.data)}>
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
           if(!attribute.view.listing) {
@@ -74,26 +81,6 @@ class CustomRow extends React.Component {
             />
           )
         })}
-        <div className="file-list__additional">
-          {Object.keys(this.props.attributes).map(attributeId => {
-            let attribute = this.props.attributes[attributeId];
-            if(attribute.view.listing === true) {
-              return false;
-            }
-            return (
-              <View
-                key={attributeId}
-                value={this.props.data[attributeId]}
-                attribute={attribute}
-              />
-            )
-          })}
-        </div>
-        <div className="file-list__actions">
-          <div className="file-list__more" onClick={this.onToggleSize} >{toogleSizeLabel}</div>
-          <div className="file-list__open" onClick={this.onOpenClick}><i className="fa fa-eye" aria-hidden="true"></i> play</div>
-          <div className="file-list__manage" onClick={this.onManageClick} ><i className="fa fa-address-card-o" aria-hidden="true"></i> manage</div>
-        </div>
       </div>
     );
   }

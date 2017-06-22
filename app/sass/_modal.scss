@@ -66,15 +66,20 @@
     height:54px;
     padding: 10px 10px;
     border-top: 1px solid #aaa;
+
+
   }
   &__button-action {
     @extend .button;
     @extend .button--primary;
     float: right;
+    margin-left: 5px;
 
     &--secondary {
       @extend .button--secondary;
       float: left;
+      margin-left: 0px;
+      margin-right: 5px;
     }
   }
 }

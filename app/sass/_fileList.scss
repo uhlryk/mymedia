@@ -4,15 +4,10 @@
     border-bottom: 1px solid #dddddd;
     width:100%;
     padding: 5px;
+    cursor: pointer;
 
     &--add-new-row {
       background: #aaaaaa;
-    }
-    &--long {
-      height: auto;
-      .file-list__additional {
-        height: auto;
-      }
     }
     &--new {
       background: repeating-linear-gradient(
@@ -41,10 +36,6 @@
           #fa393f 20px
       );
     }
-  }
-  &__additional {
-    height: 0px;
-    overflow: hidden;
   }
   &__name {
     cursor: pointer;
@@ -75,23 +66,5 @@
     i {
       font-style: italic;
     }
-  }
-  &__actions {
-    margin-top:10px;
-    height:20px;
-    text-align: center;
-  }
-  &__more {
-    cursor: pointer;
-    float: left;
-  }
-  &__open {
-    cursor: pointer;
-    margin: 0 auto;
-    display: inline;
-  }
-  &__manage {
-    cursor: pointer;
-    float: right;
   }
 }
