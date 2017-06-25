@@ -4,6 +4,7 @@
   }
 }
 .modal-background {
+  z-index: 200;
   display: block;
   position: fixed;
   top:0;
@@ -13,6 +14,7 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 .modal {
+  z-index: 201;
   display: block;
   position: fixed;
   top:0;

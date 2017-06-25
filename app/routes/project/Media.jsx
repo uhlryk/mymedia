@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import ProjectNavigation from "../../components/project/ProjectNavigation.jsx";
+import ProjectHeader from "../../components/project/ProjectHeader.jsx";
 import Table from "../../components/files/Table.jsx";
 import sortResources from "../../features/sorting/sortResources";
 import filterResources from "../../features/searching/filterResources";
@@ -39,7 +39,7 @@ class Media extends React.Component {
     return (
       <div className="media">
         <div className="media__project">
-          <ProjectNavigation />
+          <ProjectHeader />
         </div>
         <div className="media__sidebar">
           <div>
