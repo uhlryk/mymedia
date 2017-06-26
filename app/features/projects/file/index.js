@@ -8,6 +8,7 @@ import Date from "../../attributes/date/index";
 import Tag from "../../attributes/tag/index";
 import HierarchicalTag from "../../attributes/hierarchicalTag/index";
 import FileDropUpload from "../../attributes/fileDropUpload/index";
+import fse from "fs-extra";
 
 export default class extends ProjectExtension {
 
@@ -107,5 +108,12 @@ export default class extends ProjectExtension {
 
   convertPathToFolderArray (filePath) {
     return filePath.split(path.sep).slice(0,-1);
+  }
+
+  async onBeforeCreate (modifiedResource) {
+    const project = this.getManager().getRootManager().getStore().getState().project;
+    const projectPath = project.path;
+    await fse.mkdir(path.join(projectPath, modifiedResource.id));
+    return modifiedResource;
   }
 }

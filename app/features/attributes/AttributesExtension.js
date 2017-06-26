@@ -108,19 +108,19 @@ export default class AttributesExtension extends Extensioner.Extension {
     }
   }
 
-  async onBeforeCreate (value, attribute) {
+  async onBeforeCreate (value, attribute, resource) {
     return value;
   }
 
-  async onBeforeUpdate (value, attribute) {
+  async onBeforeUpdate (value, attribute, resource) {
     return value;
   }
 
-  async onAfterCreate (value, attribute) {
+  async onAfterCreate (value, attribute, resource) {
     return value;
   }
 
-  async onAfterUpdate (value, attribute) {
+  async onAfterUpdate (value, attribute, resource) {
     return value;
   }
 

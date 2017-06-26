@@ -53,7 +53,7 @@ export default class DropFile extends React.Component {
       filePath = (
         <div>
           <div>Uploaded file:</div>
-          <div>{this.props.value}</div>
+          <div>{this.props.value.name}</div>
         </div>
       );
     }

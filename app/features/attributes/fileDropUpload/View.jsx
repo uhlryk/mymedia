@@ -6,7 +6,7 @@ export default class View extends React.Component {
   };
   render() {
     return (
-      <div>{this.props.value}</div>
+      <div>{this.props.value.name}</div>
     );
   }
 }

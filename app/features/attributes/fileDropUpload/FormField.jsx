@@ -27,8 +27,10 @@ export default class FormField extends React.Component {
   }
 
   onChange(file) {
-    console.log(file);
-    this.props.onChange(file.path);
+    this.props.onChange({
+      name: file.name,
+      path: file.path
+    });
   }
 
   render() {
