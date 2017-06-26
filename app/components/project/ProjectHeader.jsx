@@ -4,7 +4,7 @@ import ManageList from "../attributes/ManageList.jsx";
 import ManageCreate from "../attributes/ManageCreate.jsx";
 import classNames from "classnames";
 import { push } from "react-router-redux";
-import ManageForm from "../files/ManageForm.jsx";
+import ManageForm from "../resources/ManageForm.jsx";
 
 @connect(state => ({
   project: state.project

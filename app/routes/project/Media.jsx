@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import ProjectHeader from "../../components/project/ProjectHeader.jsx";
-import Table from "../../components/files/Table.jsx";
+import Table from "../../components/resources/Table.jsx";
 import sortResources from "../../features/sorting/sortResources";
 import filterResources from "../../features/searching/filterResources";
 import SortNavigation from "../../features/sorting/SortNavigation";
