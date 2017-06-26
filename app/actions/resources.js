@@ -1,7 +1,7 @@
 import { save } from "./index";
 import { showNotification } from "./notification";
 export const ADD_NEW_BULK_FILES = "file_list.bulk_new_add";
-export const LOAD_SAVED_FILES = "file_list.bulk_project_set";
+export const LOAD_RESOURCES = "resources.load_resources";
 export const UPDATE_RESOURCE = "resources.update_resource";
 export const ADD_RESOURCE = "resources.add_resource";
 
@@ -16,10 +16,10 @@ export function addFiles(list) {
   };
 }
 
-export function loadFiles(list) {
+export function loadResources(list) {
   return (dispatch, getState) => {
     dispatch({
-      type: LOAD_SAVED_FILES,
+      type: LOAD_RESOURCES,
       payload: {
         list
       }

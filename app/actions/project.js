@@ -9,7 +9,7 @@ import getFileList from "../helpers/getFileList";
 import { showLoader, hideLoader } from "./loader";
 import { save } from "./index";
 import * as STATUS from "../constants/status";
-import { addFiles, loadFiles } from "./fileList";
+import { addFiles, loadResources } from "./resources";
 import { saveProjects } from "./projects";
 import { loadAttributes } from "./attributes";
 
@@ -32,10 +32,10 @@ async function createProjectFile(newProjectData) {
     dispatch(showLoader("finding files"));
     dispatch(initProject(newProjectData, STATUS.NEW));
     extensionManager.projects.getActive().createProject();
-    let files = await getFileList(newProjectData.path);
-    files = extensionManager.projects.getActive().collectProjectFiles(files);
-    files = await extensionManager.projects.getActive().mapFilesProperties(files);
-    dispatch(addFiles(files));
+    // let files = await getFileList(newProjectData.path);
+    // files = extensionManager.projects.getActive().collectProjectFiles(files);
+    // files = await extensionManager.projects.getActive().mapFilesProperties(files);
+    // dispatch(addFiles(files));
     dispatch(await save());
     dispatch(await saveProjects(newProjectData));
     dispatch(hideLoader());
@@ -64,11 +64,11 @@ async function findCollectionFiles(projectPath) {
       }
       dispatch(initProject(projectData.project, STATUS.STANDARD));
       dispatch(loadAttributes(projectData.attributes));
-      dispatch(loadFiles(projectData.media));
-      let files = await getFileList(projectPath);
-      files = extensionManager.projects.getActive().collectProjectFiles(files);
-      files = await extensionManager.projects.getActive().mapFilesProperties(files);
-      dispatch(addFiles(files, true));
+      dispatch(loadResources(projectData.resources));
+      // let files = await getFileList(projectPath);
+      // files = extensionManager.projects.getActive().collectProjectFiles(files);
+      // files = await extensionManager.projects.getActive().mapFilesProperties(files);
+      // dispatch(addFiles(files, true));
       dispatch(hideLoader());
       dispatch(await save());
       dispatch(await saveProjects(projectData.project));

@@ -8,7 +8,7 @@ export function save() {
   return async (dispatch, getState) => {
     await fileSave(path.join(getState().project.path, PROJECT_FILE), JSON.stringify({
       project: getState().project,
-      media: getState().fileList,
+      resources: getState().resources,
       attributes: getState().attributes
     }));
   };

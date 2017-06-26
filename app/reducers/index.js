@@ -5,7 +5,7 @@ import projects from "./projects";
 import notification from "./notification";
 import loader from "./loader";
 import filters from "./filters";
-import fileList from "./fileList";
+import resources from "./resources";
 import attributes from "./attributes";
 import sort from "./sort";
 import search from "./search";
@@ -14,7 +14,7 @@ import search from "./search";
 export default combineReducers({
   project,
   projects,
-  fileList,
+  resources,
   filters,
   attributes,
   notification,

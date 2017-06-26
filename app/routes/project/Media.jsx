@@ -9,7 +9,7 @@ import SortNavigation from "../../features/sorting/SortNavigation";
 import SearchNavigation from "../../features/searching/SearchNavigation";
 
 @connect(state => ({
-  fileList: state.fileList,
+  resources: state.resources,
   sort: state.sort,
   search: state.search,
   attributes: state.attributes
@@ -21,8 +21,8 @@ class Media extends React.Component {
   };
 
   render() {
-    let list = Object.keys(this.props.fileList).map(filePath => {
-      return this.props.fileList[filePath];
+    let list = Object.keys(this.props.resources).map(resourceId => {
+      return this.props.resources[resourceId];
     });
     let sortedList = sortResources(list, this.props.sort, this.props.attributes, this.context.extensions);
     let filteredSortedList = filterResources(sortedList, this.props.search, this.props.attributes, this.context.extensions);

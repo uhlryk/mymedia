@@ -1,5 +1,5 @@
 import React from "react";
-import { updateResource, addResource } from "../../actions/fileList";
+import { updateResource, addResource } from "../../actions/resources";
 import { connect } from "react-redux";
 import Edit from "../attributes/Edit.jsx";
 import Create from "../attributes/Create.jsx";

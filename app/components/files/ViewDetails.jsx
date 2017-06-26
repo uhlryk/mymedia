@@ -2,7 +2,7 @@ import React from "react";
 import View from "../attributes/View.jsx";
 import { connect } from "react-redux";
 @connect(state => ({
-  fileList: state.fileList,
+  resources: state.resources,
   attributes: state.attributes
 }))
 class ViewDetails extends React.Component {
@@ -12,7 +12,7 @@ class ViewDetails extends React.Component {
   };
 
   render() {
-    const resource = this.props.fileList[this.props.resourceId];
+    const resource = this.props.resources[this.props.resourceId];
     const attributes = Object.keys(this.props.attributes).map(attributeId => {
       let attribute = this.props.attributes[attributeId];
       return (
