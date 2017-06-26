@@ -37,11 +37,19 @@ export default class ProjectExtension extends Extensioner.Extension {
     )
   }
 
-  async onBeforeUpdate (data) {
+  async onBeforeUpdate (modifiedResource) {
+    return modifiedResource;
+  }
+
+  async onBeforeCreate (modifiedResource) {
+    return modifiedResource;
+  }
+
+  async onAfterUpdate (resourceId) {
 
   }
 
-  async onBeforeCreate (data) {
+  async onAfterCreate (resourceId) {
 
   }
 

@@ -9,14 +9,22 @@ export default class ProjectExtensionManager extends Extensioner.Manager {
   }
   getActive() {
     let project = this.getRootManager().getStore().getState().project;
-    return this.getExtensions().find(extension => extension.getName() === project.projectExtensionName);
+    return this.getExtensionByName(project.projectExtensionName);
   }
 
   async onBeforeUpdate (data) {
-    await this.getActive().onBeforeUpdate(data);
+    return await this.getActive().onBeforeUpdate(data);
   }
 
   async onBeforeCreate (data) {
-    await this.getActive().onBeforeCreate(data);
+    return await this.getActive().onBeforeCreate(data);
+  }
+
+  async onAfterUpdate (resourceId) {
+    await this.getActive().onAfterUpdate(resourceId);
+  }
+
+  async onAfterCreate (resourceId) {
+    await this.getActive().onAfterCreate(resourceId);
   }
 }

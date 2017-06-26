@@ -116,6 +116,14 @@ export default class AttributesExtension extends Extensioner.Extension {
     return value;
   }
 
+  async onAfterCreate (value, attribute) {
+    return value;
+  }
+
+  async onAfterUpdate (value, attribute) {
+    return value;
+  }
+
   static mergeConfiguration(source, target) {
     return _.merge(source, target);
   }

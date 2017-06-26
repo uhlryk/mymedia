@@ -1,5 +1,4 @@
 import _ from "lodash";
-import uuid from "uuid-v4";
 import { ADD_NEW_BULK_FILES, LOAD_RESOURCES, UPDATE_RESOURCE, ADD_RESOURCE } from "../actions/resources";
 
 // const DEFAULT_MEDIA_FILE = {
@@ -33,8 +32,7 @@ export default function resources(state = {}, action) {
     //   return newState;
     case ADD_RESOURCE:
       newState = _.cloneDeep(state);
-      let id = uuid();
-      newState[id] = Object.assign({}, action.payload, { id });
+      newState[action.payload.id] = Object.assign({}, action.payload);
       return newState;
     case UPDATE_RESOURCE:
       newState = _.cloneDeep(state);

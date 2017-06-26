@@ -5,8 +5,7 @@ export default function sortResources (resources, sortList, attributes, extensio
       var bAttribute = b[sortAttribute.id] || attributes[sortAttribute.id].defaultValue || 0;
 
       return extensions.attributes
-        .getExtensions()
-        .find(extension => extension.getName() === attributes[sortAttribute.id].extensionName)
+        .getExtensionByName(attributes[sortAttribute.id].extensionName)
         .getSortFunction(sortAttribute.order)(aAttribute, bAttribute)
     }), resources);
 }

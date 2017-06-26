@@ -17,7 +17,7 @@ export default class View extends React.Component {
 
     const attributeClassName = this.props.attribute.view.className ||  this.props.attribute.className || undefined;
     const className = classNames("file-list__element", attributeClassName);
-    const extension = this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName);
+    const extension = this.context.extensions.attributes.getExtensionByName(this.props.attribute.extensionName);
 
     if(this.props.attribute.view.hidden || !extension.hasView()) {
       return false;

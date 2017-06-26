@@ -34,7 +34,7 @@ export default class Edit extends React.Component {
     });
     const attributeClassName = this.props.attribute.edit.className ||  this.props.attribute.className || undefined;
     const className = classNames("form__group", attributeClassName);
-    const extension = this.context.extensions.attributes.getExtensions().find(extension => extension.getName() === this.props.attribute.extensionName);
+    const extension = this.context.extensions.attributes.getExtensionByName(this.props.attribute.extensionName);
     if(this.props.attribute.edit.hidden || !extension.hasEdit()) {
       return false;
     }

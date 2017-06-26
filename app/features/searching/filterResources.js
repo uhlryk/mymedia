@@ -8,7 +8,5 @@ function filterQuickSearch(resources, search, attributes, extensions) {
 }
 
 function getExtensionByName(extensions, attributeName) {
-  return extensions.attributes
-    .getExtensions()
-    .find(extension => extension.getName() === attributeName)
+  return extensions.attributes.getExtensionByName(attributeName)
 }
