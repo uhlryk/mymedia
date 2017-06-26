@@ -108,6 +108,16 @@ export default class AttributesExtension extends Extensioner.Extension {
     }
   }
 
+  async onBeforeCreate (value, attribute) {
+    console.log("onBeforeCreate", value, attribute);
+    return value;
+  }
+
+  async onBeforeUpdate (value, attribute) {
+    console.log("onBeforeUpdate", value, attribute);
+    return value;
+  }
+
   static mergeConfiguration(source, target) {
     return _.merge(source, target);
   }

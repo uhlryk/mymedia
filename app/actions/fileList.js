@@ -30,6 +30,7 @@ export function loadFiles(list) {
 
 export function addResource(data) {
   return async (dispatch, getState) => {
+    await extensionManager.attributes.onBeforeCreate(data);
     dispatch({
       type: ADD_RESOURCE,
       payload: {
@@ -43,7 +44,8 @@ export function addResource(data) {
 }
 
 export function updateResource(hashPath, data) {
-  return async (dispatch, getState) => {
+  return async (dispatch, getState, extensionManager) => {
+    await extensionManager.attributes.onBeforeUpdate(data);
     dispatch({
       type: UPDATE_RESOURCE,
       payload: {
