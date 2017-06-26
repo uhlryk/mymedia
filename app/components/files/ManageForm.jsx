@@ -42,7 +42,7 @@ class ManageForm extends React.Component {
     }
     switch(this.props.mode) {
       case ManageForm.EDIT:
-        this.props.dispatch(updateResource(this.props.data.hashPath, this.state.details));
+        this.props.dispatch(updateResource(this.props.data.id, this.state.details));
         break;
       case ManageForm.CREATE:
         this.props.dispatch(addResource(this.state.details));

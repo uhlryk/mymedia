@@ -22,7 +22,7 @@ export default class AttributesExtensionManager extends Extensioner.Manager {
 
   async onBeforeCreate (data) {
     const attributes = this.getRootManager().getStore().getState().attributes;
-    for (const attribute of attributes) {
+    for (const attribute of Object.values(attributes)) {
       const attributeId = attribute.id;
       const attributeExtensionName = attribute.extensionName;
       const attibuteExtension = this.getExtensions().find(extension => extension.getName() === attributeExtensionName);

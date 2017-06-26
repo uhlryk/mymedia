@@ -1,5 +1,4 @@
 import _ from "lodash";
-import md5 from "md5";
 import uuid from "uuid-v4";
 import { ADD_NEW_BULK_FILES, LOAD_SAVED_FILES, UPDATE_RESOURCE, ADD_RESOURCE } from "../actions/fileList";
 
@@ -11,37 +10,37 @@ export default function fileList(state = {}, action) {
   switch(action.type) {
     case LOAD_SAVED_FILES:
       newState = {};
-      Object.keys(action.payload.list).forEach(hashPath => {
-        let file = _.cloneDeep(action.payload.list[hashPath]);
+      Object.keys(action.payload.list).forEach(id => {
+        let file = _.cloneDeep(action.payload.list[id]);
         file.isPresent = false;
         file.isNew = false;
-        newState[hashPath] = file;
+        newState[id] = file;
       });
       return newState;
     case ADD_NEW_BULK_FILES:
       newState = _.cloneDeep(state);
       action.payload.list.forEach(file => {
-        let hashPath = md5(file.path);
-        let fileFromProject = newState[hashPath];
+        const id = uuid();
+        let fileFromProject = newState[id];
         if(fileFromProject) {
           fileFromProject.isPresent = true;
         } else {
           file.isPresent = true;
           file.isNew = action.markAsNew;
           file.isChanged = false;
-          file.hashPath = hashPath;
-          newState[hashPath] = Object.assign({}, file, DEFAULT_MEDIA_FILE);
+          file.id = id;
+          newState[id] = Object.assign({}, file, DEFAULT_MEDIA_FILE);
         }
       });
       return newState;
     case ADD_RESOURCE:
       newState = _.cloneDeep(state);
-      let hashPath = uuid();
-      newState[hashPath] = Object.assign({}, action.payload, { hashPath });
+      let id = uuid();
+      newState[id] = Object.assign({}, action.payload, { id });
       return newState;
     case UPDATE_RESOURCE:
       newState = _.cloneDeep(state);
-      let originalFile = newState[action.payload.hashPath];
+      let originalFile = newState[action.payload.id];
       Object.assign(originalFile, action.payload, {isChanged: true, isNew: false});
       return newState;
     default:

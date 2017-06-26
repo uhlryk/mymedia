@@ -66,7 +66,7 @@ class CustomRow extends React.Component {
       "file-list__row--delete": !this.props.data.isPresent
     });
     return (
-      <div className={className} onClick={() => this.onViewClick(this.props.data.hashPath)}>
+      <div className={className} onClick={() => this.onViewClick(this.props.data.id)}>
         {Object.keys(this.props.attributes).map(attributeId => {
           let attribute = this.props.attributes[attributeId];
           if(!attribute.view.listing) {

@@ -21,7 +21,7 @@ class Table extends React.Component {
     results.sort(compare);
     for (let i=0; i < results.length; i++) {
       const data = results[i];
-      rows.push(<Row data={data} key={data.hashPath} />);
+      rows.push(<Row data={data} key={data.id} />);
     }
     return (
       <div className={this.props.className} >
