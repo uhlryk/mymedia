@@ -21,4 +21,14 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
       }
     }, configuration));
   }
+
+  async onBeforeCreate (value, attribute) {
+    console.log("onBeforeCreate fileDrop", value, attribute);
+    return value;
+  }
+
+  async onBeforeUpdate (value, attribute) {
+    console.log("onBeforeUpdate fileDrop", value, attribute);
+    return value;
+  }
 }
