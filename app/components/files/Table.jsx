@@ -2,7 +2,6 @@ import React from "react";
 import Row from "./Row.jsx";
 import ReactTooltip from "react-tooltip";
 import { connect } from "react-redux";
-import ManageForm from "./ManageForm.jsx";
 
 @connect(state => ({}))
 class Table extends React.Component {
@@ -12,26 +11,8 @@ class Table extends React.Component {
     className: React.PropTypes.string
   };
 
-  static contextTypes = {
-    modals: React.PropTypes.object
-  };
-
   constructor(props) {
     super(props);
-    this.onAddNewClick = this.onAddNewClick.bind(this);
-  }
-
-  onAddNewClick() {
-    this.context.modals.showModal("formModal", {
-      title: "Create resource",
-      body: {
-        Component: ManageForm,
-        props: {
-          data: {},
-          mode: ManageForm.CREATE,
-        }
-      }
-    });
   }
 
   render() {
@@ -44,9 +25,6 @@ class Table extends React.Component {
     }
     return (
       <div className={this.props.className} >
-        <div className="file-list__row file-list__row--add-new-row">
-          <button onClick={this.onAddNewClick}>Add new</button>
-        </div>
         {rows}
         <ReactTooltip place="top" type="info" effect="float" id="file-list" class="tooltip"/>
       </div>

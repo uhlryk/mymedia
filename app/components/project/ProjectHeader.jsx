@@ -4,6 +4,7 @@ import ManageList from "../attributes/ManageList.jsx";
 import ManageCreate from "../attributes/ManageCreate.jsx";
 import classNames from "classnames";
 import { push } from "react-router-redux";
+import ManageForm from "../files/ManageForm.jsx";
 
 @connect(state => ({
   project: state.project
@@ -14,6 +15,7 @@ class ProjectHeader extends React.Component {
     super(props);
     this.onManageClick = this.onManageClick.bind(this);
     this.onMenuClick = this.onMenuClick.bind(this);
+    this.onAddNewClick = this.onAddNewClick.bind(this);
     this.state = {
       showMenu: false
     }
@@ -52,6 +54,19 @@ class ProjectHeader extends React.Component {
     });
   }
 
+  onAddNewClick() {
+    this.context.modals.showModal("formModal", {
+      title: "Create resource",
+      body: {
+        Component: ManageForm,
+        props: {
+          data: {},
+          mode: ManageForm.CREATE,
+        }
+      }
+    });
+  }
+
   render() {
     const menuClassName = classNames("project-header__menu", {
       "project-header__menu--open": this.state.showMenu
@@ -72,6 +87,7 @@ class ProjectHeader extends React.Component {
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
             <ul className="nav navbar-nav navbar-right">
+              <li><a href="#" onClick={ this.onAddNewClick }>Create resource</a></li>
               <li className={menuClassName}>
                 <a href="#" className="dropdown-toggle" onClick={this.onMenuClick} data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu <span className="caret"></span></a>
                 <ul className="dropdown-menu">
