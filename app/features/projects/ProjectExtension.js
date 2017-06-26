@@ -37,6 +37,14 @@ export default class ProjectExtension extends Extensioner.Extension {
     )
   }
 
+  async onBeforeUpdate (data) {
+
+  }
+
+  async onBeforeCreate (data) {
+
+  }
+
   static mergeConfiguration(source, target) {
     return _.merge(source, target);
   }
