@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import ManageList from "../attributes/ManageList.jsx";
 import ManageCreate from "../attributes/ManageCreate.jsx";
 import classNames from "classnames";
+import { push } from "react-router-redux";
 
 @connect(state => ({
   project: state.project
@@ -77,7 +78,7 @@ class ProjectHeader extends React.Component {
                   <li><a href="#">Project details</a></li>
                   <li><a href="#" onClick={this.onManageClick}>Attributes</a></li>
                   <li role="separator" className="divider"></li>
-                  <li><a href="#">Project List</a></li>
+                  <li><a href="#" onClick={() => this.props.dispatch(push("project/menu"))}>Project List</a></li>
                 </ul>
               </li>
             </ul>
