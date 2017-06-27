@@ -16,8 +16,11 @@
     @extend .btn-success;
   }
 
+  &--warning {
+    @extend .btn-warning;
+  }
 
-    &--danger {
+  &--danger {
     @extend .btn-danger;
   }
 }
