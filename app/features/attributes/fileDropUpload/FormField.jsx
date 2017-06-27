@@ -26,12 +26,11 @@ export default class FormField extends React.Component {
   }
 
   render() {
-    console.log(this.props.value);
     return (
       <div>
         <table className="table table-striped table-condensed table-hover">
           <tbody>
-          {this.props.value.map(fileData => (
+          {(this.props.value || []).map(fileData => (
             <tr key={fileData.id || md5(fileData.file.path)}>
               <td>{fileData.name || fileData.file.name}</td>
               <td>{fileData.status}</td>

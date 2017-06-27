@@ -6,7 +6,16 @@ export default class View extends React.Component {
   };
   render() {
     return (
-      <div>{this.props.value.name}</div>
+    <table className="table table-striped table-condensed table-hover">
+      <tbody>
+      {(this.props.value || []).map(fileData => (
+        <tr key={fileData.id}>
+          <td>{fileData.name}</td>
+          <td><button className="button">Open</button></td>
+        </tr>
+      ))}
+      </tbody>
+    </table>
     );
   }
 }
