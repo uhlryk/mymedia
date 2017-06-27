@@ -32,7 +32,6 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
   }
 
   async onBeforeCreate (files, attribute, resource) {
-    console.log("onBeforeCreate fileDrop", files, attribute, resource);
     if (files) {
       const newFiles = [];
       for (const fileData of files) {

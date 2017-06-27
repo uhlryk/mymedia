@@ -20,13 +20,9 @@ class CustomRow extends React.Component {
 
   constructor(props) {
     super(props);
-    this.onOpenClick = this.onOpenClick.bind(this);
     this.onManageClick = this.onManageClick.bind(this);
   }
 
-  onOpenClick() {
-    this.props.dispatch(openFile(this.props.data.path));
-  }
   onManageClick() {
     this.context.modals.showModal("formModal", {
       title: "Edit resource",
@@ -49,10 +45,6 @@ class CustomRow extends React.Component {
         }
       },
       buttons: [{
-        className: "modal__button-action",
-        label: "Open",
-        onClick: () => this.onOpenClick()
-      }, {
         className: "modal__button-action modal__button-action--secondary",
         label: "Manage",
         onClick: () => this.onManageClick()
