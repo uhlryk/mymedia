@@ -7,6 +7,12 @@ import path from "path";
 import fse from "fs-extra";
 
 export default class FileDropUploadAttributesExtension extends AttributesExtension {
+  static fileStatus = {
+    BEFORE_UPLOAD: "before_upload",
+    UPLOADED: "uploaded",
+    BEFORE_DELETE: "before_delete"
+  }
+
   constructor (extensionName = null, configuration = {}) {
     super(extensionName || "fileDropUpload", AttributesExtension.mergeConfiguration({
       view: {
@@ -25,20 +31,34 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
     }, configuration));
   }
 
-  async onBeforeCreate (file, attribute, resource) {
-    console.log("onBeforeCreate fileDrop", file, attribute, resource);
-    const project = this.getManager().getRootManager().getStore().getState().project;
-    const projectPath = project.path;
-    const resourcePath = path.join(projectPath, resource.id);
-    const srcFilePath = file.path;
-    const fileId = uuid();
-    const targetFilePath = path.join(resourcePath, fileId);
-    await fse.copy(srcFilePath, targetFilePath);
-    return {
-      id: fileId,
-      name: file.name,
-      path: targetFilePath
-    };
+  async onBeforeCreate (files, attribute, resource) {
+    console.log("onBeforeCreate fileDrop", files, attribute, resource);
+    if (files) {
+      const newFiles = [];
+      for (const fileData of files) {
+        const file = fileData.file;
+        if (file) {
+          const project = this.getManager().getRootManager().getStore().getState().project;
+          const projectPath = project.path;
+          const resourcePath = path.join(projectPath, resource.id);
+          const srcFilePath = file.path;
+          const fileId = uuid();
+          const targetFilePath = path.join(resourcePath, fileId);
+          await fse.copy(srcFilePath, targetFilePath);
+          newFiles.push({
+            id: fileId,
+            name: file.name,
+            path: targetFilePath,
+            status: FileDropUploadAttributesExtension.fileStatus.UPLOADED
+          });
+        } else {
+          newFiles.push(fileData);
+        }
+      }
+      return newFiles;
+    } else {
+      return files;
+    }
   }
 
   async onBeforeUpdate (value, attribute, resource) {
