@@ -61,9 +61,8 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
     }
   }
 
-  async onBeforeUpdate (value, attribute, resource) {
-    console.log("onBeforeUpdate fileDrop", value, attribute);
-    return null;
+  async onBeforeUpdate (files, attribute, resource) {
+    return await this.onBeforeCreate(files, attribute, resource);
   }
 
 }
