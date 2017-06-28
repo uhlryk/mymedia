@@ -18,7 +18,6 @@ export default class FormField extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("A2", nextProps);
     if(this.state.value !== nextProps.value) {
       this.setState((prevState, props) => ({
         value: props.value || props.defaultValue || ""
@@ -27,7 +26,6 @@ export default class FormField extends React.Component {
   }
 
   onChange (evt) {
-    console.log("A1", evt.target.checked);
     this.props.onChange(evt.target.checked);
   }
 
