@@ -12,7 +12,7 @@ export default class View extends React.Component {
   }
   render() {
     let value = this.props.value || (this.props.attribute && this.props.attribute.defaultValue);
-    if(!value) return false;
+    if(value === undefined) return false;
     var props = Object.assign({}, this.props.attribute, { value });
 
     const attributeClassName = this.props.attribute.view.className ||  this.props.attribute.className || undefined;

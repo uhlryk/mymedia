@@ -9,6 +9,9 @@
   &__element {
     @extend .form-control;
   }
+  &__special {
+    display: block;
+  }
   &__element-helper {
     &--error {
       color: red;

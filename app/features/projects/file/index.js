@@ -1,6 +1,7 @@
 import ProjectExtension from "../ProjectExtension";
 import path from "path";
 import InputExtension from "../../attributes/input/index";
+import CheckboxExtension from "../../attributes/checkbox/index";
 import TextAreaExtension from "../../attributes/textArea/index";
 import RatingExtension from "../../attributes/rating/index";
 import FileSize from "../../attributes/fileSize/index";
@@ -24,6 +25,8 @@ export default class extends ProjectExtension {
     super.init(manager);
     this.inputExtension = new InputExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.inputExtension);
+    this.checkboxExtension = new CheckboxExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.checkboxExtension);
     this.textAreaExtension = new TextAreaExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.textAreaExtension);
     this.ratingExtension = new RatingExtension();
