@@ -10,7 +10,6 @@ export default class FormField extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log("AAAAA", props);
     this.onChange = this.onChange.bind(this);
     this.state = {
       value: this.props.value || this.props.defaultValue || 0

@@ -1,4 +1,3 @@
-import Settings from "./Settings.jsx";
 import FormField from "./FormField.jsx";
 import View from "./View.jsx";
 import NumberAttributesExtension from "../number/index";
