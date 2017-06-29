@@ -15,9 +15,8 @@ export default class NumberAttributesExtension extends AttributesExtension {
           name: "defaultValue",
           extensionName: "number",
           displayName: "Default value",
-          create: {
-            defaultValue: 0
-          }
+          defaultValue: 0,
+          create: {}
         }]
       },
       edit: {
