@@ -1,4 +1,3 @@
-import Settings from "./Settings.jsx";
 import FormField from "./FormField.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
@@ -11,7 +10,19 @@ export default class InputAttributesExtension extends AttributesExtension {
       },
       settings: {
         displayName: "input",
-        component: Settings
+        attributes: [{
+          name: "placeholder",
+          extensionName: "input",
+          displayName: "Placeholder",
+          placeholder: "Enter placeholder",
+          create: {}
+        }, {
+          name: "defaultValue",
+          extensionName: "input",
+          displayName: "Default value",
+          placeholder: "Enter default value",
+          create: {}
+        }]
       },
       edit: {
         component: FormField

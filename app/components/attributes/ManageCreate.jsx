@@ -1,13 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { push } from "react-router-redux";
 import ValidationElementError from "../ValidationElementError.jsx";
-import Settings from "./Settings.jsx";
 import { addNewAttribute } from "../../actions/attributes";
+import Create from "./Create.jsx";
 
 const defaultState = {
   details: {
-    displayName: "",
     extensionName: ""
   },
   validation: {}
@@ -29,29 +27,21 @@ class ManageForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = defaultState;
-    this.handleDisplayNameChange = this.handleDisplayNameChange.bind(this);
-    this.handleSettingsChange = this.handleSettingsChange.bind(this);
+    this.handleExtensionSettingsAttributeChange = this.handleExtensionSettingsAttributeChange.bind(this);
     this.handleExtensionChange = this.handleExtensionChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleDisplayNameChange(evt) {
-    const value = evt.target.value;
-    this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, { displayName: value})
-    }));
-  }
-
-  handleSettingsChange(settings) {
-    this.setState((prevState, props) => ({
-      details: Object.assign({}, prevState.details, settings)
-    }));
   }
 
   handleExtensionChange(evt) {
     const value = evt.target.value;
     this.setState((prevState, props) => ({
       details: Object.assign({}, prevState.details, defaultState.details, { extensionName: value})
+    }));
+  }
+
+  handleExtensionSettingsAttributeChange(attributeName, value) {
+    this.setState((prevState, props) => ({
+      details: Object.assign({}, prevState.details, { [attributeName]: value })
     }));
   }
 
@@ -84,6 +74,24 @@ class ManageForm extends React.Component {
   }
 
   render() {
+    let extensionSettings = null;
+    const extensionName = this.state.details.extensionName;
+    if (extensionName) {
+      const extension = this.context.extensions.attributes.getExtensionByName(extensionName);
+      const settingsAttributes = extension.getSettings().attributes;
+      extensionSettings = settingsAttributes.map(attribute => {
+        const attributeId = attribute.name;
+        return (
+          <Create
+            key={attribute.name}
+            onChange={value => this.handleExtensionSettingsAttributeChange(attributeId, value)}
+            value={this.state.details[attributeId]}
+            attribute={attribute}
+            validation={this.state.validation[attributeId]}
+          />
+        )
+      })
+    }
     return (
       <form onSubmit={this.handleSubmit} className="form">
         <div className="modal__body">
@@ -102,14 +110,7 @@ class ManageForm extends React.Component {
           </div>
           {this.state.details.extensionName ? (
             <div>
-              <div className="form__group">
-                <label>Display name</label>
-                <input type="text" className="form__element" value={this.state.details.displayName} onChange={this.handleDisplayNameChange} placeholder="Enter name" />
-                <ValidationElementError error={this.state.validation.displayName} />
-              </div>
-              <div className="form__group">
-                <Settings attributeExtensionName={this.state.details.extensionName} onChange={this.handleSettingsChange}/>
-              </div>
+              {extensionSettings}
             </div>
           ) : null}
         </div>

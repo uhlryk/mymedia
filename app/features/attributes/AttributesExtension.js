@@ -35,12 +35,13 @@ export default class AttributesExtension extends Extensioner.Extension {
         }
       },
       settings: {
-        set component(val) {
-          this._component = React.createFactory(val);
-        },
-        get component() {
-          return this._component;
-        }
+        attributes: [{
+          name: "displayName",
+          extensionName: "input",
+          displayName: "Display name",
+          placeholder: "Enter name",
+          create: {}
+        }]
       },
       sort: {
 
@@ -61,11 +62,8 @@ export default class AttributesExtension extends Extensioner.Extension {
     }
   }
 
-  hasSettings () {
-    return this.getConfig().settings.component;
-  }
-  getSettings (props) {
-    return this.getComponent("settings")(Object.assign({}, props, { extension: this}));
+  getSettings () {
+    return this._configuration.settings;
   }
 
   hasEdit () {
@@ -125,6 +123,10 @@ export default class AttributesExtension extends Extensioner.Extension {
   }
 
   static mergeConfiguration(source, target) {
-    return _.merge(source, target);
+    return _.mergeWith(source, target, (objValue, srcValue) => {
+      if (_.isArray(objValue)) {
+        return objValue.concat(srcValue);
+      }
+    });
   }
 }
