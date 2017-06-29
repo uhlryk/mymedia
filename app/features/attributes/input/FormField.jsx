@@ -20,7 +20,7 @@ export default class FormField extends React.Component {
   componentWillReceiveProps(nextProps) {
     if(this.state.value !== nextProps.value) {
       this.setState((prevState, props) => ({
-        value: props.value || props.defaultValue || ""
+        value: props.value || ""
       }));
     }
   }
