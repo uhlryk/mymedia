@@ -1,4 +1,5 @@
 import React from "react";
+import resolveValue from "../../../helpers/resolveValue";
 
 export default class FormField extends React.Component {
   static propsTypes = {
@@ -12,14 +13,14 @@ export default class FormField extends React.Component {
     super(props);
     this.onChange = this.onChange.bind(this);
     this.state = {
-      value: this.props.value || this.props.defaultValue || 0
+      value: resolveValue(this.props.value, this.props.defaultValue, 0)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(this.state.value !== nextProps.value) {
       this.setState((prevState, props) => ({
-        value: props.value || ""
+        value: resolveValue(props.value, this.props.defaultValue, 0)
       }));
     }
   }
