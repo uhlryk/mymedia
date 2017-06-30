@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { openProject, openProjectByPath } from "./../../actions/project";
 import { loadProjectsFromPesistence, clearProjects } from "./../../actions/projects";
 import { push } from "react-router-redux";
-
+import Header from "../../components/Header.jsx";
 /**
  * project is name of directory which contains media files
  */
@@ -50,6 +50,9 @@ class ProjectMenu extends React.Component {
     ));
     return (
       <div>
+        <Header branding="Projects">
+
+        </Header>
         <div className="row">
           <div className="col-xs-8">
             <p>Open collection directory</p>

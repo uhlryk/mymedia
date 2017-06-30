@@ -72,9 +72,13 @@ class ProjectHeader extends React.Component {
     const menuClassName = classNames("project-header__menu", {
       "project-header__menu--open": this.state.showMenu
     });
-
+    const branding = (
+      <span>
+        <a href="#" onClick={() => this.props.dispatch(push("project/menu"))}>Projects</a> / {this.props.project.name}
+      </span>
+    );
     return (
-      <Header branding={this.props.project.name}>
+      <Header branding={branding}>
         <ul className="nav navbar-nav navbar-right">
           <li><a href="#" onClick={ this.onAddNewClick }>Create resource</a></li>
           <li className={menuClassName}>
