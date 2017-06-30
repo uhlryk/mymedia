@@ -1,4 +1,3 @@
-import Settings from "./Settings.jsx";
 import FormField from "./FormField.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
@@ -20,7 +19,13 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
       },
       settings: {
         displayName: "file drop upload",
-        component: Settings
+        attributes: [{
+          name: "label",
+          extensionName: "input",
+          displayName: "Label",
+          placeholder: "Enter label",
+          create: {}
+        }]
       },
       edit: {
         component: FormField
