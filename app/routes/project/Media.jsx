@@ -38,7 +38,7 @@ class Media extends React.Component {
     }
     return (
       <div className="media">
-        <div className="media__project">
+        <div className="media__header">
           <ProjectHeader />
         </div>
         <div className="media__sidebar">

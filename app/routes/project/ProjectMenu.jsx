@@ -49,10 +49,11 @@ class ProjectMenu extends React.Component {
       </tr>
     ));
     return (
-      <div>
-        <Header branding="Projects">
-
-        </Header>
+      <div className="project-menu">
+        <div className="project-menu__header">
+          <Header branding="Projects">
+          </Header>
+        </div>
         <div className="row">
           <div className="col-xs-8">
             <p>Open collection directory</p>
