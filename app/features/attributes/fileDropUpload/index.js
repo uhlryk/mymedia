@@ -25,6 +25,13 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
           displayName: "Label",
           placeholder: "Enter label",
           create: {}
+        }, {
+          name: "singleFile",
+          extensionName: "checkbox",
+          displayName: "Single file ",
+          editLabel: "Allow only single file",
+          viewLabel: "Allow only single file",
+          create: {}
         }]
       },
       edit: {
