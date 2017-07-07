@@ -80,7 +80,7 @@ super(<attributeExtensionName>, <configuration>)
 
 ###### Attribute 
 
-It is similar to topic [Create attribute from attribute extension instance](####-Create-attribute-from-attribute-extension-instance)
+It is similar to topic [Create attribute from attribute extension instance](#create-attribute-from-attribute-extension-instance)
 
 #### Register attribute extension instance in project extension
 
