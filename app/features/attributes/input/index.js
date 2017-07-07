@@ -11,13 +11,13 @@ export default class InputAttributesExtension extends AttributesExtension {
       settings: {
         displayName: "input",
         attributes: [{
-          name: "placeholder",
+          id: "placeholder",
           extensionName: "input",
           displayName: "Placeholder",
           placeholder: "Enter placeholder",
           create: {}
         }, {
-          name: "defaultValue",
+          id: "defaultValue",
           extensionName: "input",
           displayName: "Default value",
           placeholder: "Enter default value",

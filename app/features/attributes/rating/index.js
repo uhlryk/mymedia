@@ -12,7 +12,7 @@ export default class RatingAttributesExtension extends NumberAttributesExtension
       settings: {
         displayName: "rating",
         attributes: [{
-          name: "starNumber",
+          id: "starNumber",
           extensionName: "number",
           displayName: "Number of stars",
           defaultValue: 5,

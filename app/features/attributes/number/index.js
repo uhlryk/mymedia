@@ -12,7 +12,7 @@ export default class NumberAttributesExtension extends AttributesExtension {
       settings: {
         displayName: "number",
         attributes: [{
-          name: "defaultValue",
+          id: "defaultValue",
           extensionName: "number",
           displayName: "Default value",
           defaultValue: 0,

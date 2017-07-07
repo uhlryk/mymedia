@@ -36,7 +36,7 @@ export default class AttributesExtension extends Extensioner.Extension {
       },
       settings: {
         attributes: [{
-          name: "displayName",
+          id: "displayName",
           extensionName: "input",
           displayName: "Display name",
           placeholder: "Enter name",

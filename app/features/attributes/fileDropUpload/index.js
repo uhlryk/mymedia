@@ -20,13 +20,13 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
       settings: {
         displayName: "file drop upload",
         attributes: [{
-          name: "label",
+          id: "label",
           extensionName: "input",
           displayName: "Label",
           placeholder: "Enter label",
           create: {}
         }, {
-          name: "singleFile",
+          id: "singleFile",
           extensionName: "checkbox",
           displayName: "Single file ",
           editLabel: "Allow only single file",

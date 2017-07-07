@@ -80,10 +80,10 @@ class ManageForm extends React.Component {
       const extension = this.context.extensions.attributes.getExtensionByName(extensionName);
       const settingsAttributes = extension.getSettings().attributes;
       extensionSettings = settingsAttributes.map(attribute => {
-        const attributeId = attribute.name;
+        const attributeId = attribute.id;
         return (
           <Create
-            key={attribute.name}
+            key={attribute.id}
             onChange={value => this.handleExtensionSettingsAttributeChange(attributeId, value)}
             value={this.state.details[attributeId]}
             attribute={attribute}

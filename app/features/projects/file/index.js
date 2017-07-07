@@ -82,7 +82,13 @@ export default class extends ProjectExtension {
     });
 
     this.createAttribute("file-size-id", this.fileSizeExtension.getName(), {
-      displayName: "Size"
+      displayName: "Size",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
     });
 
     this.createAttribute("create-date-id", this.dateExtension.getName(), {
@@ -92,10 +98,10 @@ export default class extends ProjectExtension {
     this.createAttribute("original-name-id", this.inputExtension.getName(), {
       displayName: "Original name",
       edit: {
-        disabled: true
+        hidden: true
       },
       create: {
-        disabled: true
+        hidden: true
       }
     });
   }

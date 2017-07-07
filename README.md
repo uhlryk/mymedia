@@ -74,9 +74,13 @@ super(<attributeExtensionName>, <configuration>)
     - **createDisabled** **false** disallow creating new attribute
     - **editDisabled** **false** disallow editing attribute
     - **deleteDisabled** **false** disallow deleting attribute
-    - **component** **null** react component which render attribute settings
+    - **attributes** **array** list of attributes objects (describe form fields used for settings)
   - **sort**
     - **disabled** **false** 
+
+###### Attribute 
+
+It is similar to topic [Create attribute from attribute extension instance](####-Create-attribute-from-attribute-extension-instance)
 
 #### Register attribute extension instance in project extension
 

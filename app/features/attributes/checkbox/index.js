@@ -11,19 +11,19 @@ export default class CheckboxAttributesExtension extends AttributesExtension {
       settings: {
         displayName: "checkbox",
         attributes: [{
-          name: "viewLabel",
+          id: "viewLabel",
           extensionName: "input",
           displayName: "View Label",
           placeholder: "Enter view label",
           create: {}
         }, {
-          name: "editLabel",
+          id: "editLabel",
           extensionName: "input",
           displayName: "Edit Label",
           placeholder: "Enter edit label",
           create: {}
         }, {
-          name: "defaultValue",
+          id: "defaultValue",
           extensionName: "checkbox",
           displayName: "Default value",
           editLabel: "Choose default value",

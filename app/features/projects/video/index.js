@@ -24,16 +24,40 @@ export default class extends FileProjectExtension {
   createProject () {
     super.createProject();
     this.createAttribute("video-duration-id", this.inputExtension.getName(), {
-      displayName: "Duration"
+      displayName: "Duration",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
     });
     this.createAttribute("video-width-id", this.inputExtension.getName(), {
-      displayName: "Resolution Width"
+      displayName: "Resolution Width",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
     });
     this.createAttribute("video-height-id", this.inputExtension.getName(), {
-      displayName: "Resolution Height"
+      displayName: "Resolution Height",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
     });
     this.createAttribute("video-framerate-id", this.inputExtension.getName(), {
-      displayName: "Frame rate"
+      displayName: "Frame rate",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
     });
   }
 
