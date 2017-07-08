@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import resolveValue from "../../helpers/resolveValue";
 
 export default class View extends React.Component {
   static contextTypes = {
@@ -11,7 +12,7 @@ export default class View extends React.Component {
     attribute: React.PropTypes.object
   }
   render() {
-    let value = this.props.value || (this.props.attribute && this.props.attribute.defaultValue);
+    const value = resolveValue(this.props.value, this.props.attribute.defaultValue, undefined);
     if(value === undefined) return false;
     var props = Object.assign({}, this.props.attribute, { value });
 
