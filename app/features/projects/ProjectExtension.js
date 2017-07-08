@@ -20,16 +20,6 @@ export default class ProjectExtension extends Extensioner.Extension {
   collectProjectFiles (files) {
     return files;
   }
-  async mapFilesProperties (files) {
-    let mappedFiles = [];
-    for (let file of files) {
-      mappedFiles.push(await this.mapFileProperties(file))
-    }
-    return mappedFiles;
-  }
-  async mapFileProperties (file) {
-    return file;
-  }
 
   createAttribute (id, extensionName, settings) {
     this.getManager().getRootManager().getStore().dispatch(
@@ -41,7 +31,15 @@ export default class ProjectExtension extends Extensioner.Extension {
     return modifiedResource;
   }
 
+  async onPostBeforeUpdate (modifiedResource) {
+    return modifiedResource;
+  }
+
   async onBeforeCreate (modifiedResource) {
+    return modifiedResource;
+  }
+
+  async onPostBeforeCreate (modifiedResource) {
     return modifiedResource;
   }
 

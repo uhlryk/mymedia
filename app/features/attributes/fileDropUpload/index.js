@@ -54,12 +54,14 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
           const resourcePath = path.join(projectPath, resource.id);
           const srcFilePath = file.path;
 
-          const targetFilePath = path.join(resourcePath, fileData.id);
+          const targetDirPath = path.join(resourcePath, fileData.id);
+          await fse.mkdir(targetDirPath);
+          const targetFilePath = path.join(targetDirPath, file.name);
           await fse.copy(srcFilePath, targetFilePath);
           newFiles.push({
             id: fileData.id,
             name: file.name,
-            path: targetFilePath,
+            path: path.join(resource.id, fileData.id, file.name),
             status: FileDropUploadAttributesExtension.fileStatus.UPLOADED
           });
         } else if(fileData.status === FileDropUploadAttributesExtension.fileStatus.BEFORE_DELETE) {

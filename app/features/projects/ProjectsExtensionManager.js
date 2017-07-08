@@ -16,8 +16,16 @@ export default class ProjectExtensionManager extends Extensioner.Manager {
     return await this.getActive().onBeforeUpdate(data);
   }
 
+  async onPostBeforeUpdate (data) {
+    return await this.getActive().onPostBeforeUpdate(data);
+  }
+
   async onBeforeCreate (data) {
     return await this.getActive().onBeforeCreate(data);
+  }
+
+  async onPostBeforeCreate (data) {
+    return await this.getActive().onPostBeforeCreate(data);
   }
 
   async onAfterUpdate (resourceId) {

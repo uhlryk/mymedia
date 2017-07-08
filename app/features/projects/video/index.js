@@ -1,6 +1,5 @@
 import FileProjectExtension from "../file/index";
 import ProjectExtension from "../ProjectExtension";
-import p from "bluebird";
 import path from "path";
 import { ipcRenderer } from "electron";
 
@@ -61,19 +60,22 @@ export default class extends FileProjectExtension {
     });
   }
 
-  async mapFileProperties (file) {
-    file = await super.mapFileProperties(file);
-    var metadata = await this.getMetadata (path.join(this.getManager().getRootManager().getStore().getState().project.path, file.path));
-    return Object.assign({}, file, {
-      "video-duration-id": metadata.Duration,
-      "video-width-id": metadata.ImageWidth,
-      "video-height-id": metadata.ImageHeight,
-      "video-framerate-id": metadata.FrameRate
-    })
+  async onPostBeforeCreate (modifiedResource) {
+    modifiedResource = await super.onPostBeforeCreate(modifiedResource);
+    if (modifiedResource["file-resource-id"] && modifiedResource["file-resource-id"][0]) {
+      const metadata = await this.getMetadata(path.join(this.getManager().getRootManager().getStore().getState().project.path, modifiedResource["file-resource-id"][0].path));
+      Object.assign(modifiedResource, {
+        "video-duration-id": metadata.Duration,
+        "video-width-id": metadata.ImageWidth,
+        "video-height-id": metadata.ImageHeight,
+        "video-framerate-id": metadata.FrameRate
+      })
+    }
+    return modifiedResource
   }
 
   getMetadata (filepath) {
-    return new p(resolve => {
+    return new Promise(resolve => {
       ipcRenderer.send("exif", filepath);
       ipcRenderer.once("exif-reply", (event, metadata) => {
         resolve(metadata.data[0]);

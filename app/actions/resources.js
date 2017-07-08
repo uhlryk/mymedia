@@ -35,7 +35,7 @@ export function addResource(resource) {
     resource.id = resourceId;
     resource = await extensionManager.projects.onBeforeCreate(resource);
     resource = await extensionManager.attributes.onBeforeCreate(resource);
-
+    resource = await extensionManager.projects.onPostBeforeCreate(resource);
     dispatch({
       type: ADD_RESOURCE,
       payload: {
@@ -55,6 +55,7 @@ export function updateResource(resourceId, resource) {
     resource.id = resourceId;
     resource = await extensionManager.projects.onBeforeUpdate(resource);
     resource = await extensionManager.attributes.onBeforeUpdate(resource);
+    resource = await extensionManager.projects.onPostBeforeUpdate(resource);
     dispatch({
       type: UPDATE_RESOURCE,
       payload: {

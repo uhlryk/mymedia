@@ -19,7 +19,6 @@ export default class extends ProjectExtension {
       displayName: "Any files",
       description: "Project for various files"
     }, configuration));
-    this.mapFileProperties = this.mapFileProperties.bind(this);
   }
 
   init (manager) {
@@ -62,14 +61,14 @@ export default class extends ProjectExtension {
       label: "some file"
     });
 
-    this.createAttribute("path-id", this.hierarchicalTagExtension.getName(), {
-      displayName: "File path",
-      view: {
-        displayName: null,
-        className: "file-list__original-path",
-        listing: true
-      }
-    });
+    // this.createAttribute("path-id", this.hierarchicalTagExtension.getName(), {
+    //   displayName: "File path",
+    //   view: {
+    //     displayName: null,
+    //     className: "file-list__original-path",
+    //     listing: true
+    //   }
+    // });
 
     this.createAttribute("description-id", this.textAreaExtension.getName(), {
       displayName: "Description",
@@ -94,38 +93,33 @@ export default class extends ProjectExtension {
     this.createAttribute("create-date-id", this.dateExtension.getName(), {
       displayName: "Created"
     });
-
-    this.createAttribute("original-name-id", this.inputExtension.getName(), {
-      displayName: "Original name",
-      edit: {
-        hidden: true
-      },
-      create: {
-        hidden: true
-      }
-    });
-  }
-
-  async mapFileProperties (file) {
-    file = await super.mapFileProperties(file);
-
-    return Object.assign({}, file, {
-      "name-id": file.name,
-      "path-id": this.convertPathToFolderArray(file.path),
-      "file-size-id": file.stat.size,
-      "create-date-id": file.stat.birthtime,
-      "original-name-id": file.name
-    });
-  }
-
-  convertPathToFolderArray (filePath) {
-    return filePath.split(path.sep).slice(0,-1);
   }
 
   async onBeforeCreate (modifiedResource) {
+    modifiedResource = await super.onBeforeCreate(modifiedResource);
     const project = this.getManager().getRootManager().getStore().getState().project;
     const projectPath = project.path;
     await fse.mkdir(path.join(projectPath, modifiedResource.id));
     return modifiedResource;
+  }
+
+  async onPostBeforeCreate (modifiedResource) {
+    modifiedResource = await super.onPostBeforeCreate(modifiedResource);
+    const project = this.getManager().getRootManager().getStore().getState().project;
+    const projectPath = project.path;
+    if (modifiedResource["file-resource-id"] && modifiedResource["file-resource-id"][0]) {
+      const stat = await fse.stat(path.join(projectPath, modifiedResource["file-resource-id"][0].path));
+      modifiedResource["file-size-id"] = stat.size;
+      modifiedResource["create-date-id"] = stat.birthtime;
+      //const project = this.getManager().getRootManager().getStore().getState().project;
+      //const projectPath = project.path;
+      //modifiedResource["path-id"] = path.relative(projectPath, modifiedResource["file-resource-id"][0].path).split(path.sep).slice(0, -1);
+    }
+    return modifiedResource;
+  }
+
+
+  async onPostBeforeUpdate (files, attribute, resource) {
+    return await this.onPostBeforeCreate(files, attribute, resource);
   }
 }
