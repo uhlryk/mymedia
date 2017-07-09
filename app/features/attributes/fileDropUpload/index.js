@@ -44,16 +44,15 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
   }
 
   async onBeforeCreate (files, attribute, resource) {
+    const project = this.getManager().getRootManager().getStore().getState().project;
+    const projectPath = project.path;
+    const resourcePath = path.join(projectPath, resource.id);
     if (files) {
       const newFiles = [];
       for (const fileData of files) {
         const file = fileData.file;
         if (file) {
-          const project = this.getManager().getRootManager().getStore().getState().project;
-          const projectPath = project.path;
-          const resourcePath = path.join(projectPath, resource.id);
           const srcFilePath = file.path;
-
           const targetDirPath = path.join(resourcePath, fileData.id);
           await fse.mkdir(targetDirPath);
           const targetFilePath = path.join(targetDirPath, file.name);
@@ -65,7 +64,7 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
             status: FileDropUploadAttributesExtension.fileStatus.UPLOADED
           });
         } else if(fileData.status === FileDropUploadAttributesExtension.fileStatus.BEFORE_DELETE) {
-          await fse.remove(fileData.path);
+          await fse.remove(path.join(resourcePath, fileData.id));
         } else {
           newFiles.push(fileData);
         }
