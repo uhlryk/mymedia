@@ -1,5 +1,6 @@
 import FileProjectExtension from "../file/index";
 import ProjectExtension from "../ProjectExtension";
+import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import path from "path";
 import { ipcRenderer } from "electron";
 
@@ -61,15 +62,20 @@ export default class extends FileProjectExtension {
   }
 
   async onPostBeforeCreate (modifiedResource) {
+    const project = this.getManager().getRootManager().getStore().getState().project;
+    const projectPath = project.path;
+    const resourcePath = path.join(projectPath, modifiedResource.id);
     modifiedResource = await super.onPostBeforeCreate(modifiedResource);
     if (modifiedResource["file-resource-id"] && modifiedResource["file-resource-id"][0]) {
-      const metadata = await this.getMetadata(path.join(this.getManager().getRootManager().getStore().getState().project.path, modifiedResource["file-resource-id"][0].path));
+      const filePath = path.join(projectPath, modifiedResource["file-resource-id"][0].path);
+      const metadata = await this.getMetadata(filePath);
       Object.assign(modifiedResource, {
         "video-duration-id": metadata.Duration,
         "video-width-id": metadata.ImageWidth,
         "video-height-id": metadata.ImageHeight,
         "video-framerate-id": metadata.FrameRate
       })
+      await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -ss 00:00:14.435 -vframes 1 ${path.join(resourcePath, "frame.png")}`)
     }
     return modifiedResource
   }
