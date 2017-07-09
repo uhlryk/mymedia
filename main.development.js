@@ -51,7 +51,7 @@ app.on("ready", () => {
     ep
       .open()
       .then((pid) => console.log("Started exiftool process %s", pid))
-      .then(() => ep.readMetadata(filepath))
+      .then(() => ep.readMetadata(filepath, ["n"]))
       .then(metadata => {
         ep.close();
         evt.sender.send("exif-reply", metadata);

@@ -1,7 +1,10 @@
 import FileProjectExtension from "../file/index";
+import ImageExtension from "../../attributes/image/index";
 import ProjectExtension from "../ProjectExtension";
 import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
+import getFileList from "../../../helpers/getFileList";
 import path from "path";
+import fse from "fs-extra";
 import { ipcRenderer } from "electron";
 
 export default class extends FileProjectExtension {
@@ -11,6 +14,12 @@ export default class extends FileProjectExtension {
       displayName: "Video files",
       description: "Project for video files"
     }, configuration));
+  }
+
+  init (manager) {
+    super.init(manager);
+    this.imageExtension = new ImageExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.imageExtension);
   }
 
   collectProjectFiles (files) {
@@ -23,6 +32,15 @@ export default class extends FileProjectExtension {
 
   createProject () {
     super.createProject();
+    this.createAttribute("video-frames-id", this.imageExtension.getName(), {
+      displayName: "Frames",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
+    });
     this.createAttribute("video-duration-id", this.inputExtension.getName(), {
       displayName: "Duration",
       edit: {
@@ -62,20 +80,31 @@ export default class extends FileProjectExtension {
   }
 
   async onPostBeforeCreate (modifiedResource) {
+    modifiedResource = await super.onPostBeforeCreate(modifiedResource);
     const project = this.getManager().getRootManager().getStore().getState().project;
     const projectPath = project.path;
     const resourcePath = path.join(projectPath, modifiedResource.id);
-    modifiedResource = await super.onPostBeforeCreate(modifiedResource);
     if (modifiedResource["file-resource-id"] && modifiedResource["file-resource-id"][0]) {
       const filePath = path.join(projectPath, modifiedResource["file-resource-id"][0].path);
       const metadata = await this.getMetadata(filePath);
+      const videoDuration = metadata.Duration;
       Object.assign(modifiedResource, {
-        "video-duration-id": metadata.Duration,
+        "video-duration-id": videoDuration,
         "video-width-id": metadata.ImageWidth,
         "video-height-id": metadata.ImageHeight,
         "video-framerate-id": metadata.FrameRate
+      });
+      const framesNumber = 6;
+      const imageFrameId = "video-frames-id";
+      const targetAttributeDirPath = path.join(resourcePath, imageFrameId);
+      await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetAttributeDirPath, "frame%d.png")}`);
+      const frames = await getFileList(targetAttributeDirPath);
+      Object.assign(modifiedResource, {
+        [imageFrameId]: frames.map(frame => ({
+          name: frame.name,
+          path: path.join(modifiedResource.id, imageFrameId, frame.path)
+        }))
       })
-      await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -ss 00:00:14.435 -vframes 1 ${path.join(resourcePath, "frame.png")}`)
     }
     return modifiedResource
   }
