@@ -1,0 +1,29 @@
+.image-gallery-attribute {
+  height: 220px;
+  width: 100%;
+  overflow: scroll;
+
+  &__wrapper {
+    width: auto;
+    display: inline-flex;
+
+  }
+  &__thumbnail-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    display: inline-table;
+    margin: 5px;
+  }
+  &__thumbnail {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+  }
+}

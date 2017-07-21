@@ -15,7 +15,6 @@ export default class View extends React.Component {
   }
 
   onOpenClick(filePath) {
-    console.log("A1", filePath);
     this.props.dispatch(openFile(filePath));
   }
 

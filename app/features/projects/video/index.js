@@ -1,5 +1,5 @@
 import FileProjectExtension from "../file/index";
-import ImageExtension from "../../attributes/image/index";
+import ImageGalleryExtension from "../../attributes/imageGallery/index";
 import ProjectExtension from "../ProjectExtension";
 import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import getFileList from "../../../helpers/getFileList";
@@ -18,8 +18,8 @@ export default class extends FileProjectExtension {
 
   init (manager) {
     super.init(manager);
-    this.imageExtension = new ImageExtension();
-    this.getManager().getRootManager().attributes.registerExtension(this.imageExtension);
+    this.imageGalleryExtension = new ImageGalleryExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.imageGalleryExtension);
   }
 
   collectProjectFiles (files) {
@@ -32,8 +32,8 @@ export default class extends FileProjectExtension {
 
   createProject () {
     super.createProject();
-    this.createAttribute("video-frames-id", this.imageExtension.getName(), {
-      displayName: "Frames",
+    this.createAttribute("thumbnail-gallery-id", this.imageGalleryExtension.getName(), {
+      displayName: "Video thumbnails",
       edit: {
         hidden: true
       },
@@ -95,14 +95,14 @@ export default class extends FileProjectExtension {
         "video-framerate-id": metadata.FrameRate
       });
       const framesNumber = 6;
-      const imageFrameId = "video-frames-id";
-      const targetAttributeDirPath = path.join(resourcePath, imageFrameId);
+      const imageGalleryId = "thumbnail-gallery-id";
+      const targetAttributeDirPath = path.join(resourcePath, imageGalleryId);
       await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetAttributeDirPath, "frame%d.png")}`);
       const frames = await getFileList(targetAttributeDirPath);
       Object.assign(modifiedResource, {
-        [imageFrameId]: frames.map(frame => ({
+        [imageGalleryId]: frames.map(frame => ({
           name: frame.name,
-          path: path.join(modifiedResource.id, imageFrameId, frame.path)
+          path: path.join(modifiedResource.id, imageGalleryId, frame.path)
         }))
       })
     }
