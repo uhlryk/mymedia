@@ -24,7 +24,6 @@ export default class View extends React.Component {
       return false;
     }
     const displayName = this.props.attribute.view.displayName !== undefined ? this.props.attribute.view.displayName : this.props.attribute.displayName;
-    console.log("ZZ1", extension);
     return (
       <div className={className}>
         {displayName? <label>{displayName}</label> : null}

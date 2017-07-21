@@ -7,7 +7,6 @@ export default class View extends React.Component {
     projectPath: React.PropTypes.string.isRequired
   };
   render() {
-    console.log("AA1", this.props.value);
     const images = this.props.value.map(image => (
       <div key={image.name} className="image-gallery-attribute__thumbnail-wrapper">
         <img className="image-gallery-attribute__thumbnail" src={path.join(this.props.projectPath, image.path)}/>

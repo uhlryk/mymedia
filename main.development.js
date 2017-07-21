@@ -59,11 +59,22 @@ app.on("ready", () => {
       .catch(console.error)
   });
 
-  ipcMain.on("shell", (evt, cmd) => {
-    var exec = childProcess.exec;
-    exec(cmd, function(error, stdout, stderr) {
-      evt.sender.send("shell-reply", error, stdout, stderr);
+  ipcMain.on("shell", (evt, cmdName, params) => {
+    const command = childProcess.spawn(cmdName, params);
+
+    command.stdout.on("data", data => {
+      console.log(`stdout: ${data}`);
     });
+
+    command.stderr.on("data", err => {
+      console.log(`stderr: ${err}`);
+    });
+
+    command.on("close", (code) => {
+      console.log(`child process exited with code ${code}`);
+      evt.sender.send("shell-reply", null);
+    });
+
   });
 
   if (process.env.NODE_ENV === "development") {

@@ -113,8 +113,7 @@ export default class extends FileProjectExtension {
       const framesNumber = 6;
       const imageGalleryId = "thumbnail-gallery-id";
       const targetGalleryAttributeDirPath = path.join(resourcePath, imageGalleryId);
-      console.log("A", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetGalleryAttributeDirPath, "frame%d.png")}`);
-      await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetGalleryAttributeDirPath, "frame%d.png")}`);
+      await asyncIpcMessage("shell", "ffmpeg", ["-i", filePath, "-vf", `fps=1/${videoDuration/framesNumber}`, path.join(targetGalleryAttributeDirPath, "frame%d.png")]);
       const frames = await getFileList(targetGalleryAttributeDirPath);
 
       Object.assign(modifiedResource, {
