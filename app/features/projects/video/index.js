@@ -1,5 +1,6 @@
 import FileProjectExtension from "../file/index";
 import ImageGalleryExtension from "../../attributes/imageGallery/index";
+import ImageExtension from "../../attributes/image/index";
 import ProjectExtension from "../ProjectExtension";
 import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import getFileList from "../../../helpers/getFileList";
@@ -20,6 +21,8 @@ export default class extends FileProjectExtension {
     super.init(manager);
     this.imageGalleryExtension = new ImageGalleryExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.imageGalleryExtension);
+    this.imageExtension = new ImageExtension();
+    this.getManager().getRootManager().attributes.registerExtension(this.imageExtension);
   }
 
   collectProjectFiles (files) {
@@ -34,6 +37,19 @@ export default class extends FileProjectExtension {
     super.createProject();
     this.createAttribute("thumbnail-gallery-id", this.imageGalleryExtension.getName(), {
       displayName: "Video thumbnails",
+      edit: {
+        hidden: true
+      },
+      create: {
+        hidden: true
+      }
+    });
+    this.createAttribute("avatar-image-id", this.imageExtension.getName(), {
+      displayName: null,
+      view: {
+        displayName: null,
+        listing: true
+      },
       edit: {
         hidden: true
       },
@@ -96,15 +112,28 @@ export default class extends FileProjectExtension {
       });
       const framesNumber = 6;
       const imageGalleryId = "thumbnail-gallery-id";
-      const targetAttributeDirPath = path.join(resourcePath, imageGalleryId);
-      await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetAttributeDirPath, "frame%d.png")}`);
-      const frames = await getFileList(targetAttributeDirPath);
+      const targetGalleryAttributeDirPath = path.join(resourcePath, imageGalleryId);
+      console.log("A", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetGalleryAttributeDirPath, "frame%d.png")}`);
+      await asyncIpcMessage("shell", `ffmpeg -i ${filePath} -vf fps=1/${videoDuration/framesNumber} ${path.join(targetGalleryAttributeDirPath, "frame%d.png")}`);
+      const frames = await getFileList(targetGalleryAttributeDirPath);
+
       Object.assign(modifiedResource, {
         [imageGalleryId]: frames.map(frame => ({
           name: frame.name,
           path: path.join(modifiedResource.id, imageGalleryId, frame.path)
-        }))
-      })
+        })),
+      });
+      if(frames[0]) {
+        const avatarId = "avatar-image-id";
+        const targetAvatarAttributeDirPath = path.join(resourcePath, avatarId, frames[0].name);
+        await fse.copy(path.join(targetGalleryAttributeDirPath, frames[0].name), targetAvatarAttributeDirPath);
+        Object.assign(modifiedResource, {
+          [avatarId]: {
+            name: frames[0].name,
+            path: path.join(modifiedResource.id, avatarId, frames[0].name)
+          },
+        });
+      }
     }
     return modifiedResource
   }
