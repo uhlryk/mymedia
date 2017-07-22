@@ -56,8 +56,7 @@ export default class extends ProjectExtension {
       displayName: "File name",
       view: {
         displayName: null,
-        className: "file-list__name",
-        listing: true
+        className: "file-list__name"
       }
     });
 

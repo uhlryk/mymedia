@@ -12,17 +12,18 @@ class Listing extends React.Component {
   };
 
   render() {
-    const className = classNames("file-list__row");
+    const className = classNames("listing");
     return (
       <div className={className}>
-        {this.createViewAttribute("name-id")}
+        {this.createViewAttribute("avatar-image-id", "listing__avatar")}
+        {this.createViewAttribute("name-id", "listing__name")}
       </div>
     );
   }
 
   createViewAttribute (attributeId, className) {
     const attributes = this.props.attributes;
-    const attribute = attributes[attributeId];
+    const attribute = Object.assign({}, attributes[attributeId], { view: Object.assign({}, attributes[attributeId].view, {hidden: false})});
     const value = this.props.data[attributeId];
     return (
       <div className={className || ""}>

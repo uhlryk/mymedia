@@ -7,13 +7,17 @@ import getFileList from "../../../helpers/getFileList";
 import path from "path";
 import fse from "fs-extra";
 import { ipcRenderer } from "electron";
+import Listing from "./Listing";
 
 export default class extends FileProjectExtension {
 
   constructor (extensionName = null, configuration = {}) {
     super(extensionName || "video", ProjectExtension.mergeConfiguration({
       displayName: "Video files",
-      description: "Project for video files"
+      description: "Project for video files",
+      listing: {
+        component: Listing
+      }
     }, configuration));
   }
 
@@ -48,7 +52,7 @@ export default class extends FileProjectExtension {
       displayName: null,
       view: {
         displayName: null,
-        listing: true
+        hidden: true
       },
       edit: {
         hidden: true

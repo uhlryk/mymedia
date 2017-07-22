@@ -46,6 +46,8 @@ super(<projectExtensionName>, <configuration>)
 - **configuration** 
   - **displayName**
   - **description**
+  - **listing
+    - **component** **null** react component which render resource listing
 
 ### Attribute Extensions 
 
@@ -119,7 +121,6 @@ In `init` method of project extension
     - **displayName**
     - **className**
     - **hidden** bool **false** *will be hidden in listing and details view*
-    - **listing** bool **false** *will be visible in row list* 
   - **edit** *affects only edit mode*
     - **displayName**
     - **className**
