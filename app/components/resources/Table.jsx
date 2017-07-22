@@ -1,10 +1,16 @@
 import React from "react";
-import Row from "./Row.jsx";
+import ViewDetails from "./ViewDetails.jsx";
+import ManageForm from "./ManageForm.jsx";
 import ReactTooltip from "react-tooltip";
 import { connect } from "react-redux";
 
 @connect(state => ({}))
 class Table extends React.Component {
+
+  static contextTypes = {
+    extensions: React.PropTypes.object,
+    modals: React.PropTypes.object
+  };
 
   static propsTypes = {
     results: React.PropTypes.array,
@@ -15,13 +21,44 @@ class Table extends React.Component {
     super(props);
   }
 
+  onManageClick() {
+    this.context.modals.showModal("formModal", {
+      title: "Edit resource",
+      body: {
+        Component: ManageForm,
+        props: {
+          data: this.props.data,
+          mode: ManageForm.EDIT,
+        }
+      }
+    });
+  }
+
+  onViewClick(resourceId) {
+    this.context.modals.showModal("modal", {
+      title: "View resource",
+      body: {
+        Component: ViewDetails,
+        props: {
+          resourceId
+        }
+      },
+      buttons: [{
+        className: "modal__button-action modal__button-action--secondary",
+        label: "Manage",
+        onClick: () => this.onManageClick()
+      }]
+    });
+  }
+
   render() {
+    const projectExtension = this.context.extensions.projects.getActive();
     const rows = [];
     const results = this.props.results.slice();
     results.sort(compare);
     for (let i=0; i < results.length; i++) {
       const data = results[i];
-      rows.push(<Row data={data} key={data.id} />);
+      rows.push(<div key={data.id} onClick={() => this.onViewClick(data.id)}>{projectExtension.getListing({ data: data })}</div>);
     }
     return (
       <div className={this.props.className} >

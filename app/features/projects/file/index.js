@@ -10,6 +10,8 @@ import Date from "../../attributes/date/index";
 import Tag from "../../attributes/tag/index";
 import HierarchicalTag from "../../attributes/hierarchicalTag/index";
 import FileDropUpload from "../../attributes/fileDropUpload/index";
+
+import Listing from "./Listing";
 import fse from "fs-extra";
 
 export default class extends ProjectExtension {
@@ -17,7 +19,10 @@ export default class extends ProjectExtension {
   constructor (extensionName = null, configuration = {}) {
     super(extensionName || "file", ProjectExtension.mergeConfiguration({
       displayName: "Any files",
-      description: "Project for various files"
+      description: "Project for various files",
+      listing: {
+        component: Listing
+      }
     }, configuration));
   }
 
