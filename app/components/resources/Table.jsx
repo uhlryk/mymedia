@@ -21,32 +21,32 @@ class Table extends React.Component {
     super(props);
   }
 
-  onManageClick() {
+  onManageClick(resource) {
     this.context.modals.showModal("formModal", {
       title: "Edit resource",
       body: {
         Component: ManageForm,
         props: {
-          data: this.props.data,
+          data: resource,
           mode: ManageForm.EDIT,
         }
       }
     });
   }
 
-  onViewClick(resourceId) {
+  onViewClick(resource) {
     this.context.modals.showModal("modal", {
       title: "View resource",
       body: {
         Component: ViewDetails,
         props: {
-          resourceId
+          resourceId: resource.id
         }
       },
       buttons: [{
         className: "modal__button-action modal__button-action--secondary",
         label: "Manage",
-        onClick: () => this.onManageClick()
+        onClick: () => this.onManageClick(resource)
       }]
     });
   }
@@ -58,7 +58,7 @@ class Table extends React.Component {
     results.sort(compare);
     for (let i=0; i < results.length; i++) {
       const data = results[i];
-      rows.push(<div key={data.id} onClick={() => this.onViewClick(data.id)}>{projectExtension.getListing({ data: data })}</div>);
+      rows.push(<div key={data.id} onClick={() => this.onViewClick(data)}>{projectExtension.getListing({ data: data })}</div>);
     }
     return (
       <div className={this.props.className} >

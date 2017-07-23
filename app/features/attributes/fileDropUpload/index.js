@@ -48,7 +48,9 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
     const projectPath = project.path;
     const resourcePath = path.join(projectPath, resource.id);
     const targetAttributeDirPath = path.join(resourcePath, attribute.id);
-    await fse.mkdir(targetAttributeDirPath);
+    if (!await fse.exists(targetAttributeDirPath)) {
+      await fse.mkdir(targetAttributeDirPath);
+    }
     if (files) {
       const newFiles = [];
       for (const fileData of files) {

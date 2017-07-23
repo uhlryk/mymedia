@@ -131,10 +131,10 @@ export default class extends FileProjectExtension {
         const targetAvatarAttributeDirPath = path.join(resourcePath, avatarId, frames[0].name);
         await fse.copy(path.join(targetGalleryAttributeDirPath, frames[0].name), targetAvatarAttributeDirPath);
         Object.assign(modifiedResource, {
-          [avatarId]: {
+          [avatarId]: [{
             name: frames[0].name,
             path: path.join(modifiedResource.id, avatarId, frames[0].name)
-          },
+          }]
         });
       }
     }

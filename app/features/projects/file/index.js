@@ -100,6 +100,7 @@ export default class extends ProjectExtension {
   }
 
   async onBeforeCreate (modifiedResource) {
+    console.log("onBeforeCreate")
     modifiedResource = await super.onBeforeCreate(modifiedResource);
     const project = this.getManager().getRootManager().getStore().getState().project;
     const projectPath = project.path;
