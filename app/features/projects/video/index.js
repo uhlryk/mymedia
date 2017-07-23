@@ -107,7 +107,8 @@ export default class extends FileProjectExtension {
     if (modifiedResource["file-resource-id"] && modifiedResource["file-resource-id"][0]) {
       const filePath = path.join(projectPath, modifiedResource["file-resource-id"][0].path);
       const metadata = await this.getMetadata(filePath);
-      const videoDuration = metadata.Duration;
+      const videoDuration = metadata.Duration || metadata.MediaDuration || metadata.PlayDuration;
+      console.log("AAA", metadata);
       Object.assign(modifiedResource, {
         "video-duration-id": videoDuration,
         "video-width-id": metadata.ImageWidth,
@@ -117,6 +118,7 @@ export default class extends FileProjectExtension {
       const framesNumber = 6;
       const imageGalleryId = "thumbnail-gallery-id";
       const targetGalleryAttributeDirPath = path.join(resourcePath, imageGalleryId);
+      console.log("ffmpeg", ["-i", filePath, "-vf", `fps=1/${videoDuration/framesNumber}`, path.join(targetGalleryAttributeDirPath, "frame%d.png")]);
       await asyncIpcMessage("shell", "ffmpeg", ["-i", filePath, "-vf", `fps=1/${videoDuration/framesNumber}`, path.join(targetGalleryAttributeDirPath, "frame%d.png")]);
       const frames = await getFileList(targetGalleryAttributeDirPath);
 
