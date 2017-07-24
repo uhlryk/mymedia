@@ -7,6 +7,7 @@ class TagInput extends React.Component {
 
   static propsTypes = {
     onAddTag: React.PropTypes.func,
+    onTypeTag: React.PropTypes.func,
     tagList: React.PropTypes.array
   };
 
@@ -36,7 +37,9 @@ class TagInput extends React.Component {
   onChange(event, { newValue }) {
     this.setState((prevState, props) => ({
       value: newValue
-    }));
+    }), () => {
+      this.props.onTypeTag(this.state.value);
+    });
   };
 
   onClick() {

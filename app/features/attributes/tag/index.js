@@ -49,4 +49,16 @@ export default class TagAttributesExtension extends AttributesExtension {
       return values.find(value => value.toLowerCase().includes(search.toLowerCase()));
     }
   }
+
+  async onBeforeCreate (tags, attribute, resource) {
+    const typedTag = tags.find(tag => typeof tag === "object");
+    if (typedTag) {
+      return tags.filter(tag => typeof tag !== "object").concat(typedTag.value);
+    }
+    return tags;
+  }
+
+  async onBeforeUpdate (files, attribute, resource) {
+    return await this.onBeforeCreate(files, attribute, resource);
+  }
 }
