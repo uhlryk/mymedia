@@ -39,8 +39,8 @@ export default class extends FileProjectExtension {
 
   createProject () {
     super.createProject();
-    this.createAttribute("thumbnail-gallery-id", this.imageGalleryExtension.getName(), {
-      displayName: "Video thumbnails",
+    this.createAttribute("screenshots-gallery-id", this.imageGalleryExtension.getName(), {
+      displayName: "Screenshots",
       edit: {
         hidden: true
       },
@@ -116,7 +116,7 @@ export default class extends FileProjectExtension {
         "video-framerate-id": metadata.FrameRate
       });
       const framesNumber = 6;
-      const imageGalleryId = "thumbnail-gallery-id";
+      const imageGalleryId = "screenshots-gallery-id";
       const targetGalleryAttributeDirPath = path.join(resourcePath, imageGalleryId);
       await asyncIpcMessage("shell", "ffmpeg", ["-i", filePath, "-vf", `fps=1/${videoDuration/framesNumber}`, path.join(targetGalleryAttributeDirPath, "frame%d.png")]);
       const frames = await getFileList(targetGalleryAttributeDirPath);
