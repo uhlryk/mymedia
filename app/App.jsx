@@ -1,15 +1,18 @@
 import "babel-polyfill";
 import React from "react";
-import { Provider } from "react-redux";
-import { routerMiddleware } from "react-router-redux";
+import { Provider, Route } from "react-redux";
+import { routerMiddleware, ConnectedRouter, push } from "react-router-redux";
 import reducer from "./reducers/index.js";
 import { createStore, applyMiddleware, compose } from "redux";
-import AppRouter from "./routes/AppRouter.jsx";
 import { devToolsEnhancer } from "redux-devtools-extension";
 import RegisterExtensions from "./features/RegisterExtensions.jsx";
 import StoreExtensionManager from "./features/StoreExtensionManager";
 import * as extensions from "./extensions";
 import thunk from "./middlewares/thunk";
+import Notification from "./components/Notification.jsx";
+import Loader from "./components/Loader.jsx";
+import RegisterModals from "./features/modals/RegisterModals.jsx"
+import AppRouter from "./routes/AppRouter.jsx";
 
 class App extends React.Component {
   static propsTypes = {
@@ -31,11 +34,22 @@ class App extends React.Component {
     );
     this.extensionManager.setStore(this.store);
   }
+
+  componentDidMount() {
+
+  }
+
   render() {
     return (
       <Provider store={this.store}>
         <RegisterExtensions list={extensions} extensionManager={this.extensionManager}>
-          <AppRouter history={ this.props.history } />
+          <ConnectedRouter history={this.props.history} >
+            <RegisterModals>
+              <AppRouter />
+              <Loader />
+              <Notification />
+            </RegisterModals>
+          </ConnectedRouter>
         </RegisterExtensions>
       </Provider>
     );

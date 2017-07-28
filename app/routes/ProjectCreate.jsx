@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createProject } from "./../../actions/project";
-import ValidationElementError from "../../components/ValidationElementError.jsx";
+import { createProject } from "../actions/project";
+import ValidationElementError from "../components/ValidationElementError.jsx";
 const defaultState = {
   details: {
     name: "",

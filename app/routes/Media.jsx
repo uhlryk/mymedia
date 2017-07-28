@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import ProjectHeader from "../../components/project/ProjectHeader.jsx";
-import Table from "../../components/resources/Table.jsx";
-import sortResources from "../../features/sorting/sortResources";
-import filterResources from "../../features/searching/filterResources";
-import SortNavigation from "../../features/sorting/SortNavigation";
-import SearchNavigation from "../../features/searching/SearchNavigation";
+import ProjectHeader from "../components/project/ProjectHeader.jsx";
+import Table from "../components/resources/Table.jsx";
+import sortResources from "../features/sorting/sortResources";
+import filterResources from "../features/searching/filterResources";
+import SortNavigation from "../features/sorting/SortNavigation";
+import SearchNavigation from "../features/searching/SearchNavigation";
 
 @connect(state => ({
   resources: state.resources,

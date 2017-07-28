@@ -1,15 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { openProject, openProjectByPath } from "./../../actions/project";
-import { loadProjectsFromPesistence, clearProjects } from "./../../actions/projects";
+import { openProject, openProjectByPath } from "../actions/project";
+import { loadProjectsFromPesistence, clearProjects } from "../actions/projects";
 import { push } from "react-router-redux";
-import Header from "../../components/Header.jsx";
+import Header from "../components/Header.jsx";
 /**
  * project is name of directory which contains media files
  */
-@connect(state => ({
-  projects: state.projects,
-}))
 class ProjectMenu extends React.Component {
 
   static contextTypes = {
@@ -93,4 +90,7 @@ class ProjectMenu extends React.Component {
   }
 }
 
-export default ProjectMenu;
+export default connect(state => ({
+  projects: state.projects,
+}))(ProjectMenu);
+

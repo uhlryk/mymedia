@@ -4,7 +4,7 @@ import { AppContainer } from "react-hot-loader";
 import { createBrowserHistory } from "history";
 import App from "./App";
 import style from "./sass/style.scss";  // eslint-disable-line
-const history = createBrowserHistory("project/menu");
+const history = createBrowserHistory();
 
 const initialState = window.__INITIAL_STATE__;
 const config = window.__CONFIG__;
