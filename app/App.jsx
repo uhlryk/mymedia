@@ -1,7 +1,7 @@
 import "babel-polyfill";
 import React from "react";
 import { Provider } from "react-redux";
-import { syncHistoryWithStore, routerMiddleware, push } from "react-router-redux";
+import { routerMiddleware } from "react-router-redux";
 import reducer from "./reducers/index.js";
 import { createStore, applyMiddleware, compose } from "redux";
 import AppRouter from "./routes/AppRouter.jsx";
@@ -30,13 +30,12 @@ class App extends React.Component {
       )
     );
     this.extensionManager.setStore(this.store);
-    this.syncHistory= syncHistoryWithStore(this.props.history, this.store);
   }
   render() {
     return (
       <Provider store={this.store}>
         <RegisterExtensions list={extensions} extensionManager={this.extensionManager}>
-          <AppRouter history={this.syncHistory} />
+          <AppRouter history={ this.props.history } />
         </RegisterExtensions>
       </Provider>
     );

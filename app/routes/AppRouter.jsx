@@ -1,5 +1,6 @@
 import React from "react";
-import { Router, Route } from "react-router";
+import { Route } from "react-router";
+import { ConnectedRouter } from "react-router-redux";
 
 import Content from "./../Content.jsx";
 import Project from "./Project.jsx";
@@ -14,7 +15,7 @@ class AppRouter extends React.Component {
   };
   render() {
     return (
-      <Router history={this.props.history}>
+      <ConnectedRouter history={this.props.history}>
         <Route component={Content}>
           <Route path="project" component={Project} >
             <Route path="menu" component={ProjectMenu} />
@@ -23,7 +24,7 @@ class AppRouter extends React.Component {
             </Route>
           </Route>
         </Route>
-      </Router>
+      </ConnectedRouter>
     );
   }
 }
