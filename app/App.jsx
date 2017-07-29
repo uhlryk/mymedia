@@ -12,7 +12,7 @@ import thunk from "./middlewares/thunk";
 import Notification from "./components/Notification.jsx";
 import Loader from "./components/Loader.jsx";
 import RegisterModals from "./features/modals/RegisterModals.jsx"
-import AppRouter from "./routes/AppRouter.jsx";
+import AppRouter from "./AppRouter.jsx";
 
 class App extends React.Component {
   static propsTypes = {

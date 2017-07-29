@@ -11,9 +11,6 @@ const defaultState = {
   validation: {}
 };
 
-@connect(state => ({
-  attributes: state.attributes
-}))
 class ManageForm extends React.Component {
 
   static contextTypes = {
@@ -122,4 +119,9 @@ class ManageForm extends React.Component {
   }
 }
 
-export default ManageForm;
+export default connect(state => ({
+  attributes: state.attributes
+}))(ManageForm);
+export {
+  ManageForm
+}

@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { openProject, openProjectByPath } from "../actions/project";
-import { loadProjectsFromPesistence, clearProjects } from "../actions/projects";
+import { openProject, openProjectByPath } from "../../actions/project";
+import { loadProjectsFromPesistence, clearProjects } from "../../actions/projects";
 import { push } from "react-router-redux";
-import Header from "../components/Header.jsx";
+import Header from "../Header.jsx";
 /**
  * project is name of directory which contains media files
  */
@@ -93,4 +93,6 @@ class ProjectMenu extends React.Component {
 export default connect(state => ({
   projects: state.projects,
 }))(ProjectMenu);
-
+export {
+  ProjectMenu
+}

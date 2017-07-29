@@ -2,9 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import NotificationSystem from "react-notification-system";
 
-@connect(state => ({
-  notification: state.notification
-}))
 class Notification extends React.Component {
 
   componentDidMount() {
@@ -29,4 +26,9 @@ class Notification extends React.Component {
   }
 }
 
-export default Notification;
+export default connect(state => ({
+  notification: state.notification
+}))(Notification);
+export {
+  Notification
+}

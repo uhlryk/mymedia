@@ -37,7 +37,7 @@ async function createProjectFile(newProjectData) {
     dispatch(await save());
     dispatch(await saveProjects(newProjectData));
     dispatch(hideLoader());
-    dispatch(push("project/media"));
+    dispatch(push("/resource"));
   };
 }
 
@@ -68,9 +68,9 @@ async function findCollectionFiles(projectPath) {
       dispatch(hideLoader());
       dispatch(await save());
       dispatch(await saveProjects(projectData.project));
-      dispatch(push("project/media"));
+      dispatch(push("/resource"));
     } else {
-      dispatch(push("project/create/" + encodeURIComponent(projectPath)));
+      dispatch(push("/create/" + encodeURIComponent(projectPath)));
     }
   };
 }

@@ -4,12 +4,9 @@ import ManageList from "../attributes/ManageList.jsx";
 import ManageCreate from "../attributes/ManageCreate.jsx";
 import classNames from "classnames";
 import { push } from "react-router-redux";
-import ManageForm from "../resources/ManageForm.jsx";
+import ManageForm from "./ManageForm.jsx";
 import Header from "../Header.jsx";
 
-@connect(state => ({
-  project: state.project
-}))
 class ProjectHeader extends React.Component {
 
   constructor(props) {
@@ -74,7 +71,7 @@ class ProjectHeader extends React.Component {
     });
     const branding = (
       <span>
-        <a href="#" onClick={() => this.props.dispatch(push("project/menu"))}>Projects</a> / {this.props.project.name}
+        <a href="#" onClick={() => this.props.dispatch(push("/"))}>Projects</a> / {this.props.project.name}
       </span>
     );
     return (
@@ -87,7 +84,7 @@ class ProjectHeader extends React.Component {
               <li><a href="#">Project details</a></li>
               <li><a href="#" onClick={this.onManageClick}>Attributes</a></li>
               <li role="separator" className="divider"></li>
-              <li><a href="#" onClick={() => this.props.dispatch(push("project/menu"))}>Project List</a></li>
+              <li><a href="#" onClick={() => this.props.dispatch(push("/"))}>Project List</a></li>
             </ul>
           </li>
         </ul>
@@ -95,4 +92,9 @@ class ProjectHeader extends React.Component {
     );
   }
 }
-export default ProjectHeader;
+export default connect(state => ({
+  project: state.project
+}))(ProjectHeader);
+export {
+  ProjectHeader
+}

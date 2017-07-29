@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createProject } from "../actions/project";
-import ValidationElementError from "../components/ValidationElementError.jsx";
+import { createProject } from "../../actions/project";
+import ValidationElementError from "../ValidationElementError.jsx";
 const defaultState = {
   details: {
     name: "",
@@ -12,8 +12,6 @@ const defaultState = {
   validation: {}
 };
 
-@connect(state => ({
-}))
 class ProjectCreate extends React.Component {
 
   static contextTypes = {
@@ -133,4 +131,7 @@ class ProjectCreate extends React.Component {
   }
 }
 
-export default ProjectCreate;
+export default connect(state => ({}))(ProjectCreate);
+export {
+  ProjectCreate
+}

@@ -1,10 +1,7 @@
 import React from "react";
 import View from "../attributes/View.jsx";
 import { connect } from "react-redux";
-@connect(state => ({
-  resources: state.resources,
-  attributes: state.attributes
-}))
+
 class ViewDetails extends React.Component {
 
   static propsTypes = {
@@ -30,4 +27,11 @@ class ViewDetails extends React.Component {
     );
   }
 }
-export default ViewDetails;
+
+export default connect(state => ({
+  resources: state.resources,
+  attributes: state.attributes
+}))(ViewDetails);
+export {
+  ViewDetails
+}

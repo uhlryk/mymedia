@@ -4,9 +4,7 @@ import { connect } from "react-redux";
 import Edit from "../attributes/Edit.jsx";
 import Create from "../attributes/Create.jsx";
 import AttributesExtensionManager from "../../features/attributes/AttributesExtensionManager";
-@connect(state => ({
-  attributes: state.attributes
-}))
+
 class ManageForm extends React.Component {
 
   static EDIT = "form_mode.edit";
@@ -110,4 +108,10 @@ class ManageForm extends React.Component {
   }
 }
 
-export default ManageForm;
+export default connect(state => ({
+  attributes: state.attributes
+}))(ManageForm);
+export {
+  ManageForm
+}
+

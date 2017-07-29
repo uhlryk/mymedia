@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-@connect(state => ({
-  attributes: state.attributes
-}))
 class ManageList extends React.Component {
 
   static contextTypes = {
@@ -43,4 +40,9 @@ class ManageList extends React.Component {
   }
 }
 
-export default ManageList;
+export default connect(state => ({
+  attributes: state.attributes
+}))(ManageList);
+export {
+  ManageList
+}

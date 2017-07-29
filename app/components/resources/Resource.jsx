@@ -1,20 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import ProjectHeader from "../components/project/ProjectHeader.jsx";
-import Table from "../components/resources/Table.jsx";
-import sortResources from "../features/sorting/sortResources";
-import filterResources from "../features/searching/filterResources";
-import SortNavigation from "../features/sorting/SortNavigation";
-import SearchNavigation from "../features/searching/SearchNavigation";
+import ProjectHeader from "./ProjectHeader.jsx";
+import Table from "./Table.jsx";
+import sortResources from "../../features/sorting/sortResources";
+import filterResources from "../../features/searching/filterResources";
+import SortNavigation from "../../features/sorting/SortNavigation";
+import SearchNavigation from "../../features/searching/SearchNavigation";
 
-@connect(state => ({
-  resources: state.resources,
-  sort: state.sort,
-  search: state.search,
-  attributes: state.attributes
-}))
-class Media extends React.Component {
+class Resource extends React.Component {
 
   static contextTypes = {
     extensions: React.PropTypes.object
@@ -54,4 +48,12 @@ class Media extends React.Component {
 
 }
 
-export default Media;
+export default connect(state => ({
+  resources: state.resources,
+  sort: state.sort,
+  search: state.search,
+  attributes: state.attributes
+}))(Resource);
+export {
+  Resource
+}

@@ -6,10 +6,6 @@ import RemovableTag from "./RemovableTag.jsx";
 import { addActiveTag, removeActiveTag } from "../../../actions/activeTagList";
 import ReactTooltip from "react-tooltip";
 
-@connect(state => ({
-  tagList: state.tagList,
-  activeTagList: state.activeTagList
-}))
 class TagList extends React.Component {
 
   constructor(props) {
@@ -43,4 +39,12 @@ class TagList extends React.Component {
     );
   }
 }
-export default TagList;
+
+export default connect(state => ({
+  tagList: state.tagList,
+  activeTagList: state.activeTagList
+}))(TagList);
+export {
+  TagList
+}
+

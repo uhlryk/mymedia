@@ -1,9 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 
-@connect(state => ({
-  loader: state.loader
-}))
 class Loader extends React.Component {
   render() {
     if(this.props.loader) {
@@ -21,4 +18,9 @@ class Loader extends React.Component {
   }
 }
 
-export default Loader;
+export default connect(state => ({
+  loader: state.loader
+}))(Loader);
+export {
+  Loader
+}

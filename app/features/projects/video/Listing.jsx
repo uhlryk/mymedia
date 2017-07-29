@@ -2,9 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import classNames from "classnames";
 import View from "../../../components/attributes/View";
-@connect(state => ({
-  attributes: state.attributes
-}))
+
 class Listing extends React.Component {
 
   static propsTypes = {
@@ -36,4 +34,11 @@ class Listing extends React.Component {
     );
   }
 }
-export default Listing;
+
+export default connect(state => ({
+  attributes: state.attributes
+}))(Listing);
+export {
+  Listing
+}
+

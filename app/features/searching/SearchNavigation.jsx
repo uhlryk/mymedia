@@ -2,9 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { addSearch } from "../../actions/search";
 
-@connect(state => ({
-  search: state.sort
-}))
 class SearchNavigation extends React.Component {
 
   constructor(props) {
@@ -59,4 +56,9 @@ class SearchNavigation extends React.Component {
   }
 }
 
-export default SearchNavigation;
+export default connect(state => ({
+  search: state.sort
+}))(SearchNavigation);
+export {
+  SearchNavigation
+}

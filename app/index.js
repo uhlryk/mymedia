@@ -1,10 +1,10 @@
 import React from "react";
 import { render } from "react-dom";
 import { AppContainer } from "react-hot-loader";
-import { createBrowserHistory } from "history";
+import { createMemoryHistory } from "history";
 import App from "./App";
 import style from "./sass/style.scss";  // eslint-disable-line
-const history = createBrowserHistory();
+const history = createMemoryHistory();
 
 const initialState = window.__INITIAL_STATE__;
 const config = window.__CONFIG__;

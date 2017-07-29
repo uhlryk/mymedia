@@ -4,7 +4,6 @@ import ManageForm from "./ManageForm.jsx";
 import ReactTooltip from "react-tooltip";
 import { connect } from "react-redux";
 
-@connect(state => ({}))
 class Table extends React.Component {
 
   static contextTypes = {
@@ -69,8 +68,6 @@ class Table extends React.Component {
   }
 }
 
-export default Table;
-
 function setComparisonValue(file) {
   if(file.isNew) return 10;
   if(!file.isChanged && file.isPresent) return 9;
@@ -84,4 +81,10 @@ function compare(a, b) {
   if(aValue > bValue) return -1;
   if(aValue === bValue) return 0;
   if(aValue < bValue) return 1;
+}
+
+export default connect(state => ({
+}))(Table);
+export {
+  Table
 }

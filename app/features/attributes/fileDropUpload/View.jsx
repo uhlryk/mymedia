@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { openFile } from "./../../../actions/openFile";
 
-@connect(state => ({}))
-export default class View extends React.Component {
+class View extends React.Component {
   static propsTypes = {
     value: React.PropTypes.string.isRequired
   };
@@ -32,4 +31,10 @@ export default class View extends React.Component {
     </table>
     );
   }
+}
+
+export default connect(state => ({
+}))(View);
+export {
+  View
 }

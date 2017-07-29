@@ -2,10 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import { addSort, removeSort, changeOrderSort } from "../../actions/sort";
 
-@connect(state => ({
-  attributes: state.attributes,
-  sort: state.sort
-}))
 class SortNavigation extends React.Component {
 
   constructor(props) {
@@ -69,4 +65,7 @@ class SortNavigation extends React.Component {
   }
 }
 
-export default SortNavigation;
+export default connect(state => ({
+  attributes: state.attributes,
+  sort: state.sort
+}))(SortNavigation);
