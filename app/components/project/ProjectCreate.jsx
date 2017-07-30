@@ -21,7 +21,7 @@ class ProjectCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = defaultState;
-    this.state.details.path = decodeURIComponent(this.props.params.encodedPath);
+    this.state.details.path = decodeURIComponent(this.props.match.params.encodedPath);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

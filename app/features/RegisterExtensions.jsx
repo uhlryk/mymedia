@@ -13,15 +13,15 @@ class RegisterExtensions extends React.Component {
   constructor(props) {
     super(props);
     this.extensions = props.extensionManager;
-    if(this.props.list.extensions) {
-      Object.keys(this.props.list.extensions).forEach(elemName => {
-        let Extension = this.props.list.extensions[elemName];
+    if(this.props.list.attributes) {
+      Object.keys(this.props.list.attributes).forEach(elemName => {
+        let Extension = this.props.list.extensions[elemName].RendererAttributeExtension;
         this.extensions.attributes.registerExtension(new Extension())
       });
     }
     if(this.props.list.projects) {
       Object.keys(this.props.list.projects).forEach(elemName => {
-        let Extension = this.props.list.projects[elemName];
+        let Extension = this.props.list.projects[elemName].RendererProjectExtension;
         this.extensions.projects.registerExtension(new Extension())
       });
     }
