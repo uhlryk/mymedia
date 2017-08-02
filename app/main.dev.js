@@ -84,6 +84,10 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
+  ipcMain.on("requestMainProcess", (evt, extensionName, ...requestData) => {
+    evt.sender.send("responseMainProcess", ...requestData);
+  });
+
   ipcMain.on("open", (evt, arg) => {
     open(arg);
   });

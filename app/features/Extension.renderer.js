@@ -1,3 +1,4 @@
+import { ipcRenderer } from "electron";
 import Extensioner from "extensioner";
 import _ from "lodash";
 
@@ -15,6 +16,15 @@ export default class Extension extends Extensioner.Extension {
 
   getConfig() {
     return this._configuration;
+  }
+
+  requestMainProcess (...requestData) {
+    return new Promise(resolve => {
+      ipcRenderer.send("requestMainProcess", this.getName(), ...requestData);
+      ipcRenderer.once("responseMainProcess", (evt, ...responseData) => {
+        resolve(...responseData);
+      })
+    });
   }
 
   static mergeConfiguration(...configurations) {
