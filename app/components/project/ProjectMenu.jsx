@@ -49,15 +49,12 @@ class ProjectMenu extends React.Component {
       <div className="project-menu">
         <div className="project-menu__header">
           <Header branding="Projects">
+            <ul className="nav navbar-nav navbar-right">
+              <li><a href="#" onClick={ this.onOpenProjectPath }>Open directory</a></li>
+              <li><a href="#" onClick={ this.onClearProjectPath }>Clear</a></li>
+
+            </ul>
           </Header>
-        </div>
-        <div className="row">
-          <div className="col-xs-8">
-            <p>Open collection directory</p>
-          </div>
-          <div className="col-xs-4">
-            <button onClick={this.onOpenProjectPath} className="form__button">Open directory</button>
-          </div>
         </div>
         {projects.length ? (
           <div>
@@ -73,14 +70,6 @@ class ProjectMenu extends React.Component {
                   {projects}
                   </tbody>
                 </table>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-xs-8">
-                <p>Clear collection directory</p>
-              </div>
-              <div className="col-xs-4">
-                <button onClick={this.onClearProjectPath} className="form__button">Clear</button>
               </div>
             </div>
           </div>
