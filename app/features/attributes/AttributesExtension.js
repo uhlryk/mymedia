@@ -1,15 +1,8 @@
 import React from "react";
-import Extensioner from "extensioner";
-import _ from "lodash";
-export default class AttributesExtension extends Extensioner.Extension {
-  constructor (extensionName, configuration = {}) {
-    super();
-    this.setName (extensionName);
-    this.setConfig(configuration);
-  }
-
-  setConfig(configuration) {
-    this._configuration = AttributesExtension.mergeConfiguration({
+import Extension from "../Extension.renderer";
+export default class AttributesExtension extends Extension {
+  constructor (extensionName, ...configurations) {
+    super(extensionName, {
       edit: {
         set component(val) {
           this._component = React.createFactory(val);
@@ -46,12 +39,7 @@ export default class AttributesExtension extends Extensioner.Extension {
       sort: {
 
       }
-    }, configuration);
-  }
-
-
-  getConfig() {
-    return this._configuration;
+    }, ...configurations);
   }
 
   getComponent(componentType) {
@@ -122,11 +110,4 @@ export default class AttributesExtension extends Extensioner.Extension {
     return value;
   }
 
-  static mergeConfiguration(source, target) {
-    return _.mergeWith(source, target, (objValue, srcValue) => {
-      if (_.isArray(objValue)) {
-        return objValue.concat(srcValue);
-      }
-    });
-  }
 }

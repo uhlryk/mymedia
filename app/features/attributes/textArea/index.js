@@ -5,8 +5,8 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class TextAreaAttributesExtension extends AttributesExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "textArea", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "textArea", {
       view: {
         component: View
       },
@@ -20,7 +20,7 @@ export default class TextAreaAttributesExtension extends AttributesExtension {
       create: {
         component: FormField
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   getQuickSearchFunction (search) {

@@ -1,18 +1,17 @@
-import AttributesExtension from "../AttributesExtension";
 import FileDropUploadAttributesExtension from "../fileDropUpload/index";
 import View from "./View.jsx";
 
 export default class ImageAttributesExtension extends FileDropUploadAttributesExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "image", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "image", {
       settings: {
         displayName: "image",
       },
       view: {
         component: View
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   getView (props) {

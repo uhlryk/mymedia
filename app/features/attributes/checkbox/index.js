@@ -3,8 +3,8 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class CheckboxAttributesExtension extends AttributesExtension {
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "checkbox", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "checkbox", {
       view: {
         component: View
       },
@@ -36,7 +36,7 @@ export default class CheckboxAttributesExtension extends AttributesExtension {
       create: {
         component: FormField
       }
-    }, configuration));
+    }, ...configurations);
   }
 
 }

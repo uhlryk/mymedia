@@ -16,14 +16,14 @@ import fse from "fs-extra";
 
 export default class extends ProjectExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "file", ProjectExtension.mergeConfiguration({
+  constructor (extensionName = null, ...configurations) {
+    super(extensionName || "file", {
       displayName: "Any files",
       description: "Project for various files",
       listing: {
         component: Listing
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   init (manager) {

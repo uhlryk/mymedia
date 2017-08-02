@@ -4,9 +4,8 @@ import AttributesExtension from "../AttributesExtension";
 
 export default class TagAttributesExtension extends AttributesExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "tag", AttributesExtension.mergeConfiguration({
-
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "tag", {
       view: {
         component: View
       },
@@ -22,7 +21,7 @@ export default class TagAttributesExtension extends AttributesExtension {
       sort: {
         disabled: true
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   getEdit (props) {

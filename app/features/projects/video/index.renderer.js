@@ -1,7 +1,6 @@
 import FileProjectExtension from "../file/index.renderer";
 import ImageGalleryExtension from "../../attributes/imageGallery/index";
 import ImageExtension from "../../attributes/image/index";
-import ProjectExtension from "../ProjectExtension.renderer";
 import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import getFileList from "../../../helpers/getFileList";
 import path from "path";
@@ -11,14 +10,14 @@ import Listing from "./Listing";
 
 export default class extends FileProjectExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "video", ProjectExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "video", {
       displayName: "Video files",
       description: "Project for video files",
       listing: {
         component: Listing
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   init (manager) {

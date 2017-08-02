@@ -3,8 +3,8 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class InputAttributesExtension extends AttributesExtension {
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "input", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "input", {
       view: {
         component: View
       },
@@ -30,7 +30,7 @@ export default class InputAttributesExtension extends AttributesExtension {
       create: {
         component: FormField
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   getQuickSearchFunction (search) {

@@ -1,15 +1,9 @@
 import React from "react";
 import { addNewAttributeWithId } from "../../actions/attributes";
-import Extensioner from "extensioner";
-export default class ProjectExtension extends Extensioner.Extension {
-  constructor(extensionName, configuration = {}) {
-    super();
-    this.setName(extensionName);
-    this.setConfig(configuration);
-  }
-
-  setConfig(configuration) {
-    this._configuration = ProjectExtension.mergeConfiguration({
+import Extension from "../Extension.renderer";
+export default class ProjectExtension extends Extension {
+  constructor(extensionName, ...configurations) {
+    super(extensionName, {
       listing: {
         set component(val) {
           this._component = React.createFactory(val);
@@ -18,11 +12,7 @@ export default class ProjectExtension extends Extensioner.Extension {
           return this._component;
         }
       },
-    }, configuration);
-  }
-
-  getConfig() {
-    return this._configuration;
+    }, ...configurations);
   }
 
   getComponent(componentType) {
@@ -72,7 +62,4 @@ export default class ProjectExtension extends Extensioner.Extension {
 
   }
 
-  static mergeConfiguration(source, target) {
-    return _.merge(source, target);
-  }
 }

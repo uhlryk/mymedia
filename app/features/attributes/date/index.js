@@ -2,8 +2,8 @@ import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
 export default class DateAttributesExtension extends AttributesExtension {
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "date", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "date", {
       view: {
         component: View
       },
@@ -12,6 +12,6 @@ export default class DateAttributesExtension extends AttributesExtension {
         editDisabled: true,
         deleteDisabled: true
       }
-    }, configuration));
+    }, ...configurations);
   }
 }

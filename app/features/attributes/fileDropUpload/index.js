@@ -12,8 +12,8 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
     BEFORE_DELETE: "before_delete"
   }
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "fileDropUpload", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "fileDropUpload", {
       view: {
         component: View
       },
@@ -40,7 +40,7 @@ export default class FileDropUploadAttributesExtension extends AttributesExtensi
       create: {
         component: FormField
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   async onBeforeCreate (files, attribute, resource) {

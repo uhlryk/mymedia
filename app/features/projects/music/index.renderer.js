@@ -1,14 +1,13 @@
 import FileProjectExtension from "../file/index.renderer";
-import ProjectExtension from "../ProjectExtension.renderer";
 import path from "path";
 
 export default class extends FileProjectExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "music", ProjectExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "music", {
       displayName: "Music files",
       description: "Project for music files"
-    }, configuration));
+    }, ...configurations);
   }
 
   collectProjectFiles (files) {

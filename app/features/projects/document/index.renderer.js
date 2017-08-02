@@ -3,11 +3,11 @@ import ProjectExtension from "../ProjectExtension.renderer";
 
 export default class extends FileProjectExtension {
 
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "document", ProjectExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "document", {
       displayName: "Document files",
       description: "Project for document files"
-    }, configuration));
+    }, ...configurations);
   }
 
   collectProjectFiles (files) {

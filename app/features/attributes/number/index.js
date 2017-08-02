@@ -2,10 +2,9 @@ import FormField from "./FormField.jsx";
 import View from "./View.jsx";
 import AttributesExtension from "../AttributesExtension";
 
-
 export default class NumberAttributesExtension extends AttributesExtension {
-  constructor (extensionName = null, configuration = {}) {
-    super(extensionName || "number", AttributesExtension.mergeConfiguration({
+  constructor (extensionName, ...configurations) {
+    super(extensionName || "number", {
       view: {
         component: View
       },
@@ -25,7 +24,7 @@ export default class NumberAttributesExtension extends AttributesExtension {
       create: {
         component: FormField
       }
-    }, configuration));
+    }, ...configurations);
   }
 
   getSortFunction (order) {
