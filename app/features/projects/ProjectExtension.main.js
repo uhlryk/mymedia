@@ -1,8 +1,6 @@
-import Extensioner from "extensioner";
-export default class ProjectExtension extends Extensioner.Extension {
-  constructor(extensionName, configuration = {}) {
-    super();
-    this.setName(extensionName);
-    this.setConfig(configuration);
+import Extension from "../Extension.main";
+export default class ProjectExtension extends Extension {
+  constructor(extensionName, ...configurations) {
+    super(extensionName, ...configurations);
   }
 }
