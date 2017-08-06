@@ -17,8 +17,6 @@ import * as extensions from "./extensions";
 import ExtensionManager from "./features/ExtensionManager.main";
 
 const extensionManager = new ExtensionManager(extensions);
-import exiftool from "node-exiftool";
-import exiftoolBin from "dist-exiftool";
 
 let mainWindow = null;
 
@@ -92,23 +90,6 @@ app.on('ready', async () => {
     const requestResult = await extensionManager.dispatchRequestProcess(extensionName, command, ...requestData);
     evt.sender.send("responseMainProcess", requestResult);
   });
-
-  // ipcMain.on("open", (evt, arg) => {
-  //   open(arg);
-  // });
-  //
-  // ipcMain.on("exif", (evt, filepath) => {
-  //   const ep = new exiftool.ExiftoolProcess(exiftoolBin);
-  //   ep
-  //     .open()
-  //     .then((pid) => console.log("Started exiftool process %s", pid))
-  //     .then(() => ep.readMetadata(filepath, ["n"]))
-  //     .then(metadata => {
-  //       ep.close();
-  //       evt.sender.send("exif-reply", metadata);
-  //     })
-  //     .catch(console.error)
-  // });
 
   // ipcMain.on("shell", (evt, cmdName, params) => {
   //   const command = childProcess.spawn(cmdName, params);

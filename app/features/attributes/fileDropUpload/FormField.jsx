@@ -1,7 +1,7 @@
 import React from "react";
 import uuid from "uuid-v4";
 import DropFile from "./DropFile";
-import FileDropUploadAttributesExtension from "./index";
+import FileDropUploadAttributesExtension from "./index.renderer";
 
 export default class FormField extends React.Component {
   static propsTypes = {

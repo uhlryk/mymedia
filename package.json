@@ -202,6 +202,7 @@
     "history": "^4.6.3",
     "moment": "^2.18.1",
     "node-exiftool": "^2.2.0",
+    "open": "^0.0.5",
     "react": "^15.6.1",
     "react-autosuggest": "^9.3.2",
     "react-dom": "^15.6.1",

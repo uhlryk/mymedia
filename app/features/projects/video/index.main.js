@@ -1,6 +1,8 @@
 import ProjectExtension from "../ProjectExtension.main";
 import exiftool from "node-exiftool";
 import exiftoolBin from "dist-exiftool";
+import * as ImageGalleryExtension from "../../attributes/imageGallery/index";
+import * as ImageExtension from "../../attributes/image/index";
 
 export default class extends ProjectExtension {
 
@@ -17,7 +19,13 @@ export default class extends ProjectExtension {
           return metadata.data[0];
         })
         .catch(console.error)
-    })
+    });
+  }
+
+  init (manager) {
+    super.init(manager);
+    this.getManager().registerExtension(new ImageGalleryExtension.MainAttributeExtension());
+    this.getManager().registerExtension(new ImageExtension.MainAttributeExtension());
   }
 
 }

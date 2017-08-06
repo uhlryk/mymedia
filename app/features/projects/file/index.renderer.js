@@ -1,15 +1,15 @@
 import ProjectExtension from "../ProjectExtension.renderer";
 import path from "path";
-import InputExtension from "../../attributes/input/index";
-import NumberExtension from "../../attributes/number/index";
-import CheckboxExtension from "../../attributes/checkbox/index";
-import TextAreaExtension from "../../attributes/textArea/index";
-import RatingExtension from "../../attributes/rating/index";
-import FileSize from "../../attributes/fileSize/index";
-import Date from "../../attributes/date/index";
-import Tag from "../../attributes/tag/index";
-import HierarchicalTag from "../../attributes/hierarchicalTag/index";
-import FileDropUpload from "../../attributes/fileDropUpload/index";
+import * as InputExtension from "../../attributes/input/index";
+import * as NumberExtension from "../../attributes/number/index";
+import * as CheckboxExtension from "../../attributes/checkbox/index";
+import * as TextAreaExtension from "../../attributes/textArea/index";
+import * as RatingExtension from "../../attributes/rating/index";
+import * as FileSize from "../../attributes/fileSize/index";
+import * as Date from "../../attributes/date/index";
+import * as Tag from "../../attributes/tag/index";
+import * as HierarchicalTag from "../../attributes/hierarchicalTag/index";
+import * as FileDropUpload from "../../attributes/fileDropUpload/index";
 
 import Listing from "./Listing";
 import fse from "fs-extra";
@@ -28,25 +28,25 @@ export default class extends ProjectExtension {
 
   init (manager) {
     super.init(manager);
-    this.inputExtension = new InputExtension();
+    this.inputExtension = new InputExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.inputExtension);
-    this.numberExtension = new NumberExtension();
+    this.numberExtension = new NumberExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.numberExtension);
-    this.checkboxExtension = new CheckboxExtension();
+    this.checkboxExtension = new CheckboxExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.checkboxExtension);
-    this.textAreaExtension = new TextAreaExtension();
+    this.textAreaExtension = new TextAreaExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.textAreaExtension);
-    this.ratingExtension = new RatingExtension();
+    this.ratingExtension = new RatingExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.ratingExtension);
-    this.fileSizeExtension = new FileSize();
+    this.fileSizeExtension = new FileSize.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.fileSizeExtension);
-    this.fileDropUploadExtension = new FileDropUpload();
+    this.fileDropUploadExtension = new FileDropUpload.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.fileDropUploadExtension);
-    this.dateExtension = new Date();
+    this.dateExtension = new Date.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.dateExtension);
-    this.tagExtension = new Tag();
+    this.tagExtension = new Tag.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.tagExtension);
-    this.hierarchicalTagExtension = new HierarchicalTag();
+    this.hierarchicalTagExtension = new HierarchicalTag.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.hierarchicalTagExtension);
   }
 

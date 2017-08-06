@@ -3,7 +3,7 @@ import { updateResource, addResource } from "../../actions/resources";
 import { connect } from "react-redux";
 import Edit from "../attributes/Edit.jsx";
 import Create from "../attributes/Create.jsx";
-import AttributesExtensionManager from "../../features/attributes/AttributesExtensionManager";
+import AttributesExtensionManager from "../../features/attributes/AttributesExtensionManager.renderer";
 
 class ManageForm extends React.Component {
 

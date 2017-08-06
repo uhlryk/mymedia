@@ -1,6 +1,6 @@
 import React from "react";
+import path from "path";
 import { connect } from "react-redux";
-import { openFile } from "./../../../actions/openFile";
 
 class View extends React.Component {
   static propsTypes = {
@@ -14,7 +14,8 @@ class View extends React.Component {
   }
 
   onOpenClick(filePath) {
-    this.props.dispatch(openFile(filePath));
+    const projectPath = this.props.project.path;
+    this.props.extension.requestMainProcess("open-resource", path.join(projectPath, filePath));
   }
 
   render() {
@@ -34,6 +35,7 @@ class View extends React.Component {
 }
 
 export default connect(state => ({
+  project: state.project
 }))(View);
 export {
   View

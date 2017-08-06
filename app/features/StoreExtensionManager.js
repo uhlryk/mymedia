@@ -1,6 +1,6 @@
 import Extensioner from "extensioner";
 import ProjectsExtensionManager from "./projects/ProjectsExtensionManager.renderer";
-import AttributesExtensionManager from "./attributes/AttributesExtensionManager";
+import AttributesExtensionManager from "./attributes/AttributesExtensionManager.renderer";
 export default class StoreExtensionManager extends Extensioner.Manager {
   constructor () {
     super();

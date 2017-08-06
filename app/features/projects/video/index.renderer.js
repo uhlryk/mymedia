@@ -1,6 +1,6 @@
 import FileProjectExtension from "../file/index.renderer";
-import ImageGalleryExtension from "../../attributes/imageGallery/index";
-import ImageExtension from "../../attributes/image/index";
+import * as ImageGalleryExtension from "../../attributes/imageGallery/index";
+import * as ImageExtension from "../../attributes/image/index";
 import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import getFileList from "../../../helpers/getFileList";
 import path from "path";
@@ -21,9 +21,9 @@ export default class extends FileProjectExtension {
 
   init (manager) {
     super.init(manager);
-    this.imageGalleryExtension = new ImageGalleryExtension();
+    this.imageGalleryExtension = new ImageGalleryExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.imageGalleryExtension);
-    this.imageExtension = new ImageExtension();
+    this.imageExtension = new ImageExtension.RendererAttributeExtension();
     this.getManager().getRootManager().attributes.registerExtension(this.imageExtension);
   }
 

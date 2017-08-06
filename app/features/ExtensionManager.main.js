@@ -18,6 +18,11 @@ export default class StoreExtensionManager extends Extensioner.Manager {
   }
 
   async dispatchRequestProcess (extensionName, command, ...requestData) {
-    return await this.getExtensionByName(extensionName).responseMainProcess(command, ...requestData);
+    const extension = this.getExtensionByName(extensionName);
+    if (extension) {
+      return await extension.responseMainProcess(command, ...requestData);
+    } else {
+      console.warn(`dispatchRequestProcess no extension ${extensionName}`)
+    }
   }
 }
