@@ -1,3 +1,4 @@
+import BaseExtension from "./Extension";
 export default class Extension extends BaseExtension {
 
   constructor(extensionName, ...configurations) {
@@ -9,9 +10,9 @@ export default class Extension extends BaseExtension {
     this.listeners[command] = listener;
   }
 
-  responseMainProcess (evt, command, ...requestData) {
+  async responseMainProcess (command, ...requestData) {
     if (this.listeners[command]) {
-      this.listeners[command](evt, ...requestData);
+      return await this.listeners[command](...requestData);
     }
   }
 }

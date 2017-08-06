@@ -5,7 +5,7 @@ import { routerMiddleware, ConnectedRouter, push } from "react-router-redux";
 import reducer from "./reducers/index.js";
 import { createStore, applyMiddleware, compose } from "redux";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import RegisterExtensions from "./features/RegisterExtensions.jsx";
+import RegisterExtensions from "./features/RegisterExtensions.renderer.jsx";
 import StoreExtensionManager from "./features/StoreExtensionManager";
 import * as extensions from "./extensions";
 import thunk from "./middlewares/thunk";

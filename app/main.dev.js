@@ -13,6 +13,10 @@
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import MenuBuilder from './menu';
 import childProcess from "child_process";
+import * as extensions from "./extensions";
+import ExtensionManager from "./features/ExtensionManager.main";
+
+const extensionManager = new ExtensionManager(extensions);
 import exiftool from "node-exiftool";
 import exiftoolBin from "dist-exiftool";
 
@@ -84,44 +88,45 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  ipcMain.on("requestMainProcess", (evt, extensionName, command, ...requestData) => {
-    evt.sender.send("responseMainProcess", ...requestData);
+  ipcMain.on("requestMainProcess", async (evt, extensionName, command, ...requestData) => {
+    const requestResult = await extensionManager.dispatchRequestProcess(extensionName, command, ...requestData);
+    evt.sender.send("responseMainProcess", requestResult);
   });
 
-  ipcMain.on("open", (evt, arg) => {
-    open(arg);
-  });
+  // ipcMain.on("open", (evt, arg) => {
+  //   open(arg);
+  // });
+  //
+  // ipcMain.on("exif", (evt, filepath) => {
+  //   const ep = new exiftool.ExiftoolProcess(exiftoolBin);
+  //   ep
+  //     .open()
+  //     .then((pid) => console.log("Started exiftool process %s", pid))
+  //     .then(() => ep.readMetadata(filepath, ["n"]))
+  //     .then(metadata => {
+  //       ep.close();
+  //       evt.sender.send("exif-reply", metadata);
+  //     })
+  //     .catch(console.error)
+  // });
 
-  ipcMain.on("exif", (evt, filepath) => {
-    const ep = new exiftool.ExiftoolProcess(exiftoolBin);
-    ep
-      .open()
-      .then((pid) => console.log("Started exiftool process %s", pid))
-      .then(() => ep.readMetadata(filepath, ["n"]))
-      .then(metadata => {
-        ep.close();
-        evt.sender.send("exif-reply", metadata);
-      })
-      .catch(console.error)
-  });
-
-  ipcMain.on("shell", (evt, cmdName, params) => {
-    const command = childProcess.spawn(cmdName, params);
-
-    command.stdout.on("data", data => {
-      console.log(`stdout: ${data}`);
-    });
-
-    command.stderr.on("data", err => {
-      console.log(`stderr: ${err}`);
-    });
-
-    command.on("close", (code) => {
-      console.log(`child process exited with code ${code}`);
-      evt.sender.send("shell-reply", null);
-    });
-
-  });
+  // ipcMain.on("shell", (evt, cmdName, params) => {
+  //   const command = childProcess.spawn(cmdName, params);
+  //
+  //   command.stdout.on("data", data => {
+  //     console.log(`stdout: ${data}`);
+  //   });
+  //
+  //   command.stderr.on("data", err => {
+  //     console.log(`stderr: ${err}`);
+  //   });
+  //
+  //   command.on("close", (code) => {
+  //     console.log(`child process exited with code ${code}`);
+  //     evt.sender.send("shell-reply", null);
+  //   });
+  //
+  // });
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();

@@ -5,7 +5,6 @@ import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import getFileList from "../../../helpers/getFileList";
 import path from "path";
 import fse from "fs-extra";
-import { ipcRenderer } from "electron";
 import Listing from "./Listing";
 
 export default class extends FileProjectExtension {
@@ -105,9 +104,9 @@ export default class extends FileProjectExtension {
     const resourcePath = path.join(projectPath, modifiedResource.id);
     if (modifiedResource["file-resource-id"] && modifiedResource["file-resource-id"][0]) {
       const filePath = path.join(projectPath, modifiedResource["file-resource-id"][0].path);
-      const metadata = await this.getMetadata(filePath);
+      // const metadata = await this.getMetadata(filePath);
+      const metadata = await this.requestMainProcess("file-info", filePath);
       const videoDuration = metadata.Duration || metadata.MediaDuration || metadata.PlayDuration;
-      console.log(metadata);
       Object.assign(modifiedResource, {
         "video-duration-id": videoDuration,
         "video-width-id": metadata.ImageWidth,
@@ -141,12 +140,4 @@ export default class extends FileProjectExtension {
     return modifiedResource
   }
 
-  getMetadata (filepath) {
-    return new Promise(resolve => {
-      ipcRenderer.send("exif", filepath);
-      ipcRenderer.once("exif-reply", (event, metadata) => {
-        resolve(metadata.data[0]);
-      })
-    });
-  }
 }

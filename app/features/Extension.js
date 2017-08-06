@@ -28,7 +28,7 @@ export default class Extension extends Extensioner.Extension {
           }
         });
       }
-    })
+    }, null)
 
   }
 }
