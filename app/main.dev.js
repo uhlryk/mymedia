@@ -12,7 +12,6 @@
  */
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import MenuBuilder from './menu';
-import childProcess from "child_process";
 import * as extensions from "./extensions";
 import ExtensionManager from "./features/ExtensionManager.main";
 
@@ -90,24 +89,6 @@ app.on('ready', async () => {
     const requestResult = await extensionManager.dispatchRequestProcess(extensionName, command, ...requestData);
     evt.sender.send("responseMainProcess", requestResult);
   });
-
-  // ipcMain.on("shell", (evt, cmdName, params) => {
-  //   const command = childProcess.spawn(cmdName, params);
-  //
-  //   command.stdout.on("data", data => {
-  //     console.log(`stdout: ${data}`);
-  //   });
-  //
-  //   command.stderr.on("data", err => {
-  //     console.log(`stderr: ${err}`);
-  //   });
-  //
-  //   command.on("close", (code) => {
-  //     console.log(`child process exited with code ${code}`);
-  //     evt.sender.send("shell-reply", null);
-  //   });
-  //
-  // });
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();

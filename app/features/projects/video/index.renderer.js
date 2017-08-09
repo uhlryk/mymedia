@@ -1,7 +1,6 @@
 import FileProjectExtension from "../file/index.renderer";
 import * as ImageGalleryExtension from "../../attributes/imageGallery/index";
 import * as ImageExtension from "../../attributes/image/index";
-import asyncIpcMessage from "../../../helpers/asyncIpcMessage";
 import getFileList from "../../../helpers/getFileList";
 import path from "path";
 import fse from "fs-extra";
@@ -113,10 +112,9 @@ export default class extends FileProjectExtension {
         "video-height-id": metadata.ImageHeight,
         "video-framerate-id": metadata.FrameRate
       });
-      const framesNumber = 6;
       const imageGalleryId = "screenshots-gallery-id";
       const targetGalleryAttributeDirPath = path.join(resourcePath, imageGalleryId);
-      await asyncIpcMessage("shell", "ffmpeg", ["-i", filePath, "-vf", `fps=1/${videoDuration/framesNumber}`, path.join(targetGalleryAttributeDirPath, "frame%d.png")]);
+      await this.requestMainProcess("video-screenshots", filePath, videoDuration, targetGalleryAttributeDirPath);
       const frames = await getFileList(targetGalleryAttributeDirPath);
 
       Object.assign(modifiedResource, {

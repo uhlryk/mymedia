@@ -1,6 +1,8 @@
 import ProjectExtension from "../ProjectExtension.main";
+import path from "path";
 import exiftool from "node-exiftool";
 import exiftoolBin from "dist-exiftool";
+import childProcess from "child_process";
 import * as ImageGalleryExtension from "../../attributes/imageGallery/index";
 import * as ImageExtension from "../../attributes/image/index";
 
@@ -19,6 +21,30 @@ export default class extends ProjectExtension {
           return metadata.data[0];
         })
         .catch(console.error)
+    });
+    this.setRequestRendererListener("video-screenshots", async (filePath, videoDuration, targetGalleryAttributeDirPath) => {
+      const framesNumber = 6;
+      const command = childProcess.spawn("ffmpeg",  [
+        "-i",
+        filePath,
+        "-vf",
+        `fps=1/${videoDuration/framesNumber}`,
+        path.join(targetGalleryAttributeDirPath, "frame%d.png")
+      ]);
+      return new Promise(resolve => {
+        command.stdout.on("data", data => {
+          console.log(`stdout: ${data}`);
+        });
+
+        command.stderr.on("data", err => {
+          console.log(`stderr: ${err}`);
+        });
+
+        command.on("close", (code) => {
+          console.log(`child process exited with code ${code}`);
+          resolve();
+        });
+      });
     });
   }
 
