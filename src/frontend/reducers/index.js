@@ -1,0 +1,2 @@
+// global reducers
+export default {};

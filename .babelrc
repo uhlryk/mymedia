@@ -7,20 +7,21 @@
     "stage-0",
     "react"
   ],
-  "plugins": ["add-module-exports", "dynamic-import-webpack", "transform-async-to-generator"],
+  "plugins": ["add-module-exports"],
   "env": {
     "production": {
       "presets": ["react-optimize"],
-      "plugins": ["babel-plugin-dev-expression"]
+      "plugins": [
+          "transform-class-properties",
+          "transform-es2015-classes",
+          "dev-expression"
+      ]
     },
     "development": {
       "plugins": [
-        "transform-class-properties",
-        "transform-es2015-classes",
-        ["flow-runtime", {
-          "assert": true,
-          "annotate": true
-        }]
+          "transform-class-properties",
+          "transform-es2015-classes"
+
       ]
     }
   }

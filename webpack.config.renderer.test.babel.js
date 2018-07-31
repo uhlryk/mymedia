@@ -1,27 +1,12 @@
-/**
- * Build config for electron renderer process
- */
-
 import path from "path";
-import webpack from "webpack";
 import ExtractTextPlugin from "extract-text-webpack-plugin";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
 export default {
     devtool: "source-map",
-
     target: "electron-renderer",
-
-    entry: "./src/frontend/index",
-
-    output: {
-        path: path.join(__dirname, "dist/frontend"),
-        publicPath: "./dist/frontend",
-        filename: "renderer.prod.js"
-    },
     resolve: {
         extensions: [".js", ".jsx", ".json"],
-        modules: [path.join(__dirname, "src"), "node_modules"]
+        modules: [path.join(__dirname, "app"), "node_modules"]
     },
     module: {
         rules: [
@@ -35,7 +20,6 @@ export default {
                     }
                 }
             },
-            // Extract all .global.css to style.css as is
             {
                 test: /\.global\.css$/,
                 use: ExtractTextPlugin.extract({
@@ -163,27 +147,5 @@ export default {
                 use: "url-loader"
             }
         ]
-    },
-
-    plugins: [
-        /**
-         * Create global constants which can be configured at compile time.
-         *
-         * Useful for allowing different behaviour between development builds and
-         * release builds
-         *
-         * NODE_ENV should be production so that modules do not perform certain
-         * development checks
-         */
-        new webpack.EnvironmentPlugin({
-            NODE_ENV: "production"
-        }),
-        new webpack.NamedModulesPlugin(),
-        new ExtractTextPlugin("style.css"),
-
-        new BundleAnalyzerPlugin({
-            analyzerMode: process.env.OPEN_ANALYZER === "true" ? "server" : "disabled",
-            openAnalyzer: process.env.OPEN_ANALYZER === "true"
-        })
-    ]
+    }
 };

@@ -2,61 +2,67 @@
  * Webpack config for production electron main process
  */
 
-import webpack from 'webpack';
-import merge from 'webpack-merge';
-import BabiliPlugin from 'babili-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import baseConfig from './webpack.config.base';
-import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 
-CheckNodeEnv('production');
+export default {
+    devtool: "source-map",
 
-export default merge.smart(baseConfig, {
-  devtool: 'source-map',
+    target: "electron-main",
 
-  target: 'electron-main',
+    entry: "./src/desktop/main.dev",
 
-  entry: './app/main.dev',
+    output: {
+        path: path.join(__dirname, "dist/desktop"),
+        filename: "main.prod.js",
+        libraryTarget: "commonjs2"
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        cacheDirectory: true
+                    }
+                }
+            }
+        ]
+    },
+    resolve: {
+        extensions: [".js", ".json"],
+        modules: [path.join(__dirname, "src/desktop"), "node_modules"]
+    },
+    plugins: [
+        new BundleAnalyzerPlugin({
+            analyzerMode: process.env.OPEN_ANALYZER === "true" ? "server" : "disabled",
+            openAnalyzer: process.env.OPEN_ANALYZER === "true"
+        }),
 
-  // 'main.js' in root
-  output: {
-    path: __dirname,
-    filename: './app/main.prod.js'
-  },
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: "production",
+            DEBUG_PROD: "false"
+        }),
+        new webpack.NamedModulesPlugin(),
+        new HtmlWebpackPlugin({
+            hash: true,
+            inject: false,
+            template: "src/desktop/template.html",
+            filename: "app.html"
+        })
+    ],
 
-  plugins: [
     /**
-     * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
+     * Disables webpack processing of __dirname and __filename.
+     * If you run the bundle in node.js it falls back to these values of node.js.
+     * https://github.com/webpack/webpack/issues/2010
      */
-    new BabiliPlugin(),
-
-    new BundleAnalyzerPlugin({
-      analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
-    }),
-
-    /**
-     * Create global constants which can be configured at compile time.
-     *
-     * Useful for allowing different behaviour between development builds and
-     * release builds
-     *
-     * NODE_ENV should be production so that modules do not perform certain
-     * development checks
-     */
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false')
-    })
-  ],
-
-  /**
-   * Disables webpack processing of __dirname and __filename.
-   * If you run the bundle in node.js it falls back to these values of node.js.
-   * https://github.com/webpack/webpack/issues/2010
-   */
-  node: {
-    __dirname: false,
-    __filename: false
-  },
-});
+    node: {
+        __dirname: false,
+        __filename: false
+    }
+};

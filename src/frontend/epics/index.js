@@ -1,0 +1,2 @@
+// global epics
+export default [];

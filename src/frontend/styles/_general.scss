@@ -1,0 +1,25 @@
+body {
+    background: lightgrey;
+}
+
+.input {
+    @extend .form-control
+}
+
+.lead {
+    @extend .lead;
+    @extend .text-uppercase;
+    @extend .text-center;
+}
+
+.button {
+    @extend .btn;
+
+    &--normal {
+        @extend .btn-success;
+    }
+
+    &--danger {
+        @extend .btn-danger;
+    }
+}
