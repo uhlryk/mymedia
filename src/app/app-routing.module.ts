@@ -1,14 +1,14 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProjectComponent } from "./features/project/project.component";
-import { ProjectModule } from "./features/project/project.module";
+import { ProjectPathComponent } from "./features/projectPath/projectPath.component";
+import { ProjectPathModule } from "./features/projectPath/projectPath.module";
 import { FilesComponent } from "./features/files/files.component";
 import { FilesModule } from "./features/files/files.module";
 
 const routes: Routes = [
     {
         path: "",
-        component: ProjectComponent
+        component: ProjectPathComponent
     },
     {
         path: "files",
@@ -17,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [ProjectModule, FilesModule, RouterModule.forRoot(routes)],
+    imports: [ProjectPathModule, FilesModule, RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
