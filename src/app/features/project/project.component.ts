@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import {Router} from '@angular/router';
+import { Router } from "@angular/router";
 const electron = (<any>window).require("electron");
 // import { remote} from "electron";
 const dialog = electron.remote.dialog;
@@ -9,8 +9,7 @@ const dialog = electron.remote.dialog;
     templateUrl: "project.component.html"
 })
 export class ProjectComponent {
-    constructor(private cdr: ChangeDetectorRef, private router: Router) {
-    }
+    constructor(private cdr: ChangeDetectorRef, private router: Router) {}
     projectPath = new FormControl("");
     allowNext = false;
     actionType = "";
@@ -24,7 +23,7 @@ export class ProjectComponent {
                 this.allowNext = true;
                 this.actionType = "Create Project";
                 this.cdr.detectChanges();
-              this.router.navigate(["/files"]);
+                this.router.navigate(["/files"]);
             }
         );
     }
