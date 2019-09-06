@@ -7,7 +7,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let file of fileList">
-            <td  (click)="openFile(file.id)" >{{ file.name }}</td>
+            <td  (click)="openFile(file.id)" >{{ file.orgFileName }}</td>
             <td></td>
         </tr>
     </tbody>

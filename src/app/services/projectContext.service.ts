@@ -22,11 +22,11 @@ export class ProjectContextService {
         return this.projectFolderPath;
     }
 
-    loadProject(): Observable<boolean> {
-        const projectPromise = loadFile(
-            this.projectFolderPath,
-            ProjectContextService.projectFileName
-        )
+    setProject(project) {
+        this._project = project;
+    }
+    loadProject(): Promise<Project> {
+        return loadFile(this.projectFolderPath, ProjectContextService.projectFileName)
             .then(projectFile => {
                 if (projectFile) {
                     return Object.assign({}, new Project(), JSON.parse(projectFile));
@@ -42,39 +42,40 @@ export class ProjectContextService {
                 }
             })
             .then(project => {
-                return getFileList(this.projectFolderPath).then(files => {
-                    files.forEach(fsFile => {
-                        const fsFileName: string = fsFile.name;
-                        const fsFilePath: string = fsFile.path;
-                        const fileFromProject = project.files.find(
-                            file => file.filePath === fsFilePath
-                        );
-                        if (!fileFromProject) {
-                            const file: File = new File();
-                            file.filePath = fsFilePath;
-                            file.orgFileName = fsFileName;
-                            console.log("new file added", file);
+                return getFileList(this.projectFolderPath)
+                    .then(files => {
+                        files.forEach(fsFile => {
+                            const fsFileName: string = fsFile.name;
+                            const fsFilePath: string = fsFile.path;
+                            const fileFromProject = project.files.find(
+                                file => file.filePath === fsFilePath
+                            );
+                            if (!fileFromProject) {
+                                const file: File = new File();
+                                file.filePath = fsFilePath;
+                                file.orgFileName = fsFileName;
+                                console.log("new file added", file);
 
-                            project.files.push(file);
-                        } else {
-                        }
-                    });
-                    this._project = project;
-                    return fileSave(
-                        path.join(
-                            this.projectFolderPath,
-                            ProjectContextService.projectFileName
-                        ),
-                        JSON.stringify(this._project)
-                    );
-                });
-            })
-            .then(() => true);
-        return from(projectPromise);
+                                project.files.push(file);
+                            } else {
+                            }
+                        });
+                        // this._project = project;
+                        return fileSave(
+                            path.join(
+                                this.projectFolderPath,
+                                ProjectContextService.projectFileName
+                            ),
+                            JSON.stringify(project)
+                        );
+                    })
+                    .then(() => project);
+            });
+
+        // return from(projectPromise);
     }
 
-    // createProject((projectFolderPath: string): Observable<Project> {
-    //     const project = new Project();
-    //
-    // }
+    getFiles() {
+        return this._project.files;
+    }
 }
