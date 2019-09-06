@@ -1,4 +1,4 @@
-<table>
+<table class="table">
     <thead>
         <tr>
             <th scope="col">File</th>
@@ -6,8 +6,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let file of files">
-            <td>{{ file.name }}</td>
+        <tr *ngFor="let file of fileList">
+            <td  (click)="openFile(file.id)" >{{ file.name }}</td>
             <td></td>
         </tr>
     </tbody>
