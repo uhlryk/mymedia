@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../services/projectContext.service";
-import { FileService } from "../../services/file.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -10,7 +9,6 @@ export class FilesComponent implements OnInit {
     fileList;
     constructor(
         private projectContextService: ProjectContextService,
-        private fileService: FileService,
         private router: Router
     ) {}
     ngOnInit() {
@@ -19,11 +17,8 @@ export class FilesComponent implements OnInit {
     }
 
     openFile(fileId) {
-        const selectedFile = this.projectContextService.getFile(fileId);
-
-        this.fileService.open(
-            this.projectContextService.getProjectPath(),
-            selectedFile.filePath
+        this.projectContextService.openFile(
+            fileId
         );
     }
 

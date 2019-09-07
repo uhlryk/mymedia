@@ -12,4 +12,8 @@ export class FileService {
     open(projectPath, filePath) {
         shell.openItem(path.join(projectPath, filePath));
     }
+
+    getFileName(filePath) {
+        return path.parse(filePath).name;
+    }
 }
