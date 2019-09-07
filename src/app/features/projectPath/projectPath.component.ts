@@ -24,7 +24,7 @@ export class ProjectPathComponent {
                 const projectFolderPath = fileNames[0];
                 this.projectPath.setValue(projectFolderPath);
                 this.projectContextService.setProjectPath(projectFolderPath);
-                this.projectContextService.loadProject().then(project => {
+                this.projectContextService.loadProject().subscribe(project => {
                     console.log(project);
                     this.projectContextService.setProject(project);
                     this.router.navigate(["/files"]);
