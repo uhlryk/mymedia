@@ -81,6 +81,10 @@ export class ProjectContextService {
         // return from(projectPromise);
     }
 
+    getFile(fileId: string): File {
+        return this._project.files.find(file => file.id === fileId);
+    }
+
     getFiles(): Array<File> {
         return this._project.files;
     }
