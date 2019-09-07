@@ -81,7 +81,7 @@ export class ProjectContextService {
         // return from(projectPromise);
     }
 
-    getFiles() {
+    getFiles(): Array<File> {
         return this._project.files;
     }
 }
