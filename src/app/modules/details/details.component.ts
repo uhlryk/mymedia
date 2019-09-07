@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../services/projectContext.service";
+import { FileService } from "../../services/file.service";
 import { ActivatedRoute } from "@angular/router";
-const {shell} = (<any>window).require("electron");
-import * as path from "path";
 import File from "../../types/File";
 
 @Component({
@@ -14,6 +13,7 @@ export class DetailsComponent implements OnInit {
     file: File;
     constructor(
         private projectContextService: ProjectContextService,
+        private fileService: FileService,
         private route: ActivatedRoute
     ) {}
 
@@ -25,6 +25,9 @@ export class DetailsComponent implements OnInit {
     }
 
     openFile() {
-        shell.openItem(path.join(this.projectContextService.getProjectPath(), this.file.filePath));
+        this.fileService.open(
+            this.projectContextService.getProjectPath(),
+            this.file.filePath
+        );
     }
 }

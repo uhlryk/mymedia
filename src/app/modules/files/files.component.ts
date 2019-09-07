@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../services/projectContext.service";
-import * as path from "path";
-const {shell} = (<any>window).require("electron");
+import { FileService } from "../../services/file.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -11,19 +10,21 @@ export class FilesComponent implements OnInit {
     fileList;
     constructor(
         private projectContextService: ProjectContextService,
-        private router: Router,
-    ) {
-
-    }
+        private fileService: FileService,
+        private router: Router
+    ) {}
     ngOnInit() {
         const files = this.projectContextService.getFiles();
         this.fileList = files;
     }
 
     openFile(fileId) {
-        const selectedFile = this.projectContextService
-            .getFile(fileId);
-        shell.openItem(path.join(this.projectContextService.getProjectPath(), selectedFile.filePath));
+        const selectedFile = this.projectContextService.getFile(fileId);
+
+        this.fileService.open(
+            this.projectContextService.getProjectPath(),
+            selectedFile.filePath
+        );
     }
 
     showFileDetails(fileId) {
