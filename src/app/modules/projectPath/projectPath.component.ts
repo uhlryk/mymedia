@@ -14,7 +14,6 @@ export class ProjectPathComponent {
         private router: Router,
         private projectContextService: ProjectContextService
     ) {}
-    projectPath = new FormControl("");
     onSelectPath() {
         dialog.showOpenDialog(
             {
@@ -22,7 +21,6 @@ export class ProjectPathComponent {
             },
             fileNames => {
                 const projectFolderPath = fileNames[0];
-                this.projectPath.setValue(projectFolderPath);
                 this.projectContextService.setProjectPath(projectFolderPath);
                 this.projectContextService.loadProject().subscribe(project => {
                     console.log(project);
