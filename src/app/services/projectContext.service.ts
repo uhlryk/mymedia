@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import {FileService} from "./file.service";
+import { FileService } from "./file.service";
 import loadFile from "./loadFile";
 import fileSave from "./fileSave";
 import getFileList from "./getFileList";
@@ -56,7 +56,9 @@ export class ProjectContextService {
                                     const file: File = new File();
                                     file.filePath = fsFilePath;
                                     file.orgFileName = fsFileName;
-                                    file.newFileName = this.fileService.getFileName(fsFileName);
+                                    file.newFileName = this.fileService.getFileName(
+                                        fsFileName
+                                    );
                                     console.log("new file added", file);
 
                                     project.files.push(file);
@@ -93,5 +95,19 @@ export class ProjectContextService {
 
     openFile(fileId) {
         this.fileService.open(this.getProjectPath(), this.getFile(fileId).filePath);
+    }
+
+    saveProject(): Observable<null> {
+        return Observable.create(observable => {
+            fileSave(
+                path.join(this.projectFolderPath, ProjectContextService.projectFileName),
+                JSON.stringify(this._project)
+            ).then(() => {
+                this._ngZone.run(() => {
+                    observable.next();
+                    observable.complete();
+                });
+            });
+        });
     }
 }

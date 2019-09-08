@@ -1,8 +1,7 @@
 <div>{{file.filePath}}</div>
 <div>{{file.orgFileName}}</div>
-<div>{{file.newFileName}}</div>
 <div>
-    <input type="text" [(ngModel)]="title" readonly>
+    <app-title [title]="file.newFileName" (changed)="saveTitle($event)"></app-title>
 </div>
 <div>
     <button (click)="openFile()" class="btn">Open</button>

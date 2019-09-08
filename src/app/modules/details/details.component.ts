@@ -10,7 +10,6 @@ import File from "../../types/File";
 })
 export class DetailsComponent implements OnInit {
     file: File;
-    title: string = "";
     constructor(
         private projectContextService: ProjectContextService,
         private route: ActivatedRoute
@@ -20,13 +19,17 @@ export class DetailsComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             const fileId: string = params.get("fileId");
             this.file = this.projectContextService.getFile(fileId);
-            this.title = this.file.newFileName;
+            // this.title = this.file.newFileName;
         });
     }
 
     openFile() {
-        this.projectContextService.openFile(
-            this.file.id
-        );
+        this.projectContextService.openFile(this.file.id);
+    }
+
+    saveTitle(newTitle) {
+        this.file.newFileName = newTitle;
+        this.projectContextService.saveProject().subscribe(() => {
+        });
     }
 }
