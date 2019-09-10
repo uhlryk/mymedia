@@ -2,26 +2,27 @@ import {Component, EventEmitter, OnInit, Output, Input} from "@angular/core";
 
 @Component({
     selector: "app-title",
-    template: "<input [(ngModel)]='title' (dblclick)='makeItWritable()' (blur)='saveChanges()' [readonly]='isReadOnly'/>",
+    template: "<input [(ngModel)]='title' (change)='isChanged()' (blur)='saveChanges()'/>",
     styleUrls: ["./title.component.scss"]
 })
 export class TitleComponent implements OnInit {
     @Input() title: string;
     @Output() changed = new EventEmitter<string>();
-
-    isReadOnly: boolean = true;
+    needSave = false;
     constructor() {
     }
 
     ngOnInit() {
     }
 
-    makeItWritable(){
-        this.isReadOnly = false;
+    isChanged(){
+        this.needSave = true;
     }
 
     saveChanges() {
-        this.isReadOnly = true;
-        this.changed.emit(this.title);
+        if(this.needSave) {
+            this.needSave = false;
+            this.changed.emit(this.title);
+        }
     }
 }
