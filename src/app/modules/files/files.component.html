@@ -6,12 +6,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let file of fileList">
-            <td>{{ file.newFileName }}</td>
-            <td>
-                <button (click)="openFile(file.id)" class="btn btn-sm">open</button>
-                <button (click)="showFileDetails(file.id)" class="btn btn-sm">details</button>
-            </td>
+        <tr app-row *ngFor="let file of fileList" [file]="file" actionClick>
+            <button (click)="openFile(file.id)" class="btn btn-sm">open</button>
+            <button (click)="showFileDetails(file.id)" class="btn btn-sm">details</button>
         </tr>
     </tbody>
 </table>
