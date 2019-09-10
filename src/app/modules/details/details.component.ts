@@ -32,4 +32,10 @@ export class DetailsComponent implements OnInit {
         this.projectContextService.saveProject().subscribe(() => {
         });
     }
+
+    saveDescription(text) {
+        this.file.description = text;
+        this.projectContextService.saveProject().subscribe(() => {
+        });
+    }
 }

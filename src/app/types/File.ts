@@ -5,6 +5,7 @@ export default class File {
     orgFileName: string;
     newFileName: string = "";
     size = 0;
+    description = "";
     id: string;
     tags: string[] = [];
     constructor() {

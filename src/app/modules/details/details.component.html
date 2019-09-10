@@ -5,5 +5,8 @@
     <app-title [title]="file.newFileName" (changed)="saveTitle($event)"></app-title>
 </div>
 <div>
+    <app-description [text]="file.description" (changed)="saveDescription($event)"></app-description>
+</div>
+<div>
     <button (click)="openFile()" class="btn">Open</button>
 </div>
