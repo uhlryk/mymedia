@@ -14,4 +14,7 @@ export class AppComponent {
     clickHome():void {
       this.router.navigate([""]);
     }
+    clickTags():void {
+        this.router.navigate(["/tags"]);
+    }
 }

@@ -6,6 +6,8 @@ import { FilesComponent } from "./modules/files/files.component";
 import { FilesModule } from "./modules/files/files.module";
 import { DetailsComponent } from "./modules/details/details.component";
 import { DetailsModule } from "./modules/details/details.module";
+import { TagsModule } from "./modules/tags/tags.module";
+import { TagsComponent } from "./modules/tags/tags.component";
 
 const routes: Routes = [
     {
@@ -19,11 +21,15 @@ const routes: Routes = [
     {
         path: "files",
         component: FilesComponent
+    },
+    {
+        path: "tags",
+        component: TagsComponent
     }
 ];
 
 @NgModule({
-    imports: [ProjectPathModule, FilesModule, DetailsModule, RouterModule.forRoot(routes)],
+    imports: [ProjectPathModule, FilesModule, DetailsModule, TagsModule, RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
