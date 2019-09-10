@@ -3,7 +3,8 @@ import { ProjectContextService } from "../../services/projectContext.service";
 import { Router } from "@angular/router";
 
 @Component({
-    templateUrl: "files.component.html"
+    templateUrl: "files.component.html",
+    styleUrls: ["./files.component.scss"]
 })
 export class FilesComponent implements OnInit {
     fileList;
