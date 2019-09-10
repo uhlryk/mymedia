@@ -1,5 +1,6 @@
 <div>{{file.filePath}}</div>
 <div>{{file.orgFileName}}</div>
+<div><app-file-size [size]="file.size"></app-file-size></div>
 <div>
     <app-title [title]="file.newFileName" (changed)="saveTitle($event)"></app-title>
 </div>

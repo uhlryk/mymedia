@@ -46,9 +46,12 @@ export class ProjectContextService {
                 .then(project => {
                     return getFileList(this.projectFolderPath)
                         .then(files => {
+                            console.log("===");
+                            console.log(files[0]);
                             files.forEach(fsFile => {
                                 const fsFileName: string = fsFile.name;
                                 const fsFilePath: string = fsFile.path;
+                                const fsSize: number = fsFile.stat.size;
                                 const fileFromProject = project.files.find(
                                     file => file.filePath === fsFilePath
                                 );
@@ -56,6 +59,7 @@ export class ProjectContextService {
                                     const file: File = new File();
                                     file.filePath = fsFilePath;
                                     file.orgFileName = fsFileName;
+                                    file.size = fsSize;
                                     file.newFileName = this.fileService.getFileName(
                                         fsFileName
                                     );
