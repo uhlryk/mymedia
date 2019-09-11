@@ -22,9 +22,22 @@ export class TagsComponent implements OnInit {
     }
 
     setValue() {
-        this.projectContextService.addTag(this.tagName);
+        if (this.tagId) {
+            const tag = this.projectContextService.getTag(this.tagId);
+            tag.name = this.tagName;
+        } else {
+            this.projectContextService.addTag(this.tagName);
+        }
         this.tagId = null;
         this.tagName = "";
         this.buttonName = TagsComponent.CREATE_NAME;
+        this.projectContextService.saveProject().subscribe(() => {});
+    }
+
+    editTag(tagId) {
+        this.tagId = tagId;
+        const tag = this.projectContextService.getTag(tagId);
+        this.tagName = tag.name;
+        this.buttonName = TagsComponent.UPDATE_NAME;
     }
 }

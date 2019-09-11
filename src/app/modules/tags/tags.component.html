@@ -11,7 +11,7 @@
     <tbody>
     <tr *ngFor="let tag of tagList">
         <td>{{tag.name}}</td>
-        <td><button>edit</button></td>
+        <td><button (click)="editTag(tag.id)">edit</button></td>
     </tr>
     </tbody>
 </table>
