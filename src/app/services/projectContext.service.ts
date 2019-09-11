@@ -115,6 +115,10 @@ export class ProjectContextService {
         return this._project.tags.find(tag => tag.id === tagId);
     }
 
+    findTagByName(tagName:string): Tag {
+        return this._project.tags.find(tag => tag.name === tagName);
+    }
+
     saveProject(): Observable<null> {
         return Observable.create(observable => {
             fileSave(

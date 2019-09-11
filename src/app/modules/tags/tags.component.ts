@@ -26,7 +26,9 @@ export class TagsComponent implements OnInit {
             const tag = this.projectContextService.getTag(this.tagId);
             tag.name = this.tagName;
         } else {
-            this.projectContextService.addTag(this.tagName);
+            if(!this.projectContextService.findTagByName(this.tagName)) {
+                this.projectContextService.addTag(this.tagName);
+            }
         }
         this.tagId = null;
         this.tagName = "";
