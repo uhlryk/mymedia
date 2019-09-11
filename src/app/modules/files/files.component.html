@@ -6,7 +6,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr app-row *ngFor="let file of fileList" [file]="file" actionClick>
+        <tr app-row *ngFor="let file of fileList" [file]="file">
             <button (click)="openFile(file.id)" class="btn btn-sm">open</button>
             <button (click)="showFileDetails(file.id)" class="btn btn-sm">details</button>
         </tr>

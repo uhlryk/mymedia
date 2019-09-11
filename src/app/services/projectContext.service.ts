@@ -107,6 +107,10 @@ export class ProjectContextService {
         return this._project.tags.push(tag);
     }
 
+    getTags(): Array<Tag> {
+        return this._project.tags;
+    }
+
     saveProject(): Observable<null> {
         return Observable.create(observable => {
             fileSave(

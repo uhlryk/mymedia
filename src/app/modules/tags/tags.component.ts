@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {ProjectContextService} from "../../services/projectContext.service";
+import { ProjectContextService } from "../../services/projectContext.service";
+import Tag from "../../types/Tag";
 
 @Component({
     templateUrl: "./tags.component.html",
@@ -11,17 +12,16 @@ export class TagsComponent implements OnInit {
     tagName: string;
     tagId: string;
     buttonName: string;
-    constructor(
-        private projectContextService: ProjectContextService
-    ) {}
+    tagList: Array<Tag>;
+
+    constructor(private projectContextService: ProjectContextService) {}
 
     ngOnInit() {
         this.buttonName = TagsComponent.CREATE_NAME;
+        this.tagList = this.projectContextService.getTags();
     }
 
     setValue() {
-        console.log("===");
-        console.log(this.tagName);
         this.projectContextService.addTag(this.tagName);
         this.tagId = null;
         this.tagName = "";

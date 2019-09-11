@@ -1,2 +1,18 @@
 <input type="text" [(ngModel)]="tagName" />
 <button (click)="setValue()">{{ buttonName }}</button>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Tag</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tag of tagList">
+        <td>{{tag.name}}</td>
+        <td><button>edit</button></td>
+    </tr>
+    </tbody>
+</table>
+
