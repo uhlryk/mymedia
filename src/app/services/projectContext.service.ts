@@ -8,6 +8,7 @@ import File from "../types/File";
 import { Observable, from } from "rxjs";
 import { NgZone } from "@angular/core";
 import path from "path";
+import Tag from "../types/Tag";
 
 @Injectable()
 export class ProjectContextService {
@@ -99,6 +100,11 @@ export class ProjectContextService {
 
     openFile(fileId) {
         this.fileService.open(this.getProjectPath(), this.getFile(fileId).filePath);
+    }
+
+    addTag(tagName) {
+        const tag: Tag = new Tag(tagName);
+        return this._project.tags.push(tag);
     }
 
     saveProject(): Observable<null> {
