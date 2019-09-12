@@ -102,6 +102,18 @@ export class ProjectContextService {
         this.fileService.open(this.getProjectPath(), this.getFile(fileId).filePath);
     }
 
+    getFileTags(fileId: string): Array<Tag> {
+        const file = this.getFile(fileId);
+        const projectTags = this.getTags();
+        return file.tags.map(tagId => projectTags.find(tag => tag.id === tagId));
+    }
+    addTagToFile(fileId, tagId) {
+        const file = this.getFile(fileId);
+        if (!file.tags.find(fTagId => fTagId === tagId)) {
+            file.tags.push(tagId);
+        }
+    }
+
     addTag(tagName) {
         const tag: Tag = new Tag(tagName);
         return this._project.tags.push(tag);
@@ -115,7 +127,7 @@ export class ProjectContextService {
         return this._project.tags.find(tag => tag.id === tagId);
     }
 
-    findTagByName(tagName:string): Tag {
+    findTagByName(tagName: string): Tag {
         return this._project.tags.find(tag => tag.name === tagName);
     }
 
