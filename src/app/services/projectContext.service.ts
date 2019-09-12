@@ -114,6 +114,14 @@ export class ProjectContextService {
         }
     }
 
+    removeTagFromFile(fileId, tagId) {
+        const file = this.getFile(fileId);
+        const index = file.tags.findIndex(fTagId => fTagId === tagId);
+        if (index >= 0) {
+            file.tags.splice(index, 1);
+        }
+    }
+
     addTag(tagName) {
         const tag: Tag = new Tag(tagName);
         return this._project.tags.push(tag);

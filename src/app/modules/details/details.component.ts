@@ -13,7 +13,7 @@ export class DetailsComponent implements OnInit {
     file: File;
     fileTags: Array<Tag>;
     projectTags: Array<Tag>;
-    selectedTagId: number;
+    selectedTagId: string;
     constructor(
         private projectContextService: ProjectContextService,
         private route: ActivatedRoute
@@ -32,7 +32,7 @@ export class DetailsComponent implements OnInit {
                     1
                 );
             });
-            this.selectedTagId = 0;
+            this.selectedTagId = "";
         });
     }
 
@@ -49,14 +49,27 @@ export class DetailsComponent implements OnInit {
 
         // this.selectedTag = this.initTag;
         this.projectContextService.addTagToFile(this.file.id, this.selectedTagId);
-        this.selectedTagId = 0;
+        this.selectedTagId = "";
         this.projectContextService.saveProject().subscribe(() => {
             this.file = this.projectContextService.getFile(this.file.id);
             this.fileTags = this.projectContextService.getFileTags(this.file.id);
         });
     }
 
-    removeTag(tagId) {}
+    removeTag(tagId) {
+        this.projectContextService.removeTagFromFile(this.file.id, tagId);
+        this.projectContextService.saveProject().subscribe(() => {
+            this.file = this.projectContextService.getFile(this.file.id);
+            this.fileTags = this.projectContextService.getFileTags(this.file.id);
+            this.projectTags = this.projectContextService.getTags().slice();
+            this.fileTags.forEach(fileTag => {
+                this.projectTags.splice(
+                    this.projectTags.findIndex(tag => tag.id === fileTag.id),
+                    1
+                );
+            });
+        });
+    }
 
     saveTitle(newTitle) {
         this.file.newFileName = newTitle;
