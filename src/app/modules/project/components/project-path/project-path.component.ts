@@ -1,12 +1,11 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
-import { FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
-import { ProjectContextService } from "../../services/projectContext.service";
+import { ProjectContextService } from "../../../../services/projectContext.service";
 const electron = (<any>window).require("electron");
 const dialog = electron.remote.dialog;
 
 @Component({
-    templateUrl: "projectPath.component.html"
+    templateUrl: "project-path.component.html"
 })
 export class ProjectPathComponent {
     constructor(

@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProjectPathComponent } from "./modules/projectPath/projectPath.component";
-import { ProjectPathModule } from "./modules/projectPath/projectPath.module";
+import { ProjectPathComponent } from "./modules/project/components/project-path/project-path.component";
+import { ProjectModule } from "./modules/project/project.module";
 import { FilesComponent } from "./modules/files/files.component";
 import { FilesModule } from "./modules/files/files.module";
 import { DetailsComponent } from "./modules/details/details.component";
@@ -29,7 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [ProjectPathModule, FilesModule, DetailsModule, TagsModule, RouterModule.forRoot(routes)],
+    imports: [ProjectModule, FilesModule, DetailsModule, TagsModule, RouterModule.forRoot(routes)],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
