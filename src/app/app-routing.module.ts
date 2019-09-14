@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProjectPathComponent } from "./modules/project/components/project-path/project-path.component";
+import { ProjectPathComponent } from "./modules/project/pages/project-path/project-path.component";
 import { ProjectModule } from "./modules/project/project.module";
-import { FilesComponent } from "./modules/files/files.component";
+import { FilesComponent } from "./modules/files/pages/file-list/files.component";
 import { FilesModule } from "./modules/files/files.module";
 import { DetailsComponent } from "./modules/details/details.component";
 import { DetailsModule } from "./modules/details/details.module";
