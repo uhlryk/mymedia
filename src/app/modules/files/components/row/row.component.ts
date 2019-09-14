@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from "@angular/core";
-import File from "../../../types/File";
+import { Component, Input, OnInit } from "@angular/core";
+import File from "../../../../types/File";
 
 @Component({
     selector: "[app-row]",

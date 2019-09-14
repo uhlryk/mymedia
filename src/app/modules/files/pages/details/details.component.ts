@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ProjectContextService } from "../../services/projectContext.service";
+import { ProjectContextService } from "../../../../services/projectContext.service";
 import { ActivatedRoute } from "@angular/router";
-import File from "../../types/File";
-import Tag from "../../types/Tag";
+import File from "../../../../types/File";
+import Tag from "../../../../types/Tag";
 
 @Component({
     selector: "app-file",
