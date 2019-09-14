@@ -27,24 +27,62 @@ export class ProjectContextService {
     setProject(project) {
         this._project = project;
     }
-    loadProject(): Observable<Project> {
+    createProject(): Observable<boolean> {
         return Observable.create(observable => {
-            return loadFile(this.projectFolderPath, ProjectContextService.projectFileName)
-                .then(projectFile => {
-                    if (projectFile) {
-                        return Object.assign({}, new Project(), JSON.parse(projectFile));
-                    } else {
-                        const project = new Project();
-                        return fileSave(
-                            path.join(
-                                this.projectFolderPath,
-                                ProjectContextService.projectFileName
-                            ),
-                            JSON.stringify(project)
-                        ).then(() => project);
-                    }
+            const project = new Project();
+            return getFileList(this.projectFolderPath)
+                .then(files => {
+                    console.log("===");
+                    console.log(files[0]);
+                    files.forEach(fsFile => {
+                        const fsFileName: string = fsFile.name;
+                        const fsFilePath: string = fsFile.path;
+                        const fsSize: number = fsFile.stat.size;
+                        const fileFromProject = project.files.find(
+                            file => file.filePath === fsFilePath
+                        );
+                        if (!fileFromProject) {
+                            const file: File = new File();
+                            file.filePath = fsFilePath;
+                            file.orgFileName = fsFileName;
+                            file.size = fsSize;
+                            file.newFileName = this.fileService.getFileName(fsFileName);
+                            console.log("new file added", file);
+
+                            project.files.push(file);
+                        } else {
+                        }
+                    });
+                    // this._project = project;
+                    return fileSave(
+                        path.join(
+                            this.projectFolderPath,
+                            ProjectContextService.projectFileName
+                        ),
+                        JSON.stringify(project)
+                    );
                 })
-                .then(project => {
+                .then(() => {
+                    this._ngZone.run(() => {
+                        this.setProject(project);
+                        observable.next(true);
+                        observable.complete();
+                    });
+                });
+        });
+    }
+    loadProject(): Observable<boolean> {
+        return Observable.create(observable => {
+            return loadFile(
+                this.projectFolderPath,
+                ProjectContextService.projectFileName
+            ).then(projectFile => {
+                if (projectFile) {
+                    const project = Object.assign(
+                        {},
+                        new Project(),
+                        JSON.parse(projectFile)
+                    );
                     return getFileList(this.projectFolderPath)
                         .then(files => {
                             console.log("===");
@@ -81,13 +119,19 @@ export class ProjectContextService {
                         })
                         .then(() => {
                             this._ngZone.run(() => {
-                                observable.next(project);
+                                this.setProject(project);
+                                observable.next(true);
                                 observable.complete();
                             });
                         });
-                });
+                } else {
+                    this._ngZone.run(() => {
+                        observable.next(false);
+                        observable.complete();
+                    });
+                }
+            });
         });
-        // return from(projectPromise);
     }
 
     getFile(fileId: string): File {

@@ -21,10 +21,14 @@ export class ProjectPathComponent {
             fileNames => {
                 const projectFolderPath = fileNames[0];
                 this.projectContextService.setProjectPath(projectFolderPath);
-                this.projectContextService.loadProject().subscribe(project => {
-                    console.log(project);
-                    this.projectContextService.setProject(project);
-                    this.router.navigate(["/files"]);
+                this.projectContextService.loadProject().subscribe(isProject => {
+                    if (isProject) {
+                        // console.log(project);
+                        // this.projectContextService.setProject(project);
+                        this.router.navigate(["/files"]);
+                    } else {
+                        this.router.navigate(["/create-project"]);
+                    }
                 });
             }
         );

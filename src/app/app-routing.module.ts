@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ProjectPathComponent } from "./modules/project/pages/project-path/project-path.component";
+import { CreateProjectComponent } from "./modules/project/pages/create-project/create-project.component";
 import { ProjectModule } from "./modules/project/project.module";
 import { FilesComponent } from "./modules/files/pages/file-list/files.component";
 import { FilesModule } from "./modules/files/files.module";
@@ -12,6 +13,10 @@ const routes: Routes = [
     {
         path: "",
         component: ProjectPathComponent
+    },
+    {
+        path: "create-project",
+        component: CreateProjectComponent
     },
     {
         path: "files/:fileId",
