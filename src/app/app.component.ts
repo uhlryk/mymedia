@@ -11,10 +11,4 @@ export class AppComponent {
     constructor(private router: Router,) {
 
     }
-    clickHome():void {
-      this.router.navigate([""]);
-    }
-    clickTags():void {
-        this.router.navigate(["/tags"]);
-    }
 }
