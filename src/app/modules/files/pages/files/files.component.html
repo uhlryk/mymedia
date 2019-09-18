@@ -1,20 +1,13 @@
-<input [(ngModel)]="searchInput"/>
+<input [(ngModel)]="searchInput" />
 <button (click)="startSearch()">search</button>
 
+<app-list
+    [files]="files"
+    (openFile)="openFile($event)"
+    (showDetails)="showFileDetails($event)"
+></app-list>
 
-<app-list [files]="files" (openFile)="openFile($event)" (showDetails)="showFileDetails($event)"></app-list>
-<!--<table class="table">-->
-    <!--<thead>-->
-        <!--<tr>-->
-            <!--<th scope="col">File</th>-->
-            <!--<th scope="col">Actions</th>-->
-        <!--</tr>-->
-    <!--</thead>-->
-    <!--<tbody>-->
-        <!--<tr app-row *ngFor="let file of fileList" [file]="file">-->
-            <!--<button (click)="openFile(file.id)" class="btn btn-sm">open</button>-->
-            <!--<button (click)="showFileDetails(file.id)" class="btn btn-sm">details</button>-->
-        <!--</tr>-->
-    <!--</tbody>-->
-<!--</table>-->
-
+<app-details
+    (openFile)="openFile($event)"
+    (showDetails)="showFileDetails($event)"
+></app-details>

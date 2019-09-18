@@ -4,22 +4,22 @@ import { FilesComponent } from "./pages/files/files.component";
 import { RowComponent } from "./components/row/row.component";
 import { FormsModule } from "@angular/forms";
 
-import { DetailsComponent } from "./pages/details/details.component";
 import { TitleComponent } from "./components/title/title.component";
 import { FileSizeComponent } from "./components/file-size/file-size.component";
 import { DescriptionComponent } from "./components/description/description.component";
-import { ListComponent } from './components/list/list.component';
-
+import { ListComponent } from "./components/list/list.component";
+import { DetailsComponent } from "./components/details/details.component";
+import { ModalModule } from "ngx-bootstrap";
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, ModalModule.forRoot()],
     declarations: [
         FilesComponent,
         RowComponent,
-        DetailsComponent,
         TitleComponent,
         DescriptionComponent,
         FileSizeComponent,
-        ListComponent
+        ListComponent,
+        DetailsComponent
     ]
 })
 export class FilesModule {}

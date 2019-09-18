@@ -1,13 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { Router } from "@angular/router";
 import File from "../../../../types/File";
+import {DetailsComponent} from "../../components/details/details.component";
 
 @Component({
     templateUrl: "files.component.html",
     styleUrls: ["./files.component.scss"]
 })
 export class FilesComponent implements OnInit {
+    @ViewChild(DetailsComponent, {static: true}) detailsComponentModal: DetailsComponent;
+
     files: Array<File>;
     searchInput;
     constructor(
@@ -23,7 +26,8 @@ export class FilesComponent implements OnInit {
     }
 
     showFileDetails(fileId) {
-        this.router.navigate([`/files/${fileId}`]);
+        this.detailsComponentModal.show(fileId);
+        // this.router.navigate([`/files/${fileId}`]);
     }
 
     startSearch() {

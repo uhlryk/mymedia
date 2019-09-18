@@ -1,0 +1,56 @@
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Modal</h4>
+        <button
+            type="button"
+            class="close pull-right"
+            aria-label="Close"
+            (click)="modalRef.hide()"
+        >
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div>{{ file.filePath }}</div>
+        <div>{{ file.orgFileName }}</div>
+        <div><app-file-size [size]="file.size"></app-file-size></div>
+        <div>
+            <app-title
+                [title]="file.newFileName"
+                (changed)="saveTitle($event)"
+            ></app-title>
+        </div>
+        <div>
+            <app-description
+                [text]="file.description"
+                (changed)="saveDescription($event)"
+            ></app-description>
+        </div>
+        <div>
+            <button (click)="openFile()" class="btn">Open</button>
+        </div>
+
+        <select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">
+            <option *ngFor="let tag of projectTags" [value]="tag.id">
+                {{ tag.name }}
+            </option>
+        </select>
+
+        <button (click)="addTag()">AAAA</button>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tag</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tag of fileTags">
+                    <td>{{ tag.name }}</td>
+                    <td><button (click)="removeTag(tag.id)">remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
