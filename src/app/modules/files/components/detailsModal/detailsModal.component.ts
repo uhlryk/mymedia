@@ -1,9 +1,7 @@
 import {
     Component,
-    ElementRef,
     TemplateRef,
     EventEmitter,
-    Input,
     OnInit,
     Output,
     ViewChild
@@ -14,11 +12,11 @@ import Tag from "../../../../types/Tag";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 
 @Component({
-    selector: "app-details",
-    templateUrl: "./details.component.html",
-    styleUrls: ["./details.component.scss"]
+    selector: "app-details-modal",
+    templateUrl: "./detailsModal.component.html",
+    styleUrls: ["./detailsModal.component.scss"]
 })
-export class DetailsComponent implements OnInit {
+export class DetailsModalComponent implements OnInit {
     @Output() openFile = new EventEmitter<string>();
     @Output() showDetails = new EventEmitter<string>();
 
