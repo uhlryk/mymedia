@@ -27,7 +27,7 @@ export class ProjectContextService {
     setProject(project) {
         this._project = project;
     }
-    createProject(): Observable<boolean> {
+    createProject(createSubFolderTags: boolean): Observable<boolean> {
         return Observable.create(observable => {
             const project = new Project();
             return getFileList(this.projectFolderPath)
@@ -38,20 +38,25 @@ export class ProjectContextService {
                         const fsFileName: string = fsFile.name;
                         const fsFilePath: string = fsFile.path;
                         const fsSize: number = fsFile.stat.size;
-                        const fileFromProject = project.files.find(
-                            file => file.filePath === fsFilePath
-                        );
-                        if (!fileFromProject) {
-                            const file: File = new File();
-                            file.filePath = fsFilePath;
-                            file.orgFileName = fsFileName;
-                            file.size = fsSize;
-                            file.newFileName = this.fileService.getFileName(fsFileName);
-                            console.log("new file added", file);
 
-                            project.files.push(file);
-                        } else {
+                        const file: File = new File();
+                        file.filePath = fsFilePath;
+                        file.orgFileName = fsFileName;
+                        file.size = fsSize;
+                        file.newFileName = this.fileService.getFileName(fsFileName);
+                        console.log("new file added", file);
+
+                        if(createSubFolderTags) {
+                            const folderPath = path.dirname(file.filePath);
+                            let existingTag = project.tags.find(tag => tag.name === folderPath);
+                            if(!existingTag) {
+                                existingTag = new Tag(folderPath);
+                                project.tags.push(existingTag);
+                            }
+                            file.tags.push(existingTag.id);
                         }
+                        project.files.push(file);
+
                     });
                     // this._project = project;
                     return fileSave(

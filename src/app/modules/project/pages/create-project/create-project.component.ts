@@ -9,6 +9,7 @@ import { Router } from "@angular/router";
 })
 export class CreateProjectComponent implements OnInit {
     projectPath: string;
+    createSubFolderTags: boolean;
     constructor(
         private projectContextService: ProjectContextService,
         private router: Router
@@ -21,7 +22,7 @@ export class CreateProjectComponent implements OnInit {
     }
 
     onCreateProject() {
-        this.projectContextService.createProject().subscribe(isProject => {
+        this.projectContextService.createProject(this.createSubFolderTags).subscribe(isProject => {
             this.router.navigate(["/files"]);
         });
     }
