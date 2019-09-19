@@ -27,7 +27,7 @@
             ></app-description>
         </div>
         <div>
-            <button (click)="openFile()" class="btn">Open</button>
+            <button (click)="clickOpenFile(file.id)">open</button>
         </div>
 
         <select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">
@@ -35,8 +35,6 @@
                 {{ tag.name }}
             </option>
         </select>
-
-        <button (click)="addTag()">AAAA</button>
 
         <table class="table">
             <thead>
