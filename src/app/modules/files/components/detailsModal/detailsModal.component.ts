@@ -51,10 +51,6 @@ export class DetailsModalComponent implements OnInit {
 
     ngOnInit() {}
 
-    openFile() {
-        this.projectContextService.openFile(this.file.id);
-    }
-
     addTag() {
         console.log(this.selectedTagId);
         this.projectTags.splice(

@@ -48,12 +48,14 @@ export class ProjectContextService {
 
                         if(createSubFolderTags) {
                             const folderPath = path.dirname(file.filePath);
-                            let existingTag = project.tags.find(tag => tag.name === folderPath);
-                            if(!existingTag) {
-                                existingTag = new Tag(folderPath);
-                                project.tags.push(existingTag);
+                            if(folderPath !== ".") {
+                                let existingTag = project.tags.find(tag => tag.name === folderPath);
+                                if (!existingTag) {
+                                    existingTag = new Tag(folderPath);
+                                    project.tags.push(existingTag);
+                                }
+                                file.tags.push(existingTag.id);
                             }
-                            file.tags.push(existingTag.id);
                         }
                         project.files.push(file);
 
