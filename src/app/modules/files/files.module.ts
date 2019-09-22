@@ -10,6 +10,7 @@ import { DescriptionComponent } from "./components/description/description.compo
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalComponent } from "./components/detailsModal/detailsModal.component";
 import { ModalModule } from "ngx-bootstrap";
+import { RatingComponent } from './components/rating/rating.component';
 @NgModule({
     imports: [CommonModule, FormsModule, ModalModule.forRoot()],
     declarations: [
@@ -19,7 +20,8 @@ import { ModalModule } from "ngx-bootstrap";
         DescriptionComponent,
         FileSizeComponent,
         ListComponent,
-        DetailsModalComponent
+        DetailsModalComponent,
+        RatingComponent
     ]
 })
 export class FilesModule {}

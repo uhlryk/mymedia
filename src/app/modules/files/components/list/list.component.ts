@@ -14,8 +14,6 @@ export class ListComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
-        console.log("BBBB");
-        console.log(this.resourceList);
     }
 
     clickOpenFile(resourceId: string) {

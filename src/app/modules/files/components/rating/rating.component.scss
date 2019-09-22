@@ -1,0 +1,8 @@
+.rating {
+    unicode-bidi: bidi-override;
+}
+.rating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
