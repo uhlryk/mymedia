@@ -1,5 +1,13 @@
-<td>{{ resource.getTitle() }}</td>
+<td>
+    <div>
+        {{ resource.getTitle() }}
+    </div>
+    <div>
+        <span *ngFor="let tag of resource.getResourceTagModelList()">{{
+            tag.getName()
+        }}</span>
+    </div>
+</td>
 <td>
     <ng-content></ng-content>
-
 </td>

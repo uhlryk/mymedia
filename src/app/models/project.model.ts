@@ -71,7 +71,7 @@ export default class ProjectModel {
                 if (folderPath !== ".") {
                     let tagModel = this._tagCollectionModel.getTagModelByName(folderPath);
                     if (!tagModel) {
-                        tagModel = TagModel.create(file.filePath);
+                        tagModel = TagModel.create(folderPath);
                         this._tagCollectionModel.addTagModel(tagModel);
                     }
                     resourceModel.addTagModel(tagModel);
