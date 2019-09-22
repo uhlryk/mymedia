@@ -16,8 +16,6 @@ export class CreateProjectComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        console.log("AAA");
-        console.log(this.projectContextService.getProjectPath());
         this.projectPath = this.projectContextService.getProjectPath();
     }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../services/projectContext.service";
-import Tag from "../../types/Tag";
+import TagModel from "../../models/tag.model";
 
 @Component({
     templateUrl: "./tags.component.html",
@@ -12,22 +12,24 @@ export class TagsComponent implements OnInit {
     tagName: string;
     tagId: string;
     buttonName: string;
-    tagList: Array<Tag>;
+    tagList: Array<TagModel>;
 
     constructor(private projectContextService: ProjectContextService) {}
 
     ngOnInit() {
         this.buttonName = TagsComponent.CREATE_NAME;
-        this.tagList = this.projectContextService.getTags();
+        this.tagList = this.projectContextService.getProjectTagList();
     }
 
     setValue() {
         if (this.tagId) {
-            const tag = this.projectContextService.getTag(this.tagId);
-            tag.name = this.tagName;
+            const tagModel = this.projectContextService.getProjectTagModelById(
+                this.tagId
+            );
+            tagModel.setName(this.tagName);
         } else {
-            if(!this.projectContextService.findTagByName(this.tagName)) {
-                this.projectContextService.addTag(this.tagName);
+            if (!this.projectContextService.getProjectTagModelByName(this.tagName)) {
+                this.projectContextService.createProjectTag(this.tagName);
             }
         }
         this.tagId = null;
@@ -38,8 +40,10 @@ export class TagsComponent implements OnInit {
 
     editTag(tagId) {
         this.tagId = tagId;
-        const tag = this.projectContextService.getTag(tagId);
-        this.tagName = tag.name;
+        const tagModel: TagModel = this.projectContextService.getProjectTagModelById(
+            tagId
+        );
+        this.tagName = tagModel.getName();
         this.buttonName = TagsComponent.UPDATE_NAME;
     }
 }

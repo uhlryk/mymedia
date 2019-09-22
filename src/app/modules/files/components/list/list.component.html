@@ -6,9 +6,9 @@
         </tr>
     </thead>
     <tbody>
-        <tr app-row *ngFor="let file of files" [file]="file">
-            <button (click)="clickOpenFile(file.id)" class="btn btn-sm">open</button>
-            <button (click)="clickShowDetails(file.id)" class="btn btn-sm">details</button>
+        <tr app-row *ngFor="let resource of resourceList" [resource]="resource">
+            <button (click)="clickOpenFile(resource.getId())" class="btn btn-sm">open</button>
+            <button (click)="clickShowDetails(resource.getId())" class="btn btn-sm">details</button>
         </tr>
     </tbody>
 </table>

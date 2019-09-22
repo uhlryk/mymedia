@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import File from "../../../../types/File";
+import ResourceModel from "../../../../models/resource.model";
 
 @Component({
     selector: "app-list",
@@ -7,20 +7,21 @@ import File from "../../../../types/File";
     styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit {
-    @Input() files: Array<File>;
+    @Input() resourceList: Array<ResourceModel>;
     @Output() openFile = new EventEmitter<string>();
     @Output() showDetails = new EventEmitter<string>();
 
     constructor() {}
 
-    ngOnInit() {}
-
-    clickOpenFile(fileId:string) {
-        console.log("open file", fileId);
-        this.openFile.emit(fileId);
+    ngOnInit() {
+        console.log("BBBB");
+        console.log(this.resourceList);
     }
-    clickShowDetails(fileId:string) {
-        console.log("show file", fileId);
-        this.showDetails.emit(fileId);
+
+    clickOpenFile(resourceId: string) {
+        this.openFile.emit(resourceId);
+    }
+    clickShowDetails(resourceId: string) {
+        this.showDetails.emit(resourceId);
     }
 }

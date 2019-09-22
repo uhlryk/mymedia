@@ -7,9 +7,9 @@ import {
     ViewChild
 } from "@angular/core";
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import File from "../../../../types/File";
-import Tag from "../../../../types/Tag";
 import { ProjectContextService } from "../../../../services/projectContext.service";
+import ResourceModel from "../../../../models/resource.model";
+import TagModel from "../../../../models/tag.model";
 
 @Component({
     selector: "app-details-modal",
@@ -17,7 +17,6 @@ import { ProjectContextService } from "../../../../services/projectContext.servi
     styleUrls: ["./detailsModal.component.scss"]
 })
 export class DetailsModalComponent implements OnInit {
-    @Output() openFile = new EventEmitter<string>();
     @Output() showDetails = new EventEmitter<string>();
 
     modalRef: BsModalRef;
@@ -26,72 +25,50 @@ export class DetailsModalComponent implements OnInit {
         private projectContextService: ProjectContextService
     ) {}
 
-    file: File;
-    fileTags: Array<Tag>;
-    projectTags: Array<Tag>;
+    resource: ResourceModel;
+    availableProjectTagModelList: Array<TagModel>;
     selectedTagId: string;
 
-    @ViewChild("template", { static: false }) elementView: TemplateRef;
+    @ViewChild("template", { static: false }) elementView: TemplateRef<any>;
 
-    show(fileId: string) {
-        console.log("AAAA", fileId);
-        this.projectTags = this.projectContextService.getTags().slice();
-        this.file = this.projectContextService.getFile(fileId);
-        this.fileTags = this.projectContextService.getFileTags(fileId);
-        this.fileTags.forEach(fileTag => {
-            this.projectTags.splice(
-                this.projectTags.findIndex(tag => tag.id === fileTag.id),
-                1
-            );
-        });
+    show(resourceId: string) {
+        this.resource = this.projectContextService.getResourceModel(resourceId);
+        this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
         this.selectedTagId = "";
-
         this.modalRef = this.modalService.show(this.elementView);
     }
 
     ngOnInit() {}
 
     clickOpenFile() {
-        this.openFile.emit(this.file.id);
+        this.projectContextService.getProjectModel().open(this.resource.getId());
     }
 
     addTag() {
         console.log(this.selectedTagId);
-        this.projectTags.splice(
-            this.projectTags.findIndex(tag => tag.id === this.selectedTagId),
-            1
+        this.projectContextService.addResourceTag(
+            this.resource.getId(),
+            this.selectedTagId
         );
-
-        this.projectContextService.addTagToFile(this.file.id, this.selectedTagId);
+        this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
         this.selectedTagId = "";
-        this.projectContextService.saveProject().subscribe(() => {
-            this.file = this.projectContextService.getFile(this.file.id);
-            this.fileTags = this.projectContextService.getFileTags(this.file.id);
-        });
+        this.projectContextService.saveProject().subscribe(() => {});
     }
 
     removeTag(tagId) {
-        this.projectContextService.removeTagFromFile(this.file.id, tagId);
-        this.projectContextService.saveProject().subscribe(() => {
-            this.file = this.projectContextService.getFile(this.file.id);
-            this.fileTags = this.projectContextService.getFileTags(this.file.id);
-            this.projectTags = this.projectContextService.getTags().slice();
-            this.fileTags.forEach(fileTag => {
-                this.projectTags.splice(
-                    this.projectTags.findIndex(tag => tag.id === fileTag.id),
-                    1
-                );
-            });
-        });
+        this.projectContextService.removeResourceTag(this.resource.getId(), tagId);
+        this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
+        this.selectedTagId = "";
+        this.projectContextService.saveProject().subscribe(() => {});
     }
 
     saveTitle(newTitle) {
-        this.file.newFileName = newTitle;
+        this.resource.setTitle(newTitle);
         this.projectContextService.saveProject().subscribe(() => {});
     }
 
     saveDescription(text) {
-        this.file.description = text;
+        this.resource.setDescription(text);
         this.projectContextService.saveProject().subscribe(() => {});
     }
 }

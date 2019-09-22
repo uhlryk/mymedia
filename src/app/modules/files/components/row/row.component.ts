@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import File from "../../../../types/File";
+import ResourceModel from "../../../../models/resource.model";
 
 @Component({
     selector: "[app-row]",
@@ -7,7 +7,7 @@ import File from "../../../../types/File";
     styleUrls: ["./row.component.scss"]
 })
 export class RowComponent implements OnInit {
-    @Input() file: File;
+    @Input() resource: ResourceModel;
     constructor() {}
 
     ngOnInit() {}

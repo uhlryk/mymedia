@@ -11,28 +11,28 @@
         </button>
     </div>
     <div class="modal-body">
-        <div>{{ file.filePath }}</div>
-        <div>{{ file.orgFileName }}</div>
-        <div><app-file-size [size]="file.size"></app-file-size></div>
+        <div>{{ resource.getFilePath() }}</div>
+        <div>{{ resource.getFileName() }}</div>
+        <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
         <div>
             <app-title
-                [title]="file.newFileName"
+                [title]="resource.getTitle()"
                 (changed)="saveTitle($event)"
             ></app-title>
         </div>
         <div>
             <app-description
-                [text]="file.description"
+                [text]="resource.getDescription()"
                 (changed)="saveDescription($event)"
             ></app-description>
         </div>
         <div>
-            <button (click)="clickOpenFile(file.id)">open</button>
+            <button (click)="clickOpenFile(resource.getId())">open</button>
         </div>
 
         <select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">
-            <option *ngFor="let tag of projectTags" [value]="tag.id">
-                {{ tag.name }}
+            <option *ngFor="let tag of availableProjectTagModelList" [value]="tag.getId()">
+                {{ tag.getName() }}
             </option>
         </select>
 
@@ -44,9 +44,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let tag of fileTags">
-                    <td>{{ tag.name }}</td>
-                    <td><button (click)="removeTag(tag.id)">remove</button></td>
+                <tr *ngFor="let tag of resource.getResourceTagModelList()">
+                    <td>{{ tag.getName() }}</td>
+                    <td><button (click)="removeTag(tag.getId())">remove</button></td>
                 </tr>
             </tbody>
         </table>
