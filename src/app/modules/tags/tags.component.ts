@@ -46,4 +46,14 @@ export class TagsComponent implements OnInit {
         this.tagName = tagModel.getName();
         this.buttonName = TagsComponent.UPDATE_NAME;
     }
+    removeTag(tagId) {
+        this.projectContextService.removeProjectTag(
+            tagId
+        );
+        this.tagId = null;
+        this.tagName = "";
+        this.buttonName = TagsComponent.CREATE_NAME;
+        this.tagList = this.projectContextService.getProjectTagList();
+        this.projectContextService.saveProject().subscribe(() => {});
+    }
 }

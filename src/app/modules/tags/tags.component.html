@@ -11,7 +11,10 @@
     <tbody>
     <tr *ngFor="let tag of tagList">
         <td>{{tag.getName()}}</td>
-        <td><button (click)="editTag(tag.getId())">edit</button></td>
+        <td>
+            <button (click)="editTag(tag.getId())">edit</button>
+            <button (click)="removeTag(tag.getId())">remove</button>
+        </td>
     </tr>
     </tbody>
 </table>

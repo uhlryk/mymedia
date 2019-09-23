@@ -77,8 +77,12 @@ export class ProjectContextService {
     removeResourceTag(resourceId, tagId) {
         this._projectModel
             .getResourceCollectionModel()
-            .getResourceModelById(resourceId)
-            .removeTagModel(tagId);
+            .removeResourceTagModel(resourceId, tagId);
+    }
+
+    removeProjectTag(tagId) {
+        this._projectModel.getResourceCollectionModel().removeAllResourceTagModel(tagId);
+        this._projectModel.getTagCollectionModel().removeTagModelById(tagId);
     }
 
     createProjectTag(tagName) {

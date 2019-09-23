@@ -51,6 +51,16 @@ export default class ResourceCollectionModel {
         });
     }
 
+    public removeResourceTagModel(resourceId, tagId) {
+        this.getResourceModelById(resourceId).removeTagModel(tagId);
+    }
+
+    public removeAllResourceTagModel(tagId) {
+        return this._resourceModelList.forEach(resourceModel => {
+            resourceModel.removeTagModel(tagId);
+        });
+    }
+
     public toSaveValue(): Array<ResourceInterface> {
         return this._resourceModelList.map((resourceModel: ResourceModel) =>
             resourceModel.toSaveValue()

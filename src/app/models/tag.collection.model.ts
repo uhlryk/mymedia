@@ -26,6 +26,13 @@ export default class TagCollectionModel {
         this._tagModelList.push(tagModel);
     }
 
+    public removeTagModelById(tagId: string) {
+        this._tagModelList.splice(
+            this._tagModelList.findIndex(tagModel => tagModel.getId() === tagId),
+            1
+        );
+    }
+
     public toSaveValue(): Array<TagInterface> {
         return this._tagModelList.map((tagModel: TagModel) => tagModel.toSaveValue());
     }
