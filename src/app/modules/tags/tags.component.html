@@ -10,8 +10,8 @@
     </thead>
     <tbody>
     <tr *ngFor="let tag of tagList">
-        <td>{{tag.name}}</td>
-        <td><button (click)="editTag(tag.id)">edit</button></td>
+        <td>{{tag.getName()}}</td>
+        <td><button (click)="editTag(tag.getId())">edit</button></td>
     </tr>
     </tbody>
 </table>
