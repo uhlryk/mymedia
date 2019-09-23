@@ -44,6 +44,11 @@ export class DetailsModalComponent implements OnInit {
         this.projectContextService.getProjectModel().open(this.resource.getId());
     }
 
+    clickChangeRating(value) {
+        this.resource.setRating(value);
+        this.projectContextService.saveProject().subscribe(() => {});
+    }
+
     addTag() {
         console.log(this.selectedTagId);
         this.projectContextService.addResourceTag(

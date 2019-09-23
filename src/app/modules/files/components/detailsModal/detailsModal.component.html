@@ -21,6 +21,9 @@
             ></app-title>
         </div>
         <div>
+        <app-rating [editable]="true" [value]="resource.getRating()" (clickChange)="clickChangeRating($event)"></app-rating>
+        </div>
+        <div>
             <app-description
                 [text]="resource.getDescription()"
                 (changed)="saveDescription($event)"

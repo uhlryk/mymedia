@@ -9,6 +9,7 @@ export default class ResourceModel {
     private _filePath: string;
     private _fileName: string;
     private _size: number;
+    private _rating: number;
     private _title: string;
     private _id: string;
     private _description: string;
@@ -27,6 +28,7 @@ export default class ResourceModel {
         resourceModel._filePath = resource.filePath;
         resourceModel._fileName = resource.filePath;
         resourceModel._size = resource.size;
+        resourceModel._rating = resource.rating;
         resourceModel._title = resource.title;
         resourceModel._description = resource.description;
         resource.tags.forEach((tagId: string) => {
@@ -44,6 +46,7 @@ export default class ResourceModel {
         resourceModel._filePath = file.filePath;
         resourceModel._fileName = file.name;
         resourceModel._size = file.size;
+        resourceModel._rating = 0;
         resourceModel._title = getFileName(file.name);
         return resourceModel;
     }
@@ -83,6 +86,14 @@ export default class ResourceModel {
         this._isDeleted = true;
     }
 
+    getRating(): number {
+        return this._rating;
+    }
+
+    public setRating(rating) {
+        this._rating = rating;
+    }
+
     public setTitle(title: string) {
         this._title = title;
     }
@@ -113,6 +124,7 @@ export default class ResourceModel {
             fileName: this._fileName,
             title: this._title,
             size: this._size,
+            rating: this._rating,
             description: this._description,
             id: this._id,
             tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId())

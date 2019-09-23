@@ -1,4 +1,5 @@
 <div class="rating">
-    <span *ngFor="let i of filledStars">★</span>
-    <span *ngFor="let j of emptyStars">☆</span>
+    <span *ngFor="let star of stars" (click)="clickChangeValue(star.value)">
+        {{ star.type }}
+    </span>
 </div>

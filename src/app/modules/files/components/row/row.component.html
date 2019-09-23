@@ -9,7 +9,7 @@
     </div>
 </td>
 <td>
-    <app-rating></app-rating>
+    <app-rating [editable]="false" [value]="resource.getRating()"></app-rating>
 </td>
 <td>
     <ng-content></ng-content>
