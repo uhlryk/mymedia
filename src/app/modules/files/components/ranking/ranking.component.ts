@@ -2,11 +2,11 @@ import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from "@angu
 // import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-    selector: "app-rating",
-    templateUrl: "./rating.component.html",
-    styleUrls: ["./rating.component.scss"]
+    selector: "app-ranking",
+    templateUrl: "./ranking.component.html",
+    styleUrls: ["./ranking.component.scss"]
 })
-export class RatingComponent implements OnInit, OnChanges {
+export class RankingComponent implements OnInit, OnChanges {
     @Input() value: number = 0;
     @Input() editable: boolean = false;
     @Output() clickChange = new EventEmitter<number>();

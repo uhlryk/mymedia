@@ -3,7 +3,7 @@ export default interface ResourceInterface {
     fileName: string;
     title: string;
     size: number;
-    rating: number;
+    ranking: number;
     description: string;
     id: string;
     tags: Array<string>;
