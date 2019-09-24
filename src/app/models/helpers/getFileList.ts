@@ -1,5 +1,5 @@
-import fse from "fs-extra";
-import path from "path";
+import * as fse from "fs-extra";
+import * as path from "path";
 import FileInterface from "../file.interface";
 async function walk(baseDir, dir): Promise<Array<FileInterface>> {
     const results: Array<FileInterface> = [];

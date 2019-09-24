@@ -4,7 +4,7 @@ import TagCollectionModel from "./tag.collection.model";
 import ProjectInterface from "./project.interface";
 import ResourceCollectionModel from "./resource.collection.model";
 import FileInterface from "./file.interface";
-import path from "path";
+import * as path from "path";
 import TagModel from "./tag.model";
 import ResourceModel from "./resource.model";
 import fileSave from "./helpers/fileSave";

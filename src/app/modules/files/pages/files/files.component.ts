@@ -1,15 +1,20 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { Router } from "@angular/router";
-import {DetailsModalComponent} from "../../components/detailsModal/detailsModal.component";
+import { DetailsModalComponent } from "../../components/detailsModal/detailsModal.component";
 import ResourceModel from "../../../../models/resource.model";
+
+// TODO: move this to separate service and run with each video file path
+// import { ipcRenderer } from "electron";
+// ipcRenderer.send("ping");
 
 @Component({
     templateUrl: "files.component.html",
     styleUrls: ["./files.component.scss"]
 })
 export class FilesComponent implements OnInit {
-    @ViewChild(DetailsModalComponent, {static: true}) detailsModal: DetailsModalComponent;
+    @ViewChild(DetailsModalComponent, { static: true })
+    detailsModal: DetailsModalComponent;
 
     resourceList: Array<ResourceModel>;
     searchInput;
@@ -18,7 +23,9 @@ export class FilesComponent implements OnInit {
         private router: Router
     ) {}
     ngOnInit() {
-        this.resourceList = this.projectContextService.getResourceCollectionModel().getList();
+        this.resourceList = this.projectContextService
+            .getResourceCollectionModel()
+            .getList();
     }
 
     openFile(resourceId) {
@@ -32,19 +39,29 @@ export class FilesComponent implements OnInit {
     }
 
     startSearch() {
-        this.resourceList = this.projectContextService.getResourceCollectionModel().getList().filter(resource => {
-            if (resource.getTitle().toLowerCase().includes(this.searchInput.toLowerCase())) {
-                return true;
-            }
-            const matchedFileTags = resource.getResourceTagModelList().filter(tagModel =>
-                tagModel.getName().toLowerCase().includes(this.searchInput.toLowerCase())
-            );
-            if (
-                matchedFileTags.length > 0
-            ) {
-                return true;
-            }
-        });
-
+        this.resourceList = this.projectContextService
+            .getResourceCollectionModel()
+            .getList()
+            .filter(resource => {
+                if (
+                    resource
+                        .getTitle()
+                        .toLowerCase()
+                        .includes(this.searchInput.toLowerCase())
+                ) {
+                    return true;
+                }
+                const matchedFileTags = resource
+                    .getResourceTagModelList()
+                    .filter(tagModel =>
+                        tagModel
+                            .getName()
+                            .toLowerCase()
+                            .includes(this.searchInput.toLowerCase())
+                    );
+                if (matchedFileTags.length > 0) {
+                    return true;
+                }
+            });
     }
 }
