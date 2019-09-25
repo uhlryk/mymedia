@@ -11,6 +11,7 @@ import fileSave from "./helpers/fileSave";
 import fileOpen from "./helpers/fileOpen";
 
 export default class ProjectModel {
+    static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
 
     private projectFolderPath: string;
@@ -22,7 +23,6 @@ export default class ProjectModel {
     }
 
     public getProjectPath() {
-
         return this.projectFolderPath;
     }
     private async loadFiles(): Promise<Array<FileInterface>> {
@@ -32,6 +32,7 @@ export default class ProjectModel {
     private async loadProjectFile(): Promise<ProjectInterface> {
         const projectFile = await loadFile(
             this.projectFolderPath,
+            ProjectModel.PROJECT_FOLDER,
             ProjectModel.PROJECT_FILE_NAME
         );
         return JSON.parse(projectFile);
@@ -92,7 +93,9 @@ export default class ProjectModel {
             tagList: this._tagCollectionModel.toSaveValue()
         };
         await fileSave(
-            path.join(this.projectFolderPath, ProjectModel.PROJECT_FILE_NAME),
+            this.projectFolderPath,
+            ProjectModel.PROJECT_FOLDER,
+            ProjectModel.PROJECT_FILE_NAME,
             JSON.stringify(project)
         );
     }
