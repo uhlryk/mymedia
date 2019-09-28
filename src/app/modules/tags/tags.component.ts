@@ -17,8 +17,11 @@ export class TagsComponent implements OnInit {
     constructor(private projectContextService: ProjectContextService) {}
 
     ngOnInit() {
-        this.buttonName = TagsComponent.CREATE_NAME;
-        this.tagList = this.projectContextService.getProjectTagList();
+        this.projectContextService.ensureInitialized().subscribe(() => {
+            this.buttonName = TagsComponent.CREATE_NAME;
+            this.tagList = this.projectContextService.getProjectTagList();
+        });
+
     }
 
     setValue() {

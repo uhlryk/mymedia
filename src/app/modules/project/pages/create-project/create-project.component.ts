@@ -16,12 +16,16 @@ export class CreateProjectComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.projectPath = this.projectContextService.getProjectPath();
+        this.projectContextService.getProjectPath().subscribe(projectPath => {
+            this.projectPath = projectPath;
+        });
     }
 
     onCreateProject() {
-        this.projectContextService.createProject(this.createSubFolderTags).subscribe(isProject => {
-            this.router.navigate(["/files"]);
-        });
+        this.projectContextService
+            .createProject(this.createSubFolderTags)
+            .subscribe(isProject => {
+                this.router.navigate(["/files"]);
+            });
     }
 }

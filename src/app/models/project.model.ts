@@ -9,29 +9,28 @@ import TagModel from "./tag.model";
 import ResourceModel from "./resource.model";
 import fileSave from "./helpers/fileSave";
 import fileOpen from "./helpers/fileOpen";
+import IpcProvider from "../providers/ipc.provider";
 
 export default class ProjectModel {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
-
-    private projectFolderPath: string;
-
     private _tagCollectionModel: TagCollectionModel;
     private _resourceCollectionModel: ResourceCollectionModel;
-    constructor(projectFolderPath: string) {
-        this.projectFolderPath = projectFolderPath;
+    public async setProjectPath(projectFolderPath: string) {
+        await IpcProvider.request("project/set", projectFolderPath);
     }
-
-    public getProjectPath() {
-        return this.projectFolderPath;
+    public async getProjectPath() {
+        return await IpcProvider.request("project/get");
     }
     private async loadFiles(): Promise<Array<FileInterface>> {
-        return getFileList(this.projectFolderPath);
+        const projectPath = await this.getProjectPath();
+        return getFileList(projectPath);
     }
 
     private async loadProjectFile(): Promise<ProjectInterface> {
+        const projectPath = await this.getProjectPath();
         const projectFile = await loadFile(
-            this.projectFolderPath,
+            projectPath,
             ProjectModel.PROJECT_FOLDER,
             ProjectModel.PROJECT_FILE_NAME
         );
@@ -92,8 +91,9 @@ export default class ProjectModel {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };
+        const projectPath = await this.getProjectPath();
         await fileSave(
-            this.projectFolderPath,
+            projectPath,
             ProjectModel.PROJECT_FOLDER,
             ProjectModel.PROJECT_FILE_NAME,
             JSON.stringify(project)
@@ -108,10 +108,11 @@ export default class ProjectModel {
         return this._tagCollectionModel;
     }
 
-    public open(resourceId: string) {
+    public async open(resourceId: string) {
         const resourceModel: ResourceModel = this._resourceCollectionModel.getResourceModelById(
             resourceId
         );
-        fileOpen(this.projectFolderPath, resourceModel.getFilePath());
+        const projectPath = await this.getProjectPath();
+        fileOpen(projectPath, resourceModel.getFilePath());
     }
 }

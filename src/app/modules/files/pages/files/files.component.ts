@@ -23,9 +23,12 @@ export class FilesComponent implements OnInit {
         private router: Router
     ) {}
     ngOnInit() {
-        this.resourceList = this.projectContextService
-            .getResourceCollectionModel()
-            .getList();
+        this.projectContextService.ensureInitialized().subscribe(() => {
+            this.resourceList = this.projectContextService
+                .getResourceCollectionModel()
+                .getList();
+        });
+
     }
 
     openFile(resourceId) {

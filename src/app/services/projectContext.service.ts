@@ -10,13 +10,39 @@ import TagModel from "../models/tag.model";
 export class ProjectContextService {
     _projectModel: ProjectModel;
     constructor(private _ngZone: NgZone) {}
-    setProjectPath(projectFolderPath: string): void {
-        this._projectModel = new ProjectModel(projectFolderPath);
-        // this.projectFolderPath = projectFolderPath;
+    ensureInitialized(): Observable<boolean> {
+        return Observable.create(async observable => {
+            if(!this.getProjectModel()) {
+                this._projectModel = new ProjectModel();
+            }
+            await this.getProjectModel().loadProject();
+            this._ngZone.run(() => {
+                observable.next(true);
+                observable.complete();
+            });
+        });
+    }
+    setProjectPath(projectFolderPath: string): Observable<boolean> {
+        return Observable.create(async observable => {
+            this._projectModel = new ProjectModel();
+            await this.getProjectModel().setProjectPath(projectFolderPath);
+
+            this._ngZone.run(() => {
+                observable.next(true);
+                observable.complete();
+            });
+        });
     }
 
-    getProjectPath() {
-        return this._projectModel.getProjectPath();
+    getProjectPath(): Observable<string> {
+        return Observable.create(async observable => {
+            const projectPath = await this.getProjectModel().getProjectPath();
+
+            this._ngZone.run(() => {
+                observable.next(projectPath);
+                observable.complete();
+            });
+        });
     }
     getProjectModel(): ProjectModel {
         return this._projectModel;
@@ -24,7 +50,7 @@ export class ProjectContextService {
 
     createProject(createSubFolderTags: boolean): Observable<boolean> {
         return Observable.create(async observable => {
-            await this._projectModel.createProject(createSubFolderTags);
+            await this.getProjectModel().createProject(createSubFolderTags);
 
             this._ngZone.run(() => {
                 observable.next(true);
@@ -35,7 +61,7 @@ export class ProjectContextService {
 
     loadProject(): Observable<boolean> {
         return Observable.create(async observable => {
-            const isProject: boolean = await this._projectModel.loadProject();
+            const isProject: boolean = await this.getProjectModel().loadProject();
             if (isProject) {
                 this._ngZone.run(() => {
                     observable.next(true);
@@ -51,59 +77,59 @@ export class ProjectContextService {
     }
 
     getResourceModel(resourceId: string): ResourceModel {
-        return this._projectModel
+        return this.getProjectModel()
             .getResourceCollectionModel()
             .getResourceModelById(resourceId);
     }
 
     getResourceCollectionModel(): ResourceCollectionModel {
-        return this._projectModel.getResourceCollectionModel();
+        return this.getProjectModel().getResourceCollectionModel();
     }
 
     openResource(resourceId: string) {
-        this._projectModel.open(resourceId);
+        this.getProjectModel().open(resourceId);
     }
 
     addResourceTag(resourceId, tagId) {
-        const tagModel: TagModel = this._projectModel
+        const tagModel: TagModel = this.getProjectModel()
             .getTagCollectionModel()
             .getTagModelById(tagId);
-        this._projectModel
+        this.getProjectModel()
             .getResourceCollectionModel()
             .getResourceModelById(resourceId)
             .addTagModel(tagModel);
     }
 
     removeResourceTag(resourceId, tagId) {
-        this._projectModel
+        this.getProjectModel()
             .getResourceCollectionModel()
             .removeResourceTagModel(resourceId, tagId);
     }
 
     removeProjectTag(tagId) {
-        this._projectModel.getResourceCollectionModel().removeAllResourceTagModel(tagId);
-        this._projectModel.getTagCollectionModel().removeTagModelById(tagId);
+        this.getProjectModel().getResourceCollectionModel().removeAllResourceTagModel(tagId);
+        this.getProjectModel().getTagCollectionModel().removeTagModelById(tagId);
     }
 
     createProjectTag(tagName) {
-        this._projectModel.getTagCollectionModel().addTagModel(TagModel.create(tagName));
+        this.getProjectModel().getTagCollectionModel().addTagModel(TagModel.create(tagName));
     }
 
     getProjectTagList(): Array<TagModel> {
-        return this._projectModel.getTagCollectionModel().getList();
+        return this.getProjectModel().getTagCollectionModel().getList();
     }
 
     getProjectTagModelById(tagId: string): TagModel {
-        return this._projectModel.getTagCollectionModel().getTagModelById(tagId);
+        return this.getProjectModel().getTagCollectionModel().getTagModelById(tagId);
     }
 
     getProjectTagModelByName(tagName: string): TagModel {
-        return this._projectModel.getTagCollectionModel().getTagModelByName(tagName);
+        return this.getProjectModel().getTagCollectionModel().getTagModelByName(tagName);
     }
 
     saveProject(): Observable<null> {
         return Observable.create(async observable => {
-            await this._projectModel.save();
+            await this.getProjectModel().save();
             this._ngZone.run(() => {
                 observable.next();
                 observable.complete();
