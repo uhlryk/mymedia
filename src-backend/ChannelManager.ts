@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-export default class Project {
+export default class ChannelManager {
     _projectPath: string;
     constructor() {
         ipcMain.on(

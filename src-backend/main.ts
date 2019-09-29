@@ -3,7 +3,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import { spawn } from "child_process";
 import * as ffmpeg from "ffmpeg-static-electron";
-import Project from "./Project";
+import ChannelManager from "./ChannelManager";
 console.log(ffmpeg.path);
 
 const IS_HOT = process.env.IS_HOT;
@@ -12,7 +12,7 @@ console.log(IS_HOT);
 let mainWindow: Electron.BrowserWindow;
 
 app.on("ready", () => {
-    new Project();
+    new ChannelManager();
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, "../dist/assets/icon.png"),
         webPreferences: {
