@@ -18,7 +18,7 @@
                     "##builder": "@angular-devkit/build-angular:browser",
                     "builder": "@angular-guru/electron-builder:build",
                     "options": {
-                        "outputPath": "dist/",
+                        "outputPath": "dist/frontend",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",

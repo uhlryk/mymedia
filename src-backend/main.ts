@@ -22,7 +22,7 @@ app.on("ready", () => {
     if (IS_HOT) {
         mainWindow.loadURL("http://localhost:4200/");
     } else {
-        mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
+        mainWindow.loadFile(path.join(__dirname, "../frontend/index.html"));
     }
 
     ipcMain.on("ping", event => {

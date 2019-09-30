@@ -1,16 +1,16 @@
 {
     "name": "mymedia",
     "version": "0.0.0",
-    "main": "dist/main.js",
+    "main": "dist/desktop/main.js",
     "scripts": {
         "ng": "ng",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "build-electron": "tsc --lib ES2018,DOM --target ES5 src-backend/main.ts --outDir dist",
-        "build": "ng build --base-href ./ && tsc --lib ES2018,DOM --target ES5 src-backend/main.ts --outDir dist",
+        "build-electron": "tsc --lib ES2018,DOM --target ES5 src-backend/main.ts --outDir dist/desktop",
+        "build": "ng build --base-href ./ && tsc --lib ES2018,DOM --target ES5 src-backend/main.ts --outDir dist/desktop",
         "start": "electron .",
-        "start-hot": "concurrently \"IS_HOT=1 electron .\" \"ng serve\"",
+        "start-hot": "concurrently \"IS_HOT=1 electron .\" \"ng serve --live-reload -o\"",
         "package": "npm run build && electron-packager . mymedia --overwrite --asar --icon=dist/assets/icon.ico --ignore=^e2e$ --ignore=^src$ --ignore=^src-backend$ --ignore=^.editorconfig$ --ignore=^.gitignore$ --ignore=^angular.json$ --ignore=^browserslist$ --ignore=^karma.conf.js$ --ignore=^package-lock.json$ --ignore=^README.md$ --ignore=^tslint --ignore=^tsconfig"
     },
     "private": true,
