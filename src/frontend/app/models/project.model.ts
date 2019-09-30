@@ -1,9 +1,9 @@
 import loadFile from "./helpers/loadFile";
 import getFileList from "./helpers/getFileList";
 import TagCollectionModel from "./tag.collection.model";
-import ProjectInterface from "./project.interface";
+import ProjectInterface from "../../../shared/types/project.interface";
 import ResourceCollectionModel from "./resource.collection.model";
-import FileInterface from "./file.interface";
+import FileInterface from "../../../shared/types/file.interface";
 import * as path from "path";
 import TagModel from "./tag.model";
 import ResourceModel from "./resource.model";
@@ -28,14 +28,22 @@ export default class ProjectModel {
     }
 
     private async loadProjectFile(): Promise<ProjectInterface> {
-        const projectPath: string = await this.getProjectPath();
-        const projectFile = await loadFile(
-            projectPath,
-            ProjectModel.PROJECT_FOLDER,
-            ProjectModel.PROJECT_FILE_NAME
-        );
-        return JSON.parse(projectFile);
+        console.log("A0");
+        const project: ProjectInterface = await IpcProvider.request("project/load");
+        console.log("AAA");
+        console.log(project);
+        return project;
     }
+
+    // private async loadProjectFile(): Promise<ProjectInterface> {
+    //     const projectPath: string = await this.getProjectPath();
+    //     const projectFile = await loadFile(
+    //         projectPath,
+    //         ProjectModel.PROJECT_FOLDER,
+    //         ProjectModel.PROJECT_FILE_NAME
+    //     );
+    //     return JSON.parse(projectFile);
+    // }
 
     public async loadProject(): Promise<boolean> {
         const project: ProjectInterface = await this.loadProjectFile();
@@ -91,14 +99,22 @@ export default class ProjectModel {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };
-        const projectPath: string = await this.getProjectPath();
-        await fileSave(
-            projectPath,
-            ProjectModel.PROJECT_FOLDER,
-            ProjectModel.PROJECT_FILE_NAME,
-            JSON.stringify(project)
-        );
+        return await IpcProvider.request("project/save", project);
     }
+
+    // public async save() {
+    //     const project: ProjectInterface = {
+    //         resourceList: this._resourceCollectionModel.toSaveValue(),
+    //         tagList: this._tagCollectionModel.toSaveValue()
+    //     };
+    //     const projectPath: string = await this.getProjectPath();
+    //     await fileSave(
+    //         projectPath,
+    //         ProjectModel.PROJECT_FOLDER,
+    //         ProjectModel.PROJECT_FILE_NAME,
+    //         JSON.stringify(project)
+    //     );
+    // }
 
     public getResourceCollectionModel(): ResourceCollectionModel {
         return this._resourceCollectionModel;

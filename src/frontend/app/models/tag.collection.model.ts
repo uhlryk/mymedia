@@ -1,4 +1,4 @@
-import TagInterface from "./tag.interface";
+import TagInterface from "../../../shared/types/tag.interface";
 import TagModel from "./tag.model";
 
 export default class TagCollectionModel {

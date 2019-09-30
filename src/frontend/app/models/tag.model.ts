@@ -1,5 +1,5 @@
 import uuid from "uuidv4";
-import TagInterface from "./tag.interface";
+import TagInterface from "../../../shared/types/tag.interface";
 
 export default class TagModel {
     private _id: string;

@@ -1,7 +1,7 @@
 import ResourceModel from "./resource.model";
-import ResourceInterface from "./resource.interface";
+import ResourceInterface from "../../../shared/types/resource.interface";
 import TagCollectionModel from "./tag.collection.model";
-import FileInterface from "./file.interface";
+import FileInterface from "../../../shared/types/file.interface";
 
 export default class ResourceCollectionModel {
     private _resourceModelList: Array<ResourceModel> = [];

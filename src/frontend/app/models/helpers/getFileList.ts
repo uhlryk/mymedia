@@ -1,6 +1,6 @@
 import * as fse from "fs-extra";
 import * as path from "path";
-import FileInterface from "../file.interface";
+import FileInterface from "../../../../shared/types/file.interface";
 async function walk(baseDir, dir): Promise<Array<FileInterface>> {
     const results: Array<FileInterface> = [];
     const fileList = await fse.readdir(dir);
