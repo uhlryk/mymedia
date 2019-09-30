@@ -19,7 +19,7 @@ export default class ProjectModel {
     public async setProjectPath(projectFolderPath: string) {
         await IpcProvider.request("project/set", projectFolderPath);
     }
-    public async getProjectPath() {
+    public async getProjectPath(): Promise<string> {
         return await IpcProvider.request("project/get");
     }
     private async loadFiles(): Promise<Array<FileInterface>> {
@@ -28,7 +28,7 @@ export default class ProjectModel {
     }
 
     private async loadProjectFile(): Promise<ProjectInterface> {
-        const projectPath = await this.getProjectPath();
+        const projectPath: string = await this.getProjectPath();
         const projectFile = await loadFile(
             projectPath,
             ProjectModel.PROJECT_FOLDER,
@@ -91,7 +91,7 @@ export default class ProjectModel {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };
-        const projectPath = await this.getProjectPath();
+        const projectPath: string = await this.getProjectPath();
         await fileSave(
             projectPath,
             ProjectModel.PROJECT_FOLDER,
