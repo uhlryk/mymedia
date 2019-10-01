@@ -1,4 +1,3 @@
-import getFileList from "../../../desktop/fs/getFileList";
 import TagCollectionModel from "./tag.collection.model";
 import ProjectInterface from "../../../shared/types/project.interface";
 import ResourceCollectionModel from "./resource.collection.model";

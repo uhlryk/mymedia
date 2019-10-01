@@ -12,7 +12,8 @@ async function walk(baseDir, dir): Promise<Array<FileInterface>> {
         } else if (fileStat && fileStat.isFile()) {
             if (!/(^|\/)\.[^\/\.]/g.test(filePath)) {
                 results.push({
-                    name: fileName,
+                    fileName: fileName,
+                    name: path.parse(filePath).name,
                     filePath: path.relative(baseDir, filePath),
                     size: fileStat.size
                 });

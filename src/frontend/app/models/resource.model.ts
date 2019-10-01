@@ -2,7 +2,6 @@ import uuid from "uuidv4";
 import ResourceInterface from "../../../shared/types/resource.interface";
 import FileInterface from "../../../shared/types/file.interface";
 import TagCollectionModel from "./tag.collection.model";
-import getFileName from "./helpers/getFileName";
 import TagModel from "./tag.model";
 
 export default class ResourceModel {
@@ -44,10 +43,10 @@ export default class ResourceModel {
         const resourceModel: ResourceModel = new ResourceModel(tagCollectionModel);
         resourceModel._id = uuid();
         resourceModel._filePath = file.filePath;
-        resourceModel._fileName = file.name;
+        resourceModel._fileName = file.fileName;
         resourceModel._size = file.size;
         resourceModel._ranking = 0;
-        resourceModel._title = getFileName(file.name);
+        resourceModel._title = file.name;
         return resourceModel;
     }
 
