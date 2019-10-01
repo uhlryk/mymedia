@@ -1,4 +1,4 @@
-import getFileList from "./helpers/getFileList";
+import getFileList from "../../../desktop/fs/getFileList";
 import TagCollectionModel from "./tag.collection.model";
 import ProjectInterface from "../../../shared/types/project.interface";
 import ResourceCollectionModel from "./resource.collection.model";
@@ -18,8 +18,7 @@ export default class ProjectModel {
         return await IpcProvider.request("project/get");
     }
     private async loadFiles(): Promise<Array<FileInterface>> {
-        const projectPath = await this.getProjectPath();
-        return getFileList(projectPath);
+        return await IpcProvider.request("resource/list");
     }
 
     private async loadProjectFile(): Promise<ProjectInterface> {
