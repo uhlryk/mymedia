@@ -1,7 +1,8 @@
-import { ipcMain } from "electron";
+import { ipcMain, shell } from "electron";
 import ProjectInterface from "../shared/types/project.interface";
 import loadFile from "./fs/loadFile";
 import saveFile from "./fs/saveFile";
+import * as path from "path";
 export default class ChannelManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
@@ -35,16 +36,17 @@ export default class ChannelManager {
         );
 
         ipcMain.on("project/load", async (event, responseChannel: string) => {
-            console.log("Y1");
             const projectFileString = await loadFile(
                 this.getProjectPath(),
                 ChannelManager.PROJECT_FOLDER,
                 ChannelManager.PROJECT_FILE_NAME
             );
             const projectFile: ProjectInterface = JSON.parse(projectFileString);
-            console.log("Y2");
-            event.reply(responseChannel,  projectFile);
-            console.log("Y3");
+            event.reply(responseChannel, projectFile);
+        });
+
+        ipcMain.on("resource/open", (event, resourcePath: string) => {
+            shell.openItem(path.join(this.getProjectPath(), resourcePath));
         });
     }
 

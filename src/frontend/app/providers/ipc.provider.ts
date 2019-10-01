@@ -10,4 +10,7 @@ export default class IpcProvider {
             ipcRenderer.send(channel, responseChannel, params);
         });
     }
+    static trigger(channel: string, params?: any): void {
+        ipcRenderer.send(channel, params);
+    }
 }
