@@ -10,6 +10,7 @@
             tag.getName()
         }}</span>
     </div>
+    <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
 </td>
 <td>
     <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
