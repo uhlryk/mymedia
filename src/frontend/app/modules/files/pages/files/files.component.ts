@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
-import { Router } from "@angular/router";
+import { ResultManipulationService } from "../../../../services/result-manipulation.service";
 import { DetailsModalComponent } from "../../components/detailsModal/detailsModal.component";
 import ResourceModel from "../../../../models/resource.model";
 
@@ -20,15 +20,19 @@ export class FilesComponent implements OnInit {
     searchInput;
     constructor(
         private projectContextService: ProjectContextService,
-        private router: Router
+        private resultManipulationService: ResultManipulationService
     ) {}
     ngOnInit() {
         this.projectContextService.ensureInitialized().subscribe(() => {
-            this.resourceList = this.projectContextService
-                .getResourceCollectionModel()
-                .getList().slice(0,20);
+            this.resultManipulationService
+                .manipulate(
+                    this.projectContextService.getResourceCollectionModel().getList()
+                )
+                .subscribe(resourceList => {
+                    this.resourceList = resourceList;
+                });
+            this.resultManipulationService.compute();
         });
-
     }
 
     openFile(resourceId) {
@@ -36,35 +40,12 @@ export class FilesComponent implements OnInit {
     }
 
     showFileDetails(resourceId) {
-        console.log("ZZZ");
         console.log(resourceId);
         this.detailsModal.show(resourceId);
     }
 
     startSearch() {
-        this.resourceList = this.projectContextService
-            .getResourceCollectionModel()
-            .getList()
-            .filter(resource => {
-                if (
-                    resource
-                        .getTitle()
-                        .toLowerCase()
-                        .includes(this.searchInput.toLowerCase())
-                ) {
-                    return true;
-                }
-                const matchedFileTags = resource
-                    .getResourceTagModelList()
-                    .filter(tagModel =>
-                        tagModel
-                            .getName()
-                            .toLowerCase()
-                            .includes(this.searchInput.toLowerCase())
-                    );
-                if (matchedFileTags.length > 0) {
-                    return true;
-                }
-            });
+        console.log("A1");
+        this.resultManipulationService.setSearch(this.searchInput);
     }
 }

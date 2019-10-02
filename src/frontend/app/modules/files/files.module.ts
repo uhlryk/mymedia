@@ -12,9 +12,10 @@ import { DetailsModalComponent } from "./components/detailsModal/detailsModal.co
 import { ModalModule } from "ngx-bootstrap";
 import { RankingComponent } from "./components/ranking/ranking.component";
 import { ThumbnailService } from "../../services/thumbnail.service";
+import { ResultManipulationService } from "../../services/result-manipulation.service";
 @NgModule({
     imports: [CommonModule, FormsModule, ModalModule.forRoot()],
-    providers: [ThumbnailService],
+    providers: [ThumbnailService, ResultManipulationService],
     declarations: [
         FilesComponent,
         RowComponent,
