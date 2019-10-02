@@ -5,7 +5,7 @@ import { Observable, Observer } from "rxjs";
 @Injectable()
 export class ResultManipulationService {
     private _searchTerm = "";
-    private _observer: Observer;
+    private _observer: Observer<any>;
     private _resourceList: Array<ResourceModel>;
     constructor() {}
 

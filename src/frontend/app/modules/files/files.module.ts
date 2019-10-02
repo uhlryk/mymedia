@@ -13,6 +13,7 @@ import { ModalModule } from "ngx-bootstrap";
 import { RankingComponent } from "./components/ranking/ranking.component";
 import { ThumbnailService } from "../../services/thumbnail.service";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
+import { SearchComponent } from './components/search/search.component';
 @NgModule({
     imports: [CommonModule, FormsModule, ModalModule.forRoot()],
     providers: [ThumbnailService, ResultManipulationService],
@@ -24,7 +25,8 @@ import { ResultManipulationService } from "../../services/result-manipulation.se
         FileSizeComponent,
         ListComponent,
         DetailsModalComponent,
-        RankingComponent
+        RankingComponent,
+        SearchComponent
     ]
 })
 export class FilesModule {}
