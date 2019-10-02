@@ -10,9 +10,11 @@ import { DescriptionComponent } from "./components/description/description.compo
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalComponent } from "./components/detailsModal/detailsModal.component";
 import { ModalModule } from "ngx-bootstrap";
-import { RankingComponent } from './components/ranking/ranking.component';
+import { RankingComponent } from "./components/ranking/ranking.component";
+import { ThumbnailService } from "../../services/thumbnail.service";
 @NgModule({
     imports: [CommonModule, FormsModule, ModalModule.forRoot()],
+    providers: [ThumbnailService],
     declarations: [
         FilesComponent,
         RowComponent,

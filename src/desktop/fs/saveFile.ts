@@ -2,15 +2,16 @@ import * as fse from "fs-extra";
 import * as path from "path";
 
 export default async function saveFile(
-    directory: string,
-    projectFolderName: string,
+    projectFolderPath: string,
     projectFile: string,
+    thumbnailFolder: string,
     content
 ) {
-    const projectFolderPath = path.resolve(directory, projectFolderName);
     const isProjectFolderExist: boolean = await fse.pathExists(projectFolderPath);
     if (isProjectFolderExist === false) {
-        await fse.mkdir(path.resolve(directory, projectFolderName));
+        await fse.mkdir(projectFolderPath);
+        await fse.mkdir(path.resolve(projectFolderPath, thumbnailFolder));
+
     }
-    await fse.writeFile(path.resolve(directory, projectFolderName, projectFile), content);
+    await fse.writeFile(path.resolve(projectFolderPath, projectFile), content);
 }

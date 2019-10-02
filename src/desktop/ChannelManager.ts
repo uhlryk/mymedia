@@ -3,11 +3,15 @@ import ProjectInterface from "../shared/types/project.interface";
 import loadFile from "./fs/loadFile";
 import saveFile from "./fs/saveFile";
 import getFileList from "./fs/getFileList";
+import getThumbnail from "./fs/getThumbnail";
+import generateThumbnail from "./fs/generateThumbnail";
 import * as path from "path";
 import FileInterface from "../shared/types/file.interface";
 export default class ChannelManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
+    static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
+    static PROJECT_THUMBNAIL_FILE = "thum.jpg";
     _projectPath: string;
     constructor() {
         ipcMain.on(
@@ -28,9 +32,9 @@ export default class ChannelManager {
             "project/save",
             async (event, responseChannel: string, project: ProjectInterface) => {
                 await saveFile(
-                    this.getProjectPath(),
-                    ChannelManager.PROJECT_FOLDER,
+                    path.resolve(this.getProjectPath(), ChannelManager.PROJECT_FOLDER),
                     ChannelManager.PROJECT_FILE_NAME,
+                    ChannelManager.PROJECT_THUMBNAIL_FOLDER,
                     JSON.stringify(project)
                 );
                 event.reply(responseChannel);
@@ -57,6 +61,47 @@ export default class ChannelManager {
             );
             event.reply(responseChannel, fileList);
         });
+
+        ipcMain.on(
+            "resource/thumbnail",
+            async (
+                event,
+                responseChannel: string,
+                { id: resourceId, filePath: resourcePath }
+            ) => {
+                const thumbnail: string = await getThumbnail(
+                    path.resolve(
+                        this.getProjectPath(),
+                        ChannelManager.PROJECT_FOLDER,
+                        ChannelManager.PROJECT_THUMBNAIL_FOLDER,
+                        resourceId,
+                        ChannelManager.PROJECT_THUMBNAIL_FILE
+                    )
+                );
+                if (thumbnail) {
+                    event.reply(responseChannel, thumbnail);
+                } else {
+                    const newThumbnail: string = await generateThumbnail(
+                        path.resolve(
+                            this.getProjectPath(),
+                            resourcePath
+                        ),
+                        path.resolve(
+                            this.getProjectPath(),
+                            ChannelManager.PROJECT_FOLDER,
+                            ChannelManager.PROJECT_THUMBNAIL_FOLDER,
+                            resourceId
+                        ),
+                        ChannelManager.PROJECT_THUMBNAIL_FILE
+                    );
+                    if(newThumbnail) {
+                        event.reply(responseChannel, newThumbnail);
+                    } else {
+                        event.reply(responseChannel, null);
+                    }
+                }
+            }
+        );
     }
 
     private getProjectPath(): string {

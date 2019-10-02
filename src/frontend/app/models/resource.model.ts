@@ -3,6 +3,7 @@ import ResourceInterface from "../../../shared/types/resource.interface";
 import FileInterface from "../../../shared/types/file.interface";
 import TagCollectionModel from "./tag.collection.model";
 import TagModel from "./tag.model";
+import IpcProvider from "../providers/ipc.provider";
 
 export default class ResourceModel {
     private _filePath: string;
@@ -18,6 +19,8 @@ export default class ResourceModel {
 
     private _tagModelList: Array<TagModel> = [];
     private _tagCollectionModel: TagCollectionModel;
+    private _thumbnail: string;
+    private _genarateThumbnailFailed: boolean = false;
     static fromProject(
         resource: ResourceInterface,
         tagCollectionModel: TagCollectionModel
@@ -36,6 +39,7 @@ export default class ResourceModel {
         });
         return resourceModel;
     }
+
     static fromFile(
         file: FileInterface,
         tagCollectionModel: TagCollectionModel
@@ -54,6 +58,19 @@ export default class ResourceModel {
         this._tagCollectionModel = tagCollectionModel;
     }
 
+    async getThumbnail() {
+        if (this._genarateThumbnailFailed) {
+            return null;
+        }
+        if (this._thumbnail) {
+            return this._thumbnail;
+        }
+        this._thumbnail = await IpcProvider.request("resource/thumbnail", {
+            id: this.getId(),
+            filePath: this.getFilePath()
+        });
+        return this._thumbnail;
+    }
     getFilePath() {
         return this._filePath;
     }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
+import { ThumbnailService } from "../../../../services/thumbnail.service";
 
 @Component({
     selector: "[app-row]",
@@ -8,7 +9,14 @@ import ResourceModel from "../../../../models/resource.model";
 })
 export class RowComponent implements OnInit {
     @Input() resource: ResourceModel;
-    constructor() {}
+    private thumbnail: string = "";
+    constructor(
+        private thumbnailService: ThumbnailService
+    ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.thumbnailService.getThumbnail(this.resource).subscribe(thumbnail => {
+            this.thumbnail = thumbnail;
+        });
+    }
 }
