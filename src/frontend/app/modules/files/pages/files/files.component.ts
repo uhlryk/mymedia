@@ -26,7 +26,7 @@ export class FilesComponent implements OnInit {
         this.projectContextService.ensureInitialized().subscribe(() => {
             this.resourceList = this.projectContextService
                 .getResourceCollectionModel()
-                .getList();
+                .getList().slice(0,20);
         });
 
     }

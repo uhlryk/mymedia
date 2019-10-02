@@ -1,13 +1,20 @@
-<input [(ngModel)]="searchInput" />
-<button (click)="startSearch()">search</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <input [(ngModel)]="searchInput" />
+            <button (click)="startSearch()">search</button>
+        </div>
+        <div class="col-7">
+            <app-list
+                [resourceList]="resourceList"
+                (openFile)="openFile($event)"
+                (showDetails)="showFileDetails($event)"
+            ></app-list>
 
-<app-list
-    [resourceList]="resourceList"
-    (openFile)="openFile($event)"
-    (showDetails)="showFileDetails($event)"
-></app-list>
-
-<app-details-modal
-    (openFile)="openFile($event)"
-    (showDetails)="showFileDetails($event)"
-></app-details-modal>
+            <app-details-modal
+                (openFile)="openFile($event)"
+                (showDetails)="showFileDetails($event)"
+            ></app-details-modal>
+        </div>
+    </div>
+</div>
