@@ -1,6 +1,7 @@
 import * as fse from "fs-extra";
 import * as path from "path";
 import FileInterface from "../../shared/types/file.interface";
+const ACCEPTABLE_EXTENSIONS = [".wmv", ".mp4", ".mov", ".webm", ".mkv", ".flv", ".vob", ".avi", ".rmvb"];
 async function walk(baseDir, dir): Promise<Array<FileInterface>> {
     const results: Array<FileInterface> = [];
     const fileList = await fse.readdir(dir);
@@ -10,7 +11,8 @@ async function walk(baseDir, dir): Promise<Array<FileInterface>> {
         if (fileStat && fileStat.isDirectory()) {
             Array.prototype.push.apply(results, await walk(baseDir, filePath));
         } else if (fileStat && fileStat.isFile()) {
-            if (!/(^|\/)\.[^\/\.]/g.test(filePath)) {
+            const extension = path.extname(filePath);
+            if (!/(^|\/)\.[^\/\.]/g.test(filePath) && ACCEPTABLE_EXTENSIONS.includes(extension)) {
                 results.push({
                     fileName: fileName,
                     name: path.parse(filePath).name,
