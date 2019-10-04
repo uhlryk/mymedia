@@ -1,6 +1,6 @@
 <table class="table">
     <tbody>
-        <tr app-row *ngFor="let resource of resourceList" [resource]="resource">
+        <tr app-row *ngFor="let resource of resourceList" [resource]="resource" (openThumbnailModal)="clickOpenThumbnailModal($event)">
             <button (click)="clickOpenFile(resource.getId())" class="btn btn-sm">open</button>
             <button (click)="clickShowDetails(resource.getId())" class="btn btn-sm">details</button>
         </tr>

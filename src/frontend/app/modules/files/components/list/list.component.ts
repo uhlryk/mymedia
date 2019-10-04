@@ -10,6 +10,7 @@ export class ListComponent implements OnInit {
     @Input() resourceList: Array<ResourceModel>;
     @Output() openFile = new EventEmitter<string>();
     @Output() showDetails = new EventEmitter<string>();
+    @Output() openThumbnailModal = new EventEmitter<string>();
 
     constructor() {}
 
@@ -21,5 +22,8 @@ export class ListComponent implements OnInit {
     }
     clickShowDetails(resourceId: string) {
         this.showDetails.emit(resourceId);
+    }
+    clickOpenThumbnailModal(resourceId: string) {
+        this.openThumbnailModal.emit(resourceId);
     }
 }

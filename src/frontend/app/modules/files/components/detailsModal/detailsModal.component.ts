@@ -29,7 +29,7 @@ export class DetailsModalComponent implements OnInit {
     availableProjectTagModelList: Array<TagModel>;
     selectedTagId: string;
 
-    @ViewChild("template", { static: false }) elementView: TemplateRef<any>;
+    @ViewChild("detailsTemplate", { static: false }) elementView: TemplateRef<any>;
 
     show(resourceId: string) {
         this.resource = this.projectContextService.getResourceModel(resourceId);

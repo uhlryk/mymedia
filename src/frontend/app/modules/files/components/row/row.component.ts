@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
 
@@ -9,6 +9,7 @@ import { ThumbnailService } from "../../../../services/thumbnail.service";
 })
 export class RowComponent implements OnInit {
     @Input() resource: ResourceModel;
+    @Output() openThumbnailModal = new EventEmitter<string>();
     private thumbnail: string = "";
     constructor(
         private thumbnailService: ThumbnailService
@@ -18,5 +19,9 @@ export class RowComponent implements OnInit {
         this.thumbnailService.getThumbnail(this.resource).subscribe(thumbnail => {
             this.thumbnail = thumbnail;
         });
+    }
+
+    clickThumbanil() {
+        this.openThumbnailModal.emit(this.resource.getId());
     }
 }

@@ -15,6 +15,7 @@ import { ThumbnailService } from "../../services/thumbnail.service";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from './components/search/search.component';
 import { OrderComponent } from './components/order/order.component';
+import { ImageModalComponent } from './components/image-modal/image-modal.component';
 @NgModule({
     imports: [CommonModule, FormsModule, ModalModule.forRoot()],
     providers: [ThumbnailService, ResultManipulationService],
@@ -28,7 +29,8 @@ import { OrderComponent } from './components/order/order.component';
         DetailsModalComponent,
         RankingComponent,
         SearchComponent,
-        OrderComponent
+        OrderComponent,
+        ImageModalComponent
     ]
 })
 export class FilesModule {}

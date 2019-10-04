@@ -3,19 +3,21 @@
         <div class="col-3">
             <app-order></app-order>
             <app-search></app-search>
-
         </div>
         <div class="col-7">
             <app-list
                 [resourceList]="resourceList"
                 (openFile)="openFile($event)"
                 (showDetails)="showFileDetails($event)"
+                (openThumbnailModal)="openThumbnailModal($event)"
             ></app-list>
 
             <app-details-modal
                 (openFile)="openFile($event)"
                 (showDetails)="showFileDetails($event)"
             ></app-details-modal>
+
+            <app-image-modal></app-image-modal>
         </div>
     </div>
 </div>

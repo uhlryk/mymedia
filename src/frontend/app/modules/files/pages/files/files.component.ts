@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { ResultManipulationService } from "../../../../services/result-manipulation.service";
 import { DetailsModalComponent } from "../../components/detailsModal/detailsModal.component";
+import { ImageModalComponent } from "../../components/image-modal/image-modal.component";
 import ResourceModel from "../../../../models/resource.model";
 
 @Component({
@@ -11,6 +12,7 @@ import ResourceModel from "../../../../models/resource.model";
 export class FilesComponent implements OnInit {
     @ViewChild(DetailsModalComponent, { static: true })
     detailsModal: DetailsModalComponent;
+    @ViewChild(ImageModalComponent, { static: true }) imageModal: ImageModalComponent;
 
     resourceList: Array<ResourceModel>;
     constructor(
@@ -35,7 +37,14 @@ export class FilesComponent implements OnInit {
     }
 
     showFileDetails(resourceId) {
+        console.log("AAAA");
         console.log(resourceId);
         this.detailsModal.show(resourceId);
+    }
+
+    openThumbnailModal(resourceId) {
+        console.log("BBBBB");
+        console.log(resourceId);
+        this.imageModal.show(resourceId);
     }
 }
