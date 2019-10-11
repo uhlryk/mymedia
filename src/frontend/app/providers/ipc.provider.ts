@@ -1,5 +1,4 @@
-import { ipcRenderer } from "electron";
-
+const { ipcRenderer } = (<any>window).electron;
 export default class IpcProvider {
     static async request(channel: string, params?: any): Promise<any> {
         const responseChannel: string = channel + Math.floor(Math.random() * 1000);

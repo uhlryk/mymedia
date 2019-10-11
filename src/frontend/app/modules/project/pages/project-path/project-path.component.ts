@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { Router } from "@angular/router";
 import { ProjectContextService } from "../../../../services/projectContext.service";
-import { remote } from "electron";
+const { remote } = (<any>window).electron;
 const dialog = remote.dialog;
 
 @Component({
