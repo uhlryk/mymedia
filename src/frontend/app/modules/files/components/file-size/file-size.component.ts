@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
     selector: "app-file-size",
-    template: "<div>{{_size}}</div>",
+    template: "<span>{{_size}}</span>",
     styleUrls: ["./file-size.component.scss"]
 })
 export class FileSizeComponent implements OnInit {

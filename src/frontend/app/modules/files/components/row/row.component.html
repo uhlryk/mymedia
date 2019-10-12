@@ -1,20 +1,43 @@
-<td>
-    <img (click)="clickThumbanil()" width="100" [src]="thumbnail"/>
-</td>
-<td>
-    <div>
-        {{ resource.getTitle() }}
+<mat-list-item>
+    <img matListAvatar (click)="clickThumbanil()" [src]="thumbnail" alt="...">
+    <div matLine> {{ resource.getTitle() }} </div>
+    <div matLine>
+        <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
+        &nbsp;
+        <app-file-size [size]="resource.getSize()"></app-file-size>
     </div>
-    <div>
+    <div matLine>
         <span *ngFor="let tag of resource.getResourceTagModelList()">{{
-            tag.getName()
+        tag.getName()
         }}</span>
     </div>
-    <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
-</td>
-<td>
-    <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
-</td>
-<td>
-    <ng-content></ng-content>
-</td>
+    <button mat-icon-button (click)="clickOpenDetails()">
+        <mat-icon>info</mat-icon>
+    </button>
+    <button mat-icon-button (click)="clickExecuteMedia()">
+        <mat-icon>play_arrow</mat-icon>
+    </button>
+</mat-list-item>
+
+
+
+<!--<td>-->
+    <!--<img  width="100" [src]="thumbnail"/>-->
+<!--</td>-->
+<!--<td>-->
+    <!--<div>-->
+        <!--{{ resource.getTitle() }}-->
+    <!--</div>-->
+    <!--<div>-->
+        <!--<span *ngFor="let tag of resource.getResourceTagModelList()">{{-->
+            <!--tag.getName()-->
+        <!--}}</span>-->
+    <!--</div>-->
+    <!--<div><app-file-size [size]="resource.getSize()"></app-file-size></div>-->
+<!--</td>-->
+<!--<td>-->
+    <!--<app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>-->
+<!--</td>-->
+<!--<td>-->
+    <!--<ng-content></ng-content>-->
+<!--</td>-->
