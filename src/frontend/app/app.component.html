@@ -1,33 +1,33 @@
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a
-            class="nav-link"
-            routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Project</a
-        >
-    </li>
-    <li class="nav-item">
-        <a
-            class="nav-link"
-            routerLink="/files"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Files</a
-        >
-    </li>
-    <li class="nav-item">
-        <a
-            class="nav-link"
-            routerLink="/tags"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Tags</a
-        >
-    </li>
-</ul>
+<app-top-menu></app-top-menu>
 
-<div class="container-fluid">
-    <router-outlet></router-outlet>
-</div>
+<!--<ul class="nav nav-tabs">-->
+<!--<li class="nav-item">-->
+<!--<a-->
+<!--class="nav-link"-->
+<!--routerLink="/"-->
+<!--routerLinkActive="active"-->
+<!--[routerLinkActiveOptions]="{ exact: true }"-->
+<!--&gt;Project</a-->
+<!--&gt;-->
+<!--</li>-->
+<!--<li class="nav-item">-->
+<!--<a-->
+<!--class="nav-link"-->
+<!--routerLink="/files"-->
+<!--routerLinkActive="active"-->
+<!--[routerLinkActiveOptions]="{ exact: true }"-->
+<!--&gt;Files</a-->
+<!--&gt;-->
+<!--</li>-->
+<!--<li class="nav-item">-->
+<!--<a-->
+<!--class="nav-link"-->
+<!--routerLink="/tags"-->
+<!--routerLinkActive="active"-->
+<!--[routerLinkActiveOptions]="{ exact: true }"-->
+<!--&gt;Tags</a-->
+<!--&gt;-->
+<!--</li>-->
+<!--</ul>-->
+
+<router-outlet></router-outlet>
