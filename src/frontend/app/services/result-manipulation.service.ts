@@ -11,7 +11,6 @@ export class ResultManipulationService {
     constructor() {}
 
     public setSearch(searchTerm: string = "") {
-        console.log("A2");
         this._searchTerm = searchTerm;
         this.compute();
     }

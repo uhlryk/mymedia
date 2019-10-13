@@ -12,7 +12,7 @@ export class ProjectContextService {
     constructor(private _ngZone: NgZone) {}
     ensureInitialized(): Observable<boolean> {
         return Observable.create(async observable => {
-            if(!this.getProjectModel()) {
+            if (!this.getProjectModel()) {
                 this._projectModel = new ProjectModel();
             }
             await this.getProjectModel().loadProject();
@@ -22,10 +22,10 @@ export class ProjectContextService {
             });
         });
     }
-    setProjectPath(projectFolderPath: string): Observable<boolean> {
+    setProjectPath(): Observable<boolean> {
         return Observable.create(async observable => {
             this._projectModel = new ProjectModel();
-            await this.getProjectModel().setProjectPath(projectFolderPath);
+            await this.getProjectModel().setProjectPath();
 
             this._ngZone.run(() => {
                 observable.next(true);
@@ -33,7 +33,6 @@ export class ProjectContextService {
             });
         });
     }
-
     getProjectPath(): Observable<string> {
         return Observable.create(async observable => {
             const projectPath = await this.getProjectModel().getProjectPath();
@@ -107,24 +106,36 @@ export class ProjectContextService {
     }
 
     removeProjectTag(tagId) {
-        this.getProjectModel().getResourceCollectionModel().removeAllResourceTagModel(tagId);
-        this.getProjectModel().getTagCollectionModel().removeTagModelById(tagId);
+        this.getProjectModel()
+            .getResourceCollectionModel()
+            .removeAllResourceTagModel(tagId);
+        this.getProjectModel()
+            .getTagCollectionModel()
+            .removeTagModelById(tagId);
     }
 
     createProjectTag(tagName) {
-        this.getProjectModel().getTagCollectionModel().addTagModel(TagModel.create(tagName));
+        this.getProjectModel()
+            .getTagCollectionModel()
+            .addTagModel(TagModel.create(tagName));
     }
 
     getProjectTagList(): Array<TagModel> {
-        return this.getProjectModel().getTagCollectionModel().getList();
+        return this.getProjectModel()
+            .getTagCollectionModel()
+            .getList();
     }
 
     getProjectTagModelById(tagId: string): TagModel {
-        return this.getProjectModel().getTagCollectionModel().getTagModelById(tagId);
+        return this.getProjectModel()
+            .getTagCollectionModel()
+            .getTagModelById(tagId);
     }
 
     getProjectTagModelByName(tagName: string): TagModel {
-        return this.getProjectModel().getTagCollectionModel().getTagModelByName(tagName);
+        return this.getProjectModel()
+            .getTagCollectionModel()
+            .getTagModelByName(tagName);
     }
 
     saveProject(): Observable<null> {

@@ -10,8 +10,8 @@ import IpcProvider from "../providers/ipc.provider";
 export default class ProjectModel {
     private _tagCollectionModel: TagCollectionModel;
     private _resourceCollectionModel: ResourceCollectionModel;
-    public async setProjectPath(projectFolderPath: string) {
-        await IpcProvider.request("project/set", projectFolderPath);
+    public async setProjectPath() {
+        await IpcProvider.request("project/set");
     }
     public async getProjectPath(): Promise<string> {
         return await IpcProvider.request("project/get");

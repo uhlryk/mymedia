@@ -1,4 +1,4 @@
-import { ipcMain, shell } from "electron";
+import { ipcMain, shell, dialog } from "electron";
 import ProjectInterface from "../shared/types/project.interface";
 import loadFile from "./fs/loadFile";
 import saveFile from "./fs/saveFile";
@@ -14,15 +14,17 @@ export default class ChannelManager {
     static PROJECT_THUMBNAIL_FILE = "thum.jpg";
     _projectPath: string;
     constructor() {
-        ipcMain.on(
-            "project/set",
-            (event, responseChannel: string, projectPath: string) => {
-                console.log("Set Project ", projectPath);
-                this._projectPath = projectPath;
-                event.reply(responseChannel);
-            }
-        );
-
+        ipcMain.on("project/set", (event, responseChannel: string) => {
+            dialog.showOpenDialog(
+                {
+                    properties: ["openDirectory"]
+                },
+                fileNames => {
+                    this._projectPath = fileNames[0];
+                    event.reply(responseChannel);
+                }
+            );
+        });
         ipcMain.on("project/get", (event, responseChannel: string) => {
             console.log("Get Project ", this._projectPath);
             event.reply(responseChannel, this._projectPath);
@@ -82,10 +84,7 @@ export default class ChannelManager {
                     event.reply(responseChannel, thumbnail);
                 } else {
                     const newThumbnail: string = await generateThumbnail(
-                        path.resolve(
-                            this.getProjectPath(),
-                            resourcePath
-                        ),
+                        path.resolve(this.getProjectPath(), resourcePath),
                         path.resolve(
                             this.getProjectPath(),
                             ChannelManager.PROJECT_FOLDER,
@@ -94,7 +93,7 @@ export default class ChannelManager {
                         ),
                         ChannelManager.PROJECT_THUMBNAIL_FILE
                     );
-                    if(newThumbnail) {
+                    if (newThumbnail) {
                         event.reply(responseChannel, newThumbnail);
                     } else {
                         event.reply(responseChannel, null);
