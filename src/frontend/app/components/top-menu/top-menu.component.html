@@ -1,32 +1,29 @@
-<header>
-        <h1>MyMedia</h1>
-
-        <span
-            ><a
-                class="nav-link"
+<header class="ks-top-menu grid-container full">
+    <ul class="menu">
+        <li class="menu-text">MyMedia</li>
+        <li class="is-active">
+            <a
                 routerLink="/"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 >Project</a
-            ></span
-        >
-        <span class = "fill-remaining-space"></span>
-        <span
-            ><a
-                class="nav-link"
+            >
+        </li>
+        <li>
+            <a
                 routerLink="/files"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 >Files</a
-            ></span
-        >
-        <span>
+            >
+        </li>
+        <li>
             <a
-                class="nav-link"
                 routerLink="/tags"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 >Tags</a
             >
-        </span>
+        </li>
+    </ul>
 </header>
