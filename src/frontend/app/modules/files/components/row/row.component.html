@@ -1,18 +1,27 @@
-    <img  (click)="clickThumbanil()" [src]="thumbnail" alt="...">
-    <div > {{ resource.getTitle() }} </div>
-    <div >
-        <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
-        &nbsp;
-        <app-file-size [size]="resource.getSize()"></app-file-size>
+<div class="">
+    <div class="card">
+        <img (click)="clickThumbanil()" [src]="thumbnail" alt="..." />
+        <div class="card-section">
+            <div>{{ resource.getTitle() }}</div>
+        </div>
+        <div class="card-section">
+            <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
+            &nbsp;
+            <app-file-size [size]="resource.getSize()"></app-file-size>
+        </div>
+        <div class="card-section">
+            <span *ngFor="let tag of resource.getResourceTagModelList()">{{
+                tag.getName()
+            }}</span>
+        </div>
+        <div class="card-divider">
+            <i class="fi-list"></i>
+            <button (click)="clickOpenDetails()">
+                <i class="material-icons">info</i>
+            </button>
+            <button (click)="clickExecuteMedia()">
+                <i class="material-icons">play_arrow</i>
+            </button>
+        </div>
     </div>
-    <div >
-        <span *ngFor="let tag of resource.getResourceTagModelList()">{{
-        tag.getName()
-        }}</span>
-    </div>
-    <button (click)="clickOpenDetails()">
-       info
-    </button>
-    <button (click)="clickExecuteMedia()">
-        play_arrow
-    </button>
+</div>

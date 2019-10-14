@@ -1,10 +1,13 @@
-<div>
-    <app-row
-        *ngFor="let resource of resourceList"
-        [resource]="resource"
-        (openThumbnailModal)="clickOpenThumbnailModal($event)"
-        (openDetailsModal)="clickShowDetails($event)"
-        (executeMedia)="clickOpenFile($event)"
-    >
-    </app-row>
+<div class="grid-container full">
+    <div class="grid-x grid-margin-x small-up-2 medium-up-3">
+        <app-row
+            class="cell small-4"
+            *ngFor="let resource of resourceList"
+            [resource]="resource"
+            (openThumbnailModal)="clickOpenThumbnailModal($event)"
+            (openDetailsModal)="clickShowDetails($event)"
+            (executeMedia)="clickOpenFile($event)"
+        >
+        </app-row>
+    </div>
 </div>
