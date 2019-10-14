@@ -7,6 +7,7 @@ import getThumbnail from "./fs/getThumbnail";
 import generateThumbnail from "./fs/generateThumbnail";
 import * as path from "path";
 import FileInterface from "../shared/types/file.interface";
+import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 export default class ChannelManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
@@ -14,24 +15,27 @@ export default class ChannelManager {
     static PROJECT_THUMBNAIL_FILE = "thum.jpg";
     _projectPath: string;
     constructor() {
-        ipcMain.on("project/set", (event, responseChannel: string) => {
-            dialog.showOpenDialog(
-                {
-                    properties: ["openDirectory"]
-                },
-                fileNames => {
-                    this._projectPath = fileNames[0];
-                    event.reply(responseChannel);
-                }
-            );
-        });
-        ipcMain.on("project/get", (event, responseChannel: string) => {
+        ipcMain.on(
+            IpcProviderResourceEnums.SET_PROJECT,
+            (event, responseChannel: string) => {
+                dialog.showOpenDialog(
+                    {
+                        properties: ["openDirectory"]
+                    },
+                    fileNames => {
+                        this._projectPath = fileNames[0];
+                        event.reply(responseChannel);
+                    }
+                );
+            }
+        );
+        ipcMain.on(IpcProviderResourceEnums.GET_PROJECT, (event, responseChannel: string) => {
             console.log("Get Project ", this._projectPath);
             event.reply(responseChannel, this._projectPath);
         });
 
         ipcMain.on(
-            "project/save",
+            IpcProviderResourceEnums.SAVE_PROJECT,
             async (event, responseChannel: string, project: ProjectInterface) => {
                 await saveFile(
                     path.resolve(this.getProjectPath(), ChannelManager.PROJECT_FOLDER),
@@ -43,7 +47,7 @@ export default class ChannelManager {
             }
         );
 
-        ipcMain.on("project/load", async (event, responseChannel: string) => {
+        ipcMain.on(IpcProviderResourceEnums.LOAD_PROJECT, async (event, responseChannel: string) => {
             const projectFileString = await loadFile(
                 this.getProjectPath(),
                 ChannelManager.PROJECT_FOLDER,
@@ -53,11 +57,11 @@ export default class ChannelManager {
             event.reply(responseChannel, projectFile);
         });
 
-        ipcMain.on("resource/open", (event, resourcePath: string) => {
+        ipcMain.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, (event, resourcePath: string) => {
             shell.openItem(path.join(this.getProjectPath(), resourcePath));
         });
 
-        ipcMain.on("resource/list", async (event, responseChannel: string) => {
+        ipcMain.on(IpcProviderResourceEnums.GET_LIST_RESOURCE, async (event, responseChannel: string) => {
             const fileList: Array<FileInterface> = await getFileList(
                 this.getProjectPath()
             );
@@ -65,7 +69,7 @@ export default class ChannelManager {
         });
 
         ipcMain.on(
-            "resource/thumbnail",
+            IpcProviderResourceEnums.GET_THUMBNAIL,
             async (
                 event,
                 responseChannel: string,

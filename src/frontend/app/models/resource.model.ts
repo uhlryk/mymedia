@@ -1,4 +1,5 @@
 import uuid from "uuidv4";
+import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ResourceInterface from "../../../shared/types/resource.interface";
 import FileInterface from "../../../shared/types/file.interface";
 import TagCollectionModel from "./tag.collection.model";
@@ -65,7 +66,7 @@ export default class ResourceModel {
         if (this._thumbnail) {
             return this._thumbnail;
         }
-        this._thumbnail = await IpcProvider.request("resource/thumbnail", {
+        this._thumbnail = await IpcProvider.request(IpcProviderResourceEnums.GET_THUMBNAIL, {
             id: this.getId(),
             filePath: this.getFilePath()
         });

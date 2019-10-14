@@ -2,6 +2,7 @@ import TagCollectionModel from "./tag.collection.model";
 import ProjectInterface from "../../../shared/types/project.interface";
 import ResourceCollectionModel from "./resource.collection.model";
 import FileInterface from "../../../shared/types/file.interface";
+import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import * as path from "path";
 import TagModel from "./tag.model";
 import ResourceModel from "./resource.model";
@@ -11,17 +12,17 @@ export default class ProjectModel {
     private _tagCollectionModel: TagCollectionModel;
     private _resourceCollectionModel: ResourceCollectionModel;
     public async setProjectPath() {
-        await IpcProvider.request("project/set");
+        await IpcProvider.request(IpcProviderResourceEnums.SET_PROJECT);
     }
     public async getProjectPath(): Promise<string> {
-        return await IpcProvider.request("project/get");
+        return await IpcProvider.request(IpcProviderResourceEnums.GET_PROJECT);
     }
     private async loadFiles(): Promise<Array<FileInterface>> {
-        return await IpcProvider.request("resource/list");
+        return await IpcProvider.request(IpcProviderResourceEnums.GET_LIST_RESOURCE);
     }
 
     private async loadProjectFile(): Promise<ProjectInterface> {
-        const project: ProjectInterface = await IpcProvider.request("project/load");
+        const project: ProjectInterface = await IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT);
         console.log(project);
         return project;
     }
@@ -80,7 +81,7 @@ export default class ProjectModel {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };
-        return await IpcProvider.request("project/save", project);
+        return await IpcProvider.request(IpcProviderResourceEnums.SAVE_PROJECT, project);
     }
 
     public getResourceCollectionModel(): ResourceCollectionModel {
@@ -95,6 +96,6 @@ export default class ProjectModel {
         const resourceModel: ResourceModel = this._resourceCollectionModel.getResourceModelById(
             resourceId
         );
-        IpcProvider.trigger("resource/open", resourceModel.getFilePath());
+        IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, resourceModel.getFilePath());
     }
 }
