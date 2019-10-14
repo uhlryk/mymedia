@@ -6,7 +6,7 @@ import {
     Output,
     ViewChild
 } from "@angular/core";
-import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+// import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
@@ -19,9 +19,9 @@ import TagModel from "../../../../models/tag.model";
 export class DetailsModalComponent implements OnInit {
     @Output() showDetails = new EventEmitter<string>();
 
-    modalRef: BsModalRef;
+    // modalRef: BsModalRef;
     constructor(
-        private modalService: BsModalService,
+        // private modalService: BsModalService,
         private projectContextService: ProjectContextService
     ) {}
 
@@ -35,7 +35,7 @@ export class DetailsModalComponent implements OnInit {
         this.resource = this.projectContextService.getResourceModel(resourceId);
         this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
         this.selectedTagId = "";
-        this.modalRef = this.modalService.show(this.elementView);
+        // this.modalRef = this.modalService.show(this.elementView);
     }
 
     ngOnInit() {}

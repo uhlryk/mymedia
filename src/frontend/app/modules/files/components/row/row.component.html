@@ -1,20 +1,18 @@
-<mat-list-item>
-    <img matListAvatar (click)="clickThumbanil()" [src]="thumbnail" alt="...">
-    <div matLine> {{ resource.getTitle() }} </div>
-    <div matLine>
+    <img  (click)="clickThumbanil()" [src]="thumbnail" alt="...">
+    <div > {{ resource.getTitle() }} </div>
+    <div >
         <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
         &nbsp;
         <app-file-size [size]="resource.getSize()"></app-file-size>
     </div>
-    <div matLine>
+    <div >
         <span *ngFor="let tag of resource.getResourceTagModelList()">{{
         tag.getName()
         }}</span>
     </div>
-    <button mat-icon-button (click)="clickOpenDetails()">
-        <mat-icon>info</mat-icon>
+    <button (click)="clickOpenDetails()">
+       info
     </button>
-    <button mat-icon-button (click)="clickExecuteMedia()">
-        <mat-icon>play_arrow</mat-icon>
+    <button (click)="clickExecuteMedia()">
+        play_arrow
     </button>
-</mat-list-item>

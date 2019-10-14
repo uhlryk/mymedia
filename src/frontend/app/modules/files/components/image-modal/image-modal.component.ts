@@ -1,5 +1,4 @@
 import { Component, TemplateRef, OnInit, ViewChild } from "@angular/core";
-import { BsModalService, BsModalRef, ModalOptions } from "ngx-bootstrap/modal";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import ResourceModel from "../../../../models/resource.model";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
@@ -10,9 +9,9 @@ import { ThumbnailService } from "../../../../services/thumbnail.service";
     styleUrls: ["./image-modal.component.scss"]
 })
 export class ImageModalComponent implements OnInit {
-    modalRef: BsModalRef;
+    // modalRef: BsModalRef;
     constructor(
-        private modalService: BsModalService,
+        // private modalService: BsModalService,
         private thumbnailService: ThumbnailService,
         private projectContextService: ProjectContextService
     ) {}
@@ -23,8 +22,8 @@ export class ImageModalComponent implements OnInit {
 
     show(resourceId: string) {
         this.resource = this.projectContextService.getResourceModel(resourceId);
-        const config: ModalOptions = { class: "modal-lg" };
-        this.modalRef = this.modalService.show(this.elementView, config);
+        // const config: ModalOptions = { class: "modal-lg" };
+        // this.modalRef = this.modalService.show(this.elementView, config);
         this.thumbnailService.getThumbnail(this.resource).subscribe(thumbnail => {
             this.thumbnail = thumbnail;
         });

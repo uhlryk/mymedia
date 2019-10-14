@@ -9,24 +9,16 @@ import { FileSizeComponent } from "./components/file-size/file-size.component";
 import { DescriptionComponent } from "./components/description/description.component";
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalComponent } from "./components/detailsModal/detailsModal.component";
-import { ModalModule } from "ngx-bootstrap";
 import { RankingComponent } from "./components/ranking/ranking.component";
 import { ThumbnailService } from "../../services/thumbnail.service";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ImageModalComponent } from "./components/image-modal/image-modal.component";
-import { MatListModule } from "@angular/material/list";
-import { MatIconModule } from "@angular/material/icon";
-import {MatButtonModule} from '@angular/material/button';
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        ModalModule.forRoot(),
-        MatListModule,
-        MatIconModule,
-        MatButtonModule
     ],
     providers: [ThumbnailService, ResultManipulationService],
     declarations: [

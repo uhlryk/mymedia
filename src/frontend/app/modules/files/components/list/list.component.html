@@ -1,5 +1,4 @@
-<mat-list>
-    <mat-list-item> </mat-list-item>
+<div>
     <app-row
         *ngFor="let resource of resourceList"
         [resource]="resource"
@@ -8,4 +7,4 @@
         (executeMedia)="clickOpenFile($event)"
     >
     </app-row>
-</mat-list>
+</div>
