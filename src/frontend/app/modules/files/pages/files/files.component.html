@@ -1,9 +1,9 @@
-<div class="grid-x">
-    <div class="aw-side-menu cell small-3">
+<div class="p-grid">
+    <div class="p-col-fixed" style="width:350px;">
         <app-order></app-order>
         <app-search></app-search>
     </div>
-    <div class="aw-main-container cell auto">
+    <div class="p-col">
         <app-list
             [resourceList]="resourceList"
             (openFile)="openFile($event)"
