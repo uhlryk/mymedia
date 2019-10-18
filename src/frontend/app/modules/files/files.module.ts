@@ -15,11 +15,10 @@ import { ResultManipulationService } from "../../services/result-manipulation.se
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ImageModalComponent } from "./components/image-modal/image-modal.component";
+import { CardModule } from "primeng/card";
+import { ButtonModule } from "primeng/button";
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-    ],
+    imports: [CommonModule, FormsModule, CardModule, ButtonModule],
     providers: [ThumbnailService, ResultManipulationService],
     declarations: [
         FilesComponent,

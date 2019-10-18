@@ -1,27 +1,23 @@
-<div class="">
-    <div class="card">
+<p-card styleClass="ui-card-shadow">
+    <p-header>
         <img (click)="clickThumbanil()" [src]="thumbnail" alt="..." />
-        <div class="card-section">
-            <div>{{ resource.getTitle() }}</div>
-        </div>
-        <div class="card-section">
-            <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
-            &nbsp;
-            <app-file-size [size]="resource.getSize()"></app-file-size>
-        </div>
-        <div class="card-section">
-            <span *ngFor="let tag of resource.getResourceTagModelList()">{{
-                tag.getName()
-            }}</span>
-        </div>
-        <div class="card-divider">
-            <i class="fi-list"></i>
-            <button (click)="clickOpenDetails()">
-                <i class="material-icons">info</i>
-            </button>
-            <button (click)="clickExecuteMedia()">
-                <i class="material-icons">play_arrow</i>
-            </button>
-        </div>
+    </p-header>
+    <div class="card-section">
+        {{ resource.getTitle() }}
     </div>
-</div>
+    <div class="card-section">
+        <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
+    </div>
+    <div class="card-section">&nbsp;
+        <app-file-size [size]="resource.getSize()"></app-file-size>
+    </div>
+    <div class="card-section">
+        <span *ngFor="let tag of resource.getResourceTagModelList()">{{
+            tag.getName()
+        }}</span>
+    </div>
+    <p-footer>
+        <button pButton type="button" (click)="clickOpenDetails()" icon="fas fa-address-card" style="margin-right: .25em"></button>
+        <button pButton type="button" (click)="clickExecuteMedia()" icon="fas fa-play"></button>
+    </p-footer>
+</p-card>
