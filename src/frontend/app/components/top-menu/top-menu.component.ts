@@ -1,3 +1,4 @@
+import { MenuItem } from "primeng/api";
 import { Component, OnInit } from "@angular/core";
 
 @Component({
@@ -8,5 +9,15 @@ import { Component, OnInit } from "@angular/core";
 export class TopMenuComponent implements OnInit {
     constructor() {}
 
-    ngOnInit() {}
+    items: MenuItem[];
+
+    ngOnInit() {
+        this.items = [
+            { label: "Stats", icon: "far fa-address-card" },
+            { label: "Calendar", icon: "fa fa-fw fa-calendar" },
+            { label: "Documentation", icon: "fa fa-fw fa-book" },
+            { label: "Support", icon: "fa fa-fw fa-support" },
+            { label: "Social", icon: "fa fa-fw fa-twitter" }
+        ];
+    }
 }
