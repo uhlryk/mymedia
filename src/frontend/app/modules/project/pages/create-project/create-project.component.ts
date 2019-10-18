@@ -22,10 +22,11 @@ export class CreateProjectComponent implements OnInit {
     }
 
     onCreateProject() {
-        this.projectContextService
-            .createProject(this.createSubFolderTags)
-            .subscribe(isProject => {
-                this.router.navigate(["/files"]);
-            });
+        const isNewSubfolder = this.createSubFolderTags
+            ? !!this.createSubFolderTags[0]
+            : false;
+        this.projectContextService.createProject(isNewSubfolder).subscribe(isProject => {
+            this.router.navigate(["/files"]);
+        });
     }
 }

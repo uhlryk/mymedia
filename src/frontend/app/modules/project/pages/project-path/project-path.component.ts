@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 
 @Component({
-    templateUrl: "project-path.component.html"
+    templateUrl: "project-path.component.html",
+    styleUrls: ["./project-path.component.scss"]
 })
 export class ProjectPathComponent {
     constructor(
