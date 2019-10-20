@@ -2,7 +2,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import ChannelManager from "./ChannelManager";
-
+const contextMenu = require("electron-context-menu");
+contextMenu({
+    showInspectElement: true
+});
 const IS_HOT = process.env.IS_HOT;
 console.log(IS_HOT);
 
