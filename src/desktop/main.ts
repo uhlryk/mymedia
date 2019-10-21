@@ -16,11 +16,13 @@ app.on("ready", () => {
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, "../dist/assets/icon.png"),
         webPreferences: {
+            webSecurity: false,
             nodeIntegration: true // Allows IPC and other APIs
         }
     });
     if (IS_HOT) {
         mainWindow.loadURL("http://localhost:4200/");
+        mainWindow.webContents.openDevTools();
     } else {
         mainWindow.loadFile(path.join(__dirname, "../frontend/index.html"));
     }

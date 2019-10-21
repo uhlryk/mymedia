@@ -17,9 +17,11 @@ import { OrderComponent } from "./components/order/order.component";
 import { ImageModalComponent } from "./components/image-modal/image-modal.component";
 import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
+import { DynamicDialogModule } from "primeng/dynamicdialog";
+import { DialogService } from "primeng/api";
 @NgModule({
-    imports: [CommonModule, FormsModule, CardModule, ButtonModule],
-    providers: [ThumbnailService, ResultManipulationService],
+    imports: [CommonModule, FormsModule, CardModule, ButtonModule, DynamicDialogModule],
+    providers: [ThumbnailService, ResultManipulationService, DialogService],
     declarations: [
         FilesComponent,
         RowComponent,
@@ -32,6 +34,7 @@ import { ButtonModule } from "primeng/button";
         SearchComponent,
         OrderComponent,
         ImageModalComponent
-    ]
+    ],
+    entryComponents: [ImageModalComponent]
 })
 export class FilesModule {}

@@ -4,6 +4,7 @@ import { ResultManipulationService } from "../../../../services/result-manipulat
 import { DetailsModalComponent } from "../../components/detailsModal/detailsModal.component";
 import { ImageModalComponent } from "../../components/image-modal/image-modal.component";
 import ResourceModel from "../../../../models/resource.model";
+import { DialogService } from "primeng/api";
 
 @Component({
     templateUrl: "files.component.html",
@@ -12,12 +13,12 @@ import ResourceModel from "../../../../models/resource.model";
 export class FilesComponent implements OnInit {
     @ViewChild(DetailsModalComponent, { static: true })
     detailsModal: DetailsModalComponent;
-    @ViewChild(ImageModalComponent, { static: true }) imageModal: ImageModalComponent;
 
     resourceList: Array<ResourceModel>;
     constructor(
         private projectContextService: ProjectContextService,
-        private resultManipulationService: ResultManipulationService
+        private resultManipulationService: ResultManipulationService,
+        public dialogService: DialogService
     ) {}
     ngOnInit() {
         this.projectContextService.ensureInitialized().subscribe(() => {
@@ -43,8 +44,13 @@ export class FilesComponent implements OnInit {
     }
 
     openThumbnailModal(resourceId) {
-        console.log("BBBBB");
-        console.log(resourceId);
-        this.imageModal.show(resourceId);
+        this.dialogService.open(ImageModalComponent, {
+            data: {
+                resourceId: resourceId
+            },
+            header: this.projectContextService.getResourceModel(resourceId).getTitle(),
+            width: "70%",
+            contentStyle: { "max-height": "450px", overflow: "auto" }
+        });
     }
 }
