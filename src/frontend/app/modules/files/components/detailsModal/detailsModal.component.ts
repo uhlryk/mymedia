@@ -1,12 +1,5 @@
-import {
-    Component,
-    TemplateRef,
-    EventEmitter,
-    OnInit,
-    Output,
-    ViewChild
-} from "@angular/core";
-// import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { Component, EventEmitter, Output } from "@angular/core";
+
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
@@ -16,29 +9,20 @@ import TagModel from "../../../../models/tag.model";
     templateUrl: "./detailsModal.component.html",
     styleUrls: ["./detailsModal.component.scss"]
 })
-export class DetailsModalComponent implements OnInit {
+export class DetailsModalComponent {
     @Output() showDetails = new EventEmitter<string>();
-
-    // modalRef: BsModalRef;
-    constructor(
-        // private modalService: BsModalService,
-        private projectContextService: ProjectContextService
-    ) {}
+    constructor(private projectContextService: ProjectContextService) {}
 
     resource: ResourceModel;
     availableProjectTagModelList: Array<TagModel>;
     selectedTagId: string;
-
-    @ViewChild("detailsTemplate", { static: false }) elementView: TemplateRef<any>;
-
+    visibleSidebar: boolean;
     show(resourceId: string) {
         this.resource = this.projectContextService.getResourceModel(resourceId);
         this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
         this.selectedTagId = "";
-        // this.modalRef = this.modalService.show(this.elementView);
+        this.visibleSidebar = true;
     }
-
-    ngOnInit() {}
 
     clickOpenFile() {
         this.projectContextService.getProjectModel().open(this.resource.getId());

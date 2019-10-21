@@ -19,8 +19,16 @@ import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
 import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { DialogService } from "primeng/api";
+import { SidebarModule } from "primeng/sidebar";
 @NgModule({
-    imports: [CommonModule, FormsModule, CardModule, ButtonModule, DynamicDialogModule],
+    imports: [
+        CommonModule,
+        FormsModule,
+        CardModule,
+        ButtonModule,
+        DynamicDialogModule,
+        SidebarModule
+    ],
     providers: [ThumbnailService, ResultManipulationService, DialogService],
     declarations: [
         FilesComponent,

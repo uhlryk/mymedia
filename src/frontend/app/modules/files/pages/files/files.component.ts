@@ -15,6 +15,7 @@ export class FilesComponent implements OnInit {
     detailsModal: DetailsModalComponent;
 
     resourceList: Array<ResourceModel>;
+    // visibleSidebar = false;
     constructor(
         private projectContextService: ProjectContextService,
         private resultManipulationService: ResultManipulationService,
@@ -38,8 +39,6 @@ export class FilesComponent implements OnInit {
     }
 
     showFileDetails(resourceId) {
-        console.log("AAAA");
-        console.log(resourceId);
         this.detailsModal.show(resourceId);
     }
 

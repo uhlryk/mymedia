@@ -1,57 +1,60 @@
-<ng-template #detailsTemplate>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Modal</h4>
-        <button
-            type="button"
-            class="close pull-right"
-            aria-label="Close"
-            (click)="modalRef.hide()"
-        >
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div>{{ resource.getFilePath() }}</div>
-        <div>{{ resource.getFileName() }}</div>
-        <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
-        <div>
-            <app-title
-                [title]="resource.getTitle()"
-                (changed)="saveTitle($event)"
-            ></app-title>
-        </div>
-        <div>
-        <app-ranking [editable]="true" [value]="resource.getRanking()" (clickChange)="clickChangeRanking($event)"></app-ranking>
-        </div>
-        <div>
-            <app-description
-                [text]="resource.getDescription()"
-                (changed)="saveDescription($event)"
-            ></app-description>
-        </div>
-        <div>
-            <button (click)="clickOpenFile(resource.getId())">open</button>
-        </div>
+<div >
+    <p-sidebar
+        [(visible)]="visibleSidebar"
+        [baseZIndex]="10000"
+        position="right"
+        styleClass="ui-sidebar-md"
+    >
+        <div *ngIf="resource">
+            <div>{{ resource.getFilePath() }}</div>
+            <div>{{ resource.getFileName() }}</div>
+            <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
+            <div>
+                <app-title
+                    [title]="resource.getTitle()"
+                    (changed)="saveTitle($event)"
+                ></app-title>
+            </div>
+            <div>
+                <app-ranking
+                    [editable]="true"
+                    [value]="resource.getRanking()"
+                    (clickChange)="clickChangeRanking($event)"
+                ></app-ranking>
+            </div>
+            <div>
+                <app-description
+                    [text]="resource.getDescription()"
+                    (changed)="saveDescription($event)"
+                ></app-description>
+            </div>
+            <div>
+                <button (click)="clickOpenFile(resource.getId())">open</button>
+            </div>
 
-        <select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">
-            <option *ngFor="let tag of availableProjectTagModelList" [value]="tag.getId()">
-                {{ tag.getName() }}
-            </option>
-        </select>
+            <select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">
+                <option
+                    *ngFor="let tag of availableProjectTagModelList"
+                    [value]="tag.getId()"
+                >
+                    {{ tag.getName() }}
+                </option>
+            </select>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Tag</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let tag of resource.getResourceTagModelList()">
-                    <td>{{ tag.getName() }}</td>
-                    <td><button (click)="removeTag(tag.getId())">remove</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</ng-template>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Tag</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let tag of resource.getResourceTagModelList()">
+                        <td>{{ tag.getName() }}</td>
+                        <td><button (click)="removeTag(tag.getId())">remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </p-sidebar>
+</div>
