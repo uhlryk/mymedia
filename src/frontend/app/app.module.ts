@@ -6,9 +6,11 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TabMenuModule } from "primeng/tabmenu";
 import { TopMenuComponent } from "./components/top-menu/top-menu.component";
+import { LoaderComponent } from './components/loader/loader.component';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 @NgModule({
-    declarations: [AppComponent, TopMenuComponent],
-    imports: [BrowserModule, AppRoutingModule, TabMenuModule, BrowserAnimationsModule],
+    declarations: [AppComponent, TopMenuComponent, LoaderComponent],
+    imports: [BrowserModule, AppRoutingModule, TabMenuModule, BrowserAnimationsModule, ProgressSpinnerModule],
     providers: [],
     bootstrap: [AppComponent]
 })
