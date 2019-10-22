@@ -1,7 +1,7 @@
 import { Component, ChangeDetectorRef } from "@angular/core";
 import { Router } from "@angular/router";
 import { ProjectContextService } from "../../../../services/projectContext.service";
-import {LoaderService} from "../../../../services/loader.service";
+import { LoaderService } from "../../../../services/loader.service";
 
 @Component({
     templateUrl: "project-path.component.html",
@@ -16,10 +16,10 @@ export class ProjectPathComponent {
     ) {}
 
     onSelectPath() {
-        this.loaderService.show();
+        this.loaderService.showMessage("Waiting for project path");
         this.projectContextService.setProjectPath().subscribe(() => {
             this.projectContextService.loadProject().subscribe(isProject => {
-                this.loaderService.hide();
+                // this.loaderService.hide();
                 if (isProject) {
                     this.router.navigate(["/files"]);
                 } else {
