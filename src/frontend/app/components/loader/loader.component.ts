@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { LoaderService } from "../../services/loader.service";
 
 @Component({
     selector: "app-loader",
@@ -7,7 +8,11 @@ import { Component, OnInit } from "@angular/core";
 })
 export class LoaderComponent implements OnInit {
     private showLoader = false;
-    constructor() {}
+    constructor(private loaderService: LoaderService) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.loaderService.waitForStatus().subscribe(showLoader => {
+            this.showLoader = showLoader
+        })
+    }
 }
