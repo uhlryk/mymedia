@@ -12,4 +12,15 @@ export default class IpcProvider {
     static trigger(channel: string, params?: any): void {
         ipcRenderer.send(channel, params);
     }
+
+    static listen(channel: string, callback: (response: any) => void): RemoveListener {
+        const listener = (event, mainProcessResponse) => {
+            callback(mainProcessResponse);
+        };
+        ipcRenderer.on(channel, listener);
+        return () => {
+            ipcRenderer.removeListener(channel, listener);
+        };
+    }
 }
+export type RemoveListener = () => void;

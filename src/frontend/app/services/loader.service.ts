@@ -9,26 +9,31 @@ export class LoaderService {
         this.status = new LoaderStatus();
     }
 
-    waitForStatus(): Observable<ILoaderStatus> {
+    public waitForStatus(): Observable<ILoaderStatus> {
         return new Observable(observer => {
             this._observer = observer;
         });
     }
 
-    show() {
+    public show() {
         this.status.showLoader = true;
         this._observer.next(this.status);
     }
-    showMessage(message: string) {
+    public showMessage(message: string) {
         this.status.showLoader = true;
         this.status.showMessage = true;
         this.status.message = message;
         this._observer.next(this.status);
     }
-    hide() {
+    public hide() {
         this.status = new LoaderStatus();
         this._observer.next(this.status);
     }
+
+    private listenForBackendChanges() {
+
+    }
+
 }
 
 class LoaderStatus implements ILoaderStatus {
