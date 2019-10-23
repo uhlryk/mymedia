@@ -16,10 +16,9 @@ export class ProjectPathComponent {
     ) {}
 
     onSelectPath() {
-        this.loaderService.showMessage("Waiting for project path");
+        this.loaderService.show();
         this.projectContextService.setProjectPath().subscribe(() => {
-            this.projectContextService.loadProject().subscribe(isProject => {
-                this.loaderService.hide();
+            this.projectContextService.isProjectExist().subscribe(isProject => {
                 if (isProject) {
                     this.router.navigate(["/files"]);
                 } else {

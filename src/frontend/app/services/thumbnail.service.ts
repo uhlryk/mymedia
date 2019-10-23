@@ -20,7 +20,7 @@ export class ThumbnailService {
                 },
                 resource
             });
-            console.log("Add request to queue ", resource.getTitle());
+            // console.log("Add request to queue ", resource.getTitle());
             await this.run();
         });
     }
@@ -30,9 +30,9 @@ export class ThumbnailService {
             this._isRunning = true;
             while (this._list[0]) {
                 const request: ThumbnailRequest = this._list.shift();
-                console.log("Start request for ", request.resource.getTitle());
+                // console.log("Start request for ", request.resource.getTitle());
                 const thumbnail = await request.resource.getThumbnail();
-                console.log("Finish request for ", request.resource.getTitle());
+                // console.log("Finish request for ", request.resource.getTitle());
                 request.callback(thumbnail);
             }
             this._isRunning = false;

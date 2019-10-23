@@ -9,6 +9,14 @@ import ResourceModel from "./resource.model";
 import IpcProvider from "../providers/ipc.provider";
 
 export default class ProjectModel {
+    private static _instance;
+    static getInstance(): ProjectModel {
+        if (!ProjectModel._instance) {
+            ProjectModel._instance = new ProjectModel();
+        }
+        return ProjectModel._instance;
+    }
+
     private _tagCollectionModel: TagCollectionModel;
     private _resourceCollectionModel: ResourceCollectionModel;
     public async setProjectPath() {
@@ -22,11 +30,23 @@ export default class ProjectModel {
     }
 
     private async loadProjectFile(): Promise<ProjectInterface> {
-        const project: ProjectInterface = await IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT);
+        const project: ProjectInterface = await IpcProvider.request(
+            IpcProviderResourceEnums.LOAD_PROJECT
+        );
         console.log(project);
         return project;
     }
 
+    public async isProjectExist(): Promise<boolean> {
+        const isProject: ProjectInterface = await IpcProvider.request(
+            IpcProviderResourceEnums.IS_EXIST_PROJECT
+        );
+        if (isProject) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public async loadProject(): Promise<boolean> {
         const project: ProjectInterface = await this.loadProjectFile();
         if (project) {
@@ -71,7 +91,7 @@ export default class ProjectModel {
         await this.save();
     }
 
-    public async sync() {
+    private async sync() {
         const fileList: Array<FileInterface> = await this.loadFiles();
         this._resourceCollectionModel.sync(fileList);
     }
@@ -96,6 +116,9 @@ export default class ProjectModel {
         const resourceModel: ResourceModel = this._resourceCollectionModel.getResourceModelById(
             resourceId
         );
-        IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, resourceModel.getFilePath());
+        IpcProvider.trigger(
+            IpcProviderResourceEnums.EXECUTE_RESOURCE,
+            resourceModel.getFilePath()
+        );
     }
 }

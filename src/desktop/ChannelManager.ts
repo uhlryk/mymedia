@@ -8,6 +8,7 @@ import generateThumbnail from "./fs/generateThumbnail";
 import * as path from "path";
 import FileInterface from "../shared/types/file.interface";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
+import isProjectStructure from "./fs/isProjectStructure";
 export default class ChannelManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
@@ -18,6 +19,7 @@ export default class ChannelManager {
         ipcMain.on(
             IpcProviderResourceEnums.SET_PROJECT,
             (event, responseChannel: string) => {
+                event.reply(IpcProviderResourceEnums.SET_LOADER_MESSAGE, "Waiting for project path");
                 dialog.showOpenDialog(
                     {
                         properties: ["openDirectory"]
@@ -46,8 +48,17 @@ export default class ChannelManager {
                 event.reply(responseChannel);
             }
         );
+        ipcMain.on(IpcProviderResourceEnums.IS_EXIST_PROJECT, async (event, responseChannel: string) => {
+            event.reply(IpcProviderResourceEnums.SET_LOADER_MESSAGE, "Checking if project exist");
+            const isProject = await isProjectStructure(
+                this.getProjectPath(),
+                ChannelManager.PROJECT_FOLDER
+            );
+            event.reply(responseChannel, isProject);
+        });
 
         ipcMain.on(IpcProviderResourceEnums.LOAD_PROJECT, async (event, responseChannel: string) => {
+            event.reply(IpcProviderResourceEnums.SET_LOADER_MESSAGE, "Loading project");
             const projectFileString = await loadFile(
                 this.getProjectPath(),
                 ChannelManager.PROJECT_FOLDER,

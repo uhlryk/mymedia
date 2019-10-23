@@ -8,13 +8,9 @@ import TagModel from "../models/tag.model";
 
 @Injectable()
 export class ProjectContextService {
-    _projectModel: ProjectModel;
     constructor(private _ngZone: NgZone) {}
-    ensureInitialized(): Observable<boolean> {
+    loadProject(): Observable<boolean> {
         return Observable.create(async observable => {
-            if (!this.getProjectModel()) {
-                this._projectModel = new ProjectModel();
-            }
             await this.getProjectModel().loadProject();
             this._ngZone.run(() => {
                 observable.next(true);
@@ -24,7 +20,6 @@ export class ProjectContextService {
     }
     setProjectPath(): Observable<boolean> {
         return Observable.create(async observable => {
-            this._projectModel = new ProjectModel();
             await this.getProjectModel().setProjectPath();
 
             this._ngZone.run(() => {
@@ -44,7 +39,7 @@ export class ProjectContextService {
         });
     }
     getProjectModel(): ProjectModel {
-        return this._projectModel;
+        return ProjectModel.getInstance();
     }
 
     createProject(createSubFolderTags: boolean): Observable<boolean> {
@@ -58,9 +53,9 @@ export class ProjectContextService {
         });
     }
 
-    loadProject(): Observable<boolean> {
+    isProjectExist(): Observable<boolean> {
         return Observable.create(async observable => {
-            const isProject: boolean = await this.getProjectModel().loadProject();
+            const isProject: boolean = await this.getProjectModel().isProjectExist();
             if (isProject) {
                 this._ngZone.run(() => {
                     observable.next(true);

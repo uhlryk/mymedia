@@ -5,6 +5,7 @@ import { DetailsModalComponent } from "../../components/detailsModal/detailsModa
 import { ImageModalComponent } from "../../components/image-modal/image-modal.component";
 import ResourceModel from "../../../../models/resource.model";
 import { DialogService } from "primeng/api";
+import {LoaderService} from "../../../../services/loader.service";
 
 @Component({
     templateUrl: "files.component.html",
@@ -19,10 +20,11 @@ export class FilesComponent implements OnInit {
     constructor(
         private projectContextService: ProjectContextService,
         private resultManipulationService: ResultManipulationService,
-        public dialogService: DialogService
+        public dialogService: DialogService,
+        private loaderService: LoaderService
     ) {}
     ngOnInit() {
-        this.projectContextService.ensureInitialized().subscribe(() => {
+        this.projectContextService.loadProject().subscribe(() => {
             this.resultManipulationService
                 .manipulate(
                     this.projectContextService.getResourceCollectionModel().getList()
@@ -31,6 +33,7 @@ export class FilesComponent implements OnInit {
                     this.resourceList = resourceList;
                 });
             this.resultManipulationService.compute();
+            this.loaderService.hide();
         });
     }
 
