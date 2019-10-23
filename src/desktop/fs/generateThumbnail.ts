@@ -14,12 +14,19 @@ export default async function generateThumbnail(
         await fse.mkdir(thumbnailFolderPath);
     }
     const childProcess = spawn(ffmpeg.path, [
+        "-nostats",
+        "-loglevel",
+        "panic",
         "-i",
         sourceFilePath,
         "-ss",
         "00:00:05.000",
         "-vframes",
         "1",
+        // "-q:v",
+        // "2",
+        // "-s",
+        // "480x320",
         thumbnailFilePath
     ]);
     await new Promise((resolve, reject) => {
