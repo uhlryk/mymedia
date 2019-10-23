@@ -6,6 +6,7 @@ import { ImageModalComponent } from "../../components/image-modal/image-modal.co
 import ResourceModel from "../../../../models/resource.model";
 import { DialogService } from "primeng/api";
 import {LoaderService} from "../../../../services/loader.service";
+import {Router} from "@angular/router";
 
 @Component({
     templateUrl: "files.component.html",
@@ -21,19 +22,26 @@ export class FilesComponent implements OnInit {
         private projectContextService: ProjectContextService,
         private resultManipulationService: ResultManipulationService,
         public dialogService: DialogService,
-        private loaderService: LoaderService
+        private loaderService: LoaderService,
+        private router: Router,
     ) {}
     ngOnInit() {
-        this.projectContextService.loadProject().subscribe(() => {
-            this.resultManipulationService
-                .manipulate(
-                    this.projectContextService.getResourceCollectionModel().getList()
-                )
-                .subscribe(resourceList => {
-                    this.resourceList = resourceList;
+        this.projectContextService.isProjectExist().subscribe(isProjectExist => {
+            if(isProjectExist) {
+                this.projectContextService.loadProject().subscribe(() => {
+                    this.resultManipulationService
+                        .manipulate(
+                            this.projectContextService.getResourceCollectionModel().getList()
+                        )
+                        .subscribe(resourceList => {
+                            this.resourceList = resourceList;
+                        });
+                    this.resultManipulationService.compute();
+                    this.loaderService.hide();
                 });
-            this.resultManipulationService.compute();
-            this.loaderService.hide();
+            } else {
+                this.router.navigate(["/create-project"]);
+            }
         });
     }
 
