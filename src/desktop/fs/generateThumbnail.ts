@@ -46,9 +46,6 @@ export default async function generateThumbnail(
     console.log("Thumbnail should be ready");
     const isThumbnailFile = await fse.pathExists(thumbnailFilePath);
     if (isThumbnailFile) {
-        console.log("Thumbnail exist", isThumbnailFile);
-        // const fileBuffer: Buffer = await fse.readFile(thumbnailFilePath);
-        // return "data:image/jpg;base64," + fileBuffer.toString("base64");
         return "file://" + thumbnailFilePath;
     } else {
         console.log("Thumbnail doesn't exist");
