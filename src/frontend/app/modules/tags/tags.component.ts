@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../services/projectContext.service";
 import TagModel from "../../models/tag.model";
+import { LoaderService } from "../../services/loader.service";
 
 @Component({
     templateUrl: "./tags.component.html",
@@ -14,14 +15,17 @@ export class TagsComponent implements OnInit {
     buttonName: string;
     tagList: Array<TagModel>;
 
-    constructor(private projectContextService: ProjectContextService) {}
+    constructor(
+        private projectContextService: ProjectContextService,
+        private loaderService: LoaderService
+    ) {}
 
     ngOnInit() {
         this.projectContextService.loadProject().subscribe(() => {
             this.buttonName = TagsComponent.CREATE_NAME;
             this.tagList = this.projectContextService.getProjectTagList();
+            this.loaderService.hide();
         });
-
     }
 
     setValue() {
@@ -50,9 +54,7 @@ export class TagsComponent implements OnInit {
         this.buttonName = TagsComponent.UPDATE_NAME;
     }
     removeTag(tagId) {
-        this.projectContextService.removeProjectTag(
-            tagId
-        );
+        this.projectContextService.removeProjectTag(tagId);
         this.tagId = null;
         this.tagName = "";
         this.buttonName = TagsComponent.CREATE_NAME;
