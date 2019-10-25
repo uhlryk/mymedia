@@ -59,8 +59,8 @@ export class FilesComponent implements OnInit {
                 resourceId: resourceId
             },
             header: this.projectContextService.getResourceModel(resourceId).getTitle(),
-            width: "70%",
-            contentStyle: { "max-height": "450px", overflow: "auto" }
+            width: "90%",
+            contentStyle: { "max-height": "90%", overflow: "auto" }
         });
     }
 }
