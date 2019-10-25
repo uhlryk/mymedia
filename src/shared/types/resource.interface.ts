@@ -7,4 +7,6 @@ export default interface ResourceInterface {
     description: string;
     id: string;
     tags: Array<string>;
+    isRemoved: boolean;
+    isNew: boolean;
 }

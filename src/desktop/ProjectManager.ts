@@ -11,6 +11,8 @@ import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import ResourceInterface from "../shared/types/resource.interface";
 import TagInterface from "../shared/types/tag.interface";
+import uuid from "uuidv4";
+
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
@@ -18,25 +20,9 @@ export default class ProjectManager {
     static PROJECT_THUMBNAIL_FILE = "thum.jpg";
     _projectPath: string;
     _project: ProjectInterface;
-    _resourceFileList: Array<FileInterface>;
+    _fileList: Array<FileInterface>;
     constructor(projectPath: string) {
         this._projectPath = projectPath;
-
-        ipcMain.on(
-            IpcProviderResourceEnums.GET_PROJECT,
-            (event, responseChannel: string) => {
-                console.log("Get Project ", this._projectPath);
-                event.reply(responseChannel, this._projectPath);
-            }
-        );
-
-        ipcMain.on(
-            IpcProviderResourceEnums.SAVE_PROJECT,
-            async (event, responseChannel: string, project: ProjectInterface) => {
-                await this.saveProject(project);
-                event.reply(responseChannel);
-            }
-        );
 
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
@@ -60,8 +46,26 @@ export default class ProjectManager {
                     event.reply(responseChannel);
                 }
                 await this.loadProjectFile();
-
+                await this.loadResourceFileList();
+                await this.generateResourceList();
+                await this.saveProject(this._project);
                 event.reply(responseChannel, this._project);
+            }
+        );
+
+        ipcMain.on(
+            IpcProviderResourceEnums.GET_PROJECT,
+            (event, responseChannel: string) => {
+                console.log("Get Project ", this._projectPath);
+                event.reply(responseChannel, this._projectPath);
+            }
+        );
+
+        ipcMain.on(
+            IpcProviderResourceEnums.SAVE_PROJECT,
+            async (event, responseChannel: string, project: ProjectInterface) => {
+                await this.saveProject(project);
+                event.reply(responseChannel);
             }
         );
 
@@ -72,14 +76,14 @@ export default class ProjectManager {
             }
         );
 
-        ipcMain.on(
-            IpcProviderResourceEnums.GET_LIST_RESOURCE,
-            async (event, responseChannel: string) => {
-                event.reply(IpcProviderResourceEnums.SET_LOADER_MESSAGE, "Loading files");
-                await this.loadResourceFileList(event);
-                event.reply(responseChannel, this._resourceFileList);
-            }
-        );
+        // ipcMain.on(
+        //     IpcProviderResourceEnums.GET_LIST_RESOURCE,
+        //     async (event, responseChannel: string) => {
+        //         event.reply(IpcProviderResourceEnums.SET_LOADER_MESSAGE, "Loading files");
+        //         await this.loadResourceFileList();
+        //         event.reply(responseChannel, this._fileList);
+        //     }
+        // );
 
         ipcMain.on(
             IpcProviderResourceEnums.GET_THUMBNAIL,
@@ -145,25 +149,40 @@ export default class ProjectManager {
         this._project = JSON.parse(projectFileString);
     }
 
-    private async loadResourceFileList(event) {
-        this._resourceFileList = await getFileList(this.getProjectPath());
+    private async loadResourceFileList() {
+        this._fileList = await getFileList(this.getProjectPath());
     }
 
-    // private async generateResources(event) {
-    //     this._project.resourceList.map((resource: ResourceInterface) => {
-    //         resource.isRemoved = true;
-    //     });
-    //     this._resourceFileList.forEach((file:FileInterface) => {
-    //         const resource = this._project.resourceList.find((resource: ResourceInterface) => resource.filePath === file.filePath);
-    //         if(resource) {
-    //             resource.isRemoved = false;
-    //         } else {
-    //             const newResource = {
-    //
-    //             }
-    //         }
-    //     })
-    // }
+    private async generateResourceList() {
+        this._project.resourceList.map((resource: ResourceInterface) => {
+            resource.isRemoved = true;
+            resource.isNew = false;
+        });
+        this._fileList.forEach((file: FileInterface) => {
+            const resource = this._project.resourceList.find(
+                (testResource: ResourceInterface) =>
+                    testResource.filePath === file.filePath
+            );
+            if (resource) {
+                resource.isRemoved = false;
+            } else {
+                const newResource = {
+                    filePath: file.filePath,
+                    fileName: file.fileName,
+                    title: file.name,
+                    size: file.size,
+                    ranking: 0,
+                    description: "",
+                    id: uuid(),
+                    tags: [],
+                    isRemoved: false,
+                    isNew: true
+                };
+                this._project.resourceList.push(newResource);
+            }
+        });
+    }
+
     private getProjectPath(): string {
         return this._projectPath;
     }

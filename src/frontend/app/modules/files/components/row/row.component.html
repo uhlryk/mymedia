@@ -1,25 +1,41 @@
 <p-card styleClass="ui-card-shadow">
     <p-header>
         <div class="thumbnail-wrapper">
-        <img class="thumbnail" (click)="clickThumbanil()" [src]="thumbnail" alt="" />
+            <img class="thumbnail" (click)="clickThumbanil()" [src]="thumbnail" alt="" />
         </div>
     </p-header>
-    <div class="card-section">
-        {{ resource.getTitle() }}
-    </div>
-    <div class="card-section">
-        <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
-    </div>
-    <div class="card-section">&nbsp;
-        <app-file-size [size]="resource.getSize()"></app-file-size>
-    </div>
-    <div class="card-section">
-        <span *ngFor="let tag of resource.getResourceTagModelList()">{{
-            tag.getName()
-        }}</span>
+    <div [style.background-color]="resource.isRemoved() ? 'red' : 'white'">
+        <div class="card-section">
+            {{ resource.getTitle() }}
+        </div>
+        <div class="card-section">
+            <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
+
+            <span *ngIf="resource.isNew()">NEW</span>
+        </div>
+        <div class="card-section">
+            &nbsp;
+            <app-file-size [size]="resource.getSize()"></app-file-size>
+        </div>
+        <div class="card-section">
+            <span *ngFor="let tag of resource.getResourceTagModelList()">{{
+                tag.getName()
+            }}</span>
+        </div>
     </div>
     <p-footer>
-        <button pButton type="button" (click)="clickOpenDetails()" icon="fas fa-address-card" style="margin-right: .25em"></button>
-        <button pButton type="button" (click)="clickExecuteMedia()" icon="fas fa-play"></button>
+        <button
+            pButton
+            type="button"
+            (click)="clickOpenDetails()"
+            icon="fas fa-address-card"
+            style="margin-right: .25em"
+        ></button>
+        <button
+            pButton
+            type="button"
+            (click)="clickExecuteMedia()"
+            icon="fas fa-play"
+        ></button>
     </p-footer>
 </p-card>

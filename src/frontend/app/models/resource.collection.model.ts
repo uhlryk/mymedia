@@ -38,19 +38,6 @@ export default class ResourceCollectionModel {
         );
     }
 
-    public sync(fileList: Array<FileInterface>) {
-        fileList.forEach((file: FileInterface) => {
-            if (!this.getResourceModelByPath(file.filePath)) {
-                const newResourceModel = ResourceModel.fromFile(
-                    file,
-                    this._tagCollectionModel
-                );
-                newResourceModel.setAsNew();
-                this._resourceModelList.push(newResourceModel);
-            }
-        });
-    }
-
     public removeResourceTagModel(resourceId, tagId) {
         this.getResourceModelById(resourceId).removeTagModel(tagId);
     }

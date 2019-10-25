@@ -41,11 +41,6 @@ export default class ProjectModel {
                 project.resourceList,
                 this._tagCollectionModel
             );
-            const fileList: Array<FileInterface> = await IpcProvider.request(
-                IpcProviderResourceEnums.GET_LIST_RESOURCE
-            );
-            this._resourceCollectionModel.sync(fileList);
-            await this.save();
             return true;
         } else {
             return false;

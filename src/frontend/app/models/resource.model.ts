@@ -1,7 +1,5 @@
-import uuid from "uuidv4";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ResourceInterface from "../../../shared/types/resource.interface";
-import FileInterface from "../../../shared/types/file.interface";
 import TagCollectionModel from "./tag.collection.model";
 import TagModel from "./tag.model";
 import IpcProvider from "../providers/ipc.provider";
@@ -16,7 +14,7 @@ export default class ResourceModel {
     private _description: string;
 
     private _isNew: boolean;
-    private _isDeleted: boolean;
+    private _isRemoved: boolean;
 
     private _tagModelList: Array<TagModel> = [];
     private _tagCollectionModel: TagCollectionModel;
@@ -34,24 +32,12 @@ export default class ResourceModel {
         resourceModel._ranking = resource.ranking;
         resourceModel._title = resource.title;
         resourceModel._description = resource.description;
+        resourceModel._isNew = resource.isNew;
+        resourceModel._isRemoved = resource.isRemoved;
         resource.tags.forEach((tagId: string) => {
             const tagModel = tagCollectionModel.getTagModelById(tagId);
             resourceModel.addTagModel(tagModel);
         });
-        return resourceModel;
-    }
-
-    static fromFile(
-        file: FileInterface,
-        tagCollectionModel: TagCollectionModel
-    ): ResourceModel {
-        const resourceModel: ResourceModel = new ResourceModel(tagCollectionModel);
-        resourceModel._id = uuid();
-        resourceModel._filePath = file.filePath;
-        resourceModel._fileName = file.fileName;
-        resourceModel._size = file.size;
-        resourceModel._ranking = 0;
-        resourceModel._title = file.name;
         return resourceModel;
     }
 
@@ -66,10 +52,13 @@ export default class ResourceModel {
         if (this._thumbnail) {
             return this._thumbnail;
         }
-        this._thumbnail = await IpcProvider.request(IpcProviderResourceEnums.GET_THUMBNAIL, {
-            id: this.getId(),
-            filePath: this.getFilePath()
-        });
+        this._thumbnail = await IpcProvider.request(
+            IpcProviderResourceEnums.GET_THUMBNAIL,
+            {
+                id: this.getId(),
+                filePath: this.getFilePath()
+            }
+        );
         return this._thumbnail;
     }
     getFilePath() {
@@ -92,15 +81,15 @@ export default class ResourceModel {
         return this._title;
     }
 
-    getDescription() {
-        return this._description;
-    }
-    setAsNew() {
-        this._isNew = true;
+    isNew() {
+        return this._isNew;
     }
 
-    setAsDeleted() {
-        this._isDeleted = true;
+    isRemoved() {
+        return this._isRemoved;
+    }
+    getDescription() {
+        return this._description;
     }
 
     getRanking(): number {
@@ -144,6 +133,8 @@ export default class ResourceModel {
             ranking: this._ranking,
             description: this._description,
             id: this._id,
+            isRemoved: this._isRemoved,
+            isNew: this._isNew,
             tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId())
         };
     }
