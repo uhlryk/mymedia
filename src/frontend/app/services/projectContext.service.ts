@@ -42,9 +42,9 @@ export class ProjectContextService {
         return ProjectModel.getInstance();
     }
 
-    createProject(createSubFolderTags: boolean): Observable<boolean> {
+    createProject(): Observable<boolean> {
         return Observable.create(async observable => {
-            await this.getProjectModel().createProject(createSubFolderTags);
+            await this.getProjectModel().createProject();
 
             this._ngZone.run(() => {
                 observable.next(true);

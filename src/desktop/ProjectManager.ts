@@ -10,6 +10,7 @@ import FileInterface from "../shared/types/file.interface";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import ResourceInterface from "../shared/types/resource.interface";
+import TagInterface from "../shared/types/tag.interface";
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
@@ -33,6 +34,17 @@ export default class ProjectManager {
             IpcProviderResourceEnums.SAVE_PROJECT,
             async (event, responseChannel: string, project: ProjectInterface) => {
                 await this.saveProject(project);
+                event.reply(responseChannel);
+            }
+        );
+
+        ipcMain.on(
+            IpcProviderResourceEnums.CREATE_PROJECT,
+            async (event, responseChannel: string) => {
+                await this.saveProject({
+                    resourceList: [],
+                    tagList: []
+                });
                 event.reply(responseChannel);
             }
         );

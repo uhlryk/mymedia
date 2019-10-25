@@ -10,7 +10,6 @@ import { LoaderService } from "../../../../services/loader.service";
 })
 export class CreateProjectComponent implements OnInit {
     projectPath: string;
-    createSubFolderTags: boolean;
     constructor(
         private projectContextService: ProjectContextService,
         private router: Router,
@@ -25,10 +24,7 @@ export class CreateProjectComponent implements OnInit {
     }
 
     onCreateProject() {
-        const isNewSubfolder = this.createSubFolderTags
-            ? !!this.createSubFolderTags[0]
-            : false;
-        this.projectContextService.createProject(isNewSubfolder).subscribe(isProject => {
+        this.projectContextService.createProject().subscribe(isProject => {
             this.router.navigate(["/files"]);
         });
     }

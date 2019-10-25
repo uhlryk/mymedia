@@ -31,10 +31,6 @@ export default class ProjectModel {
     public async getProjectPath(): Promise<string> {
         return await IpcProvider.request(IpcProviderResourceEnums.GET_PROJECT);
     }
-    private async loadFiles(): Promise<Array<FileInterface>> {
-        return await IpcProvider.request(IpcProviderResourceEnums.GET_LIST_RESOURCE);
-    }
-
     public async loadProject(): Promise<boolean> {
         const project: ProjectInterface = await IpcProvider.request(
             IpcProviderResourceEnums.LOAD_PROJECT
@@ -45,7 +41,9 @@ export default class ProjectModel {
                 project.resourceList,
                 this._tagCollectionModel
             );
-            const fileList: Array<FileInterface> = await this.loadFiles();
+            const fileList: Array<FileInterface> = await IpcProvider.request(
+                IpcProviderResourceEnums.GET_LIST_RESOURCE
+            );
             this._resourceCollectionModel.sync(fileList);
             await this.save();
             return true;
@@ -54,32 +52,8 @@ export default class ProjectModel {
         }
     }
 
-    public async createProject(createSubFolderTags: boolean): Promise<void> {
-        this._tagCollectionModel = new TagCollectionModel();
-        this._resourceCollectionModel = new ResourceCollectionModel(
-            this._tagCollectionModel
-        );
-        const fileList: Array<FileInterface> = await this.loadFiles();
-
-        fileList.forEach((file: FileInterface) => {
-            const folderPath: string = path.dirname(file.filePath);
-            const resourceModel: ResourceModel = ResourceModel.fromFile(
-                file,
-                this._tagCollectionModel
-            );
-            this._resourceCollectionModel.addResourceModel(resourceModel);
-            if (createSubFolderTags) {
-                if (folderPath !== ".") {
-                    let tagModel = this._tagCollectionModel.getTagModelByName(folderPath);
-                    if (!tagModel) {
-                        tagModel = TagModel.create(folderPath);
-                        this._tagCollectionModel.addTagModel(tagModel);
-                    }
-                    resourceModel.addTagModel(tagModel);
-                }
-            }
-        });
-        await this.save();
+    public async createProject(): Promise<void> {
+        return await IpcProvider.request(IpcProviderResourceEnums.CREATE_PROJECT);
     }
 
     public async save() {
