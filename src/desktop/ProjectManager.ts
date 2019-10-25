@@ -32,13 +32,7 @@ export default class ProjectManager {
         ipcMain.on(
             IpcProviderResourceEnums.SAVE_PROJECT,
             async (event, responseChannel: string, project: ProjectInterface) => {
-                this._project = project;
-                await saveFile(
-                    path.resolve(this.getProjectPath(), ProjectManager.PROJECT_FOLDER),
-                    ProjectManager.PROJECT_FILE_NAME,
-                    ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-                    JSON.stringify(project)
-                );
+                await this.saveProject(project);
                 event.reply(responseChannel);
             }
         );
@@ -114,6 +108,15 @@ export default class ProjectManager {
         );
     }
 
+    public async saveProject(project) {
+        this._project = project;
+        await saveFile(
+            path.resolve(this.getProjectPath(), ProjectManager.PROJECT_FOLDER),
+            ProjectManager.PROJECT_FILE_NAME,
+            ProjectManager.PROJECT_THUMBNAIL_FOLDER,
+            JSON.stringify(project)
+        );
+    }
     public async testProjectPath() {
         const isProject = await isProjectStructure(
             this.getProjectPath(),
