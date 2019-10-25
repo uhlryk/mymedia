@@ -1,6 +1,8 @@
 <p-card styleClass="ui-card-shadow">
     <p-header>
-        <img class="thumbnail" (click)="clickThumbanil()" [src]="thumbnail" alt="..." />
+        <div class="thumbnail-wrapper">
+        <img class="thumbnail" (click)="clickThumbanil()" [src]="thumbnail" alt="" />
+        </div>
     </p-header>
     <div class="card-section">
         {{ resource.getTitle() }}
