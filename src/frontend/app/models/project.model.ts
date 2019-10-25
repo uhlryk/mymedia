@@ -10,6 +10,9 @@ import IpcProvider from "../providers/ipc.provider";
 
 export default class ProjectModel {
     private static _instance;
+    private _tagCollectionModel: TagCollectionModel;
+    private _resourceCollectionModel: ResourceCollectionModel;
+
     static getInstance(): ProjectModel {
         if (!ProjectModel._instance) {
             ProjectModel._instance = new ProjectModel();
@@ -17,10 +20,13 @@ export default class ProjectModel {
         return ProjectModel._instance;
     }
 
-    private _tagCollectionModel: TagCollectionModel;
-    private _resourceCollectionModel: ResourceCollectionModel;
-    public async setProjectPath() {
-        await IpcProvider.request(IpcProviderResourceEnums.SET_PROJECT);
+    /**
+     *  request electron to run dialog where user choose folder for project
+     *
+     * @returns false means that project doesn't exist in chosen path, true means that there is configured project
+     */
+    public async setProjectPath(): Promise<boolean> {
+        return await IpcProvider.request(IpcProviderResourceEnums.SET_PROJECT);
     }
     public async getProjectPath(): Promise<string> {
         return await IpcProvider.request(IpcProviderResourceEnums.GET_PROJECT);
@@ -29,33 +35,18 @@ export default class ProjectModel {
         return await IpcProvider.request(IpcProviderResourceEnums.GET_LIST_RESOURCE);
     }
 
-    private async loadProjectFile(): Promise<ProjectInterface> {
+    public async loadProject(): Promise<boolean> {
         const project: ProjectInterface = await IpcProvider.request(
             IpcProviderResourceEnums.LOAD_PROJECT
         );
-        console.log(project);
-        return project;
-    }
-
-    public async isProjectExist(): Promise<boolean> {
-        const isProject: ProjectInterface = await IpcProvider.request(
-            IpcProviderResourceEnums.IS_EXIST_PROJECT
-        );
-        if (isProject) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public async loadProject(): Promise<boolean> {
-        const project: ProjectInterface = await this.loadProjectFile();
         if (project) {
             this._tagCollectionModel = TagCollectionModel.fromProject(project.tagList);
             this._resourceCollectionModel = ResourceCollectionModel.fromProject(
                 project.resourceList,
                 this._tagCollectionModel
             );
-            await this.sync();
+            const fileList: Array<FileInterface> = await this.loadFiles();
+            this._resourceCollectionModel.sync(fileList);
             await this.save();
             return true;
         } else {
@@ -89,11 +80,6 @@ export default class ProjectModel {
             }
         });
         await this.save();
-    }
-
-    private async sync() {
-        const fileList: Array<FileInterface> = await this.loadFiles();
-        this._resourceCollectionModel.sync(fileList);
     }
 
     public async save() {

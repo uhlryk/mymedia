@@ -1,7 +1,7 @@
 // src-backend/main.ts
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
-import ChannelManager from "./ChannelManager";
+import AppManager from "./AppManager";
 const contextMenu = require("electron-context-menu");
 contextMenu({
     showInspectElement: true
@@ -12,7 +12,7 @@ console.log(IS_HOT);
 let mainWindow: Electron.BrowserWindow;
 
 app.on("ready", () => {
-    new ChannelManager();
+    new AppManager();
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, "../dist/assets/icon.png"),
         webPreferences: {

@@ -17,14 +17,12 @@ export class ProjectPathComponent {
 
     onSelectPath() {
         this.loaderService.show();
-        this.projectContextService.setProjectPath().subscribe(() => {
-            this.projectContextService.isProjectExist().subscribe(isProject => {
-                if (isProject) {
-                    this.router.navigate(["/files"]);
-                } else {
-                    this.router.navigate(["/create-project"]);
-                }
-            });
+        this.projectContextService.setProjectPath().subscribe(isProjectExist => {
+            if (isProjectExist) {
+                this.router.navigate(["/files"]);
+            } else {
+                this.router.navigate(["/create-project"]);
+            }
         });
     }
 }

@@ -11,19 +11,19 @@ export class ProjectContextService {
     constructor(private _ngZone: NgZone) {}
     loadProject(): Observable<boolean> {
         return Observable.create(async observable => {
-            await this.getProjectModel().loadProject();
+            const isProjectExist = await this.getProjectModel().loadProject();
             this._ngZone.run(() => {
-                observable.next(true);
+                observable.next(isProjectExist);
                 observable.complete();
             });
         });
     }
     setProjectPath(): Observable<boolean> {
         return Observable.create(async observable => {
-            await this.getProjectModel().setProjectPath();
+            const isProjectExist:boolean = await this.getProjectModel().setProjectPath();
 
             this._ngZone.run(() => {
-                observable.next(true);
+                observable.next(isProjectExist);
                 observable.complete();
             });
         });
@@ -50,23 +50,6 @@ export class ProjectContextService {
                 observable.next(true);
                 observable.complete();
             });
-        });
-    }
-
-    isProjectExist(): Observable<boolean> {
-        return Observable.create(async observable => {
-            const isProject: boolean = await this.getProjectModel().isProjectExist();
-            if (isProject) {
-                this._ngZone.run(() => {
-                    observable.next(true);
-                    observable.complete();
-                });
-            } else {
-                this._ngZone.run(() => {
-                    observable.next(false);
-                    observable.complete();
-                });
-            }
         });
     }
 
