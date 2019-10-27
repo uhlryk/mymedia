@@ -24,6 +24,7 @@ export class CreateProjectComponent implements OnInit {
     }
 
     onCreateProject() {
+        this.loaderService.show();
         this.projectContextService.createProject().subscribe(isProject => {
             this.router.navigate(["/files"]);
         });

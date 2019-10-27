@@ -1,7 +1,7 @@
 <p-card styleClass="ui-card-shadow">
     <p-header>
         <div class="thumbnail-wrapper">
-            <img class="thumbnail" (click)="clickThumbanil()" [src]="thumbnail" alt="" />
+            <img class="thumbnail" (click)="clickThumbanil()" [src]="resource.getThumbnail()" alt="" />
         </div>
     </p-header>
     <div [style.background-color]="resource.isRemoved() ? 'red' : 'white'">

@@ -10,7 +10,6 @@ import FileInterface from "../shared/types/file.interface";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import ResourceInterface from "../shared/types/resource.interface";
-import TagInterface from "../shared/types/tag.interface";
 import uuid from "uuidv4";
 
 export default class ProjectManager {
@@ -27,6 +26,7 @@ export default class ProjectManager {
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
+                console.log("Create Project ", this._projectPath);
                 await this.saveProject({
                     resourceList: [],
                     tagList: []
@@ -74,43 +74,6 @@ export default class ProjectManager {
             }
         );
 
-        ipcMain.on(
-            IpcProviderResourceEnums.GET_THUMBNAIL,
-            async (
-                event,
-                responseChannel: string,
-                { id: resourceId, filePath: resourcePath }
-            ) => {
-                const thumbnail: string = await getThumbnail(
-                    path.resolve(
-                        this.getProjectPath(),
-                        ProjectManager.PROJECT_FOLDER,
-                        ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-                        resourceId,
-                        ProjectManager.PROJECT_THUMBNAIL_FILE
-                    )
-                );
-                if (thumbnail) {
-                    event.reply(responseChannel, thumbnail);
-                } else {
-                    const newThumbnail: string = await generateThumbnail(
-                        path.resolve(this.getProjectPath(), resourcePath),
-                        path.resolve(
-                            this.getProjectPath(),
-                            ProjectManager.PROJECT_FOLDER,
-                            ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-                            resourceId
-                        ),
-                        ProjectManager.PROJECT_THUMBNAIL_FILE
-                    );
-                    if (newThumbnail) {
-                        event.reply(responseChannel, newThumbnail);
-                    } else {
-                        event.reply(responseChannel, null);
-                    }
-                }
-            }
-        );
     }
 
     public async saveProject(project) {
@@ -134,7 +97,7 @@ export default class ProjectManager {
         await this.loadProjectFile();
         await this.loadResourceFileList();
         await this.generateResourceList();
-        await this.loadThumbnailList();
+        // await this.loadThumbnailList();
         await this.saveProject(this._project);
     }
     private async loadProjectFile() {
@@ -144,13 +107,6 @@ export default class ProjectManager {
             ProjectManager.PROJECT_FILE_NAME
         );
         this._project = JSON.parse(projectFileString);
-    }
-
-    private async loadThumbnailList() {
-        this._project.resourceList.map(async (resource: ResourceInterface) => {
-            const thumbnail = await this.getThumbnail(resource.id, resource.filePath);
-            console.log("AAA", thumbnail);
-        });
     }
 
     private async getThumbnail(resourceId: string, resourcePath: string) {
@@ -193,7 +149,8 @@ export default class ProjectManager {
             resource.isRemoved = true;
             resource.isNew = false;
         });
-        this._fileList.forEach((file: FileInterface) => {
+
+        await asyncForEach(this._fileList, async (file: FileInterface) => {
             const resource = this._project.resourceList.find(
                 (testResource: ResourceInterface) =>
                     testResource.filePath === file.filePath
@@ -201,17 +158,20 @@ export default class ProjectManager {
             if (resource) {
                 resource.isRemoved = false;
             } else {
-                const newResource = {
+                const id = uuid();
+                const thumbnailPath = await this.getThumbnail(id, file.filePath);
+                const newResource: ResourceInterface = {
                     filePath: file.filePath,
                     fileName: file.fileName,
                     title: file.name,
                     size: file.size,
                     ranking: 0,
                     description: "",
-                    id: uuid(),
+                    id: id,
                     tags: [],
                     isRemoved: false,
-                    isNew: true
+                    isNew: true,
+                    thumbnailPath: thumbnailPath
                 };
                 this._project.resourceList.push(newResource);
             }
@@ -220,5 +180,11 @@ export default class ProjectManager {
 
     private getProjectPath(): string {
         return this._projectPath;
+    }
+}
+
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+        await callback(array[index], index, array);
     }
 }

@@ -18,8 +18,7 @@ export default class ResourceModel {
 
     private _tagModelList: Array<TagModel> = [];
     private _tagCollectionModel: TagCollectionModel;
-    private _thumbnail: string;
-    private _genarateThumbnailFailed: boolean = false;
+    private _thumbnailPath: string;
     static fromProject(
         resource: ResourceInterface,
         tagCollectionModel: TagCollectionModel
@@ -33,6 +32,7 @@ export default class ResourceModel {
         resourceModel._title = resource.title;
         resourceModel._description = resource.description;
         resourceModel._isNew = resource.isNew;
+        resourceModel._thumbnailPath = resource.thumbnailPath;
         resourceModel._isRemoved = resource.isRemoved;
         resource.tags.forEach((tagId: string) => {
             const tagModel = tagCollectionModel.getTagModelById(tagId);
@@ -45,21 +45,8 @@ export default class ResourceModel {
         this._tagCollectionModel = tagCollectionModel;
     }
 
-    async getThumbnail() {
-        if (this._genarateThumbnailFailed) {
-            return null;
-        }
-        if (this._thumbnail) {
-            return this._thumbnail;
-        }
-        this._thumbnail = await IpcProvider.request(
-            IpcProviderResourceEnums.GET_THUMBNAIL,
-            {
-                id: this.getId(),
-                filePath: this.getFilePath()
-            }
-        );
-        return this._thumbnail;
+    getThumbnail() {
+        return this._thumbnailPath;
     }
     getFilePath() {
         return this._filePath;
@@ -135,7 +122,8 @@ export default class ResourceModel {
             id: this._id,
             isRemoved: this._isRemoved,
             isNew: this._isNew,
-            tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId())
+            tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId()),
+            thumbnailPath: this._thumbnailPath
         };
     }
 

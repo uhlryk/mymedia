@@ -10,7 +10,6 @@ import { DescriptionComponent } from "./components/description/description.compo
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalComponent } from "./components/detailsModal/detailsModal.component";
 import { RankingComponent } from "./components/ranking/ranking.component";
-import { ThumbnailService } from "../../services/thumbnail.service";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
@@ -29,7 +28,7 @@ import { SidebarModule } from "primeng/sidebar";
         DynamicDialogModule,
         SidebarModule
     ],
-    providers: [ThumbnailService, ResultManipulationService, DialogService],
+    providers: [ResultManipulationService, DialogService],
     declarations: [
         FilesComponent,
         RowComponent,

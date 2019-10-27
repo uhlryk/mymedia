@@ -9,4 +9,5 @@ export default interface ResourceInterface {
     tags: Array<string>;
     isRemoved: boolean;
     isNew: boolean;
+    thumbnailPath: string;
 }
