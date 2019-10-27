@@ -74,15 +74,6 @@ export default class ProjectManager {
             }
         );
 
-        // ipcMain.on(
-        //     IpcProviderResourceEnums.GET_LIST_RESOURCE,
-        //     async (event, responseChannel: string) => {
-        //         event.reply(IpcProviderResourceEnums.SET_LOADER_MESSAGE, "Loading files");
-        //         await this.loadResourceFileList();
-        //         event.reply(responseChannel, this._fileList);
-        //     }
-        // );
-
         ipcMain.on(
             IpcProviderResourceEnums.GET_THUMBNAIL,
             async (
@@ -143,6 +134,7 @@ export default class ProjectManager {
         await this.loadProjectFile();
         await this.loadResourceFileList();
         await this.generateResourceList();
+        await this.loadThumbnailList();
         await this.saveProject(this._project);
     }
     private async loadProjectFile() {
@@ -152,6 +144,44 @@ export default class ProjectManager {
             ProjectManager.PROJECT_FILE_NAME
         );
         this._project = JSON.parse(projectFileString);
+    }
+
+    private async loadThumbnailList() {
+        this._project.resourceList.map(async (resource: ResourceInterface) => {
+            const thumbnail = await this.getThumbnail(resource.id, resource.filePath);
+            console.log("AAA", thumbnail);
+        });
+    }
+
+    private async getThumbnail(resourceId: string, resourcePath: string) {
+        const thumbnail: string = await getThumbnail(
+            path.resolve(
+                this.getProjectPath(),
+                ProjectManager.PROJECT_FOLDER,
+                ProjectManager.PROJECT_THUMBNAIL_FOLDER,
+                resourceId,
+                ProjectManager.PROJECT_THUMBNAIL_FILE
+            )
+        );
+        if (thumbnail) {
+            return thumbnail;
+        } else {
+            const newThumbnail: string = await generateThumbnail(
+                path.resolve(this.getProjectPath(), resourcePath),
+                path.resolve(
+                    this.getProjectPath(),
+                    ProjectManager.PROJECT_FOLDER,
+                    ProjectManager.PROJECT_THUMBNAIL_FOLDER,
+                    resourceId
+                ),
+                ProjectManager.PROJECT_THUMBNAIL_FILE
+            );
+            if (newThumbnail) {
+                return newThumbnail;
+            } else {
+                return null;
+            }
+        }
     }
 
     private async loadResourceFileList() {
