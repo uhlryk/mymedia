@@ -44,12 +44,10 @@ export default class ProjectManager {
                 );
                 if (!(await this.testProjectPath())) {
                     event.reply(responseChannel);
+                } else {
+                    await this.loadProject();
+                    event.reply(responseChannel, this._project);
                 }
-                await this.loadProjectFile();
-                await this.loadResourceFileList();
-                await this.generateResourceList();
-                await this.saveProject(this._project);
-                event.reply(responseChannel, this._project);
             }
         );
 
@@ -139,6 +137,13 @@ export default class ProjectManager {
             ProjectManager.PROJECT_FOLDER
         );
         return isProject;
+    }
+
+    private async loadProject() {
+        await this.loadProjectFile();
+        await this.loadResourceFileList();
+        await this.generateResourceList();
+        await this.saveProject(this._project);
     }
     private async loadProjectFile() {
         const projectFileString = await loadFile(
