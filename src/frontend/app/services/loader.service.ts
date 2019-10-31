@@ -18,6 +18,7 @@ export class LoaderService {
     }
 
     public show() {
+        this.status = new LoaderStatus();
         this.status.showLoader = true;
         this._observer.next(this.status);
     }
@@ -29,10 +30,18 @@ export class LoaderService {
         console.log("showMessage 2", message);
         this._observer.next(this.status);
     }
+    public showSpinner() {
+        this.status.showProgressBar = false;
+        this.status.progressValue = 0;
+        this._observer.next(this.status);
+    }
+    public showProgress(value) {
+        this.status.showProgressBar = true;
+        this.status.progressValue = value;
+        this._observer.next(this.status);
+    }
     public hide() {
-        console.log("hide 1");
         this.status = new LoaderStatus();
-        console.log("hide 2");
         this._observer.next(this.status);
     }
 
@@ -45,10 +54,10 @@ export class LoaderService {
 
 class LoaderStatus implements ILoaderStatus {
     message: "";
-    progressValue: 0;
     showLoader: false;
     showMessage: false;
     showProgressBar: false;
+    progressValue: 0;
 }
 
 export interface ILoaderStatus {

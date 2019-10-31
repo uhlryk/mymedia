@@ -1,6 +1,7 @@
 <div *ngIf="showLoader">
     <div class="background">
-        <p-progressSpinner class="spinner"></p-progressSpinner>
+        <p-progressSpinner *ngIf="!showProgressBar" class="spinner"></p-progressSpinner>
+        <p-progressBar *ngIf="showProgressBar" [value]="progressValue" class="progress-bar"></p-progressBar>
         <div *ngIf="showMessage">{{ message }}</div>
     </div>
 </div>
