@@ -9,3 +9,8 @@ img.thumbnail {
     object-fit: cover;
 }
 
+.title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
