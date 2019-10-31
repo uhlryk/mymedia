@@ -32,14 +32,14 @@ export default async function generateThumbnail(
     await new Promise((resolve, reject) => {
         childProcess.on("exit", statusCode => {
             if (statusCode === 0) {
-                console.log("conversion successful");
+                // console.log("conversion successful");
                 resolve();
             }
         });
 
         childProcess.stderr.on("data", err => {
-            console.log("=============");
-            console.log(String(err));
+            // console.log("=============");
+            // console.log(String(err));
         });
     });
 

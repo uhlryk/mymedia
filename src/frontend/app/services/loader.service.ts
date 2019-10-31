@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
 import { Observable, Observer } from "rxjs";
 import IpcProvider from "../providers/ipc.provider";
-import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
+import IpcProviderLoaderEnums from "../../../shared/IpcProviderLoaderEnums";
+import { NgZone } from "@angular/core";
 @Injectable()
 export class LoaderService {
     private _observer: Observer<ILoaderStatus>;
     private status: ILoaderStatus;
-    constructor() {
+    constructor(private _ngZone: NgZone) {
         this.status = new LoaderStatus();
         this.listenForBackendChanges();
     }
@@ -31,11 +32,13 @@ export class LoaderService {
         this._observer.next(this.status);
     }
     public showSpinner() {
+        this.status.showLoader = true;
         this.status.showProgressBar = false;
         this.status.progressValue = 0;
         this._observer.next(this.status);
     }
     public showProgress(value) {
+        this.status.showLoader = true;
         this.status.showProgressBar = true;
         this.status.progressValue = value;
         this._observer.next(this.status);
@@ -46,8 +49,15 @@ export class LoaderService {
     }
 
     private listenForBackendChanges() {
-        IpcProvider.listen(IpcProviderResourceEnums.SET_LOADER_MESSAGE, message => {
-            this.showMessage(message);
+        IpcProvider.listen(IpcProviderLoaderEnums.SET_LOADER_MESSAGE, message => {
+            this._ngZone.run(() => {
+                this.showMessage(message);
+            });
+        });
+        IpcProvider.listen(IpcProviderLoaderEnums.SET_PROGRESS, value => {
+            this._ngZone.run(() => {
+                this.showProgress(value);
+            });
         });
     }
 }

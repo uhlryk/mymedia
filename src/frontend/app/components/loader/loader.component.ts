@@ -20,6 +20,7 @@ export class LoaderComponent implements OnInit {
             this.showMessage = loaderStatus.showMessage;
             this.showProgressBar = loaderStatus.showProgressBar;
             this.progressValue = loaderStatus.progressValue;
+            console.log("AAA", this.progressValue, " ", loaderStatus.progressValue);
             this.message = loaderStatus.message;
         });
     }

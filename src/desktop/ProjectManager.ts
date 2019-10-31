@@ -8,9 +8,11 @@ import generateThumbnail from "./fs/generateThumbnail";
 import * as path from "path";
 import FileInterface from "../shared/types/file.interface";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
+import IpcProviderLoaderEnums from "../shared/IpcProviderLoaderEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import ResourceInterface from "../shared/types/resource.interface";
 import uuid from "uuidv4";
+import Loader from "./Loader";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
@@ -38,14 +40,12 @@ export default class ProjectManager {
         ipcMain.on(
             IpcProviderResourceEnums.LOAD_PROJECT,
             async (event, responseChannel: string) => {
-                event.reply(
-                    IpcProviderResourceEnums.SET_LOADER_MESSAGE,
-                    "Loading project"
-                );
+                const loader = new Loader(event);
+                loader.setMessage("Loading project");
                 if (!(await this.testProjectPath())) {
                     event.reply(responseChannel);
                 } else {
-                    await this.loadProject();
+                    await this.loadProject(loader);
                     event.reply(responseChannel, this._project);
                 }
             }
@@ -73,7 +73,6 @@ export default class ProjectManager {
                 shell.openItem(path.join(this.getProjectPath(), resourcePath));
             }
         );
-
     }
 
     public async saveProject(project) {
@@ -93,10 +92,10 @@ export default class ProjectManager {
         return isProject;
     }
 
-    private async loadProject() {
+    private async loadProject(loader: Loader) {
         await this.loadProjectFile();
         await this.loadResourceFileList();
-        await this.generateResourceList();
+        await this.generateResourceList(loader);
         // await this.loadThumbnailList();
         await this.saveProject(this._project);
     }
@@ -144,13 +143,16 @@ export default class ProjectManager {
         this._fileList = await getFileList(this.getProjectPath());
     }
 
-    private async generateResourceList() {
+    private async generateResourceList(loader: Loader) {
         this._project.resourceList.map((resource: ResourceInterface) => {
             resource.isRemoved = true;
             resource.isNew = false;
         });
 
-        await asyncForEach(this._fileList, async (file: FileInterface) => {
+        await asyncForEach(this._fileList, async (file: FileInterface, index: number) => {
+            const length: number = this._fileList.length;
+            loader.setMessage("Preparing files");
+            loader.setProgress(Math.ceil((index * 100) / length));
             const resource = this._project.resourceList.find(
                 (testResource: ResourceInterface) =>
                     testResource.filePath === file.filePath
