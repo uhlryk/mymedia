@@ -26,11 +26,9 @@ export class LoaderService {
         this._observer.next(this.status);
     }
     public showMessage(message: string) {
-        console.log("showMessage 1", message);
         this.status.showLoader = true;
         this.status.showMessage = true;
         this.status.message = message;
-        console.log("showMessage 2", message);
         this._observer.next(this.status);
     }
     public showSpinner() {

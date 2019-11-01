@@ -26,6 +26,7 @@ export class FilesComponent implements OnInit {
         private router: Router
     ) {}
     ngOnInit() {
+        this.loaderService.show();
         this.projectContextService.loadProject().subscribe(isProjectExist => {
             if (!isProjectExist) {
                 this.router.navigate(["/create-project"]);
