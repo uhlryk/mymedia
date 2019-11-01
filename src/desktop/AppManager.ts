@@ -5,9 +5,14 @@ import Loader from "./Loader";
 export default class AppManager {
     private _projectManager: ProjectManager;
     constructor() {
+        this.registerListener();
+    }
+
+    private registerListener() {
         ipcMain.on(
             IpcProviderResourceEnums.SET_PROJECT,
             (event, responseChannel: string) => {
+
                 const loader = new Loader(event);
                 loader.setMessage("Waiting for project path");
                 dialog.showOpenDialog(

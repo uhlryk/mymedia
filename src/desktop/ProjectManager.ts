@@ -24,7 +24,9 @@ export default class ProjectManager {
     _fileList: Array<FileInterface>;
     constructor(projectPath: string) {
         this._projectPath = projectPath;
-
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.CREATE_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.LOAD_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
@@ -59,20 +61,6 @@ export default class ProjectManager {
             }
         );
 
-        ipcMain.on(
-            IpcProviderResourceEnums.SAVE_PROJECT,
-            async (event, responseChannel: string, project: ProjectInterface) => {
-                await this.saveProject(project);
-                event.reply(responseChannel);
-            }
-        );
-
-        ipcMain.on(
-            IpcProviderResourceEnums.EXECUTE_RESOURCE,
-            (event, resourcePath: string) => {
-                shell.openItem(path.join(this.getProjectPath(), resourcePath));
-            }
-        );
     }
 
     public async saveProject(project) {
