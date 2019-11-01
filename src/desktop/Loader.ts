@@ -7,16 +7,10 @@ export default class Loader {
     }
 
     public setMessage(message) {
-        this._event.reply(
-            IpcProviderLoaderEnums.SET_LOADER_MESSAGE,
-            message
-        );
+        this._event.reply(IpcProviderLoaderEnums.SET_LOADER_MESSAGE, message);
     }
 
     public setProgress(value) {
-        this._event.reply(
-            IpcProviderLoaderEnums.SET_PROGRESS,
-            value
-        );
+        this._event.reply(IpcProviderLoaderEnums.SET_PROGRESS, value);
     }
 }

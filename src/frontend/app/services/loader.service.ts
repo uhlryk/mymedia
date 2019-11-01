@@ -7,6 +7,7 @@ import { NgZone } from "@angular/core";
 export class LoaderService {
     private _observer: Observer<ILoaderStatus>;
     private status: ILoaderStatus;
+    private cachedTime = 0;
     constructor(private _ngZone: NgZone) {
         this.status = new LoaderStatus();
         this.listenForBackendChanges();
@@ -20,6 +21,7 @@ export class LoaderService {
 
     public show() {
         this.status = new LoaderStatus();
+        this.cachedTime = 0;
         this.status.showLoader = true;
         this._observer.next(this.status);
     }
@@ -38,12 +40,16 @@ export class LoaderService {
         this._observer.next(this.status);
     }
     public showProgress(value) {
-        this.status.showLoader = true;
-        this.status.showProgressBar = true;
-        this.status.progressValue = value;
-        this._observer.next(this.status);
+        if (value === 0 || value === 100 || this.cachedTime + 3000 <= Date.now()) {
+            this.status.showLoader = true;
+            this.status.showProgressBar = true;
+            this.status.progressValue = value;
+            this.cachedTime = Date.now();
+            this._observer.next(this.status);
+        }
     }
     public hide() {
+        this.cachedTime = 0;
         this.status = new LoaderStatus();
         this._observer.next(this.status);
     }
