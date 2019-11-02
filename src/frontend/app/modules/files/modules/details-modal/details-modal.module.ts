@@ -6,9 +6,20 @@ import { TitleComponent } from "./components/title/title.component";
 import { DescriptionComponent } from "./components/description/description.component";
 import { SidebarModule } from "primeng/sidebar";
 import { SharedModule } from "../../../shared/shared.module";
+import { InplaceModule } from "primeng/inplace";
+import { InputTextModule } from "primeng/inputtext";
+import { ButtonModule } from "primeng/button";
 @NgModule({
-    declarations: [DetailsModalComponent, TitleComponent, DescriptionComponent ],
-    imports: [CommonModule, SidebarModule, SharedModule, FormsModule],
+    declarations: [DetailsModalComponent, TitleComponent, DescriptionComponent],
+    imports: [
+        CommonModule,
+        SidebarModule,
+        SharedModule,
+        FormsModule,
+        InplaceModule,
+        InputTextModule,
+        ButtonModule
+    ],
     exports: [DetailsModalComponent]
 })
 export class DetailsModalModule {}

@@ -27,6 +27,7 @@ export default class ProjectManager {
         ipcMain.removeAllListeners(IpcProviderResourceEnums.CREATE_PROJECT);
         ipcMain.removeAllListeners(IpcProviderResourceEnums.LOAD_PROJECT);
         ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.SAVE_PROJECT);
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
@@ -60,7 +61,18 @@ export default class ProjectManager {
                 event.reply(responseChannel, this._projectPath);
             }
         );
-
+        ipcMain.on(
+            IpcProviderResourceEnums.SAVE_PROJECT,
+            async (event, responseChannel: string, project: ProjectInterface) => {
+                await saveFile(
+                    path.resolve(this.getProjectPath(), ProjectManager.PROJECT_FOLDER),
+                    ProjectManager.PROJECT_FILE_NAME,
+                    ProjectManager.PROJECT_THUMBNAIL_FOLDER,
+                    JSON.stringify(project)
+                );
+                event.reply(responseChannel);
+            }
+        );
     }
 
     public async saveProject(project) {

@@ -1,4 +1,4 @@
-<div >
+<div>
     <p-sidebar
         [(visible)]="visibleSidebar"
         [baseZIndex]="10000"
@@ -6,22 +6,19 @@
         styleClass="ui-sidebar-md"
     >
         <div *ngIf="!resource">
-
             <div class="center">
                 <i class="pi pi-file-excel not-found-icon"></i>
                 <p>Media doesn't exist</p>
             </div>
         </div>
-        <div *ngIf="resource">
-            <div>{{ resource.getFilePath() }}</div>
-            <div>{{ resource.getFileName() }}</div>
+        <div *ngIf="resource" class="side-menu-container">
+            <app-title
+            [title]="resource.getTitle()"
+            (changed)="saveTitle($event)"
+            ></app-title>
+            <div class="file-path-text">{{ resource.getFilePath() }}</div>
             <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
-            <div>
-                <app-title
-                    [title]="resource.getTitle()"
-                    (changed)="saveTitle($event)"
-                ></app-title>
-            </div>
+
             <div>
                 <app-ranking
                     [editable]="true"
