@@ -5,6 +5,13 @@
         position="right"
         styleClass="ui-sidebar-md"
     >
+        <div *ngIf="!resource">
+
+            <div class="center">
+                <i class="pi pi-file-excel not-found-icon"></i>
+                <p>Media doesn't exist</p>
+            </div>
+        </div>
         <div *ngIf="resource">
             <div>{{ resource.getFilePath() }}</div>
             <div>{{ resource.getFileName() }}</div>
