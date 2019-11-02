@@ -28,6 +28,7 @@ export default class ProjectManager {
         ipcMain.removeAllListeners(IpcProviderResourceEnums.LOAD_PROJECT);
         ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
         ipcMain.removeAllListeners(IpcProviderResourceEnums.SAVE_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
@@ -73,6 +74,10 @@ export default class ProjectManager {
                 event.reply(responseChannel);
             }
         );
+
+        ipcMain.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, (event, resourcePath: string) => {
+            shell.openItem(path.join(this.getProjectPath(), resourcePath));
+        });
     }
 
     public async saveProject(project) {
