@@ -1,34 +1,17 @@
-import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    Input,
+    ViewChild,
+    ElementRef
+} from "@angular/core";
 import { Inplace } from "primeng/inplace";
 
 @Component({
     selector: "app-title",
-    template: `
-        <p-inplace>
-            <span pInplaceDisplay>
-                {{ editableTitle }}
-            </span>
-            <span pInplaceContent>
-                <div class="ui-inputgroup">
-                    <button
-                        pButton
-                        type="button"
-                        icon="pi pi-times"
-                        class="ui-button-danger"
-                        (click)="deactivate()"
-                    ></button>
-                    <input type="text" value="PrimeNG" pInputText [(ngModel)]="editableTitle" />
-                    <button
-                        pButton
-                        type="button"
-                        icon="pi pi-check"
-                        class="ui-button-success"
-                        (click)="saveChanges()"
-                    ></button>
-                </div>
-            </span>
-        </p-inplace>
-    `,
+    templateUrl: "./title.component.html",
     styleUrls: ["./title.component.scss"]
 })
 export class TitleComponent implements OnInit {
@@ -37,14 +20,15 @@ export class TitleComponent implements OnInit {
     @Output() changed = new EventEmitter<string>();
     constructor() {}
     @ViewChild(Inplace, { static: true }) titleInplace: Inplace;
+    @ViewChild("editInput", { static: true }) editInput: ElementRef;
 
     ngOnInit() {
         this.editableTitle = this.title;
-    }
-
-    deactivate() {
-        this.editableTitle = this.title;
-        this.titleInplace.deactivate();
+        this.titleInplace.onActivate.subscribe(() => {
+            setTimeout(() => {
+                this.editInput.nativeElement.focus();
+            }, 0);
+        });
     }
     saveChanges() {
         this.titleInplace.deactivate();

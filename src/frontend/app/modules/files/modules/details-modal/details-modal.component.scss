@@ -1,3 +1,7 @@
+:host ::ng-deep .ui-sidebar-sm {
+    width: 30em;
+}
+
 .center {
     position: fixed;
     display: flex;
@@ -26,4 +30,5 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 9px;
+    padding: 6px;
 }

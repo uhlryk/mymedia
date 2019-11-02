@@ -1,0 +1,12 @@
+:host ::ng-deep .ui-inplace-display {
+    padding: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    display: block;
+}
+
+.title-edit-input {
+    width: 100%;
+}

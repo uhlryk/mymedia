@@ -1,0 +1,16 @@
+<p-inplace>
+    <span pInplaceDisplay>
+        {{ editableTitle }}
+    </span>
+    <span pInplaceContent>
+        <input
+            #editInput
+            pInputText
+            class="title-edit-input"
+            type="text"
+            value="PrimeNG"
+            [(ngModel)]="editableTitle"
+            (blur)="saveChanges()"
+        />
+    </span>
+</p-inplace>
