@@ -6,8 +6,8 @@ import TagModel from "../../../../models/tag.model";
 
 @Component({
     selector: "app-details-modal",
-    templateUrl: "./detailsModal.component.html",
-    styleUrls: ["./detailsModal.component.scss"]
+    templateUrl: "./details-modal.component.html",
+    styleUrls: ["./details-modal.component.scss"]
 })
 export class DetailsModalComponent {
     @Output() showDetails = new EventEmitter<string>();

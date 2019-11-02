@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { ResultManipulationService } from "../../../../services/result-manipulation.service";
-import { DetailsModalComponent } from "../../components/detailsModal/detailsModal.component";
+import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ImageModalComponent } from "../../components/image-modal/image-modal.component";
 import ResourceModel from "../../../../models/resource.model";
 import { DialogService } from "primeng/api";
