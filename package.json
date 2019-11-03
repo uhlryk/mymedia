@@ -28,6 +28,7 @@
     "child_process": "^1.0.2",
     "electron-context-menu": "^0.15.0",
     "ffmpeg-static-electron": "^2.0.1",
+    "ffprobe-static-electron": "^2.0.0",
     "fs": "0.0.1-security",
     "fs-extra": "^8.1.0",
     "graceful-fs": "^4.2.2",

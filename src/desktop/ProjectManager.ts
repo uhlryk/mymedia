@@ -13,6 +13,7 @@ import isProjectStructure from "./fs/isProjectStructure";
 import ResourceInterface from "../shared/types/resource.interface";
 import uuid from "uuidv4";
 import Loader from "./Loader";
+import getVideoLength from "./fs/getVideoLength";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
@@ -167,6 +168,8 @@ export default class ProjectManager {
             } else {
                 const id = uuid();
                 const thumbnailPath = await this.getThumbnail(id, file.filePath);
+                const videoLength = await getVideoLength(path.resolve(this.getProjectPath(), file.filePath));
+                console.log("QQQQ ", videoLength);;
                 const newResource: ResourceInterface = {
                     filePath: file.filePath,
                     fileName: file.fileName,
