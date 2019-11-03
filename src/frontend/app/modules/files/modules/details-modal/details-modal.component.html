@@ -12,6 +12,9 @@
             </div>
         </div>
         <div *ngIf="resource" class="side-menu-container">
+            <div class="thumbnail-wrapper">
+                <img class="thumbnail" (click)="clickThumbanil()" [src]="resource.getThumbnail()" alt="" />
+            </div>
             <app-title
             [title]="resource.getTitle()"
             (changed)="saveTitle($event)"
