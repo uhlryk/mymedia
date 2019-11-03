@@ -1,27 +1,36 @@
-import { Component, EventEmitter, OnInit, Output, Input } from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    Output,
+    Input,
+    ViewChild,
+    ElementRef, OnChanges
+} from "@angular/core";
+import { Inplace } from "primeng/inplace";
 
 @Component({
     selector: "app-description",
-    template:
-        "<textarea [(ngModel)]='text' (change)='isChanged()' (blur)='saveChanges()'></textarea>",
+    templateUrl: "./description.component.html",
     styleUrls: ["./description.component.scss"]
 })
-export class DescriptionComponent implements OnInit {
+export class DescriptionComponent implements OnChanges {
     @Input() text: string;
+    private editableText: string;
     @Output() changed = new EventEmitter<string>();
-    needSave = false;
     constructor() {}
+    @ViewChild(Inplace, { static: true }) inplace: Inplace;
+    @ViewChild("editInput", { static: true }) editInput: ElementRef;
 
-    ngOnInit() {}
-
-    isChanged() {
-        this.needSave = true;
+    ngOnChanges() {
+        this.editableText = this.text;
+        this.inplace.onActivate.subscribe(() => {
+            setTimeout(() => {
+                this.editInput.nativeElement.focus();
+            }, 0);
+        });
     }
-
     saveChanges() {
-        if (this.needSave) {
-            this.needSave = false;
-            this.changed.emit(this.text);
-        }
+        this.inplace.deactivate();
+        this.changed.emit(this.editableText);
     }
 }

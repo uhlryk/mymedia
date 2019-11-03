@@ -16,7 +16,7 @@
                 <img class="thumbnail" (click)="clickThumbanil()" [src]="resource.getThumbnail()" alt="" />
             </div>
             <app-title
-            [title]="resource.getTitle()"
+            [text]="resource.getTitle()"
             (changed)="saveTitle($event)"
             ></app-title>
             <div class="file-path-text">{{ resource.getFilePath() }}</div>

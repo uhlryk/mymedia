@@ -1,11 +1,11 @@
 import {
     Component,
     EventEmitter,
-    OnInit,
     Output,
     Input,
     ViewChild,
-    ElementRef
+    ElementRef,
+    OnChanges
 } from "@angular/core";
 import { Inplace } from "primeng/inplace";
 
@@ -14,24 +14,25 @@ import { Inplace } from "primeng/inplace";
     templateUrl: "./title.component.html",
     styleUrls: ["./title.component.scss"]
 })
-export class TitleComponent implements OnInit {
-    @Input() title: string;
-    private editableTitle: string;
+export class TitleComponent implements OnChanges {
+    @Input() text: string;
+    private editableText: string;
     @Output() changed = new EventEmitter<string>();
     constructor() {}
-    @ViewChild(Inplace, { static: true }) titleInplace: Inplace;
+    @ViewChild(Inplace, { static: true }) inplace: Inplace;
     @ViewChild("editInput", { static: true }) editInput: ElementRef;
 
-    ngOnInit() {
-        this.editableTitle = this.title;
-        this.titleInplace.onActivate.subscribe(() => {
+    ngOnChanges() {
+        this.editableText = this.text;
+        this.inplace.onActivate.subscribe(() => {
             setTimeout(() => {
                 this.editInput.nativeElement.focus();
             }, 0);
         });
     }
+
     saveChanges() {
-        this.titleInplace.deactivate();
-        this.changed.emit(this.editableTitle);
+        this.inplace.deactivate();
+        this.changed.emit(this.editableText);
     }
 }

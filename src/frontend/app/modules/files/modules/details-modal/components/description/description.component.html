@@ -1,0 +1,23 @@
+<p-inplace>
+    <span pInplaceDisplay>
+        <span *ngIf="editableText">
+            {{ editableText }}
+        </span>
+        <span *ngIf="!editableText" class="no-content">
+            <i class="pi pi-pencil"></i>
+            <p>Add Description</p>
+        </span>
+
+    </span>
+    <span pInplaceContent>
+        <textarea
+            placeholder="put description"
+            #editInput
+            class="description-edit-input"
+            [(ngModel)]="editableText"
+            (blur)="saveChanges()"
+            pInputTextarea>
+
+        </textarea>
+    </span>
+</p-inplace>
