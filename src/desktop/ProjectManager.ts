@@ -14,6 +14,7 @@ import ResourceInterface from "../shared/types/resource.interface";
 import uuid from "uuidv4";
 import Loader from "./Loader";
 import getVideoLength from "./fs/getVideoLength";
+import secondsToTime from "../shared/helpers/secondsToTime";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
@@ -76,9 +77,12 @@ export default class ProjectManager {
             }
         );
 
-        ipcMain.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, (event, resourcePath: string) => {
-            shell.openItem(path.join(this.getProjectPath(), resourcePath));
-        });
+        ipcMain.on(
+            IpcProviderResourceEnums.EXECUTE_RESOURCE,
+            (event, resourcePath: string) => {
+                shell.openItem(path.join(this.getProjectPath(), resourcePath));
+            }
+        );
     }
 
     public async saveProject(project) {
@@ -167,16 +171,19 @@ export default class ProjectManager {
                 resource.isRemoved = false;
             } else {
                 const id = uuid();
-                const videoLength = await getVideoLength(path.resolve(this.getProjectPath(), file.filePath));
-                console.log(typeof videoLength);
+                const videoLength = parseInt(
+                    await getVideoLength(
+                        path.resolve(this.getProjectPath(), file.filePath)
+                    ),
+                    10
+                );
                 const thumbnailPath = await this.getThumbnail(id, file.filePath);
-                console.log("QQQQ ", videoLength);
                 const newResource: ResourceInterface = {
                     filePath: file.filePath,
                     fileName: file.fileName,
                     title: file.name,
                     size: file.size,
-                    length: parseInt(videoLength, 10),
+                    length: videoLength,
                     ranking: 0,
                     description: "",
                     id: id,
