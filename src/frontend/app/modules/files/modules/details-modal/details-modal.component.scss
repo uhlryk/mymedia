@@ -44,3 +44,12 @@ img.thumbnail {
     height:100%;
     object-fit: cover;
 }
+
+.align-meta-info {
+    display: flex;
+    flex-direction: row; /* NEW */
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    padding: 6px;
+}

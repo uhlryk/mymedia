@@ -20,9 +20,9 @@
             (changed)="saveTitle($event)"
             ></app-title>
             <div class="file-path-text">{{ resource.getFilePath() }}</div>
-            <div>
+            <div class="align-meta-info">
                 <app-file-size [size]="resource.getSize()"></app-file-size>
-                <span>{{resource.getLength()}}</span>
+                <app-video-length [length]="resource.getLength()"></app-video-length>
             </div>
 
             <div>
