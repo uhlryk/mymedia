@@ -5,7 +5,7 @@ import { DetailsModalComponent } from "./details-modal.component";
 import { TitleComponent } from "./components/title/title.component";
 import { DescriptionComponent } from "./components/description/description.component";
 import { SidebarModule } from "primeng/sidebar";
-import { SharedModule } from "../../../shared/shared.module";
+import { SharedModule } from "../shared/shared.module";
 import { InplaceModule } from "primeng/inplace";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";

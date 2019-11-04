@@ -4,7 +4,7 @@ import { FilesComponent } from "./pages/files/files.component";
 import { RowComponent } from "./components/row/row.component";
 import { FormsModule } from "@angular/forms";
 
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "./modules/shared/shared.module";
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
