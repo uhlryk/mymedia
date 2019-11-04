@@ -8,6 +8,7 @@ export default class ResourceModel {
     private _filePath: string;
     private _fileName: string;
     private _size: number;
+    private _length: number;
     private _ranking: number;
     private _title: string;
     private _id: string;
@@ -28,6 +29,7 @@ export default class ResourceModel {
         resourceModel._filePath = resource.filePath;
         resourceModel._fileName = resource.filePath;
         resourceModel._size = resource.size;
+        resourceModel._length = resource.length;
         resourceModel._ranking = resource.ranking;
         resourceModel._title = resource.title;
         resourceModel._description = resource.description;
@@ -62,6 +64,10 @@ export default class ResourceModel {
 
     getSize() {
         return this._size;
+    }
+
+    getLength() {
+        return this._length;
     }
 
     getTitle() {
@@ -117,6 +123,7 @@ export default class ResourceModel {
             fileName: this._fileName,
             title: this._title,
             size: this._size,
+            length: this._length,
             ranking: this._ranking,
             description: this._description,
             id: this._id,

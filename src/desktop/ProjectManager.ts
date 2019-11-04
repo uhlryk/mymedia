@@ -167,14 +167,16 @@ export default class ProjectManager {
                 resource.isRemoved = false;
             } else {
                 const id = uuid();
-                const thumbnailPath = await this.getThumbnail(id, file.filePath);
                 const videoLength = await getVideoLength(path.resolve(this.getProjectPath(), file.filePath));
-                console.log("QQQQ ", videoLength);;
+                console.log(typeof videoLength);
+                const thumbnailPath = await this.getThumbnail(id, file.filePath);
+                console.log("QQQQ ", videoLength);
                 const newResource: ResourceInterface = {
                     filePath: file.filePath,
                     fileName: file.fileName,
                     title: file.name,
                     size: file.size,
+                    length: parseInt(videoLength, 10),
                     ranking: 0,
                     description: "",
                     id: id,

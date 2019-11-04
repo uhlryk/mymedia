@@ -20,7 +20,10 @@
             (changed)="saveTitle($event)"
             ></app-title>
             <div class="file-path-text">{{ resource.getFilePath() }}</div>
-            <div><app-file-size [size]="resource.getSize()"></app-file-size></div>
+            <div>
+                <app-file-size [size]="resource.getSize()"></app-file-size>
+                <span>{{resource.getLength()}}</span>
+            </div>
 
             <div>
                 <app-ranking

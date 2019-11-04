@@ -16,6 +16,8 @@
         <div class="card-section">
             &nbsp;
             <app-file-size [size]="resource.getSize()"></app-file-size>
+
+            <span>{{resource.getLength()}}</span>
         </div>
         <div class="card-section">
             <span *ngFor="let tag of resource.getResourceTagModelList()">{{
