@@ -8,7 +8,9 @@ export default class ResourceModel {
     private _filePath: string;
     private _fileName: string;
     private _size: number;
-    private _length: number;
+    private _width: number;
+    private _height: number;
+    private _duration: number;
     private _ranking: number;
     private _title: string;
     private _id: string;
@@ -29,7 +31,9 @@ export default class ResourceModel {
         resourceModel._filePath = resource.filePath;
         resourceModel._fileName = resource.filePath;
         resourceModel._size = resource.size;
-        resourceModel._length = resource.length;
+        resourceModel._duration = resource.duration;
+        resourceModel._width = resource.width;
+        resourceModel._height = resource.height;
         resourceModel._ranking = resource.ranking;
         resourceModel._title = resource.title;
         resourceModel._description = resource.description;
@@ -66,10 +70,15 @@ export default class ResourceModel {
         return this._size;
     }
 
-    getLength() {
-        return this._length;
+    get duration() {
+        return this._duration;
     }
-
+    get width() {
+        return this._width;
+    }
+    get height() {
+        return this._height;
+    }
     getTitle() {
         return this._title;
     }
@@ -123,7 +132,9 @@ export default class ResourceModel {
             fileName: this._fileName,
             title: this._title,
             size: this._size,
-            length: this._length,
+            duration: this._duration,
+            width: this._width,
+            height: this._height,
             ranking: this._ranking,
             description: this._description,
             id: this._id,

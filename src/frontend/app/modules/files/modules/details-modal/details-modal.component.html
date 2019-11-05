@@ -13,16 +13,22 @@
         </div>
         <div *ngIf="resource" class="side-menu-container">
             <div class="thumbnail-wrapper">
-                <img class="thumbnail" (click)="clickThumbanil()" [src]="resource.getThumbnail()" alt="" />
+                <img
+                    class="thumbnail"
+                    (click)="clickThumbanil()"
+                    [src]="resource.getThumbnail()"
+                    alt=""
+                />
             </div>
             <app-title
-            [text]="resource.getTitle()"
-            (changed)="saveTitle($event)"
+                [text]="resource.getTitle()"
+                (changed)="saveTitle($event)"
             ></app-title>
             <div class="file-path-text">{{ resource.getFilePath() }}</div>
             <div class="align-meta-info">
                 <app-file-size [size]="resource.getSize()"></app-file-size>
-                <app-video-length [length]="resource.getLength()"></app-video-length>
+                <span>{{ resource.width }} x {{ resource.height }}</span>
+                <app-video-length [length]="resource.duration"></app-video-length>
             </div>
 
             <div>

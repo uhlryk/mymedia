@@ -13,7 +13,7 @@ import isProjectStructure from "./fs/isProjectStructure";
 import ResourceInterface from "../shared/types/resource.interface";
 import uuid from "uuidv4";
 import Loader from "./Loader";
-import getVideoLength from "./fs/getVideoLength";
+import getMetadata from "./fs/getMetadata";
 import secondsToTime from "../shared/helpers/secondsToTime";
 
 export default class ProjectManager {
@@ -171,19 +171,19 @@ export default class ProjectManager {
                 resource.isRemoved = false;
             } else {
                 const id = uuid();
-                const videoLength = parseInt(
-                    await getVideoLength(
-                        path.resolve(this.getProjectPath(), file.filePath)
-                    ),
-                    10
+                const metadata = await getMetadata(
+                    path.resolve(this.getProjectPath(), file.filePath)
                 );
+
                 const thumbnailPath = await this.getThumbnail(id, file.filePath);
                 const newResource: ResourceInterface = {
                     filePath: file.filePath,
                     fileName: file.fileName,
                     title: file.name,
                     size: file.size,
-                    length: videoLength,
+                    duration: parseInt(metadata.duration, 10),
+                    width: parseInt(metadata.width, 10),
+                    height: parseInt(metadata.height, 10),
                     ranking: 0,
                     description: "",
                     id: id,

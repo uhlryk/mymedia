@@ -21,6 +21,7 @@ export default async function generateThumbnail(
         sourceFilePath,
         "-ss",
         "00:00:00.000",
+        // 5,
         "-vframes",
         "1",
         // "-q:v",
