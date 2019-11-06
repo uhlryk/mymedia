@@ -1,5 +1,6 @@
 import ResourceModel from "./resource.model";
-import ResourceInterface from "../../../shared/types/resource.interface";
+import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
+import ResourceFileInterface from "../../../shared/types/resourceFile.interface";
 import TagCollectionModel from "./tag.collection.model";
 import FileInterface from "../../../shared/types/file.interface";
 
@@ -10,13 +11,13 @@ export default class ResourceCollectionModel {
         this._tagCollectionModel = tagCollectionModel;
     }
     static fromProject(
-        resourceList: Array<ResourceInterface>,
+        resourceList: Array<ResourceModelInterface>,
         tagCollectionModel: TagCollectionModel
     ): ResourceCollectionModel {
         const resourceCollectionModel = new ResourceCollectionModel(tagCollectionModel);
 
         resourceCollectionModel._resourceModelList = resourceList.map(
-            (resource: ResourceInterface) => {
+            (resource: ResourceModelInterface) => {
                 return ResourceModel.fromProject(resource, tagCollectionModel);
             }
         );
@@ -48,7 +49,7 @@ export default class ResourceCollectionModel {
         });
     }
 
-    public toSaveValue(): Array<ResourceInterface> {
+    public toSaveValue(): Array<ResourceFileInterface> {
         return this._resourceModelList.map((resourceModel: ResourceModel) =>
             resourceModel.toSaveValue()
         );

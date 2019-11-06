@@ -1,9 +1,9 @@
 import { ipcMain, dialog } from "electron";
-import ProjectManager from "./ProjectManager";
+import AppController from "./AppController";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import Loader from "./Loader";
 export default class AppManager {
-    private _projectManager: ProjectManager;
+    private _appController: AppController;
     constructor() {
         this.registerListener();
     }
@@ -21,9 +21,9 @@ export default class AppManager {
                     },
                     async fileNames => {
                         const projectPath = fileNames[0];
-                        this._projectManager = new ProjectManager(projectPath);
+                        this._appController = new AppController(projectPath);
                         loader.setMessage("Checking if project exist");
-                        const isProjectExist = await this._projectManager.testProjectPath();
+                        const isProjectExist = await this._appController.testProjectPath();
                         event.reply(responseChannel, isProjectExist);
                     }
                 );

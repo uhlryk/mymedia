@@ -1,8 +1,7 @@
-import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
-import ResourceInterface from "../../../shared/types/resource.interface";
+import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
+import ResourceFileInterface from "../../../shared/types/resourceFile.interface";
 import TagCollectionModel from "./tag.collection.model";
 import TagModel from "./tag.model";
-import IpcProvider from "../providers/ipc.provider";
 
 export default class ResourceModel {
     private _filePath: string;
@@ -23,7 +22,7 @@ export default class ResourceModel {
     private _tagCollectionModel: TagCollectionModel;
     private _thumbnailPath: string;
     static fromProject(
-        resource: ResourceInterface,
+        resource: ResourceModelInterface,
         tagCollectionModel: TagCollectionModel
     ) {
         const resourceModel: ResourceModel = new ResourceModel(tagCollectionModel);
@@ -126,7 +125,7 @@ export default class ResourceModel {
         }
     }
 
-    public toSaveValue(): ResourceInterface {
+    public toSaveValue(): ResourceFileInterface {
         return {
             filePath: this._filePath,
             fileName: this._fileName,

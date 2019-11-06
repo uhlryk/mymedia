@@ -1,4 +1,4 @@
-export default interface ResourceInterface {
+export default interface ResourceFileInterface {
     filePath: string;
     fileName: string;
     title: string;

@@ -1,205 +1,132 @@
-import { ipcMain, shell, dialog } from "electron";
-import ProjectInterface from "../shared/types/project.interface";
+import ProjectModelInterface from "../shared/types/projectModel.interface";
 import loadFile from "./fs/loadFile";
-import saveFile from "./fs/saveFile";
+import ProjectFileInterface from "../shared/types/projectFile.interface";
 import getFileList from "./fs/getFileList";
-import getThumbnail from "./fs/getThumbnail";
-import generateThumbnail from "./fs/generateThumbnail";
-import * as path from "path";
 import FileInterface from "../shared/types/file.interface";
-import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
-import IpcProviderLoaderEnums from "../shared/IpcProviderLoaderEnums";
-import isProjectStructure from "./fs/isProjectStructure";
-import ResourceInterface from "../shared/types/resource.interface";
+import ResourceFileInterface from "../shared/types/resourceFile.interface";
 import uuid from "uuidv4";
-import Loader from "./Loader";
 import getMetadata from "./fs/getMetadata";
-import secondsToTime from "../shared/helpers/secondsToTime";
+import * as path from "path";
+import ResourceModelInterface from "../shared/types/resourceModel.interface";
+import ThumbnailManager from "./ThumbnailManager";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
     static PROJECT_FILE_NAME = "project.json";
-    static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
-    static PROJECT_THUMBNAIL_FILE = "thum.jpg";
+
     _projectPath: string;
-    _project: ProjectInterface;
-    _fileList: Array<FileInterface>;
+    _projectFolderPath: string;
+    _projectModel: ProjectModelInterface;
     constructor(projectPath: string) {
         this._projectPath = projectPath;
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.CREATE_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.LOAD_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.SAVE_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
-        ipcMain.on(
-            IpcProviderResourceEnums.CREATE_PROJECT,
-            async (event, responseChannel: string) => {
-                console.log("Create Project ", this._projectPath);
-                await this.saveProject({
-                    resourceList: [],
-                    tagList: []
-                });
-                event.reply(responseChannel);
-            }
-        );
-
-        ipcMain.on(
-            IpcProviderResourceEnums.LOAD_PROJECT,
-            async (event, responseChannel: string) => {
-                const loader = new Loader(event);
-                loader.setMessage("Loading project");
-                if (!(await this.testProjectPath())) {
-                    event.reply(responseChannel);
-                } else {
-                    await this.loadProject(loader);
-                    event.reply(responseChannel, this._project);
-                }
-            }
-        );
-
-        ipcMain.on(
-            IpcProviderResourceEnums.GET_PROJECT,
-            (event, responseChannel: string) => {
-                console.log("Get Project ", this._projectPath);
-                event.reply(responseChannel, this._projectPath);
-            }
-        );
-        ipcMain.on(
-            IpcProviderResourceEnums.SAVE_PROJECT,
-            async (event, responseChannel: string, project: ProjectInterface) => {
-                await saveFile(
-                    path.resolve(this.getProjectPath(), ProjectManager.PROJECT_FOLDER),
-                    ProjectManager.PROJECT_FILE_NAME,
-                    ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-                    JSON.stringify(project)
-                );
-                event.reply(responseChannel);
-            }
-        );
-
-        ipcMain.on(
-            IpcProviderResourceEnums.EXECUTE_RESOURCE,
-            (event, resourcePath: string) => {
-                shell.openItem(path.join(this.getProjectPath(), resourcePath));
-            }
-        );
-    }
-
-    public async saveProject(project) {
-        this._project = project;
-        await saveFile(
-            path.resolve(this.getProjectPath(), ProjectManager.PROJECT_FOLDER),
-            ProjectManager.PROJECT_FILE_NAME,
-            ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-            JSON.stringify(project)
-        );
-    }
-    public async testProjectPath() {
-        const isProject = await isProjectStructure(
-            this.getProjectPath(),
+        this._projectFolderPath = path.resolve(
+            this._projectPath,
             ProjectManager.PROJECT_FOLDER
         );
-        return isProject;
     }
-
-    private async loadProject(loader: Loader) {
-        await this.loadProjectFile();
-        await this.loadResourceFileList();
-        await this.generateResourceList(loader);
-        // await this.loadThumbnailList();
-        await this.saveProject(this._project);
-    }
-    private async loadProjectFile() {
-        const projectFileString = await loadFile(
-            this.getProjectPath(),
-            ProjectManager.PROJECT_FOLDER,
+    public async loadProjectModel(): Promise<ProjectModelInterface> {
+        const projectFile: ProjectFileInterface = await loadProjectFile(
+            this._projectFolderPath,
             ProjectManager.PROJECT_FILE_NAME
         );
-        this._project = JSON.parse(projectFileString);
+        return await this.generateProjectModel(projectFile);
     }
 
-    private async getThumbnail(resourceId: string, resourcePath: string) {
-        const thumbnail: string = await getThumbnail(
-            path.resolve(
-                this.getProjectPath(),
-                ProjectManager.PROJECT_FOLDER,
-                ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-                resourceId,
-                ProjectManager.PROJECT_THUMBNAIL_FILE
-            )
+    public async generateProjectModel(
+        projectFile: ProjectFileInterface
+    ): Promise<ProjectModelInterface> {
+        const fileList: Array<FileInterface> = await getFileList(this._projectPath);
+        const projectModel: ProjectModelInterface = createModelFromProjectFile(
+            projectFile
         );
-        if (thumbnail) {
-            return thumbnail;
-        } else {
-            const newThumbnail: string = await generateThumbnail(
-                path.resolve(this.getProjectPath(), resourcePath),
-                path.resolve(
-                    this.getProjectPath(),
-                    ProjectManager.PROJECT_FOLDER,
-                    ProjectManager.PROJECT_THUMBNAIL_FOLDER,
-                    resourceId
-                ),
-                ProjectManager.PROJECT_THUMBNAIL_FILE
-            );
-            if (newThumbnail) {
-                return newThumbnail;
-            } else {
-                return null;
-            }
-        }
-    }
-
-    private async loadResourceFileList() {
-        this._fileList = await getFileList(this.getProjectPath());
-    }
-
-    private async generateResourceList(loader: Loader) {
-        this._project.resourceList.map((resource: ResourceInterface) => {
-            resource.isRemoved = true;
-            resource.isNew = false;
-        });
-
-        await asyncForEach(this._fileList, async (file: FileInterface, index: number) => {
-            const length: number = this._fileList.length;
-            loader.setMessage("Preparing files");
-            loader.setProgress(Math.ceil((index * 100) / length));
-            const resource = this._project.resourceList.find(
-                (testResource: ResourceInterface) =>
-                    testResource.filePath === file.filePath
+        await asyncForEach(fileList, async (file: FileInterface, index: number) => {
+            const resource: ResourceModelInterface = getResourceByPath(
+                projectModel.resourceList,
+                file.filePath
             );
             if (resource) {
                 resource.isRemoved = false;
             } else {
-                const id = uuid();
-                const metadata = await getMetadata(
-                    path.resolve(this.getProjectPath(), file.filePath)
+                projectModel.resourceList.push(
+                    await createResourceModel(
+                        this._projectPath,
+                        ProjectManager.PROJECT_FOLDER,
+                        file
+                    )
                 );
-
-                const thumbnailPath = await this.getThumbnail(id, file.filePath);
-                const newResource: ResourceInterface = {
-                    filePath: file.filePath,
-                    fileName: file.fileName,
-                    title: file.name,
-                    size: file.size,
-                    duration: parseInt(metadata.duration, 10),
-                    width: parseInt(metadata.width, 10),
-                    height: parseInt(metadata.height, 10),
-                    ranking: 0,
-                    description: "",
-                    id: id,
-                    tags: [],
-                    isRemoved: false,
-                    isNew: true,
-                    thumbnailPath: thumbnailPath
-                };
-                this._project.resourceList.push(newResource);
             }
         });
+        this._projectModel = projectModel;
+        return this._projectModel;
     }
+}
 
-    private getProjectPath(): string {
-        return this._projectPath;
-    }
+async function loadProjectFile(
+    projectFolderPath: string,
+    projectFileName: string
+): Promise<ProjectFileInterface> {
+    const projectFileString = await loadFile(projectFolderPath, projectFileName);
+    return JSON.parse(projectFileString);
+}
+
+function createModelFromProjectFile(
+    projectFile: ProjectFileInterface
+): ProjectModelInterface {
+    const projectModel: ProjectModelInterface = {
+        resourceList: [],
+        tagList: projectFile.tagList
+    };
+    projectModel.resourceList = projectFile.resourceList.map(
+        (fileResource: ResourceFileInterface): ResourceModelInterface => {
+            return Object.assign({}, fileResource, {
+                isRemoved: true,
+                isNew: false
+            }) as ResourceModelInterface;
+        }
+    );
+    return projectModel;
+}
+
+function getResourceByPath(
+    resourceList: Array<ResourceModelInterface>,
+    filePath: string
+): ResourceModelInterface {
+    return resourceList.find(
+        (resource: ResourceModelInterface) => resource.filePath === filePath
+    );
+}
+
+async function createResourceModel(
+    projectPath: string,
+    projectFoldeName: string,
+    file: FileInterface
+): Promise<ResourceModelInterface> {
+    const id = uuid();
+    const metadata = await getMetadata(path.resolve(projectPath, file.filePath));
+
+    const thumbnailPath = await ThumbnailManager.getThumbnail(
+        projectPath,
+        projectFoldeName,
+        file.filePath,
+        id
+    );
+    const resource: ResourceModelInterface = {
+        filePath: file.filePath,
+        fileName: file.fileName,
+        title: file.name,
+        size: file.size,
+        duration: parseInt(metadata.duration, 10),
+        width: parseInt(metadata.width, 10),
+        height: parseInt(metadata.height, 10),
+        ranking: 0,
+        description: "",
+        id: id,
+        tags: [],
+        isRemoved: false,
+        isNew: true,
+        thumbnailPath: thumbnailPath
+    };
+    return resource;
 }
 
 async function asyncForEach(array, callback) {

@@ -2,11 +2,9 @@ import * as fse from "fs-extra";
 import * as path from "path";
 
 export default async function loadFile(
-    directory: string,
-    projectFolderName: string,
+    projectFolderPath: string,
     projectFile: string
 ): Promise<string> {
-    const projectFolderPath = path.resolve(directory, projectFolderName);
     const isProjectFolderExist = await fse.pathExists(projectFolderPath);
     if (isProjectFolderExist) {
         const projectFolderStat = await fse.stat(projectFolderPath);
