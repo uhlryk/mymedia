@@ -9,6 +9,7 @@ import getMetadata from "./fs/getMetadata";
 import * as path from "path";
 import ResourceModelInterface from "../shared/types/resourceModel.interface";
 import ThumbnailManager from "./ThumbnailManager";
+import saveProjectFile from "./fs/saveProjectFile";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
@@ -58,6 +59,22 @@ export default class ProjectManager {
         });
         this._projectModel = projectModel;
         return this._projectModel;
+    }
+
+    public async save() {
+        const projectFile: ProjectFileInterface = {
+            resourceList: this._projectModel.resourceList.map(
+                (resourceModel: ResourceModelInterface): ResourceFileInterface => {
+                    return resourceModel as ResourceFileInterface;
+                }
+            ),
+            tagList: this._projectModel.tagList
+        };
+        await saveProjectFile(
+            this._projectFolderPath,
+            ProjectManager.PROJECT_FILE_NAME,
+            JSON.stringify(projectFile)
+        );
     }
 }
 

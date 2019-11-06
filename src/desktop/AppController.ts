@@ -1,17 +1,15 @@
 import { ipcMain, shell, dialog } from "electron";
 import ProjectModelInterface from "../shared/types/projectModel.interface";
 import ProjectFileInterface from "../shared/types/projectFile.interface";
-import saveFile from "./fs/saveFile";
+import setInitProject from "./fs/setInitProject";
 import * as path from "path";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import Loader from "./Loader";
 import ProjectManager from "./ProjectManager";
+import ThumbnailManager from "./ThumbnailManager";
 
 export default class AppController {
-    static PROJECT_FOLDER = ".mymedia";
-    static PROJECT_FILE_NAME = "project.json";
-    static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
     _projectPath: string;
     _projectManager: ProjectManager;
     constructor(projectPath: string) {
@@ -25,10 +23,15 @@ export default class AppController {
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
                 console.log("Create Project ", this._projectPath);
-                await this.saveProject({
-                    resourceList: [],
-                    tagList: []
-                });
+                await setInitProject(
+                    path.resolve(this.getProjectPath(), ProjectManager.PROJECT_FOLDER),
+                    ProjectManager.PROJECT_FILE_NAME,
+                    ThumbnailManager.PROJECT_THUMBNAIL_FOLDER,
+                    JSON.stringify({
+                        resourceList: [],
+                        tagList: []
+                    })
+                );
                 event.reply(responseChannel);
             }
         );
@@ -43,6 +46,7 @@ export default class AppController {
                 } else {
                     this._projectManager = new ProjectManager(this._projectPath);
                     const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel();
+                    await this._projectManager.save();
                     event.reply(responseChannel, projectModel);
                 }
             }
@@ -57,13 +61,9 @@ export default class AppController {
         );
         ipcMain.on(
             IpcProviderResourceEnums.SAVE_PROJECT,
-            async (event, responseChannel: string, project: ProjectModelInterface) => {
-                await saveFile(
-                    path.resolve(this.getProjectPath(), AppController.PROJECT_FOLDER),
-                    AppController.PROJECT_FILE_NAME,
-                    AppController.PROJECT_THUMBNAIL_FOLDER,
-                    JSON.stringify(project)
-                );
+            async (event, responseChannel: string, project: ProjectFileInterface) => {
+                await this._projectManager.generateProjectModel(project);
+                await this._projectManager.save();
                 event.reply(responseChannel);
             }
         );
@@ -76,18 +76,10 @@ export default class AppController {
         );
     }
 
-    public async saveProject(project: ProjectFileInterface) {
-        await saveFile(
-            path.resolve(this.getProjectPath(), AppController.PROJECT_FOLDER),
-            AppController.PROJECT_FILE_NAME,
-            AppController.PROJECT_THUMBNAIL_FOLDER,
-            JSON.stringify(project)
-        );
-    }
     public async testProjectPath() {
         const isProject = await isProjectStructure(
             this.getProjectPath(),
-            AppController.PROJECT_FOLDER
+            ProjectManager.PROJECT_FOLDER
         );
         return isProject;
     }
