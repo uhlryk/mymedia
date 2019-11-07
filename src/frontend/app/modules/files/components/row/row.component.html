@@ -1,7 +1,10 @@
 <p-card styleClass="ui-card-shadow">
     <p-header>
         <div class="thumbnail-wrapper">
-            <img class="thumbnail" (click)="clickThumbanil()" [src]="resource.getThumbnail()" alt="" />
+            <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper" >
+                <i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>
+            </div>
+            <img *ngIf="resource.thumbnailPath" class="thumbnail" (click)="clickThumbanil()" [src]="resource.thumbnailPath" alt="" />
         </div>
     </p-header>
     <div [style.background-color]="resource.isRemoved() ? 'red' : 'white'">

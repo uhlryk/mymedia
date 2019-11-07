@@ -9,7 +9,7 @@ import { SharedModule } from "../shared/shared.module";
 import { InplaceModule } from "primeng/inplace";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { InputTextareaModule } from "primeng/inputtextarea";
 @NgModule({
     declarations: [DetailsModalComponent, TitleComponent, DescriptionComponent],
     imports: [

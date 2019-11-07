@@ -1,7 +1,7 @@
 .thumbnail-wrapper {
     width:100%;
     height:200px;
-    background: #007ad9;
+    background: #b6cad9;
 }
 img.thumbnail {
     width:100%;
@@ -13,4 +13,15 @@ img.thumbnail {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.spinner-wrapper {
+    display: flex;
+    flex-direction: column; /* NEW */
+    justify-content: center;
+    align-items: center;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
 }

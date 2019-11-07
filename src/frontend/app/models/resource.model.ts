@@ -49,7 +49,7 @@ export default class ResourceModel {
         this._tagCollectionModel = tagCollectionModel;
     }
 
-    getThumbnail() {
+    public get thumbnailPath() {
         return this._thumbnailPath;
     }
     getFilePath() {

@@ -15,7 +15,6 @@ import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
 import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { DialogService } from "primeng/api";
-
 @NgModule({
     imports: [
         CommonModule,
