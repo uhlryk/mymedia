@@ -1,4 +1,3 @@
-import getThumbnail from "./fs/getThumbnail";
 import * as path from "path";
 import generateThumbnail from "./fs/generateThumbnail";
 
@@ -6,39 +5,53 @@ export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
     static PROJECT_THUMBNAIL_FILE = "thum.jpg";
 
-    static async getThumbnail(
+    private _projectPath: string;
+    private _projectFolderName: string;
+    private _queue: Array<QueueElement>;
+
+    constructor(
         projectPath: string,
-        projectFolder: string,
-        resourceFilePath: string,
-        resourceId: string
+        projectFolderName: string,
+        listener: (resourceId: string, resourceThumbnailPath: string) => void
     ) {
-        // const thumbnail: string = await getThumbnail(
-        //     path.resolve(
-        //         projectPath,
-        //         projectFolder,
-        //         ThumbnailManager.PROJECT_THUMBNAIL_FOLDER,
-        //         resourceId,
-        //         ThumbnailManager.PROJECT_THUMBNAIL_FILE
-        //     )
-        // );
-        // if (thumbnail) {
-        //     return thumbnail;
-        // } else {
-            const newThumbnail: string = await generateThumbnail(
-                path.resolve(projectPath, resourceFilePath),
-                path.resolve(
-                    projectPath,
-                    projectFolder,
-                    ThumbnailManager.PROJECT_THUMBNAIL_FOLDER,
-                    resourceId
-                ),
-                ThumbnailManager.PROJECT_THUMBNAIL_FILE
-            );
-            if (newThumbnail) {
-                return newThumbnail;
-            } else {
-                return null;
-            }
-        // }
+        this._projectPath = projectPath;
+        this._projectFolderName = projectFolderName;
+        this._queue = [];
+    }
+
+    public queueGenerateThumbnail(resourceFilePath: string, resourceId: string) {
+        const targetThumbnailPath: string = path.resolve(
+            this._projectPath,
+            this._projectFolderName,
+            ThumbnailManager.PROJECT_THUMBNAIL_FOLDER,
+            resourceId,
+            ThumbnailManager.PROJECT_THUMBNAIL_FILE
+        );
+        const videoPath: string = path.resolve(this._projectPath, resourceFilePath);
+
+        const queueElement: QueueElement = {
+            resourceId: resourceId,
+            sourceVideoPath: videoPath,
+            targetThumbnailPath: targetThumbnailPath
+        };
+        this._queue.push(queueElement);
+    }
+}
+
+interface QueueElement {
+    targetThumbnailPath: string;
+    sourceVideoPath: string;
+    resourceId: string;
+}
+
+async function getThumbnail(sourceVideoPath: string, targetThumbnailPath: string) {
+    const newThumbnail: string = await generateThumbnail(
+        sourceVideoPath,
+        targetThumbnailPath
+    );
+    if (newThumbnail) {
+        return newThumbnail;
+    } else {
+        return null;
     }
 }

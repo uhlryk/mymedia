@@ -31,7 +31,7 @@ export class ThumbnailService {
             while (this._list[0]) {
                 const request: ThumbnailRequest = this._list.shift();
                 // console.log("Start request for ", request.resource.getTitle());
-                const thumbnail = await request.resource.getThumbnail();
+                const thumbnail = await request.resource.thumbnailPath;
                 // console.log("Finish request for ", request.resource.getTitle());
                 request.callback(thumbnail);
             }

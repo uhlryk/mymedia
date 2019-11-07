@@ -18,11 +18,21 @@ export default class ProjectManager {
     _projectPath: string;
     _projectFolderPath: string;
     _projectModel: ProjectModelInterface;
-    constructor(projectPath: string) {
+
+    private _thumbnailManager: ThumbnailManager;
+    constructor(
+        projectPath: string,
+        listener: (resourceId: string, resourceThumbnailPath: string) => void
+    ) {
         this._projectPath = projectPath;
         this._projectFolderPath = path.resolve(
             this._projectPath,
             ProjectManager.PROJECT_FOLDER
+        );
+        this._thumbnailManager = new ThumbnailManager(
+            this._projectPath,
+            ProjectManager.PROJECT_FOLDER,
+            listener
         );
     }
     public async loadProjectModel(): Promise<ProjectModelInterface> {
@@ -48,12 +58,15 @@ export default class ProjectManager {
             if (resource) {
                 resource.isRemoved = false;
             } else {
-                projectModel.resourceList.push(
-                    await createResourceModel(
-                        this._projectPath,
-                        ProjectManager.PROJECT_FOLDER,
-                        file
-                    )
+                const newResource = await createResourceModel(
+                    this._projectPath,
+                    ProjectManager.PROJECT_FOLDER,
+                    file
+                );
+                projectModel.resourceList.push(newResource);
+                this._thumbnailManager.queueGenerateThumbnail(
+                    newResource.filePath,
+                    newResource.id
                 );
             }
         });
@@ -123,13 +136,6 @@ async function createResourceModel(
 ): Promise<ResourceModelInterface> {
     const id = uuid();
     const metadata = await getMetadata(path.resolve(projectPath, file.filePath));
-
-    const thumbnailPath = await ThumbnailManager.getThumbnail(
-        projectPath,
-        projectFoldeName,
-        file.filePath,
-        id
-    );
     const resource: ResourceModelInterface = {
         filePath: file.filePath,
         fileName: file.fileName,
@@ -143,8 +149,7 @@ async function createResourceModel(
         id: id,
         tags: [],
         isRemoved: false,
-        isNew: true,
-        thumbnailPath: thumbnailPath
+        isNew: true
     };
     return resource;
 }

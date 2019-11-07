@@ -1,18 +1,13 @@
 import * as fse from "fs-extra";
-import * as path from "path";
 import { spawn } from "child_process";
 import * as ffmpeg from "ffmpeg-static-electron";
 
-export default async function generateThumbnail(
-    sourceFilePath,
-    thumbnailFolderPath,
-    thumbnailFileName
-) {
-    const thumbnailFilePath = path.resolve(thumbnailFolderPath, thumbnailFileName);
-    const isThumbnailFolderExist = await fse.pathExists(thumbnailFolderPath);
-    if (!isThumbnailFolderExist) {
-        await fse.mkdir(thumbnailFolderPath);
-    }
+export default async function generateThumbnail(sourceFilePath, targetThumbnailPath) {
+    // const thumbnailFilePath = path.resolve(thumbnailFolderPath, thumbnailFileName);
+    // const isThumbnailFolderExist = await fse.pathExists(thumbnailFolderPath);
+    // if (!isThumbnailFolderExist) {
+    //     await fse.mkdir(thumbnailFolderPath);
+    // }
     const childProcess = spawn(ffmpeg.path, [
         // "-nostats",
         // "-loglevel",
@@ -28,7 +23,7 @@ export default async function generateThumbnail(
         // "2",
         // "-s",
         // "480x320",
-        thumbnailFilePath
+        targetThumbnailPath
     ]);
     await new Promise((resolve, reject) => {
         // childProcess.on("exit", statusCode => {
@@ -40,7 +35,6 @@ export default async function generateThumbnail(
         // childProcess.stdout.on("data", data => {
         //     console.log("STOUT DATA", data);
         // });
-
 
         childProcess.on("close", code => {
             console.log("CLOSE", code);
@@ -54,9 +48,9 @@ export default async function generateThumbnail(
     });
 
     console.log("Thumbnail should be ready");
-    const isThumbnailFile = await fse.pathExists(thumbnailFilePath);
+    const isThumbnailFile = await fse.pathExists(targetThumbnailPath);
     if (isThumbnailFile) {
-        return "file://" + thumbnailFilePath;
+        return "file://" + targetThumbnailPath;
     } else {
         console.log("Thumbnail doesn't exist");
         return null;

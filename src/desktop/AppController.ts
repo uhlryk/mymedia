@@ -44,7 +44,13 @@ export default class AppController {
                 if (!(await this.testProjectPath())) {
                     event.reply(responseChannel);
                 } else {
-                    this._projectManager = new ProjectManager(this._projectPath);
+                    this._projectManager = new ProjectManager(
+                        this._projectPath,
+                        (resourceId, resourceThumbnailPath) => {
+                            console.log("====");
+                            console.log(resourceId, resourceThumbnailPath);
+                        }
+                    );
                     const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel();
                     await this._projectManager.save();
                     event.reply(responseChannel, projectModel);
