@@ -1,6 +1,6 @@
 import * as fse from "fs-extra";
 import * as path from "path";
-import FileInterface from "../../shared/types/file.interface";
+import FileInterface from "../types/file.interface";
 const ACCEPTABLE_EXTENSIONS = [".wmv", ".mp4", ".mov", ".webm", ".mkv", ".flv", ".vob", ".avi", ".rmvb"];
 async function walk(baseDir, dir): Promise<Array<FileInterface>> {
     const results: Array<FileInterface> = [];

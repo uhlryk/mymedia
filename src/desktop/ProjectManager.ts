@@ -1,9 +1,9 @@
 import ProjectModelInterface from "../shared/types/projectModel.interface";
 import loadFile from "./fs/loadFile";
-import ProjectFileInterface from "../shared/types/projectFile.interface";
+import ProjectFileInterface from "./types/projectFile.interface";
 import getFileList from "./fs/getFileList";
-import FileInterface from "../shared/types/file.interface";
-import ResourceFileInterface from "../shared/types/resourceFile.interface";
+import FileInterface from "./types/file.interface";
+import ResourceFileInterface from "./types/resourceFile.interface";
 import uuid from "uuidv4";
 import getMetadata from "./fs/getMetadata";
 import * as path from "path";

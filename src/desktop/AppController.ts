@@ -1,6 +1,6 @@
 import { ipcMain, shell, dialog } from "electron";
 import ProjectModelInterface from "../shared/types/projectModel.interface";
-import ProjectFileInterface from "../shared/types/projectFile.interface";
+import ProjectFileInterface from "./types/projectFile.interface";
 import setInitProject from "./fs/setInitProject";
 import * as path from "path";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
