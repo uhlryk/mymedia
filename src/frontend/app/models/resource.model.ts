@@ -1,5 +1,4 @@
 import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
-import ResourceFileInterface from "../../../shared/types/resourceFile.interface";
 import TagCollectionModel from "./tag.collection.model";
 import TagModel from "./tag.model";
 
@@ -125,7 +124,7 @@ export default class ResourceModel {
         }
     }
 
-    public toSaveValue(): ResourceFileInterface {
+    public toSaveValue(): ResourceModelInterface {
         return {
             filePath: this._filePath,
             fileName: this._fileName,

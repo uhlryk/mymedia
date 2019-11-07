@@ -1,6 +1,5 @@
 import TagCollectionModel from "./tag.collection.model";
 import ProjectModelInterface from "../../../shared/types/projectModel.interface";
-import ProjectFileInterface from "../../../shared/types/projectFile.interface";
 import ResourceCollectionModel from "./resource.collection.model";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ResourceModel from "./resource.model";
@@ -50,7 +49,7 @@ export default class ProjectModel {
     }
 
     public async save() {
-        const project: ProjectFileInterface = {
+        const project: ProjectModelInterface = {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };

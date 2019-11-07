@@ -33,7 +33,7 @@ export default class ProjectManager {
         return await this.generateProjectModel(projectFile);
     }
 
-    public async generateProjectModel(
+    private async generateProjectModel(
         projectFile: ProjectFileInterface
     ): Promise<ProjectModelInterface> {
         const fileList: Array<FileInterface> = await getFileList(this._projectPath);
@@ -61,6 +61,9 @@ export default class ProjectManager {
         return this._projectModel;
     }
 
+    public setProjectModel(projectModel: ProjectModelInterface) {
+        this._projectModel = projectModel;
+    }
     public async save() {
         const projectFile: ProjectFileInterface = {
             resourceList: this._projectModel.resourceList.map(

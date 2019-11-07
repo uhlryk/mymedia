@@ -49,7 +49,7 @@ export default class ResourceCollectionModel {
         });
     }
 
-    public toSaveValue(): Array<ResourceFileInterface> {
+    public toSaveValue(): Array<ResourceModelInterface> {
         return this._resourceModelList.map((resourceModel: ResourceModel) =>
             resourceModel.toSaveValue()
         );

@@ -61,8 +61,8 @@ export default class AppController {
         );
         ipcMain.on(
             IpcProviderResourceEnums.SAVE_PROJECT,
-            async (event, responseChannel: string, project: ProjectFileInterface) => {
-                await this._projectManager.generateProjectModel(project);
+            async (event, responseChannel: string, project: ProjectModelInterface) => {
+                await this._projectManager.setProjectModel(project);
                 await this._projectManager.save();
                 event.reply(responseChannel);
             }
