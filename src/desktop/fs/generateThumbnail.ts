@@ -1,13 +1,15 @@
 import * as fse from "fs-extra";
 import { spawn } from "child_process";
 import * as ffmpeg from "ffmpeg-static-electron";
+import * as path from "path";
 
 export default async function generateThumbnail(sourceFilePath, targetThumbnailPath) {
     // const thumbnailFilePath = path.resolve(thumbnailFolderPath, thumbnailFileName);
-    // const isThumbnailFolderExist = await fse.pathExists(thumbnailFolderPath);
-    // if (!isThumbnailFolderExist) {
-    //     await fse.mkdir(thumbnailFolderPath);
-    // }
+    const thumbnailFolderPath: string = path.dirname(targetThumbnailPath);
+    const isThumbnailFolderExist = await fse.pathExists(thumbnailFolderPath);
+    if (!isThumbnailFolderExist) {
+        await fse.mkdir(thumbnailFolderPath);
+    }
     const childProcess = spawn(ffmpeg.path, [
         // "-nostats",
         // "-loglevel",
@@ -26,20 +28,20 @@ export default async function generateThumbnail(sourceFilePath, targetThumbnailP
         targetThumbnailPath
     ]);
     await new Promise((resolve, reject) => {
-        // childProcess.on("exit", statusCode => {
-        //     console.log("exit", statusCode);
-        // });
-        // childProcess.stderr.on("data", err => {
-        //     console.log("STERR DATA", String(err));
-        // });
-        // childProcess.stdout.on("data", data => {
-        //     console.log("STOUT DATA", data);
-        // });
+        childProcess.on("exit", statusCode => {
+            console.log("exit", statusCode);
+        });
+        childProcess.stderr.on("data", err => {
+            console.log("STERR DATA", String(err));
+        });
+        childProcess.stdout.on("data", data => {
+            console.log("STOUT DATA", data);
+        });
 
         childProcess.on("close", code => {
             console.log("CLOSE", code);
             if (code === 0) {
-                // console.log("conversion successful");
+                console.log("conversion successful");
                 resolve();
             } else {
                 reject();

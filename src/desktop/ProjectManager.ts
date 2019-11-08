@@ -71,6 +71,7 @@ export default class ProjectManager {
             }
         });
         this._projectModel = projectModel;
+        this._thumbnailManager.run();
         return this._projectModel;
     }
 
