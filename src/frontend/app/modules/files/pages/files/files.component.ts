@@ -7,6 +7,7 @@ import ResourceModel from "../../../../models/resource.model";
 import { DialogService } from "primeng/api";
 import { LoaderService } from "../../../../services/loader.service";
 import { Router } from "@angular/router";
+import { ThumbnailService } from "../../../../services/thumbnail.service";
 
 @Component({
     templateUrl: "files.component.html",
@@ -20,6 +21,7 @@ export class FilesComponent implements OnInit {
     // visibleSidebar = false;
     constructor(
         private projectContextService: ProjectContextService,
+        private thumbnailService: ThumbnailService,
         private resultManipulationService: ResultManipulationService,
         public dialogService: DialogService,
         private loaderService: LoaderService,
@@ -31,6 +33,12 @@ export class FilesComponent implements OnInit {
             if (!isProjectExist) {
                 this.router.navigate(["/create-project"]);
             } else {
+                this.thumbnailService.onThumbnailChange().subscribe(response => {
+                    const resourceModer: ResourceModel = this.projectContextService.getResourceModel(
+                        response.resourceId
+                    );
+                    resourceModer.thumbnailPath = response.resourceThumbnailPath;
+                });
                 this.resultManipulationService
                     .manipulate(
                         this.projectContextService.getResourceCollectionModel().getList()

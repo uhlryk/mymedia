@@ -20,6 +20,11 @@ export default class ResourceCollectionModel {
         });
     }
 
+    public notifyThumbnailChange(resourceId, resourceThumbnailPath) {
+        const resource = this.getResourceModelById(resourceId)
+        resource.thumbnailPath = resourceThumbnailPath;
+    }
+
     public addResourceModel(resourceModel: ResourceModel) {
         this._resourceModelList.push(resourceModel);
     }

@@ -8,6 +8,7 @@ import isProjectStructure from "./fs/isProjectStructure";
 import Loader from "./Loader";
 import ProjectManager from "./ProjectManager";
 import ThumbnailManager from "./ThumbnailManager";
+import ThumbnailChangeEventInterface from "../shared/types/thumbnailChangeEvent.interface";
 
 export default class AppController {
     _projectPath: string;
@@ -61,10 +62,14 @@ export default class AppController {
                     (resourceId, resourceThumbnailPath) => {
                         console.log("====");
                         console.log(resourceId, resourceThumbnailPath);
-                        event.reply(IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE, {
+                        const thumbnailChangeEventInterface: ThumbnailChangeEventInterface = {
                             resourceId,
                             resourceThumbnailPath
-                        });
+                        };
+                        event.reply(
+                            IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE,
+                            thumbnailChangeEventInterface
+                        );
                     }
                 );
             }

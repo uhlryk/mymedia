@@ -61,7 +61,7 @@ export default class ThumbnailManager {
                         queueElement.sourceVideoPath,
                         queueElement.targetThumbnailPath
                     );
-                    listener(queueElement.resourceId, queueElement.targetThumbnailPath);
+                    listener(queueElement.resourceId, "file://" + queueElement.targetThumbnailPath);
                 } catch (err) {
                     console.log("WWWW");
                     console.log(err);
