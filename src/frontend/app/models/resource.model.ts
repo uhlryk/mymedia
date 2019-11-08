@@ -52,6 +52,10 @@ export default class ResourceModel {
     public get thumbnailPath() {
         return this._thumbnailPath;
     }
+
+    public set thumbnailPath(value: string) {
+        this._thumbnailPath = value;
+    }
     getFilePath() {
         return this._filePath;
     }

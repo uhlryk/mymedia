@@ -1,5 +1,6 @@
 import * as path from "path";
 import generateThumbnail from "./fs/generateThumbnail";
+import getThumbnailList from "./fs/getThumbnailList";
 
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
@@ -7,24 +8,29 @@ export default class ThumbnailManager {
 
     private _projectPath: string;
     private _projectFolderName: string;
+    private _thumbnailMap: Map<string, Array<string>>;
     private _queue: Array<QueueElement>;
     private _isRunning: boolean;
-    constructor(
-        projectPath: string,
-        projectFolderName: string,
-        listener: (resourceId: string, resourceThumbnailPath: string) => void
-    ) {
+    private _thumbnailFolderName: string;
+    constructor(projectPath: string, projectFolderName: string) {
         this._projectPath = projectPath;
         this._projectFolderName = projectFolderName;
+        this._thumbnailFolderName = path.resolve(
+            projectPath,
+            projectFolderName,
+            ThumbnailManager.PROJECT_THUMBNAIL_FOLDER
+        );
         this._queue = [];
         this._isRunning = false;
     }
 
+    public async loadExistingThumbnails(): Promise<Map<string, Array<string>>> {
+        this._thumbnailMap = await getThumbnailList(this._thumbnailFolderName);
+        return this._thumbnailMap;
+    }
     public queueGenerateThumbnail(resourceFilePath: string, resourceId: string) {
         const targetThumbnailPath: string = path.resolve(
-            this._projectPath,
-            this._projectFolderName,
-            ThumbnailManager.PROJECT_THUMBNAIL_FOLDER,
+            this._thumbnailFolderName,
             resourceId,
             ThumbnailManager.PROJECT_THUMBNAIL_FILE
         );
@@ -38,15 +44,25 @@ export default class ThumbnailManager {
         this._queue.push(queueElement);
     }
 
-    public async run() {
+    public async run(
+        listener: (resourceId: string, resourceThumbnailPath: string) => void
+    ) {
+        console.log("Run thumbnail service");
         if (!this._isRunning) {
             this._isRunning = true;
             while (this._queue[0]) {
                 const queueElement: QueueElement = this._queue.shift();
-                console.log("Start generating thumbnail for ", queueElement.sourceVideoPath);
+                console.log(
+                    "Start generating thumbnail for ",
+                    queueElement.sourceVideoPath
+                );
                 try {
-                    await getThumbnail(queueElement.sourceVideoPath, queueElement.targetThumbnailPath);
-                } catch(err) {
+                    await getThumbnail(
+                        queueElement.sourceVideoPath,
+                        queueElement.targetThumbnailPath
+                    );
+                    listener(queueElement.resourceId, queueElement.targetThumbnailPath);
+                } catch (err) {
                     console.log("WWWW");
                     console.log(err);
                 }

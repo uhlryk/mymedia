@@ -22,7 +22,7 @@ export default class ProjectManager {
     private _thumbnailManager: ThumbnailManager;
     constructor(
         projectPath: string,
-        listener: (resourceId: string, resourceThumbnailPath: string) => void
+
     ) {
         this._projectPath = projectPath;
         this._projectFolderPath = path.resolve(
@@ -31,8 +31,7 @@ export default class ProjectManager {
         );
         this._thumbnailManager = new ThumbnailManager(
             this._projectPath,
-            ProjectManager.PROJECT_FOLDER,
-            listener
+            ProjectManager.PROJECT_FOLDER
         );
     }
     public async loadProjectModel(): Promise<ProjectModelInterface> {
@@ -40,9 +39,31 @@ export default class ProjectManager {
             this._projectFolderPath,
             ProjectManager.PROJECT_FILE_NAME
         );
-        return await this.generateProjectModel(projectFile);
+
+        this._projectModel = await this.generateProjectModel(projectFile);
+        await this.mapThumbnails();
+        return this._projectModel;
     }
 
+    public listenForThumbnails(listener: (resourceId: string, resourceThumbnailPath: string) => void) {
+        this._thumbnailManager.run(listener);
+    }
+    private async mapThumbnails() {
+        const thumbnailMap: Map<
+            string,
+            Array<string>
+        > = await this._thumbnailManager.loadExistingThumbnails();
+        this._projectModel.resourceList.map((resourceModel: ResourceModelInterface) => {
+            if (thumbnailMap.has(resourceModel.id)) {
+                resourceModel.thumbnailPath = thumbnailMap.get(resourceModel.id)[0];
+            } else {
+                this._thumbnailManager.queueGenerateThumbnail(
+                    resourceModel.filePath,
+                    resourceModel.id
+                );
+            }
+        });
+    }
     private async generateProjectModel(
         projectFile: ProjectFileInterface
     ): Promise<ProjectModelInterface> {
@@ -64,15 +85,9 @@ export default class ProjectManager {
                     file
                 );
                 projectModel.resourceList.push(newResource);
-                this._thumbnailManager.queueGenerateThumbnail(
-                    newResource.filePath,
-                    newResource.id
-                );
             }
         });
-        this._projectModel = projectModel;
-        this._thumbnailManager.run();
-        return this._projectModel;
+        return projectModel;
     }
 
     public setProjectModel(projectModel: ProjectModelInterface) {

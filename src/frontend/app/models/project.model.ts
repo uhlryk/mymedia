@@ -34,7 +34,7 @@ export default class ProjectModel {
         );
         if (project) {
             this._tagCollectionModel = TagCollectionModel.fromProject(project.tagList);
-            this._resourceCollectionModel = ResourceCollectionModel.fromProject(
+            this._resourceCollectionModel = new ResourceCollectionModel(
                 project.resourceList,
                 this._tagCollectionModel
             );

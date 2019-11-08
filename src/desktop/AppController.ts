@@ -19,6 +19,7 @@ export default class AppController {
         ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
         ipcMain.removeAllListeners(IpcProviderResourceEnums.SAVE_PROJECT);
         ipcMain.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
@@ -44,20 +45,30 @@ export default class AppController {
                 if (!(await this.testProjectPath())) {
                     event.reply(responseChannel);
                 } else {
-                    this._projectManager = new ProjectManager(
-                        this._projectPath,
-                        (resourceId, resourceThumbnailPath) => {
-                            console.log("====");
-                            console.log(resourceId, resourceThumbnailPath);
-                        }
-                    );
+                    this._projectManager = new ProjectManager(this._projectPath);
                     const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel();
                     await this._projectManager.save();
                     event.reply(responseChannel, projectModel);
                 }
             }
         );
-
+        ipcMain.on(
+            IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE,
+            async (event, responseChannel: string) => {
+                console.log("++++");
+                console.log("start listening for thumbnails");
+                this._projectManager.listenForThumbnails(
+                    (resourceId, resourceThumbnailPath) => {
+                        console.log("====");
+                        console.log(resourceId, resourceThumbnailPath);
+                        event.reply(IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE, {
+                            resourceId,
+                            resourceThumbnailPath
+                        });
+                    }
+                );
+            }
+        );
         ipcMain.on(
             IpcProviderResourceEnums.GET_PROJECT,
             (event, responseChannel: string) => {

@@ -1,25 +1,23 @@
 import ResourceModel from "./resource.model";
 import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
 import TagCollectionModel from "./tag.collection.model";
-
+import IpcProvider from "../providers/ipc.provider";
+import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 export default class ResourceCollectionModel {
-    private _resourceModelList: Array<ResourceModel> = [];
+    private _resourceModelList: Array<ResourceModel>;
     private _tagCollectionModel: TagCollectionModel;
-    public constructor(tagCollectionModel: TagCollectionModel) {
+    public constructor(resourceList: Array<ResourceModelInterface>, tagCollectionModel: TagCollectionModel) {
         this._tagCollectionModel = tagCollectionModel;
-    }
-    static fromProject(
-        resourceList: Array<ResourceModelInterface>,
-        tagCollectionModel: TagCollectionModel
-    ): ResourceCollectionModel {
-        const resourceCollectionModel = new ResourceCollectionModel(tagCollectionModel);
-
-        resourceCollectionModel._resourceModelList = resourceList.map(
+        this._resourceModelList = resourceList.map(
             (resource: ResourceModelInterface) => {
                 return ResourceModel.fromProject(resource, tagCollectionModel);
             }
         );
-        return resourceCollectionModel;
+        IpcProvider.trigger(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
+        IpcProvider.listen(IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE, response => {
+            const resource = this.getResourceModelById(response.resourceId)
+            resource.thumbnailPath = response.resourceThumbnailPath;
+        });
     }
 
     public addResourceModel(resourceModel: ResourceModel) {
