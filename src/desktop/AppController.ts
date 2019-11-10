@@ -47,7 +47,7 @@ export default class AppController {
                     event.reply(responseChannel);
                 } else {
                     this._projectManager = new ProjectManager(this._projectPath);
-                    const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel();
+                    const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel(loader);
                     await this._projectManager.save();
                     event.reply(responseChannel, projectModel);
                 }
@@ -56,7 +56,6 @@ export default class AppController {
         ipcMain.on(
             IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE,
             async (event, responseChannel: string) => {
-                console.log("++++");
                 console.log("start listening for thumbnails");
                 this._projectManager.listenForThumbnails(
                     (resourceId, resourceThumbnailPath) => {

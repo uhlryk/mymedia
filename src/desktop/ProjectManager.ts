@@ -10,6 +10,7 @@ import * as path from "path";
 import ResourceModelInterface from "../shared/types/resourceModel.interface";
 import ThumbnailManager from "./ThumbnailManager";
 import saveProjectFile from "./fs/saveProjectFile";
+import Loader from "./Loader";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
@@ -20,10 +21,7 @@ export default class ProjectManager {
     _projectModel: ProjectModelInterface;
 
     private _thumbnailManager: ThumbnailManager;
-    constructor(
-        projectPath: string,
-
-    ) {
+    constructor(projectPath: string) {
         this._projectPath = projectPath;
         this._projectFolderPath = path.resolve(
             this._projectPath,
@@ -34,18 +32,21 @@ export default class ProjectManager {
             ProjectManager.PROJECT_FOLDER
         );
     }
-    public async loadProjectModel(): Promise<ProjectModelInterface> {
+    public async loadProjectModel(loader: Loader): Promise<ProjectModelInterface> {
+        loader.setMessage("Load project");
         const projectFile: ProjectFileInterface = await loadProjectFile(
             this._projectFolderPath,
             ProjectManager.PROJECT_FILE_NAME
         );
-
-        this._projectModel = await this.generateProjectModel(projectFile);
+        loader.setMessage("Load project files");
+        this._projectModel = await this.generateProjectModel(projectFile, loader);
         await this.mapThumbnails();
         return this._projectModel;
     }
 
-    public listenForThumbnails(listener: (resourceId: string, resourceThumbnailPath: string) => void) {
+    public listenForThumbnails(
+        listener: (resourceId: string, resourceThumbnailPath: string) => void
+    ) {
         this._thumbnailManager.run(listener);
     }
     private async mapThumbnails() {
@@ -65,13 +66,16 @@ export default class ProjectManager {
         });
     }
     private async generateProjectModel(
-        projectFile: ProjectFileInterface
+        projectFile: ProjectFileInterface,
+        loader: Loader
     ): Promise<ProjectModelInterface> {
         const fileList: Array<FileInterface> = await getFileList(this._projectPath);
         const projectModel: ProjectModelInterface = createModelFromProjectFile(
             projectFile
         );
+        loader.setProgress(0);
         await asyncForEach(fileList, async (file: FileInterface, index: number) => {
+            loader.setProgress(Math.ceil(((index + 1) * 100) / fileList.length));
             const resource: ResourceModelInterface = getResourceByPath(
                 projectModel.resourceList,
                 file.filePath
