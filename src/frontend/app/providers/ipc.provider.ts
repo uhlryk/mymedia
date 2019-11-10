@@ -15,12 +15,9 @@ export default class IpcProvider {
 
     static listen(channel: string, callback: (response: any) => void): RemoveListener {
         const listener = (event, mainProcessResponse) => {
-            console.log("A3");
             callback(mainProcessResponse);
         };
-        console.log("A1");
         ipcRenderer.on(channel, listener);
-        console.log("A2");
         return () => {
             ipcRenderer.removeListener(channel, listener);
         };

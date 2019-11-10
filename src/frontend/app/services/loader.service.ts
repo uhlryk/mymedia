@@ -38,7 +38,6 @@ export class LoaderService {
         this._observer.next(this.status);
     }
     public showProgress(value) {
-        console.log("AAAA2");
         if (value === 0 || value === 100 || this.cachedTime + 3000 <= Date.now()) {
             this.status.showLoader = true;
             this.status.showProgressBar = true;
@@ -48,7 +47,6 @@ export class LoaderService {
         }
     }
     public hide() {
-        console.log("AAAA1");
         this.cachedTime = 0;
         this.status = new LoaderStatus();
         this._observer.next(this.status);
