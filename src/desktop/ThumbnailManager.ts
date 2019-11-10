@@ -81,7 +81,8 @@ interface QueueElement {
 async function getThumbnail(sourceVideoPath: string, targetThumbnailPath: string) {
     const newThumbnail: string = await generateThumbnail(
         sourceVideoPath,
-        targetThumbnailPath
+        targetThumbnailPath,
+        0
     );
     if (newThumbnail) {
         return newThumbnail;

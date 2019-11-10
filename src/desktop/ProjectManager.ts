@@ -91,6 +91,7 @@ export default class ProjectManager {
                 projectModel.resourceList.push(newResource);
             }
         });
+        loader.setProgress(100);
         return projectModel;
     }
 
