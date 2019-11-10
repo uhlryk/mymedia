@@ -10,11 +10,18 @@ img.thumbnail {
 }
 
 .title {
+    width: 100%;
+    display: block;
+    overflow: hidden;
+}
+.title > span {
+    display: inline-block;
+    width: 100%;
+    max-width: 700px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .spinner-wrapper {
     display: flex;
     flex-direction: column; /* NEW */

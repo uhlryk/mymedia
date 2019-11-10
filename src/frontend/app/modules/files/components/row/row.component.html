@@ -1,15 +1,23 @@
 <p-card styleClass="ui-card-shadow">
     <p-header>
         <div class="thumbnail-wrapper">
-            <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper" >
+            <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper">
                 <i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>
             </div>
-            <img *ngIf="resource.thumbnailPath" class="thumbnail" (click)="clickThumbanil()" [src]="resource.thumbnailPath" alt="" />
+            <img
+                *ngIf="resource.thumbnailPath"
+                class="thumbnail"
+                (click)="clickThumbanil()"
+                [src]="resource.thumbnailPath"
+                alt=""
+            />
         </div>
     </p-header>
     <div [style.background-color]="resource.isRemoved() ? 'red' : 'white'">
-        <div class="card-section title">
-            {{ resource.getTitle() }}
+        <div class="title">
+            <span>
+                {{ resource.getTitle() }}
+            </span>
         </div>
         <div class="card-section">
             <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
