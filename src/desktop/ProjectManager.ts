@@ -45,7 +45,11 @@ export default class ProjectManager {
     }
 
     public listenForThumbnails(
-        listener: (resourceId: string, resourceThumbnailPath: string, index: number) => void
+        listener: (
+            resourceId: string,
+            resourceThumbnailPath: string,
+            index: number
+        ) => void
     ) {
         this._thumbnailManager.run(listener);
     }
@@ -60,11 +64,7 @@ export default class ProjectManager {
                 resourceModel.thumbnailList = thumbnailMap.get(resourceModel.id);
             } else {
                 // TODO: generate all thumbnails
-                this._thumbnailManager.queueGenerateThumbnail(
-                    resourceModel,
-                    0,
-                    0
-                );
+                this._thumbnailManager.queueGenerateAllThumbnails(resourceModel);
             }
         });
     }

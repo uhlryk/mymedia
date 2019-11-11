@@ -7,7 +7,6 @@ import ThumbnailName from "../../../shared/ThumbnailName";
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
 
-
     private _projectPath: string;
     private _projectFolderName: string;
     private _thumbnailMap: Map<string, Array<string>>;
@@ -30,12 +29,17 @@ export default class ThumbnailManager {
         this._thumbnailMap = await getThumbnailList(this._thumbnailFolderName);
         return this._thumbnailMap;
     }
+
+    public queueGenerateAllThumbnails(resource: ResourceModelInterface) {
+        for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
+            this.queueGenerateThumbnail(resource, i, i === 0 ? 0 : 1);
+        }
+    }
     public queueGenerateThumbnail(
         resource: ResourceModelInterface,
         index: number,
         priority: number
     ) {
-
         const queueElement: QueueElement = {
             resourceId: resource.id,
             sourceVideoPath: path.resolve(this._projectPath, resource.filePath),
