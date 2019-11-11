@@ -19,7 +19,7 @@ export default class ResourceModel {
 
     private _tagModelList: Array<TagModel> = [];
     private _tagCollectionModel: TagCollectionModel;
-    private _thumbnailPath: string;
+    private _thumbnailList: Array<string>;
     static fromProject(
         resource: ResourceModelInterface,
         tagCollectionModel: TagCollectionModel
@@ -36,7 +36,7 @@ export default class ResourceModel {
         resourceModel._title = resource.title;
         resourceModel._description = resource.description;
         resourceModel._isNew = resource.isNew;
-        resourceModel._thumbnailPath = resource.thumbnailPath;
+        resourceModel._thumbnailList = resource.thumbnailList || [];
         resourceModel._isRemoved = resource.isRemoved;
         resource.tags.forEach((tagId: string) => {
             const tagModel = tagCollectionModel.getTagModelById(tagId);
@@ -50,11 +50,11 @@ export default class ResourceModel {
     }
 
     public get thumbnailPath() {
-        return this._thumbnailPath;
+        return this._thumbnailList[0];
     }
 
-    public set thumbnailPath(value: string) {
-        this._thumbnailPath = value;
+    public setThumbnailPath(value: string, index: number) {
+        this._thumbnailList[index] = value;
     }
     getFilePath() {
         return this._filePath;
@@ -142,8 +142,7 @@ export default class ResourceModel {
             id: this._id,
             isRemoved: this._isRemoved,
             isNew: this._isNew,
-            tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId()),
-            thumbnailPath: this._thumbnailPath
+            tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId())
         };
     }
 

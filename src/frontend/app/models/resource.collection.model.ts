@@ -13,16 +13,6 @@ export default class ResourceCollectionModel {
                 return ResourceModel.fromProject(resource, tagCollectionModel);
             }
         );
-        IpcProvider.trigger(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
-        IpcProvider.listen(IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE, response => {
-            const resource = this.getResourceModelById(response.resourceId)
-            resource.thumbnailPath = response.resourceThumbnailPath;
-        });
-    }
-
-    public notifyThumbnailChange(resourceId, resourceThumbnailPath) {
-        const resource = this.getResourceModelById(resourceId)
-        resource.thumbnailPath = resourceThumbnailPath;
     }
 
     public addResourceModel(resourceModel: ResourceModel) {

@@ -2,7 +2,7 @@ import * as path from "path";
 import generateThumbnail from "./fs/generateThumbnail";
 import getThumbnailList from "./fs/getThumbnailList";
 import ResourceModelInterface from "../shared/types/resourceModel.interface";
-import ThumbnailName from "./ThumbnailName";
+import ThumbnailName from "../shared/ThumbnailName";
 
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
@@ -30,21 +30,33 @@ export default class ThumbnailManager {
         this._thumbnailMap = await getThumbnailList(this._thumbnailFolderName);
         return this._thumbnailMap;
     }
-    public queueGenerateThumbnail(resource: ResourceModelInterface, videoPercentage: number, priority: number) {
-        const videoTime: number = Math.round((videoPercentage * resource.duration) / 100);
+    public queueGenerateThumbnail(
+        resource: ResourceModelInterface,
+        index: number,
+        priority: number
+    ) {
 
         const queueElement: QueueElement = {
             resourceId: resource.id,
             sourceVideoPath: path.resolve(this._projectPath, resource.filePath),
-            targetThumbnailPath: ThumbnailName.setName(this._thumbnailFolderName, resource.id, videoPercentage),
-            videoTime: videoTime,
+            targetThumbnailPath: ThumbnailName.setName(
+                this._thumbnailFolderName,
+                resource.id,
+                index
+            ),
+            index: index,
+            videoTime: ThumbnailName.getVideoPosition(index, resource.duration),
             priority: priority
         };
         this._queue.push(queueElement);
     }
 
     public async run(
-        listener: (resourceId: string, resourceThumbnailPath: string) => void
+        listener: (
+            resourceId: string,
+            resourceThumbnailPath: string,
+            index: number
+        ) => void
     ) {
         console.log("Run thumbnail service");
         if (!this._isRunning) {
@@ -61,7 +73,11 @@ export default class ThumbnailManager {
                         queueElement.targetThumbnailPath,
                         queueElement.videoTime
                     );
-                    listener(queueElement.resourceId, "file://" + queueElement.targetThumbnailPath);
+                    listener(
+                        queueElement.resourceId,
+                        "file://" + queueElement.targetThumbnailPath,
+                        queueElement.index
+                    );
                 } catch (err) {
                     console.log(err);
                 }
@@ -75,11 +91,16 @@ interface QueueElement {
     targetThumbnailPath: string;
     sourceVideoPath: string;
     resourceId: string;
+    index: number;
     videoTime: number;
     priority: number;
 }
 
-async function getThumbnail(sourceVideoPath: string, targetThumbnailPath: string, videoTime: number) {
+async function getThumbnail(
+    sourceVideoPath: string,
+    targetThumbnailPath: string,
+    videoTime: number
+) {
     const newThumbnail: string = await generateThumbnail(
         sourceVideoPath,
         targetThumbnailPath,

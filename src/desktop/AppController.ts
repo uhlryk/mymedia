@@ -58,12 +58,13 @@ export default class AppController {
             async (event, responseChannel: string) => {
                 console.log("start listening for thumbnails");
                 this._projectManager.listenForThumbnails(
-                    (resourceId, resourceThumbnailPath) => {
+                    (resourceId: string, resourceThumbnailPath: string, index: number) => {
                         console.log("====");
                         console.log(resourceId, resourceThumbnailPath);
                         const thumbnailChangeEventInterface: ThumbnailChangeEventInterface = {
                             resourceId,
-                            resourceThumbnailPath
+                            resourceThumbnailPath,
+                            videoIndex: index
                         };
                         event.reply(
                             IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE,

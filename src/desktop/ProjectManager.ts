@@ -45,7 +45,7 @@ export default class ProjectManager {
     }
 
     public listenForThumbnails(
-        listener: (resourceId: string, resourceThumbnailPath: string) => void
+        listener: (resourceId: string, resourceThumbnailPath: string, index: number) => void
     ) {
         this._thumbnailManager.run(listener);
     }
@@ -56,8 +56,10 @@ export default class ProjectManager {
         > = await this._thumbnailManager.loadExistingThumbnails();
         this._projectModel.resourceList.map((resourceModel: ResourceModelInterface) => {
             if (thumbnailMap.has(resourceModel.id)) {
-                resourceModel.thumbnailPath = thumbnailMap.get(resourceModel.id)[0];
+                // TODO: check if list has all thumbnails, if no start remaining
+                resourceModel.thumbnailList = thumbnailMap.get(resourceModel.id);
             } else {
+                // TODO: generate all thumbnails
                 this._thumbnailManager.queueGenerateThumbnail(
                     resourceModel,
                     0,

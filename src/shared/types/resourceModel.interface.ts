@@ -12,5 +12,5 @@ export default interface ResourceModelInterface {
     tags: Array<string>;
     isRemoved: boolean;
     isNew: boolean;
-    thumbnailPath?: string;
+    thumbnailList?: Array<string>;
 }

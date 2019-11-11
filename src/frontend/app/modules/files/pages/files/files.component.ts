@@ -37,7 +37,7 @@ export class FilesComponent implements OnInit {
                     const resourceModer: ResourceModel = this.projectContextService.getResourceModel(
                         response.resourceId
                     );
-                    resourceModer.thumbnailPath = response.resourceThumbnailPath;
+                    resourceModer.setThumbnailPath(response.resourceThumbnailPath, response.videoIndex);
                 });
                 this.resultManipulationService
                     .manipulate(
