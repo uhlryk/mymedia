@@ -3,7 +3,7 @@ import { spawn } from "child_process";
 import * as ffmpeg from "ffmpeg-static-electron";
 import * as path from "path";
 
-export default async function generateThumbnail(sourceFilePath, targetThumbnailPath, videoPart: number) {
+export default async function generateThumbnail(sourceFilePath, targetThumbnailPath, videoTime: number) {
     // const thumbnailFilePath = path.resolve(thumbnailFolderPath, thumbnailFileName);
     const thumbnailFolderPath: string = path.dirname(targetThumbnailPath);
     const isThumbnailFolderExist = await fse.pathExists(thumbnailFolderPath);
@@ -17,7 +17,7 @@ export default async function generateThumbnail(sourceFilePath, targetThumbnailP
         "-i",
         sourceFilePath,
         "-ss",
-        videoPart,
+        videoTime,
         // 5,
         "-vframes",
         "1",

@@ -59,8 +59,9 @@ export default class ProjectManager {
                 resourceModel.thumbnailPath = thumbnailMap.get(resourceModel.id)[0];
             } else {
                 this._thumbnailManager.queueGenerateThumbnail(
-                    resourceModel.filePath,
-                    resourceModel.id
+                    resourceModel,
+                    0,
+                    0
                 );
             }
         });
