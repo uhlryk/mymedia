@@ -1,8 +1,8 @@
 import * as path from "path";
-import generateThumbnail from "./fs/generateThumbnail";
-import getThumbnailList from "./fs/getThumbnailList";
-import ResourceModelInterface from "../shared/types/resourceModel.interface";
-import ThumbnailName from "../shared/ThumbnailName";
+import generateThumbnail from "./generateThumbnail";
+import getThumbnailList from "./getThumbnailList";
+import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
+import ThumbnailName from "../../../shared/ThumbnailName";
 
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";

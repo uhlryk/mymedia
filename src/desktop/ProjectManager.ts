@@ -8,7 +8,7 @@ import uuid from "uuidv4";
 import getMetadata from "./fs/getMetadata";
 import * as path from "path";
 import ResourceModelInterface from "../shared/types/resourceModel.interface";
-import ThumbnailManager from "./ThumbnailManager";
+import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import saveProjectFile from "./fs/saveProjectFile";
 import Loader from "./Loader";
 

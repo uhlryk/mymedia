@@ -1,13 +1,12 @@
 import { ipcMain, shell, dialog } from "electron";
 import ProjectModelInterface from "../shared/types/projectModel.interface";
-import ProjectFileInterface from "./types/projectFile.interface";
 import setInitProject from "./fs/setInitProject";
 import * as path from "path";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import Loader from "./Loader";
 import ProjectManager from "./ProjectManager";
-import ThumbnailManager from "./ThumbnailManager";
+import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import ThumbnailChangeEventInterface from "../shared/types/thumbnailChangeEvent.interface";
 
 export default class AppController {
