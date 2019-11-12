@@ -53,6 +53,9 @@ export default class ResourceModel {
         return this._thumbnailList[0];
     }
 
+    public get thumbnailList() {
+        return this._thumbnailList;
+    }
     public setThumbnailPath(value: string, index: number) {
         this._thumbnailList[index] = value;
     }

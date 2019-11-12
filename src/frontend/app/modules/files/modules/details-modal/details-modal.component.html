@@ -13,18 +13,37 @@
         </div>
         <div *ngIf="resource" class="side-menu-container">
             <div class="thumbnail-wrapper">
-                <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper" >
+                <div *ngIf="!thumbnailPath && !resource.thumbnailPath" class="spinner-wrapper">
                     <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
                     <i class="pi pi-clock" style="font-size: 3em"></i>
                 </div>
 
                 <img
-                    *ngIf="resource.thumbnailPath"
+                    *ngIf="thumbnailPath || resource.thumbnailPath"
                     class="thumbnail"
-                    (click)="clickThumbanil()"
-                    [src]="resource.thumbnailPath"
+                    (click)="clickThumbnail()"
+                    [src]="thumbnailPath || resource.thumbnailPath"
                     alt=""
                 />
+            </div>
+            <div class="thumbnail-gallery">
+                <div
+                    class="thumbnail-wrapper-small"
+                    *ngFor="let thumbnailPath of resource.thumbnailList"
+                >
+                    <div *ngIf="!thumbnailPath" class="spinner-wrapper">
+                        <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
+                        <i class="pi pi-clock" style="font-size: 3em"></i>
+                    </div>
+
+                    <img
+                        *ngIf="thumbnailPath"
+                        class="thumbnail"
+                        (click)="changeThumbnail(thumbnailPath)"
+                        [src]="thumbnailPath"
+                        alt=""
+                    />
+                </div>
             </div>
             <app-title
                 [text]="resource.getTitle()"

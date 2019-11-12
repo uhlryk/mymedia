@@ -14,11 +14,13 @@ export class DetailsModalComponent {
     constructor(private projectContextService: ProjectContextService) {}
 
     resource: ResourceModel;
+    thumbnailPath: string;
     availableProjectTagModelList: Array<TagModel>;
     selectedTagId: string;
     visibleSidebar: boolean;
     show(resourceId: string) {
         this.resource = this.projectContextService.getResourceModel(resourceId);
+        this.thumbnailPath = this.resource.thumbnailPath;
         this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
         this.selectedTagId = "";
         this.visibleSidebar = true;
@@ -59,5 +61,9 @@ export class DetailsModalComponent {
     saveDescription(text) {
         this.resource.setDescription(text);
         this.projectContextService.saveProject().subscribe(() => {});
+    }
+
+    changeThumbnail(thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
     }
 }

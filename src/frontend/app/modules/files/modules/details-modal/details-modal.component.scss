@@ -32,10 +32,22 @@
     font-size: 9px;
     padding: 6px;
 }
-
+.thumbnail-gallery {
+    display: flex;
+    flex-direction: row; /* NEW */
+    justify-content: space-between;
+    align-items: center;
+    height: 110px;
+}
 .thumbnail-wrapper {
     width:100%;
     height:200px;
+    background: #b6cad9;
+    margin-bottom: 10px;
+}
+.thumbnail-wrapper-small {
+    width:22%;
+    height:100px;
     background: #b6cad9;
     margin-bottom: 10px;
 }
