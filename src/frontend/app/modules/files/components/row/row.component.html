@@ -16,7 +16,7 @@
     </p-header>
     <div [style.background-color]="resource.isRemoved() ? 'red' : 'white'">
         <div class="title">
-            <span>
+            <span [pTooltip]="resource.getTitle()">
                 {{ resource.getTitle() }}
             </span>
         </div>
