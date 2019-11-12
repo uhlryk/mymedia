@@ -51,7 +51,8 @@ export default class ProjectManager {
             index: number
         ) => void
     ) {
-        this._thumbnailManager.run(listener);
+        // this._thumbnailManager.run(listener);
+        this._thumbnailManager.execute(listener);
     }
     private async mapThumbnails() {
         const thumbnailMap: Map<

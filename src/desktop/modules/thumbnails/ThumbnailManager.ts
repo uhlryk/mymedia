@@ -32,7 +32,7 @@ export default class ThumbnailManager {
 
     public queueGenerateAllThumbnails(resource: ResourceModelInterface) {
         for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
-            this.queueGenerateThumbnail(resource, i, i === 0 ? 0 : 1);
+            this.queueGenerateThumbnail(resource, i, i === 0 ? 1 : 0);
         }
     }
     public queueGenerateThumbnail(
@@ -54,41 +54,72 @@ export default class ThumbnailManager {
         };
         this._queue.push(queueElement);
     }
-
-    public async run(
+    public async execute(
         listener: (
             resourceId: string,
             resourceThumbnailPath: string,
             index: number
         ) => void
     ) {
-        console.log("Run thumbnail service");
-        if (!this._isRunning) {
-            this._isRunning = true;
-            while (this._queue[0]) {
-                const queueElement: QueueElement = this._queue.shift();
-                console.log(
-                    "Start generating thumbnail for ",
-                    queueElement.sourceVideoPath
+        const priorityOrderedArray: Array<QueueElement> = this._queue
+            .sort((elementA: QueueElement, elementB: QueueElement) => {
+                return elementB.priority - elementA.priority;
+            });
+        for (const queueElement of priorityOrderedArray) {
+            console.log(
+                "Start generating thumbnail for ",
+                queueElement.sourceVideoPath + " index:" + queueElement.index
+            );
+            try {
+                await getThumbnail(
+                    queueElement.sourceVideoPath,
+                    queueElement.targetThumbnailPath,
+                    queueElement.videoTime
                 );
-                try {
-                    await getThumbnail(
-                        queueElement.sourceVideoPath,
-                        queueElement.targetThumbnailPath,
-                        queueElement.videoTime
-                    );
-                    listener(
-                        queueElement.resourceId,
-                        "file://" + queueElement.targetThumbnailPath,
-                        queueElement.index
-                    );
-                } catch (err) {
-                    console.log(err);
-                }
+                listener(
+                    queueElement.resourceId,
+                    "file://" + queueElement.targetThumbnailPath,
+                    queueElement.index
+                );
+            } catch (err) {
+                console.log(err);
             }
-            this._isRunning = false;
         }
     }
+    // public async run(
+    //     listener: (
+    //         resourceId: string,
+    //         resourceThumbnailPath: string,
+    //         index: number
+    //     ) => void
+    // ) {
+    //     console.log("Run thumbnail service");
+    //     if (!this._isRunning) {
+    //         this._isRunning = true;
+    //         while (this._queue[0]) {
+    //             const queueElement: QueueElement = this._queue.shift();
+    //             console.log(
+    //                 "Start generating thumbnail for ",
+    //                 queueElement.sourceVideoPath
+    //             );
+    //             try {
+    //                 await getThumbnail(
+    //                     queueElement.sourceVideoPath,
+    //                     queueElement.targetThumbnailPath,
+    //                     queueElement.videoTime
+    //                 );
+    //                 listener(
+    //                     queueElement.resourceId,
+    //                     "file://" + queueElement.targetThumbnailPath,
+    //                     queueElement.index
+    //                 );
+    //             } catch (err) {
+    //                 console.log(err);
+    //             }
+    //         }
+    //         this._isRunning = false;
+    //     }
+    // }
 }
 
 interface QueueElement {
