@@ -35,6 +35,21 @@ export default class ThumbnailManager {
             this.queueGenerateThumbnail(resource, i, i === 0 ? 1 : 0);
         }
     }
+    public queueGenerateMissingThumbnails(
+        resource: ResourceModelInterface,
+        thumbnailList: Array<string>
+    ) {
+        const indexedThumbnailArray = new Array(ThumbnailName.NUMBER_OF_THUMBNAILS);
+        for (const thumbnail of thumbnailList) {
+            const index: number = ThumbnailName.getThumbnailIndex(thumbnail);
+            indexedThumbnailArray[index] = thumbnail;
+        }
+        for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
+            if (!indexedThumbnailArray[i]) {
+                this.queueGenerateThumbnail(resource, i, 0);
+            }
+        }
+    }
     public queueGenerateThumbnail(
         resource: ResourceModelInterface,
         index: number,
@@ -61,10 +76,11 @@ export default class ThumbnailManager {
             index: number
         ) => void
     ) {
-        const priorityOrderedArray: Array<QueueElement> = this._queue
-            .sort((elementA: QueueElement, elementB: QueueElement) => {
+        const priorityOrderedArray: Array<QueueElement> = this._queue.sort(
+            (elementA: QueueElement, elementB: QueueElement) => {
                 return elementB.priority - elementA.priority;
-            });
+            }
+        );
         for (const queueElement of priorityOrderedArray) {
             console.log(
                 "Start generating thumbnail for ",

@@ -18,4 +18,8 @@ export default class ThumbnailName {
         );
         return videoPosition;
     }
+
+    static getThumbnailIndex(thumbnail: string): number {
+        return parseInt(path.basename(thumbnail).split(ThumbnailName.PROJECT_THUMBNAIL_FILE_PART, 1)[0], 10);
+    }
 }

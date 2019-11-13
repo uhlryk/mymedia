@@ -61,10 +61,11 @@ export default class ProjectManager {
         > = await this._thumbnailManager.loadExistingThumbnails();
         this._projectModel.resourceList.map((resourceModel: ResourceModelInterface) => {
             if (thumbnailMap.has(resourceModel.id)) {
-                // TODO: check if list has all thumbnails, if no start remaining
-                resourceModel.thumbnailList = thumbnailMap.get(resourceModel.id);
+                const thumbnailList: Array<string> = thumbnailMap.get(resourceModel.id);
+                this._thumbnailManager.queueGenerateMissingThumbnails(resourceModel, thumbnailList);
+                resourceModel.thumbnailList = thumbnailList;
+
             } else {
-                // TODO: generate all thumbnails
                 this._thumbnailManager.queueGenerateAllThumbnails(resourceModel);
             }
         });
