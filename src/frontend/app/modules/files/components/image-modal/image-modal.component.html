@@ -1,7 +1,7 @@
 <div>
-    <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper" >
+    <div *ngIf="!thumbnailPath" class="spinner-wrapper" >
         <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
         <i class="pi pi-clock" style="font-size: 3em"></i>
     </div>
-    <img *ngIf="resource.thumbnailPath" [src]="resource.thumbnailPath" alt="" />
+    <img *ngIf="thumbnailPath" [src]="thumbnailPath" alt="" />
 </div>

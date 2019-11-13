@@ -9,18 +9,16 @@ import { ThumbnailService } from "../../../../services/thumbnail.service";
 })
 export class RowComponent implements OnInit {
     @Input() resource: ResourceModel;
-    @Output() openThumbnailModal = new EventEmitter<string>();
+    @Output() openThumbnailModal = new EventEmitter<{ resourceId: string }>();
     @Output() openDetailsModal = new EventEmitter<string>();
     @Output() executeMedia = new EventEmitter<string>();
     private thumbnail: string = "";
-    constructor() // private thumbnailService: ThumbnailService
-    {}
+    constructor() {}
 
-    ngOnInit() {
-    }
+    ngOnInit() {}
 
     clickThumbanil() {
-        this.openThumbnailModal.emit(this.resource.getId());
+        this.openThumbnailModal.emit({ resourceId: this.resource.getId() });
     }
 
     clickOpenDetails() {

@@ -17,11 +17,13 @@ export class ImageModalComponent implements OnInit {
     ) {}
 
     resource: ResourceModel;
-    thumbnail: string;
+    thumbnailPath: string;
     ngOnInit() {
         console.log(this.config);
         this.resource = this.projectContextService.getResourceModel(
             this.config.data.resourceId
         );
+        const index: number = this.config.data.index;
+        this.thumbnailPath = this.resource.thumbnailList[index];
     }
 }

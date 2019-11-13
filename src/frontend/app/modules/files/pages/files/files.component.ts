@@ -37,7 +37,10 @@ export class FilesComponent implements OnInit {
                     const resourceModer: ResourceModel = this.projectContextService.getResourceModel(
                         response.resourceId
                     );
-                    resourceModer.setThumbnailPath(response.resourceThumbnailPath, response.videoIndex);
+                    resourceModer.setThumbnailPath(
+                        response.resourceThumbnailPath,
+                        response.videoIndex
+                    );
                 });
                 this.resultManipulationService
                     .manipulate(
@@ -60,15 +63,18 @@ export class FilesComponent implements OnInit {
         this.detailsModal.show(resourceId);
     }
 
-    openThumbnailModal(resourceId) {
+    openThumbnailModal({ resourceId, index = 0 }: { resourceId: string; index?: number }) {
         this.dialogService.open(ImageModalComponent, {
             data: {
-                resourceId: resourceId
+                resourceId: resourceId,
+                index: index
             },
             header: this.projectContextService.getResourceModel(resourceId).getTitle(),
             width: "90%",
             dismissableMask: true,
-            contentStyle: { "max-height": "90%", overflow: "auto" }
+            contentStyle: { "max-height": "90%", overflow: "auto" },
+            autoZIndex: true,
+            baseZIndex: 20000
         });
     }
 }
