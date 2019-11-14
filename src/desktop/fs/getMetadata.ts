@@ -12,6 +12,8 @@ export default async function getMetadata(sourceFilePath): Promise<Metadata> {
     const childProcess = spawn(ffprobe.path, [
         "-v",
         "error",
+        "-select_streams",
+        "v:0",
         "-show_entries",
         "stream=width,height,duration",
         "-of",
@@ -25,6 +27,9 @@ export default async function getMetadata(sourceFilePath): Promise<Metadata> {
             duration: ""
         };
         childProcess.stdout.on("data", (data: string) => {
+            console.log("QQ1");
+            console.log(sourceFilePath);
+            console.log(data.toString());
             const dataArray = data.toString().split(/[^0-9.]/g);
             _metadata.width = dataArray[0];
             _metadata.height = dataArray[1];
@@ -36,6 +41,10 @@ export default async function getMetadata(sourceFilePath): Promise<Metadata> {
         });
 
         childProcess.on("close", code => {
+            console.log("QQ1");
+            console.log(sourceFilePath);
+            console.log(code);
+            console.log(_metadata);
             if (code === 0) {
                 resolve(_metadata);
             } else {
