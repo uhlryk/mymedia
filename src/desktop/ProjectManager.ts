@@ -19,7 +19,7 @@ export default class ProjectManager {
     _projectPath: string;
     _projectFolderPath: string;
     _projectModel: ProjectModelInterface;
-
+    _isDestroyed: boolean = false;
     private _thumbnailManager: ThumbnailManager;
     constructor(projectPath: string) {
         this._projectPath = projectPath;
@@ -31,6 +31,11 @@ export default class ProjectManager {
             this._projectPath,
             ProjectManager.PROJECT_FOLDER
         );
+    }
+
+    destroy() {
+        this._isDestroyed = true;
+
     }
     public async loadProjectModel(loader: Loader): Promise<ProjectModelInterface> {
         loader.setMessage("Load project");

@@ -8,18 +8,14 @@ import Loader from "./Loader";
 import ProjectManager from "./ProjectManager";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import ThumbnailChangeEventInterface from "../shared/types/thumbnailChangeEvent.interface";
+import IpcMainEvent = Electron.IpcMainEvent;
 
 export default class AppController {
     _projectPath: string;
     _projectManager: ProjectManager;
+    _isDestroyed: boolean = false;
     constructor(projectPath: string) {
         this._projectPath = projectPath;
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.CREATE_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.LOAD_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.SAVE_PROJECT);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
-        ipcMain.removeAllListeners(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
         ipcMain.on(
             IpcProviderResourceEnums.CREATE_PROJECT,
             async (event, responseChannel: string) => {
@@ -46,7 +42,9 @@ export default class AppController {
                     event.reply(responseChannel);
                 } else {
                     this._projectManager = new ProjectManager(this._projectPath);
-                    const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel(loader);
+                    const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel(
+                        loader
+                    );
                     await this._projectManager.save();
                     event.reply(responseChannel, projectModel);
                 }
@@ -57,7 +55,11 @@ export default class AppController {
             async (event, responseChannel: string) => {
                 console.log("start listening for thumbnails");
                 this._projectManager.listenForThumbnails(
-                    (resourceId: string, resourceThumbnailPath: string, index: number) => {
+                    (
+                        resourceId: string,
+                        resourceThumbnailPath: string,
+                        index: number
+                    ) => {
                         console.log("====");
                         console.log(resourceId, resourceThumbnailPath);
                         const thumbnailChangeEventInterface: ThumbnailChangeEventInterface = {
@@ -97,6 +99,18 @@ export default class AppController {
         );
     }
 
+    public destroy() {
+        this._isDestroyed = true;
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.CREATE_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.LOAD_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.GET_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.SAVE_PROJECT);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
+        ipcMain.removeAllListeners(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
+        if (this._projectManager) {
+            this._projectManager.destroy();
+        }
+    }
     public async testProjectPath() {
         const isProject = await isProjectStructure(
             this.getProjectPath(),

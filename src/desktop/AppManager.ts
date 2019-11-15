@@ -21,6 +21,9 @@ export default class AppManager {
                     },
                     async fileNames => {
                         const projectPath = fileNames[0];
+                        if(this._appController) {
+                            this._appController.destroy();
+                        }
                         this._appController = new AppController(projectPath);
                         loader.setMessage("Checking if project exist");
                         const isProjectExist = await this._appController.testProjectPath();

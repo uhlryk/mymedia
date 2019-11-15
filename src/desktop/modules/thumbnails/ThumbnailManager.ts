@@ -13,6 +13,7 @@ export default class ThumbnailManager {
     private _queue: Array<QueueElement>;
     private _isRunning: boolean;
     private _thumbnailFolderName: string;
+    private  _isDestroyed: boolean = false;
     constructor(projectPath: string, projectFolderName: string) {
         this._projectPath = projectPath;
         this._projectFolderName = projectFolderName;
@@ -25,6 +26,9 @@ export default class ThumbnailManager {
         this._isRunning = false;
     }
 
+    public destroy() {
+        this._isDestroyed = true;
+    }
     public async loadExistingThumbnails(): Promise<Map<string, Array<string>>> {
         this._thumbnailMap = await getThumbnailList(this._thumbnailFolderName);
         return this._thumbnailMap;
