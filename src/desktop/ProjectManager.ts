@@ -35,6 +35,9 @@ export default class ProjectManager {
 
     destroy() {
         this._isDestroyed = true;
+        if(this._thumbnailManager) {
+            this._thumbnailManager.destroy();
+        }
 
     }
     public async loadProjectModel(loader: Loader): Promise<ProjectModelInterface> {
