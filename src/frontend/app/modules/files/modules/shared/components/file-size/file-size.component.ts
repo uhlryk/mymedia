@@ -24,7 +24,11 @@ export class FileSizeComponent implements OnInit {
 
     @Input("size")
     set size(value) {
-        this._size = FileSizeComponent.humanFileSize(value);
+        if (Number.isInteger(value)) {
+            this._size = FileSizeComponent.humanFileSize(value);
+        } else {
+            this._size = "xxx";
+        }
     }
 
     constructor() {}

@@ -10,7 +10,11 @@ export class VideoLengthComponent implements OnInit {
     private _timeLength: string;
     @Input("length")
     set length(value) {
-        this._timeLength = secondsToTime(value);
+        if (Number.isInteger(value)) {
+            this._timeLength = secondsToTime(value);
+        } else {
+            this._timeLength = "xxx";
+        }
     }
 
     ngOnInit() {}

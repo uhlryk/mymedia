@@ -35,10 +35,9 @@ export default class ProjectManager {
 
     destroy() {
         this._isDestroyed = true;
-        if(this._thumbnailManager) {
+        if (this._thumbnailManager) {
             this._thumbnailManager.destroy();
         }
-
     }
     public async loadProjectModel(loader: Loader): Promise<ProjectModelInterface> {
         loader.setMessage("Load project");
@@ -70,9 +69,11 @@ export default class ProjectManager {
         this._projectModel.resourceList.map((resourceModel: ResourceModelInterface) => {
             if (thumbnailMap.has(resourceModel.id)) {
                 const thumbnailList: Array<string> = thumbnailMap.get(resourceModel.id);
-                this._thumbnailManager.queueGenerateMissingThumbnails(resourceModel, thumbnailList);
+                this._thumbnailManager.queueGenerateMissingThumbnails(
+                    resourceModel,
+                    thumbnailList
+                );
                 resourceModel.thumbnailList = thumbnailList;
-
             } else {
                 this._thumbnailManager.queueGenerateAllThumbnails(resourceModel);
             }

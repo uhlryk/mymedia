@@ -35,8 +35,12 @@ export default class ThumbnailManager {
     }
 
     public queueGenerateAllThumbnails(resource: ResourceModelInterface) {
-        for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
-            this.queueGenerateThumbnail(resource, i, i === 0 ? 1 : 0);
+        if (!resource.duration) {
+            this.queueGenerateThumbnail(resource, 0, 0);
+        } else {
+            for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
+                this.queueGenerateThumbnail(resource, i, i === 0 ? 1 : 0);
+            }
         }
     }
     public queueGenerateMissingThumbnails(
@@ -48,13 +52,19 @@ export default class ThumbnailManager {
             const index: number = ThumbnailName.getThumbnailIndex(thumbnail);
             indexedThumbnailArray[index] = thumbnail;
         }
-        for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
-            if (!indexedThumbnailArray[i]) {
-                this.queueGenerateThumbnail(resource, i, 0);
+        if (!resource.duration) {
+            if (!indexedThumbnailArray[0]) {
+                this.queueGenerateThumbnail(resource, 0, 0);
+            }
+        } else {
+            for (let i = 0; i < ThumbnailName.NUMBER_OF_THUMBNAILS; i++) {
+                if (!indexedThumbnailArray[i]) {
+                    this.queueGenerateThumbnail(resource, i, 0);
+                }
             }
         }
     }
-    public queueGenerateThumbnail(
+    private queueGenerateThumbnail(
         resource: ResourceModelInterface,
         index: number,
         priority: number
