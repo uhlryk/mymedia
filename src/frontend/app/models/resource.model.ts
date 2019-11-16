@@ -99,13 +99,20 @@ export default class ResourceModel {
         return this._description;
     }
 
-    getRanking(): number {
+    public get ranking() {
         return this._ranking;
     }
 
-    public setRanking(ranking) {
+    public set ranking(ranking) {
         this._ranking = ranking;
     }
+    // getRanking(): number {
+    //     return this._ranking;
+    // }
+    //
+    // public setRanking(ranking) {
+    //     this._ranking = ranking;
+    // }
 
     public setTitle(title: string) {
         this._title = title;

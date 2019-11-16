@@ -10,6 +10,7 @@ import { InplaceModule } from "primeng/inplace";
 import { InputTextModule } from "primeng/inputtext";
 import { ButtonModule } from "primeng/button";
 import { InputTextareaModule } from "primeng/inputtextarea";
+import { RatingModule } from "primeng/rating";
 @NgModule({
     declarations: [DetailsModalComponent, TitleComponent, DescriptionComponent],
     imports: [
@@ -20,7 +21,8 @@ import { InputTextareaModule } from "primeng/inputtextarea";
         InplaceModule,
         InputTextModule,
         ButtonModule,
-        InputTextareaModule
+        InputTextareaModule,
+        RatingModule
     ],
     exports: [DetailsModalComponent]
 })

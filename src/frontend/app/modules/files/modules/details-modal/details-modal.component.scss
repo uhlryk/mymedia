@@ -76,3 +76,13 @@ img.thumbnail {
     width:100%;
     padding: 6px;
 }
+
+:host ::ng-deep .ui-rating-icon {
+    font-size: 28px !important;
+}
+
+.align-rating {
+    display: flex;
+    justify-content: center;
+    padding: 17px 0px 0px;
+}

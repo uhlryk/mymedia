@@ -34,9 +34,12 @@ export class DetailsModalComponent {
     clickOpenFile() {
         this.projectContextService.getProjectModel().open(this.resource.getId());
     }
-
-    clickChangeRanking(value) {
-        this.resource.setRanking(value);
+    cancelRating() {
+        this.resource.ranking = 0;
+        this.projectContextService.saveProject().subscribe(() => {});
+    }
+    setRanking(event) {
+        this.resource.ranking = event.value;
         this.projectContextService.saveProject().subscribe(() => {});
     }
 

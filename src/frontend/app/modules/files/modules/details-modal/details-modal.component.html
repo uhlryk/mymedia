@@ -13,7 +13,10 @@
         </div>
         <div *ngIf="resource" class="side-menu-container">
             <div class="thumbnail-wrapper">
-                <div *ngIf="!thumbnailPath && !resource.thumbnailPath" class="spinner-wrapper">
+                <div
+                    *ngIf="!thumbnailPath && !resource.thumbnailPath"
+                    class="spinner-wrapper"
+                >
                     <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
                     <i class="pi pi-clock" style="font-size: 3em"></i>
                 </div>
@@ -56,12 +59,12 @@
                 <app-video-length [length]="resource.duration"></app-video-length>
             </div>
 
-            <div>
-                <app-ranking
-                    [editable]="true"
-                    [value]="resource.getRanking()"
-                    (clickChange)="clickChangeRanking($event)"
-                ></app-ranking>
+            <div class="align-rating">
+                <p-rating
+                    [ngModel]="resource.ranking"
+                    (onRate)="setRanking($event)"
+                    (onCancel)="cancelRating(0)"
+                ></p-rating>
             </div>
             <div>
                 <app-description

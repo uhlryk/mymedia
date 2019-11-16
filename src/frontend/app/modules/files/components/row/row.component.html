@@ -21,7 +21,7 @@
             </span>
         </div>
         <div class="card-section">
-            <app-ranking [editable]="false" [value]="resource.getRanking()"></app-ranking>
+            <p-rating [(ngModel)]="resource.ranking" [readonly]="true" [cancel]="false"></p-rating>
 
             <span *ngIf="resource.isNew()">NEW</span>
         </div>
