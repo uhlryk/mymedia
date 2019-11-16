@@ -13,7 +13,7 @@ export default class ThumbnailManager {
     private _queue: Array<QueueElement>;
     private _isRunning: boolean;
     private _thumbnailFolderName: string;
-    private  _isDestroyed: boolean = false;
+    private _isDestroyed: boolean = false;
     constructor(projectPath: string, projectFolderName: string) {
         this._projectPath = projectPath;
         this._projectFolderName = projectFolderName;
@@ -86,6 +86,9 @@ export default class ThumbnailManager {
             }
         );
         for (const queueElement of priorityOrderedArray) {
+            if (this._isDestroyed) {
+                break;
+            }
             console.log(
                 "Start generating thumbnail for ",
                 queueElement.sourceVideoPath + " index:" + queueElement.index
