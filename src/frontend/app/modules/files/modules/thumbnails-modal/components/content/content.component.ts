@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { ProjectContextService } from "../../../../services/projectContext.service";
-import ResourceModel from "../../../../models/resource.model";
-import { ThumbnailService } from "../../../../services/thumbnail.service";
+import { ProjectContextService } from "../../../../../../services/projectContext.service";
+import ResourceModel from "../../../../../../models/resource.model";
+import { ThumbnailService } from "../../../../../../services/thumbnail.service";
 import { DynamicDialogConfig, DynamicDialogRef } from "primeng/api";
 @Component({
-    selector: "app-image-modal",
-    templateUrl: "./image-modal.component.html",
-    styleUrls: ["./image-modal.component.scss"]
+    selector: "app-content",
+    templateUrl: "./content.component.html",
+    styleUrls: ["./content.component.scss"]
     // providers: [DynamicDialogConfig, DynamicDialogRef]
 })
-export class ImageModalComponent implements OnInit {
+export class ContentComponent implements OnInit {
     constructor(
         public config: DynamicDialogConfig,
         public ref: DynamicDialogRef,

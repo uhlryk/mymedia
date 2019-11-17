@@ -7,14 +7,14 @@ import { FormsModule } from "@angular/forms";
 import { SharedModule } from "./modules/shared/shared.module";
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
+import { ThumbnailsModalModule } from "./modules/thumbnails-modal/thumbnails-modal.module";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
-import { ImageModalComponent } from "./components/image-modal/image-modal.component";
+import { ContentComponent } from "./modules/thumbnails-modal/components/content/content.component";
 import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
-import { DynamicDialogModule } from "primeng/dynamicdialog";
-import { DialogService } from "primeng/api";
+
 import { TooltipModule } from "primeng/tooltip";
 import { RatingModule } from "primeng/rating";
 @NgModule({
@@ -23,21 +23,21 @@ import { RatingModule } from "primeng/rating";
         FormsModule,
         CardModule,
         ButtonModule,
-        DynamicDialogModule,
         DetailsModalModule,
         TooltipModule,
         SharedModule,
-        RatingModule
+        RatingModule,
+        ThumbnailsModalModule
     ],
-    providers: [ResultManipulationService, DialogService],
+    providers: [ResultManipulationService],
     declarations: [
         FilesComponent,
         RowComponent,
         ListComponent,
         SearchComponent,
         OrderComponent,
-        ImageModalComponent
+        ContentComponent
     ],
-    entryComponents: [ImageModalComponent]
+    entryComponents: [ContentComponent]
 })
 export class FilesModule {}
