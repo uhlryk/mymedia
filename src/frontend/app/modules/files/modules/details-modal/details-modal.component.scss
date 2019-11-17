@@ -22,7 +22,7 @@
     width:100%;
     height: 100%;
     box-sizing: border-box;
-    padding:43px 10px 10px;
+    padding:25px 10px 10px;
 }
 
 .file-path-text {
@@ -30,26 +30,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 9px;
-    padding: 6px;
+    padding: 3px 6px;
 }
 .thumbnail-gallery {
     display: flex;
     flex-direction: row; /* NEW */
     justify-content: space-between;
     align-items: center;
-    height: 110px;
+    height: 61px;
 }
 .thumbnail-wrapper {
     width:100%;
     height:200px;
-    background: #b6cad9;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .thumbnail-wrapper-small {
     width:22%;
-    height:100px;
+    height:100%;
     background: #b6cad9;
-    margin-bottom: 10px;
 }
 img.thumbnail {
     width:100%;
@@ -57,8 +55,9 @@ img.thumbnail {
     object-fit: cover;
 }
 
-.spinner-wrapper {
+.empty-thumbnail {
     display: flex;
+    background: #b6cad9;
     flex-direction: column; /* NEW */
     justify-content: center;
     align-items: center;
@@ -74,15 +73,18 @@ img.thumbnail {
     justify-content: space-between;
     align-items: center;
     width:100%;
-    padding: 6px;
+    padding: 3px 6px;
+}
+
+.align-meta-info ::ng-deep span {
+    font-size: 12px;
 }
 
 :host ::ng-deep .ui-rating-icon {
-    font-size: 28px !important;
+    font-size: 20px !important;
 }
 
 .align-rating {
     display: flex;
     justify-content: center;
-    padding: 17px 0px 0px;
 }

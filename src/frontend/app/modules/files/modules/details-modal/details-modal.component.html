@@ -15,7 +15,7 @@
             <div class="thumbnail-wrapper">
                 <div
                     *ngIf="!thumbnailPath && !resource.thumbnailPath"
-                    class="spinner-wrapper"
+                    class="empty-thumbnail"
                 >
                     <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
                     <i class="pi pi-clock" style="font-size: 3em"></i>
@@ -34,7 +34,7 @@
                     class="thumbnail-wrapper-small"
                     *ngFor="let thumbnailPath of resource.thumbnailList"
                 >
-                    <div *ngIf="!thumbnailPath" class="spinner-wrapper">
+                    <div *ngIf="!thumbnailPath" class="empty-thumbnail">
                         <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
                         <i class="pi pi-clock" style="font-size: 3em"></i>
                     </div>
