@@ -22,8 +22,9 @@ export class TagsModalComponent {
             },
             header: "Tags Manager",
             width: "90%",
+            height: "100%",
             dismissableMask: true,
-            contentStyle: { "max-height": "90%", overflow: "auto" },
+            contentStyle: { height: "calc(100% - 50px)", overflow: "auto" },
             autoZIndex: true,
             baseZIndex: 20000
         });

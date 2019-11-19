@@ -6,9 +6,10 @@ import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { DialogService } from "primeng/api";
 import {ContentComponent} from "./components/content/content.component";
 import { ButtonModule } from "primeng/button";
+import {TableModule} from 'primeng/table';
 @NgModule({
     declarations: [TagsModalComponent, ContentComponent],
-    imports: [CommonModule, FormsModule, DynamicDialogModule, ButtonModule],
+    imports: [CommonModule, FormsModule, DynamicDialogModule, ButtonModule, TableModule],
     providers: [DialogService],
     exports: [TagsModalComponent],
     entryComponents: [ContentComponent]

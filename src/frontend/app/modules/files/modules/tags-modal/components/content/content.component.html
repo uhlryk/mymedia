@@ -1,21 +1,25 @@
 <input type="text" [(ngModel)]="tagName" />
 <p-button label="Create" (click)="setValue()"></p-button>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Tag</th>
-        <th scope="col">Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let tag of tagList">
-        <td>{{tag.getName()}}</td>
-        <td>
-            <button (click)="editTag(tag.getId())">edit</button>
-            <button (click)="removeTag(tag.getId())">remove</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<p-table [value]="tagList">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>tag name</th>
+
+            <th>occurence</th>
+            <th>actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-tag>
+        <tr>
+            <td>{{tag.getName()}}</td>
+            <td></td>
+            <td>
+                <button (click)="editTag(tag.getId())">edit</button>
+                <button (click)="removeTag(tag.getId())">remove</button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
 

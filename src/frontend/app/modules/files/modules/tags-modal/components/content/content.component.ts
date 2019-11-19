@@ -35,24 +35,24 @@ export class ContentComponent implements OnInit {
         }
         this.tagId = null;
         this.tagName = "";
-        this.buttonName = ContentComponent.CREATE_NAME;
+        // this.buttonName = ContentComponent.CREATE_NAME;
         this.projectContextService.saveProject().subscribe(() => {});
     }
 
     editTag(tagId) {
-        this.tagId = tagId;
-        const tagModel: TagModel = this.projectContextService.getProjectTagModelById(
-            tagId
-        );
-        this.tagName = tagModel.getName();
-        this.buttonName = ContentComponent.UPDATE_NAME;
+        // this.tagId = tagId;
+        // const tagModel: TagModel = this.projectContextService.getProjectTagModelById(
+        //     tagId
+        // );
+        // this.tagName = tagModel.getName();
+        // this.buttonName = ContentComponent.UPDATE_NAME;
     }
     removeTag(tagId) {
-        this.projectContextService.removeProjectTag(tagId);
-        this.tagId = null;
-        this.tagName = "";
-        this.buttonName = ContentComponent.CREATE_NAME;
-        this.tagList = this.projectContextService.getProjectTagList();
-        this.projectContextService.saveProject().subscribe(() => {});
+        // this.projectContextService.removeProjectTag(tagId);
+        // this.tagId = null;
+        // this.tagName = "";
+        // this.buttonName = ContentComponent.CREATE_NAME;
+        // this.tagList = this.projectContextService.getProjectTagList();
+        // this.projectContextService.saveProject().subscribe(() => {});
     }
 }
