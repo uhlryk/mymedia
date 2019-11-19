@@ -11,8 +11,8 @@ export class ContentComponent implements OnInit {
     // private static CREATE_NAME = "create";
     // private static UPDATE_NAME = "change";
     tagName: string;
-    tagId: string;
-    buttonName: string;
+    // tagId: string;
+    // buttonName: string;
     tagList: Array<TagModel>;
 
     constructor(private projectContextService: ProjectContextService) {}
@@ -23,17 +23,17 @@ export class ContentComponent implements OnInit {
     }
 
     setValue() {
-        if (this.tagId) {
-            const tagModel = this.projectContextService.getProjectTagModelById(
-                this.tagId
-            );
-            tagModel.setName(this.tagName);
-        } else {
-            if (!this.projectContextService.getProjectTagModelByName(this.tagName)) {
-                this.projectContextService.createProjectTag(this.tagName);
-            }
+        // if (this.tagId) {
+        //     const tagModel = this.projectContextService.getProjectTagModelById(
+        //         this.tagId
+        //     );
+        //     tagModel.setName(this.tagName);
+        // } else {
+        if (!this.projectContextService.getProjectTagModelByName(this.tagName)) {
+            this.projectContextService.createProjectTag(this.tagName);
         }
-        this.tagId = null;
+        // }
+        // this.tagId = null;
         this.tagName = "";
         // this.buttonName = ContentComponent.CREATE_NAME;
         this.projectContextService.saveProject().subscribe(() => {});
@@ -48,11 +48,10 @@ export class ContentComponent implements OnInit {
         // this.buttonName = ContentComponent.UPDATE_NAME;
     }
     removeTag(tagId) {
-        // this.projectContextService.removeProjectTag(tagId);
+        this.projectContextService.removeProjectTag(tagId);
         // this.tagId = null;
-        // this.tagName = "";
-        // this.buttonName = ContentComponent.CREATE_NAME;
-        // this.tagList = this.projectContextService.getProjectTagList();
-        // this.projectContextService.saveProject().subscribe(() => {});
+        this.tagName = "";
+        this.tagList = this.projectContextService.getProjectTagList();
+        this.projectContextService.saveProject().subscribe(() => {});
     }
 }

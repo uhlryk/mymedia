@@ -1,6 +1,7 @@
-<input type="text" [(ngModel)]="tagName" />
-<p-button label="Create" (click)="setValue()"></p-button>
-
+<div class="create-section">
+    <input type="text" pInputText [(ngModel)]="tagName" />
+    <p-button label="Create" (click)="setValue()"></p-button>
+</div>
 <p-table [value]="tagList">
     <ng-template pTemplate="header">
         <tr>
@@ -12,14 +13,16 @@
     </ng-template>
     <ng-template pTemplate="body" let-tag>
         <tr>
-            <td>{{tag.getName()}}</td>
+            <td>{{ tag.getName() }}</td>
             <td></td>
             <td>
                 <button (click)="editTag(tag.getId())">edit</button>
-                <button (click)="removeTag(tag.getId())">remove</button>
+                <p-button
+                    icon="pi pi-times"
+                    styleClass="ui-button-danger"
+                    (click)="removeTag(tag.getId())"
+                ></p-button>
             </td>
         </tr>
     </ng-template>
 </p-table>
-
-
