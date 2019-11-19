@@ -10,11 +10,11 @@ import {
 import { Inplace } from "primeng/inplace";
 
 @Component({
-    selector: "app-title",
-    templateUrl: "./title.component.html",
-    styleUrls: ["./title.component.scss"]
+    selector: "app-text",
+    templateUrl: "./text.component.html",
+    styleUrls: ["./text.component.scss"]
 })
-export class TitleComponent implements OnChanges {
+export class TextComponent implements OnChanges {
     @Input() text: string;
     private editableText: string;
     @Output() changed = new EventEmitter<string>();

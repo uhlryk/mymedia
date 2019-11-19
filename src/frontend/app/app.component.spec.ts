@@ -22,7 +22,7 @@ describe("AppComponent", () => {
         expect(app.title).toEqual("mymedia");
     });
 
-    it("should render title", () => {
+    it("should render text", () => {
         const fixture = TestBed.createComponent(AppComponent);
         fixture.detectChanges();
         const compiled = fixture.debugElement.nativeElement;

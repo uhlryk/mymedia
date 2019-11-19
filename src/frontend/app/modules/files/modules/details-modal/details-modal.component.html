@@ -48,10 +48,10 @@
                     />
                 </div>
             </div>
-            <app-title
+            <app-text
                 [text]="resource.getTitle()"
                 (changed)="saveTitle($event)"
-            ></app-title>
+            ></app-text>
             <div class="file-path-text">{{ resource.getFilePath() }}</div>
             <div class="align-meta-info">
                 <app-file-size [size]="resource.getSize()"></app-file-size>
