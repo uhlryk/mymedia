@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { TagsModalComponent } from "./tags-modal.component";
+import { SharedModule } from "../shared/shared.module";
 import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { DialogService } from "primeng/api";
 import { ContentComponent } from "./components/content/content.component";
@@ -12,6 +13,7 @@ import { InputTextModule } from "primeng/inputtext";
     declarations: [TagsModalComponent, ContentComponent],
     imports: [
         CommonModule,
+        SharedModule,
         FormsModule,
         DynamicDialogModule,
         ButtonModule,

@@ -5,18 +5,23 @@
 <p-table [value]="tagList">
     <ng-template pTemplate="header">
         <tr>
-            <th>tag name</th>
+            <th colspan="4">tag name</th>
 
-            <th>occurence</th>
-            <th>actions</th>
+            <th colspan="1">occurence</th>
+            <th colspan="1">actions</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-tag>
         <tr>
-            <td>{{ tag.getName() }}</td>
-            <td></td>
-            <td>
-                <button (click)="editTag(tag.getId())">edit</button>
+            <td colspan="4">
+                <app-text
+                    [text]="tag.getName()"
+                    (changed)="editTag(tag.getId(), $event)"
+                ></app-text>
+            </td>
+            <td colspan="1"></td>
+            <td colspan="1">
+                <!--<button (click)="editTag(tag.getId())">edit</button>-->
                 <p-button
                     icon="pi pi-times"
                     styleClass="ui-button-danger"
