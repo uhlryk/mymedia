@@ -161,7 +161,7 @@ export default class ResourceModel {
     }
 
     /**
-     * returns tags not included in this resource
+     * returns tags-modal not included in this resource
      */
     public getOtherProjectTagModelList(): Array<TagModel> {
         return this._tagCollectionModel

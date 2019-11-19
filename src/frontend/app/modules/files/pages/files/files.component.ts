@@ -3,12 +3,11 @@ import { ProjectContextService } from "../../../../services/projectContext.servi
 import { ResultManipulationService } from "../../../../services/result-manipulation.service";
 import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
-import { ContentComponent } from "../../modules/thumbnails-modal/components/content/content.component";
 import ResourceModel from "../../../../models/resource.model";
-import { DialogService } from "primeng/api";
 import { LoaderService } from "../../../../services/loader.service";
 import { Router } from "@angular/router";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
+import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
 
 @Component({
     templateUrl: "files.component.html",
@@ -20,6 +19,9 @@ export class FilesComponent implements OnInit {
 
     @ViewChild(ThumbnailsModalComponent, { static: true })
     thumbnailsModal: ThumbnailsModalComponent;
+
+    @ViewChild(TagsModalComponent, { static: true })
+    tagsModal: TagsModalComponent;
 
     resourceList: Array<ResourceModel>;
     // visibleSidebar = false;
@@ -66,7 +68,17 @@ export class FilesComponent implements OnInit {
         this.detailsModal.show(resourceId);
     }
 
-    openThumbnailModal({ resourceId, index = 0 }: { resourceId: string; index?: number }) {
+    openThumbnailModal({
+        resourceId,
+        index = 0
+    }: {
+        resourceId: string;
+        index?: number;
+    }) {
         this.thumbnailsModal.show(resourceId, index);
+    }
+
+    openTagsModal() {
+        this.tagsModal.show();
     }
 }

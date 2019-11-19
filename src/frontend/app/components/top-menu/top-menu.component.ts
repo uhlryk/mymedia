@@ -14,8 +14,7 @@ export class TopMenuComponent implements OnInit {
     ngOnInit() {
         this.items = [
             { label: "Project", icon: "far fa-address-card", routerLink: ["/"] },
-            { label: "Media", icon: "fa fa-fw fa-calendar", routerLink: ["/files"], disabled: true },
-            { label: "Tags", icon: "fa fa-fw fa-book", routerLink: ["/tags"], disabled: true }
+            { label: "Media", icon: "fa fa-fw fa-calendar", routerLink: ["/files"], disabled: true }
         ];
     }
 }

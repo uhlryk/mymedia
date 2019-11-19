@@ -8,10 +8,10 @@ import { SharedModule } from "./modules/shared/shared.module";
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
 import { ThumbnailsModalModule } from "./modules/thumbnails-modal/thumbnails-modal.module";
+import { TagsModalModule } from "./modules/tags-modal/tags-modal.module";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
-import { ContentComponent } from "./modules/thumbnails-modal/components/content/content.component";
 import { CardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
 
@@ -27,7 +27,8 @@ import { RatingModule } from "primeng/rating";
         TooltipModule,
         SharedModule,
         RatingModule,
-        ThumbnailsModalModule
+        ThumbnailsModalModule,
+        TagsModalModule
     ],
     providers: [ResultManipulationService],
     declarations: [
@@ -36,8 +37,8 @@ import { RatingModule } from "primeng/rating";
         ListComponent,
         SearchComponent,
         OrderComponent,
-        ContentComponent
+
     ],
-    entryComponents: [ContentComponent]
+
 })
 export class FilesModule {}

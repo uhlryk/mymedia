@@ -4,14 +4,16 @@ import { ThumbnailsModalComponent } from "./thumbnails-modal.component";
 import { SharedModule } from "../shared/shared.module";
 import { DynamicDialogModule } from "primeng/dynamicdialog";
 import { DialogService } from "primeng/api";
+import {ContentComponent} from "./components/content/content.component";
 @NgModule({
-    declarations: [ThumbnailsModalComponent],
+    declarations: [ThumbnailsModalComponent, ContentComponent],
     imports: [
         CommonModule,
         SharedModule,
         DynamicDialogModule
     ],
     providers: [DialogService],
-    exports: [ThumbnailsModalComponent]
+    exports: [ThumbnailsModalComponent],
+    entryComponents: [ContentComponent]
 })
 export class ThumbnailsModalModule {}
