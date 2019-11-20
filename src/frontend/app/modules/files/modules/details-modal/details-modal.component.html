@@ -85,21 +85,15 @@
                     {{ tag.getName() }}
                 </option>
             </select>
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Tag</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let tag of resource.getResourceTagModelList()">
-                        <td>{{ tag.getName() }}</td>
-                        <td><button (click)="removeTag(tag.getId())">remove</button></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="tags-section">
+                <p-button
+                    *ngFor="let tag of resource.getResourceTagModelList()"
+                    [label]="tag.getName()"
+                    (click)="removeTag(tag.getId())"
+                    styleClass="ui-button-secondary"
+                    class="tag-button"
+                ></p-button>
+            </div>
         </div>
     </p-sidebar>
 </div>
