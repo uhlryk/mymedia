@@ -27,7 +27,7 @@ export class DetailsModalComponent {
         this.resource = this.projectContextService.getResourceModel(resourceId);
         this.thumbnailPath = this.resource.thumbnailPath;
         this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
-        this.selectedTagId = "";
+        this.selectedTagId = "0";
         this.visibleSidebar = true;
     }
 
@@ -44,14 +44,16 @@ export class DetailsModalComponent {
     }
 
     addTag() {
-        console.log(this.selectedTagId);
-        this.projectContextService.addResourceTag(
-            this.resource.getId(),
-            this.selectedTagId
-        );
-        this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
-        this.selectedTagId = "";
-        this.projectContextService.saveProject().subscribe(() => {});
+        if (this.selectedTagId && this.selectedTagId !== "0") {
+            console.log(this.selectedTagId);
+            this.projectContextService.addResourceTag(
+                this.resource.getId(),
+                this.selectedTagId
+            );
+            this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
+            this.selectedTagId = "0";
+            this.projectContextService.saveProject().subscribe(() => {});
+        }
     }
 
     removeTag(tagId) {
