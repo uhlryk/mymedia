@@ -4,6 +4,8 @@
         [baseZIndex]="10000"
         position="right"
         styleClass="ui-sidebar-sm"
+        [style]="{'overflow': 'scroll'}"
+        [blockScroll]="true"
     >
         <div *ngIf="!resource">
             <div class="center">
