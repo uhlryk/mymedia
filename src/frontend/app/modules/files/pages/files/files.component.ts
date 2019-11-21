@@ -24,6 +24,8 @@ export class FilesComponent implements OnInit {
     tagsModal: TagsModalComponent;
 
     resourceList: Array<ResourceModel>;
+
+    private _isLeftMenuVisible: boolean;
     // visibleSidebar = false;
     constructor(
         private projectContextService: ProjectContextService,
@@ -33,6 +35,7 @@ export class FilesComponent implements OnInit {
         private router: Router
     ) {}
     ngOnInit() {
+        this._isLeftMenuVisible = false;
         this.loaderService.show();
         this.projectContextService.loadProject().subscribe(isProjectExist => {
             if (!isProjectExist) {
@@ -70,5 +73,9 @@ export class FilesComponent implements OnInit {
 
     openTagsModal() {
         this.tagsModal.show();
+    }
+
+    toggleShowLeftBar() {
+        this._isLeftMenuVisible = !this._isLeftMenuVisible;
     }
 }

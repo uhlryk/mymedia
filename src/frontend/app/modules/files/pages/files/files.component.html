@@ -1,8 +1,17 @@
 <div class="p-grid">
-    <div class="p-col-fixed" style="width:150px;">
-        <p-button label="Tags Manager" (click)="openTagsModal()"></p-button>
-        <app-order></app-order>
-        <app-search></app-search>
+    <div class="p-col-fixed left-bar" [style.width]="_isLeftMenuVisible?'300px':'50px'">
+        <div class="wrapper" [style.left]="_isLeftMenuVisible?'0px':'-250px'">
+            <div *ngIf="_isLeftMenuVisible">
+                <p-button label="Tags Manager" (click)="openTagsModal()"></p-button>
+                <app-order></app-order>
+                <app-search></app-search>
+            </div>
+            <p-button *ngIf="!_isLeftMenuVisible" icon="pi pi-angle-double-right" (click)="toggleShowLeftBar()"></p-button>
+            <p-button *ngIf="_isLeftMenuVisible" icon="pi pi-angle-double-left" (click)="toggleShowLeftBar()"></p-button>
+        </div>
+        <!--<p-button label="Tags Manager" (click)="openTagsModal()"></p-button>-->
+        <!--<app-order></app-order>-->
+        <!--<app-search></app-search>-->
     </div>
     <div class="p-col">
         <app-list
