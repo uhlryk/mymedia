@@ -39,11 +39,37 @@
     align-items: center;
     height: 61px;
 }
-.thumbnail-wrapper {
+.thumbnail-section {
     width: 100%;
     height: 200px;
     margin-bottom: 5px;
 }
+.thumbnail-wrapper {
+    width:100%;
+    height:100%;
+    position: relative;
+}
+
+.show-play {
+    display: none;
+}
+.show-play i {
+    font-size: 80px;
+    color: white;
+}
+.thumbnail-wrapper:hover .show-play {
+    display: flex;
+    flex-direction: column; /* NEW */
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;left: 0;right: 0;bottom: 0;
+    background-color: rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
 .thumbnail-wrapper-small {
     width: 22%;
     height: 100%;

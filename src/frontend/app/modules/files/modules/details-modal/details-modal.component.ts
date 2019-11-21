@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
-import ThumbnailName from "../../../../../../shared/ThumbnailName";
+// import ThumbnailName from "../../../../../../shared/ThumbnailName";
 
 @Component({
     selector: "app-details-modal",
@@ -11,11 +11,6 @@ import ThumbnailName from "../../../../../../shared/ThumbnailName";
     styleUrls: ["./details-modal.component.scss"]
 })
 export class DetailsModalComponent {
-    @Output() showDetails = new EventEmitter<string>();
-    @Output() openThumbnailModal = new EventEmitter<{
-        resourceId: string;
-        index: number;
-    }>();
     constructor(private projectContextService: ProjectContextService) {}
 
     resource: ResourceModel;
@@ -77,10 +72,10 @@ export class DetailsModalComponent {
         this.thumbnailPath = thumbnailPath;
     }
 
-    clickThumbnail() {
-        console.log("AAA");
-        const index: number = ThumbnailName.getThumbnailIndex(this.thumbnailPath);
-        console.log(this.thumbnailPath + "   " + index);
-        this.openThumbnailModal.emit({ resourceId: this.resource.getId(), index: index });
-    }
+    // clickThumbnail() {
+    //     console.log("AAA");
+    //     const index: number = ThumbnailName.getThumbnailIndex(this.thumbnailPath);
+    //     console.log(this.thumbnailPath + "   " + index);
+    //     this.openThumbnailModal.emit({ resourceId: this.resource.getId(), index: index });
+    // }
 }

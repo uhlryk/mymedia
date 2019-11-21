@@ -68,16 +68,6 @@ export class FilesComponent implements OnInit {
         this.detailsModal.show(resourceId);
     }
 
-    openThumbnailModal({
-        resourceId,
-        index = 0
-    }: {
-        resourceId: string;
-        index?: number;
-    }) {
-        this.thumbnailsModal.show(resourceId, index);
-    }
-
     openTagsModal() {
         this.tagsModal.show();
     }
