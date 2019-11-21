@@ -3,7 +3,6 @@
         class="p-col-4"
         *ngFor="let resource of resourceList"
         [resource]="resource"
-        (openThumbnailModal)="clickOpenThumbnailModal($event)"
         (openDetailsModal)="clickShowDetails($event)"
         (executeMedia)="clickOpenFile($event)"
     >
