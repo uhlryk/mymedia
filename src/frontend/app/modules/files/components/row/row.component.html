@@ -1,4 +1,4 @@
-<p-card styleClass="ui-card-shadow">
+<p-card styleClass="ui-card-shadow" class="card">
     <p-header>
         <div class="thumbnail-section">
             <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </p-header>
-    <div [style.background-color]="resource.isRemoved() ? 'red' : 'white'">
+    <div>
         <div class="title">
             <span [pTooltip]="resource.getTitle()">
                 {{ resource.getTitle() }}
