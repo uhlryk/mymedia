@@ -10,7 +10,7 @@ import * as path from "path";
 import ResourceModelInterface from "../shared/types/resourceModel.interface";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import saveProjectFile from "./fs/saveProjectFile";
-import Loader from "./Loader";
+import Loader from "./core/Loader";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";

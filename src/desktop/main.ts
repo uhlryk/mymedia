@@ -7,7 +7,6 @@ contextMenu({
     showInspectElement: true
 });
 const IS_HOT = process.env.IS_HOT;
-console.log(IS_HOT);
 
 let mainWindow: Electron.BrowserWindow;
 

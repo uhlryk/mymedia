@@ -1,5 +1,5 @@
 import { IpcMainEvent } from "electron";
-import IpcProviderLoaderEnums from "../shared/IpcProviderLoaderEnums";
+import IpcProviderLoaderEnums from "../../shared/IpcProviderLoaderEnums";
 export default class Loader {
     private _event: IpcMainEvent;
     constructor(event: IpcMainEvent) {
