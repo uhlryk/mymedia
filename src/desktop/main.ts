@@ -11,7 +11,7 @@ const IS_HOT = process.env.IS_HOT;
 let mainWindow: Electron.BrowserWindow;
 
 app.on("ready", () => {
-    const appManager = new AppManager();
+
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, "../dist/assets/icon.png"),
         webPreferences: {
@@ -19,6 +19,7 @@ app.on("ready", () => {
             nodeIntegration: true // Allows IPC and other APIs
         }
     });
+    const appManager = new AppManager(mainWindow);
     if (IS_HOT) {
         mainWindow.loadURL("http://localhost:4200/");
         mainWindow.webContents.openDevTools();
@@ -26,7 +27,7 @@ app.on("ready", () => {
         mainWindow.loadFile(path.join(__dirname, "../frontend/index.html"));
     }
 
-    var menu = Menu.buildFromTemplate([
+    const menu = Menu.buildFromTemplate([
         {
             label: "Project",
             submenu: [

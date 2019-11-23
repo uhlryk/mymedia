@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import { ProjectContextService } from "./services/projectContext.service";
 
 @Component({
     selector: "app-root",
@@ -7,8 +8,12 @@ import {Router} from "@angular/router";
     styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-    title = "mymedia";
-    constructor(private router: Router,) {
-
+    constructor(
+        private router: Router,
+        private projectContextService: ProjectContextService
+    ) {
+        projectContextService.listenNewProject().subscribe(() => {
+            this.router.navigate(["/"]);
+        });
     }
 }
