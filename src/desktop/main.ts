@@ -1,5 +1,5 @@
 // src-backend/main.ts
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import * as path from "path";
 import AppManager from "./AppManager";
 const contextMenu = require("electron-context-menu");
@@ -12,7 +12,7 @@ console.log(IS_HOT);
 let mainWindow: Electron.BrowserWindow;
 
 app.on("ready", () => {
-    new AppManager();
+    const appManager = new AppManager();
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, "../dist/assets/icon.png"),
         webPreferences: {
@@ -26,6 +26,31 @@ app.on("ready", () => {
     } else {
         mainWindow.loadFile(path.join(__dirname, "../frontend/index.html"));
     }
+
+    var menu = Menu.buildFromTemplate([
+        {
+            label: "Project",
+            submenu: [
+                { label: "Create",
+                    click() {
+                        appManager.triggetCreateProject();
+                    }
+                },
+                { label: "Open" },
+                {
+                    label: "Exit",
+                    click() {
+                        app.quit();
+                    }
+                }
+            ]
+        },
+        {
+            label: "Files",
+            submenu: [{ label: "Reload" }]
+        }
+    ]);
+    Menu.setApplicationMenu(menu);
 });
 
 app.on("window-all-closed", () => {

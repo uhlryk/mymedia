@@ -12,7 +12,6 @@ export default class AppManager {
         ipcMain.on(
             IpcProviderResourceEnums.SET_PROJECT,
             (event, responseChannel: string) => {
-
                 const loader = new Loader(event);
                 loader.setMessage("Waiting for project path");
                 dialog.showOpenDialog(
@@ -21,7 +20,7 @@ export default class AppManager {
                     },
                     async fileNames => {
                         const projectPath = fileNames[0];
-                        if(this._appController) {
+                        if (this._appController) {
                             this._appController.destroy();
                         }
                         this._appController = new AppController(projectPath);
@@ -32,5 +31,12 @@ export default class AppManager {
                 );
             }
         );
+
+        ipcMain.on(
+            IpcProviderResourceEnums.LISTEN_SET_PROJECT,
+            (event, responseChannel: string) => {}
+        );
     }
+
+    public triggetCreateProject() {}
 }
