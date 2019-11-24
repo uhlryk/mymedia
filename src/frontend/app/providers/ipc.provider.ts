@@ -10,7 +10,7 @@ export default class IpcProvider {
         });
     }
     static trigger(channel: string, params?: any): void {
-        ipcRenderer.send(channel, params);
+        ipcRenderer.send(channel, "", params);
     }
 
     static listen(channel: string, callback: (response: any) => void): RemoveListener {
