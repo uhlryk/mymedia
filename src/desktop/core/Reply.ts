@@ -11,4 +11,8 @@ export default class Reply {
     send(message?: any) {
         this._event.reply(this._responseChannel, message);
     }
+
+    getEvent(): IpcMainEvent {
+        return this._event;
+    }
 }

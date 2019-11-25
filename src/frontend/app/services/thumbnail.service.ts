@@ -10,12 +10,12 @@ export class ThumbnailService {
 
     public onThumbnailChange(): Observable<ThumbnailChangeEventInterface> {
         return Observable.create(async observable => {
-            IpcProvider.trigger(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
             IpcProvider.listen(IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE, (response: ThumbnailChangeEventInterface) => {
                 this._ngZone.run(() => {
                     observable.next(response);
                 });
             });
+            IpcProvider.trigger(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
         });
     }
 }

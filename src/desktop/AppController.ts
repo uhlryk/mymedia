@@ -53,9 +53,12 @@ export default class AppController {
                         resourceThumbnailPath,
                         videoIndex: index
                     };
-                    context.reply.send(
-                        thumbnailChangeEventInterface
-                    );
+                    context.reply
+                        .getEvent()
+                        .reply(
+                            IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE,
+                            thumbnailChangeEventInterface
+                        );
                 }
             );
         });
