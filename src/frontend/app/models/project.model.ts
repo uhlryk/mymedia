@@ -53,7 +53,9 @@ export default class ProjectModel {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };
-        return await IpcProvider.request(IpcProviderResourceEnums.SAVE_PROJECT, project);
+        return await IpcProvider.request(IpcProviderResourceEnums.SAVE_PROJECT, {
+            project: project
+        });
     }
 
     public getResourceCollectionModel(): ResourceCollectionModel {
@@ -68,9 +70,8 @@ export default class ProjectModel {
         const resourceModel: ResourceModel = this._resourceCollectionModel.getResourceModelById(
             resourceId
         );
-        IpcProvider.trigger(
-            IpcProviderResourceEnums.EXECUTE_RESOURCE,
-            resourceModel.getFilePath()
-        );
+        IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {
+            filePath: resourceModel.getFilePath()
+        });
     }
 }

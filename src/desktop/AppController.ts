@@ -67,14 +67,14 @@ export default class AppController {
             context.reply.send(this._projectPath);
         });
         Listener.on(IpcProviderResourceEnums.SAVE_PROJECT, async context => {
-            const project: ProjectModelInterface = context.data[0];
+            const project: ProjectModelInterface = context.data.project;
             await this._projectManager.setProjectModel(project);
             await this._projectManager.save();
             context.reply.send();
         });
 
         Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
-            const resourcePath: string = context.data[0];
+            const resourcePath: string = context.data.filePath;
             shell.openItem(path.join(this.getProjectPath(), resourcePath));
         });
     }
