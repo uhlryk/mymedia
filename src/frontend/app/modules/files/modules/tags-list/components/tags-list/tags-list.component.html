@@ -9,7 +9,7 @@
 </select>
 <div class="tags-section">
     <p-button
-        *ngFor="let tag of _addedTagList"
+        *ngFor="let tag of _selectedTagList"
         [label]="tag.getName()"
         (click)="removeTag(tag.getId())"
         styleClass="ui-button-secondary"

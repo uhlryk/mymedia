@@ -76,33 +76,12 @@
                     (changed)="saveDescription($event)"
                 ></app-description>
             </div>
-            <div>
-                <button (click)="clickOpenFile(resource.getId())">open</button>
-            </div>
 
             <app-tags-list
                 (changeAddedTags)="changeAddedTags($event)"
                 [allTagList]="_allProjectTags"
                 [selectedTagList]="resource.getResourceTagModelList()"
             ></app-tags-list>
-            <!--<select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">-->
-                <!--<option [value]="0">Select Tag</option>-->
-                <!--<option-->
-                    <!--*ngFor="let tag of availableProjectTagModelList"-->
-                    <!--[value]="tag.getId()"-->
-                <!--&gt;-->
-                    <!--{{ tag.getName() }}-->
-                <!--</option>-->
-            <!--</select>-->
-            <!--<div class="tags-section">-->
-                <!--<p-button-->
-                    <!--*ngFor="let tag of resource.getResourceTagModelList()"-->
-                    <!--[label]="tag.getName()"-->
-                    <!--(click)="removeTag(tag.getId())"-->
-                    <!--styleClass="ui-button-secondary"-->
-                    <!--class="tag-button"-->
-                <!--&gt;</p-button>-->
-            <!--</div>-->
         </div>
     </p-sidebar>
 </div>

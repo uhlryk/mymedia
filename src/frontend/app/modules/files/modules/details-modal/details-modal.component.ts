@@ -20,8 +20,6 @@ export class DetailsModalComponent {
         this.resource = this.projectContextService.getResourceModel(resourceId);
         this.thumbnailPath = this.resource.thumbnailPath;
         this._allProjectTags = this.projectContextService.getProjectTagList().slice();
-        console.log("===============");
-        console.log(this._allProjectTags);
         this.visibleSidebar = true;
     }
 

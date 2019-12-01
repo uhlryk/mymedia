@@ -25,14 +25,11 @@ export class TagsListComponent implements OnChanges {
         this._availableTagList = this.allTagList.filter((allTag: TagModel) => {
             return !this.selectedTagList.find((selectedTag: TagModel) => selectedTag.getId() === allTag.getId());
         });
-        console.log("_______________");
-        console.log(this._availableTagList);
         this._selectedTagList = this.selectedTagList.slice();
     }
 
     addTag() {
         if (this._selectedTagId && this._selectedTagId !== "0") {
-            // console.log(this._selectedTagId);
             const selectedTagIndex: number = this._availableTagList.findIndex(
                 (tag: TagModel) => tag.getId() === this._selectedTagId
             );
