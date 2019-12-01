@@ -23,12 +23,16 @@ export class TagsListComponent implements OnChanges {
     ngOnChanges() {
         this._selectedTagId = "0";
         this._availableTagList = this.allTagList.filter((allTag: TagModel) => {
-            return !this.selectedTagList.find((selectedTag: TagModel) => selectedTag.getId() === allTag.getId());
+            return !this.selectedTagList.find(
+                (selectedTag: TagModel) => selectedTag.getId() === allTag.getId()
+            );
         });
         this._selectedTagList = this.selectedTagList.slice();
+        this._selectedTagId = "0";
     }
 
-    addTag() {
+    addTag(selectedTagId) {
+        this._selectedTagId = selectedTagId;
         if (this._selectedTagId && this._selectedTagId !== "0") {
             const selectedTagIndex: number = this._availableTagList.findIndex(
                 (tag: TagModel) => tag.getId() === this._selectedTagId
@@ -37,7 +41,7 @@ export class TagsListComponent implements OnChanges {
                 selectedTagIndex,
                 1
             )[0];
-
+            this._selectedTagId = "0";
             this._selectedTagList.push(selectedTag);
 
             this.changeAddedTags.emit(this._selectedTagList);
@@ -48,7 +52,10 @@ export class TagsListComponent implements OnChanges {
         const selectedTagIndex: number = this._selectedTagList.findIndex(
             (tag: TagModel) => tag.getId() === tagId
         );
-        const selectedTag: TagModel = this._selectedTagList.splice(selectedTagIndex, 1)[0];
+        const selectedTag: TagModel = this._selectedTagList.splice(
+            selectedTagIndex,
+            1
+        )[0];
         this._availableTagList.push(selectedTag);
         this.changeAddedTags.emit(this._selectedTagList);
     }

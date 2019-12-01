@@ -1,8 +1,9 @@
-<select name="profile" [(ngModel)]="_selectedTagId" (change)="addTag()">
-    <option [value]="0">Select Tag</option>
+<select name="profile" (change)="addTag($event.target.value)">
+    <option [selected]="_selectedTagId === '0'">Select Tag</option>
     <option
         *ngFor="let tag of _availableTagList"
         [value]="tag.getId()"
+        [selected]="_selectedTagId !== '0'"
     >
         {{ tag.getName() }}
     </option>
