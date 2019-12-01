@@ -14,12 +14,14 @@ export class DetailsModalComponent {
 
     resource: ResourceModel;
     thumbnailPath: string;
-    allProjectTags: Array<TagModel>;
+    private _allProjectTags: Array<TagModel>;
     visibleSidebar: boolean;
     show(resourceId: string) {
         this.resource = this.projectContextService.getResourceModel(resourceId);
         this.thumbnailPath = this.resource.thumbnailPath;
-        this.allProjectTags = this.projectContextService.getProjectTagList();
+        this._allProjectTags = this.projectContextService.getProjectTagList().slice();
+        console.log("===============");
+        console.log(this._allProjectTags);
         this.visibleSidebar = true;
     }
 

@@ -25,6 +25,8 @@ export class TagsListComponent implements OnChanges {
         this._availableTagList = this.allTagList.filter((allTag: TagModel) => {
             return !this.selectedTagList.find((selectedTag: TagModel) => selectedTag.getId() === allTag.getId());
         });
+        console.log("_______________");
+        console.log(this._availableTagList);
         this._selectedTagList = this.selectedTagList.slice();
     }
 

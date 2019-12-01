@@ -82,7 +82,7 @@
 
             <app-tags-list
                 (changeAddedTags)="changeAddedTags($event)"
-                [allTagList]="allProjectTags"
+                [allTagList]="_allProjectTags"
                 [selectedTagList]="resource.getResourceTagModelList()"
             ></app-tags-list>
             <!--<select name="profile" [(ngModel)]="selectedTagId" (change)="addTag()">-->
