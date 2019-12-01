@@ -80,20 +80,11 @@ export class ProjectContextService {
         this.getProjectModel().open(resourceId);
     }
 
-    addResourceTag(resourceId, tagId) {
-        const tagModel: TagModel = this.getProjectModel()
-            .getTagCollectionModel()
-            .getTagModelById(tagId);
+    setResourceTagList(resourceId, tagList: Array<TagModel>) {
         this.getProjectModel()
             .getResourceCollectionModel()
             .getResourceModelById(resourceId)
-            .addTagModel(tagModel);
-    }
-
-    removeResourceTag(resourceId, tagId) {
-        this.getProjectModel()
-            .getResourceCollectionModel()
-            .removeResourceTagModel(resourceId, tagId);
+            .setTagModelList(tagList);
     }
 
     removeProjectTag(tagId) {

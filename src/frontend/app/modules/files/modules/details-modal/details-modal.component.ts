@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component } from "@angular/core";
 
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
-// import ThumbnailName from "../../../../../../shared/ThumbnailName";
 
 @Component({
     selector: "app-details-modal",
@@ -15,14 +14,12 @@ export class DetailsModalComponent {
 
     resource: ResourceModel;
     thumbnailPath: string;
-    availableProjectTagModelList: Array<TagModel>;
-    selectedTagId: string;
+    allProjectTags: Array<TagModel>;
     visibleSidebar: boolean;
     show(resourceId: string) {
         this.resource = this.projectContextService.getResourceModel(resourceId);
         this.thumbnailPath = this.resource.thumbnailPath;
-        this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
-        this.selectedTagId = "0";
+        this.allProjectTags = this.projectContextService.getProjectTagList();
         this.visibleSidebar = true;
     }
 
@@ -37,24 +34,11 @@ export class DetailsModalComponent {
         this.resource.ranking = event.value;
         this.projectContextService.saveProject().subscribe(() => {});
     }
-
-    addTag() {
-        if (this.selectedTagId && this.selectedTagId !== "0") {
-            console.log(this.selectedTagId);
-            this.projectContextService.addResourceTag(
-                this.resource.getId(),
-                this.selectedTagId
-            );
-            this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
-            this.selectedTagId = "0";
-            this.projectContextService.saveProject().subscribe(() => {});
-        }
-    }
-
-    removeTag(tagId) {
-        this.projectContextService.removeResourceTag(this.resource.getId(), tagId);
-        this.availableProjectTagModelList = this.resource.getOtherProjectTagModelList();
-        this.selectedTagId = "";
+    changeAddedTags(selectedTagList: Array<TagModel>) {
+        this.projectContextService.setResourceTagList(
+            this.resource.getId(),
+            selectedTagList
+        );
         this.projectContextService.saveProject().subscribe(() => {});
     }
 
@@ -71,11 +55,4 @@ export class DetailsModalComponent {
     changeThumbnail(thumbnailPath) {
         this.thumbnailPath = thumbnailPath;
     }
-
-    // clickThumbnail() {
-    //     console.log("AAA");
-    //     const index: number = ThumbnailName.getThumbnailIndex(this.thumbnailPath);
-    //     console.log(this.thumbnailPath + "   " + index);
-    //     this.openThumbnailModal.emit({ resourceId: this.resource.getId(), index: index });
-    // }
 }

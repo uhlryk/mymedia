@@ -1,1 +1,18 @@
-<p>tags-list works!</p>
+<select name="profile" [(ngModel)]="_selectedTagId" (change)="addTag()">
+    <option [value]="0">Select Tag</option>
+    <option
+        *ngFor="let tag of _availableTagList"
+        [value]="tag.getId()"
+    >
+        {{ tag.getName() }}
+    </option>
+</select>
+<div class="tags-section">
+    <p-button
+        *ngFor="let tag of _addedTagList"
+        [label]="tag.getName()"
+        (click)="removeTag(tag.getId())"
+        styleClass="ui-button-secondary"
+        class="tag-button"
+    ></p-button>
+</div>

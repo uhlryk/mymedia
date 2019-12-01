@@ -30,10 +30,6 @@ export default class ResourceCollectionModel {
         );
     }
 
-    public removeResourceTagModel(resourceId, tagId) {
-        this.getResourceModelById(resourceId).removeTagModel(tagId);
-    }
-
     public removeAllResourceTagModel(tagId) {
         return this._resourceModelList.forEach(resourceModel => {
             resourceModel.removeTagModel(tagId);

@@ -40,7 +40,7 @@ export default class ResourceModel {
         resourceModel._isRemoved = resource.isRemoved;
         resource.tags.forEach((tagId: string) => {
             const tagModel = tagCollectionModel.getTagModelById(tagId);
-            resourceModel.addTagModel(tagModel);
+            resourceModel._addTagModel(tagModel);
         });
         return resourceModel;
     }
@@ -120,7 +120,10 @@ export default class ResourceModel {
     public setDescription(description: string) {
         this._description = description;
     }
-    public addTagModel(newTagModel: TagModel) {
+    public setTagModelList(tagModelList: Array<TagModel>) {
+        this._tagModelList = tagModelList;
+    }
+    private _addTagModel(newTagModel: TagModel) {
         const existingTagModel = this._tagModelList.find(
             (tagModel: TagModel) => tagModel.getId() === newTagModel.getId()
         );
@@ -163,15 +166,15 @@ export default class ResourceModel {
     /**
      * returns tags-modal not included in this resource
      */
-    public getOtherProjectTagModelList(): Array<TagModel> {
-        return this._tagCollectionModel
-            .getList()
-            .filter(
-                (projectTagModel: TagModel) =>
-                    !this._tagModelList.find(
-                        (resourceTagModel: TagModel) =>
-                            projectTagModel.getId() === resourceTagModel.getId()
-                    )
-            );
-    }
+    // public getOtherProjectTagModelList(): Array<TagModel> {
+    //     return this._tagCollectionModel
+    //         .getList()
+    //         .filter(
+    //             (projectTagModel: TagModel) =>
+    //                 !this._tagModelList.find(
+    //                     (resourceTagModel: TagModel) =>
+    //                         projectTagModel.getId() === resourceTagModel.getId()
+    //                 )
+    //         );
+    // }
 }
