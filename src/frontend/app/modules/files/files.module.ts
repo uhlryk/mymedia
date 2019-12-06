@@ -9,6 +9,7 @@ import { ListComponent } from "./components/list/list.component";
 import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
 import { ThumbnailsModalModule } from "./modules/thumbnails-modal/thumbnails-modal.module";
 import { TagsModalModule } from "./modules/tags-modal/tags-modal.module";
+import { TagModule } from "./modules/tag/tag.module";
 import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
@@ -28,7 +29,8 @@ import { RatingModule } from "primeng/rating";
         SharedModule,
         RatingModule,
         ThumbnailsModalModule,
-        TagsModalModule
+        TagsModalModule,
+        TagModule
     ],
     providers: [ResultManipulationService],
     declarations: [

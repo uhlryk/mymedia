@@ -6,11 +6,7 @@
                 <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
             </div>
             <div class="thumbnail-wrapper" *ngIf="resource.thumbnailPath">
-                <img
-                    class="thumbnail"
-                    [src]="resource.thumbnailPath"
-                    alt=""
-                />
+                <img class="thumbnail" [src]="resource.thumbnailPath" alt="" />
                 <div class="show-play" (click)="clickExecuteMedia()">
                     <i class="pi pi-caret-right"></i>
                 </div>
@@ -33,9 +29,14 @@
             <span *ngIf="resource.isNew()">NEW</span>
         </div>
         <div class="card-section">
-            <span *ngFor="let tag of resource.getResourceTagModelList()">{{
-                tag.getName()
-            }}</span>
+            <app-tag
+                *ngFor="let tag of resource.getResourceTagModelList()"
+                [tagModel]="tag"
+            >
+            </app-tag>
+            <!--<span *ngFor="let tag of resource.getResourceTagModelList()">{{-->
+            <!--tag.getName()-->
+            <!--}}</span>-->
         </div>
     </div>
     <p-footer>

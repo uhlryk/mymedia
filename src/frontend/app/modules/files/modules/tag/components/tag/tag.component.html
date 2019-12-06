@@ -1,4 +1,7 @@
 <p-button
+    [pTooltip]="tagModel.getName()"
+    tooltipZIndex="100000"
+    tooltipPosition="top"
     [label]="tagModel.getName()"
     (click)="clickButton(tagModel.getId())"
     styleClass="ui-button-secondary"
