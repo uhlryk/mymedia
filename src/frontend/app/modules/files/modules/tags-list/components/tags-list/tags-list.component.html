@@ -9,11 +9,9 @@
     </option>
 </select>
 <div class="tags-section">
-    <p-button
+    <app-tag
         *ngFor="let tag of _selectedTagList"
-        [label]="tag.getName()"
-        (click)="removeTag(tag.getId())"
-        styleClass="ui-button-secondary"
-        class="tag-button"
-    ></p-button>
+        (clickTag)="removeTag(tag.getId())"
+        [tagModel]="tag"
+    ></app-tag>
 </div>

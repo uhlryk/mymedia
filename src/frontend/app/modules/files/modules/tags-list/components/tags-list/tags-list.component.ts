@@ -48,7 +48,7 @@ export class TagsListComponent implements OnChanges {
         }
     }
 
-    removeTag(tagId) {
+    removeTag(tagId: string) {
         const selectedTagIndex: number = this._selectedTagList.findIndex(
             (tag: TagModel) => tag.getId() === tagId
         );

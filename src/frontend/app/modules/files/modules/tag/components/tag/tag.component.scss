@@ -1,0 +1,23 @@
+:host {
+    width: 48%;
+    padding: 3px 0;
+}
+
+.tag-button {
+    border: 1px solid grey;
+    width: 100%;
+    
+    & ::ng-deep {
+        & .ui-button {
+            width: 100%;
+            background-color: #d4ead4 !important;
+        }
+        & .ui-button-text {
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 11px;
+        }
+    }
+}
