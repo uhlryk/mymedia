@@ -1,4 +1,4 @@
-<select name="profile" (change)="addTag($event.target.value)">
+<select name="profile" (change)="addTag($event.target.value)" [disabled]="_availableTagList.length < 1">
     <option [selected]="_selectedTagId === '0'">Select Tag</option>
     <option
         *ngFor="let tag of _availableTagList"
