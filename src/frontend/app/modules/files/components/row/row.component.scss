@@ -63,3 +63,10 @@ img.thumbnail {
 }
 
 
+.tag-list {
+    display: flex;
+}
+.tag-list > span {
+    width: 19%;
+    margin: 3px 1% 0 0;
+}
