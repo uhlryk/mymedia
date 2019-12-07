@@ -2,7 +2,6 @@
 
 .tag-button {
     width: 100%;
-    //background-color: #d4ead4 !important;
     & ::ng-deep {
         & .ui-button {
             width: 100%;
@@ -14,7 +13,7 @@
             background-color: #f3f3f3 !important;
         }
         & .ui-button-text {
-            text-align: left;
+            text-align: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;

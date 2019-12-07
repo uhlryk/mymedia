@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { TagsListComponent } from "./components/tags-list/tags-list.component";
+import { TagSelectListComponent } from "./components/tags-select-list/tag-select-list.component";
 import { ButtonModule } from "primeng/button";
 import { TagModule } from "../tag/tag.module";
 @NgModule({
-    declarations: [TagsListComponent],
+    declarations: [TagSelectListComponent],
     imports: [CommonModule, FormsModule, ButtonModule, TagModule],
-    exports: [TagsListComponent]
+    exports: [TagSelectListComponent]
 })
-export class TagsListModule {}
+export class TagSelectListModule {}

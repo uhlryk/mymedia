@@ -77,11 +77,11 @@
                 ></app-description>
             </div>
 
-            <app-tags-list
+            <app-tag-select-list
                 (changeAddedTags)="changeAddedTags($event)"
                 [allTagList]="_allProjectTags"
                 [selectedTagList]="resource.getResourceTagModelList()"
-            ></app-tags-list>
+            ></app-tag-select-list>
         </div>
     </p-sidebar>
 </div>

@@ -3,7 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { DetailsModalComponent } from "./details-modal.component";
 import { DescriptionComponent } from "./components/description/description.component";
-import { TagsListModule } from "../tags-list/tags-list.module";
+import { TagSelectListModule } from "../tag-select-list/tag-select-list.module";
 import { SidebarModule } from "primeng/sidebar";
 import { SharedModule } from "../shared/shared.module";
 import { InplaceModule } from "primeng/inplace";
@@ -14,7 +14,7 @@ import { RatingModule } from "primeng/rating";
     declarations: [DetailsModalComponent, DescriptionComponent],
     imports: [
         CommonModule,
-        TagsListModule,
+        TagSelectListModule,
         SidebarModule,
         SharedModule,
         FormsModule,

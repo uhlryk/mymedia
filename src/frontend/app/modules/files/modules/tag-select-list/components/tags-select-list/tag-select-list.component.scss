@@ -1,9 +1,9 @@
 .tags-section {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 .tags-section > span {
-    width: 48%;
-    margin: 3px 0;
+    width: 24%;
+    margin: 3px 1% 0 0;
 }

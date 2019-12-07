@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import TagModel from "../../../../../../models/tag.model";
-import ResourceModel from "../../../../../../models/resource.model";
 
 @Component({
-    selector: "app-tags-list",
-    templateUrl: "./tags-list.component.html",
-    styleUrls: ["./tags-list.component.scss"]
+    selector: "app-tag-select-list",
+    templateUrl: "./tag-select-list.component.html",
+    styleUrls: ["./tag-select-list.component.scss"]
 })
-export class TagsListComponent implements OnChanges {
+export class TagSelectListComponent implements OnChanges {
     private _selectedTagId: string;
     private _availableTagList: Array<TagModel>;
     private _selectedTagList: Array<TagModel>;
