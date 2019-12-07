@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
 
@@ -7,18 +7,17 @@ import TagModel from "../../../../models/tag.model";
     templateUrl: "./row.component.html",
     styleUrls: ["./row.component.scss"]
 })
-export class RowComponent implements OnInit, OnChanges {
+export class RowComponent implements OnInit {
     @Input() resource: ResourceModel;
     @Output() openDetailsModal = new EventEmitter<string>();
     @Output() executeMedia = new EventEmitter<string>();
-    private _tagList: Array<TagModel>;
+    _tagList: Array<TagModel>;
     constructor() {}
 
-    ngOnInit() {}
-
-    ngOnChanges() {
-        this._tagList = this.resource.getResourceTagModelList().slice(0, 4);
+    ngOnInit() {
+        this._tagList = this.resource.getResourceTagModelList();
     }
+
     clickOpenDetails() {
         this.openDetailsModal.emit(this.resource.getId());
     }
