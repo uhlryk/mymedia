@@ -121,7 +121,8 @@ export default class ResourceModel {
         this._description = description;
     }
     public setTagModelList(tagModelList: Array<TagModel>) {
-        this._tagModelList = tagModelList;
+        this._tagModelList.length = 0;
+        this._tagModelList.push(...tagModelList);
     }
     private _addTagModel(newTagModel: TagModel) {
         const existingTagModel = this._tagModelList.find(

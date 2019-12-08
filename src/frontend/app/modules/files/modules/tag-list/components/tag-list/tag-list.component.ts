@@ -14,6 +14,6 @@ export class TagListComponent implements OnInit, OnChanges {
     ngOnInit() {}
 
     ngOnChanges() {
-        this._lineTagList = this.tags.slice(0, 4);
+        this._lineTagList = this.tags;
     }
 }
