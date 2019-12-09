@@ -3,7 +3,33 @@
     display: flex;
     height: 40px;
 }
-.tag-list > span {
-    width: 21%;
+.tag-wrapper {
+    width: 20%;
     margin: 3px 1% 0 0;
+}
+
+.tag-more {
+    width: 18%;
+    display: block;
+    margin: 3px 0 0 0;
+}
+
+.button-more {
+    width: 100%;
+    & ::ng-deep {
+        & .ui-button {
+            width: 100%;
+            border: 1px solid grey !important;
+            border-radius: 10px !important;
+        }
+        & .ui-button:hover {
+        }
+        & .ui-button-text {
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 11px;
+        }
+    }
 }
