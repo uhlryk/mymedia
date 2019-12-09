@@ -1,5 +1,5 @@
 <div class="tag-list">
-    <span *ngFor="let tag of _lineTagList; let i = index">
-        <app-tag *ngIf="i < 4" [tagModel]="tag"> </app-tag>
+    <span *ngFor="let tag of _lineTagList.slice(0, 4); let i = index">
+        <app-tag  [tagModel]="tag"> </app-tag>
     </span>
 </div>
