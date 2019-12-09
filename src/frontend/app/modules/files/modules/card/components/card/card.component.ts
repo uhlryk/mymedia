@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import ResourceModel from "../../../../models/resource.model";
-import TagModel from "../../../../models/tag.model";
+import ResourceModel from "../../../../../../models/resource.model";
+import TagModel from "../../../../../../models/tag.model";
 
 @Component({
-    selector: "app-row",
-    templateUrl: "./row.component.html",
-    styleUrls: ["./row.component.scss"]
+    selector: "app-card",
+    templateUrl: "./card.component.html",
+    styleUrls: ["./card.component.scss"]
 })
-export class RowComponent implements OnInit {
+export class CardComponent implements OnInit {
     @Input() resource: ResourceModel;
     @Output() openDetailsModal = new EventEmitter<string>();
     @Output() executeMedia = new EventEmitter<string>();

@@ -1,10 +1,10 @@
 <div class="p-grid">
-    <app-row
+    <app-card
         class="p-col-4"
         *ngFor="let resource of resourceList"
         [resource]="resource"
         (openDetailsModal)="clickShowDetails($event)"
         (executeMedia)="clickOpenFile($event)"
     >
-    </app-row>
+    </app-card>
 </div>
