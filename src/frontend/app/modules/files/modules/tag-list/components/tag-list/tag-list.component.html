@@ -1,8 +1,19 @@
+<p-overlayPanel #op>
+    <div class="extra-tag-list">
+    <span class="extra-tag-wrapper" *ngFor="let tag of _lineTagList.slice(4, _lineTagList.length); let i = index">
+        <app-tag [tagModel]="tag"> </app-tag>
+    </span>
+    </div>
+</p-overlayPanel>
 <div class="tag-list">
     <span class="tag-wrapper" *ngFor="let tag of _lineTagList.slice(0, 4); let i = index">
         <app-tag [tagModel]="tag"> </app-tag>
     </span>
     <span class="tag-more" *ngIf="_lineTagList.length > 4">
-        <p-button icon="pi pi-ellipsis-h" class="button-more"></p-button>
+        <p-button
+            icon="pi pi-ellipsis-h"
+            class="button-more"
+            (click)="op.toggle($event)"
+        ></p-button>
     </span>
 </div>

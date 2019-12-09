@@ -14,7 +14,14 @@
     margin: 3px 0 0 0;
     margin-left: auto;
 }
-
+.extra-tag-list {
+    display: flex;
+    flex-direction: column;
+}
+.extra-tag-wrapper {
+    width: 100px;
+    margin: 3px 1% 0 0;
+}
 .button-more {
     width: 100%;
     & ::ng-deep {
