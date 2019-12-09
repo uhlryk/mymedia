@@ -15,17 +15,13 @@ import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ButtonModule } from "primeng/button";
 
-import { TooltipModule } from "primeng/tooltip";
-import { RatingModule } from "primeng/rating";
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ButtonModule,
         DetailsModalModule,
-        TooltipModule,
         SharedModule,
-        RatingModule,
         ThumbnailsModalModule,
         TagsModalModule,
         CardModule
