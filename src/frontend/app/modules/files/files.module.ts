@@ -14,6 +14,7 @@ import { ResultManipulationService } from "../../services/result-manipulation.se
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ButtonModule } from "primeng/button";
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @NgModule({
     imports: [
@@ -27,6 +28,6 @@ import { ButtonModule } from "primeng/button";
         CardModule
     ],
     providers: [ResultManipulationService],
-    declarations: [FilesComponent, ListComponent, SearchComponent, OrderComponent]
+    declarations: [FilesComponent, ListComponent, SearchComponent, OrderComponent, SideMenuComponent]
 })
 export class FilesModule {}

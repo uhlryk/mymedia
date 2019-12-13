@@ -1,0 +1,21 @@
+<div class="wrapper" [style.left]="_isLeftMenuVisible ? '0px' : '-185px'">
+    <div class="content">
+        <div *ngIf="_isLeftMenuVisible">
+            <p-button label="Tags Manager" (click)="_clickOpenTagsModal()"></p-button>
+            <app-order></app-order>
+            <app-search></app-search>
+        </div>
+    </div>
+    <div class="navigation">
+        <p-button
+            *ngIf="!_isLeftMenuVisible"
+            icon="pi pi-angle-double-right"
+            (click)="_toggleShowLeftBar()"
+        ></p-button>
+        <p-button
+            *ngIf="_isLeftMenuVisible"
+            icon="pi pi-angle-double-left"
+            (click)="_toggleShowLeftBar()"
+        ></p-button>
+    </div>
+</div>

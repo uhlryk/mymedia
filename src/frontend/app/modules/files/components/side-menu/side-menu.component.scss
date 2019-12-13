@@ -1,0 +1,32 @@
+:host {
+    //height: 100%;
+    width: 35px;
+    position: relative;
+    border-right: 1px solid blue;
+}
+
+:host > .wrapper {
+    position: fixed;
+    top: 0;
+    left: -185px;
+    width: 220px;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+.wrapper .content {
+    height: 100%;
+    width: 185px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.wrapper .navigation {
+    height: 100%;
+    width: 35px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}

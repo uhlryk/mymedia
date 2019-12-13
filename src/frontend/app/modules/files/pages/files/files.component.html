@@ -1,18 +1,5 @@
 <div class="p-grid">
-    <div class="p-col-fixed left-bar" [style.width]="_isLeftMenuVisible?'220px':'50px'">
-        <div class="wrapper" [style.left]="_isLeftMenuVisible?'0px':'-170px'">
-            <div *ngIf="_isLeftMenuVisible">
-                <p-button label="Tags Manager" (click)="openTagsModal()"></p-button>
-                <app-order></app-order>
-                <app-search></app-search>
-            </div>
-            <p-button *ngIf="!_isLeftMenuVisible" icon="pi pi-angle-double-right" (click)="toggleShowLeftBar()"></p-button>
-            <p-button *ngIf="_isLeftMenuVisible" icon="pi pi-angle-double-left" (click)="toggleShowLeftBar()"></p-button>
-        </div>
-        <!--<p-button label="Tags Manager" (click)="openTagsModal()"></p-button>-->
-        <!--<app-order></app-order>-->
-        <!--<app-search></app-search>-->
-    </div>
+    <app-side-menu class="p-col-fixed" (openTagsModal)="_openTagsModal()"> </app-side-menu>
     <div class="p-col">
         <app-list
             [resourceList]="resourceList"
@@ -20,8 +7,7 @@
             (showDetails)="showFileDetails($event)"
         ></app-list>
 
-        <app-details-modal
-        ></app-details-modal>
+        <app-details-modal></app-details-modal>
         <app-thumbnails-modal></app-thumbnails-modal>
         <app-tags-modal></app-tags-modal>
     </div>

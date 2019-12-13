@@ -71,11 +71,8 @@ export class FilesComponent implements OnInit {
         this.detailsModal.show(resourceId);
     }
 
-    openTagsModal() {
+    _openTagsModal() {
         this.tagsModal.show();
     }
 
-    toggleShowLeftBar() {
-        this._isLeftMenuVisible = !this._isLeftMenuVisible;
-    }
 }
