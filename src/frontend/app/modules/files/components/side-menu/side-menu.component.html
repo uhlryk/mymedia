@@ -1,9 +1,7 @@
 <div class="wrapper" [style.left]="_isLeftMenuVisible ? '0px' : '-185px'">
     <div class="content">
         <div *ngIf="_isLeftMenuVisible">
-            <p-button label="Tags Manager" (click)="_clickOpenTagsModal()"></p-button>
-            <app-order></app-order>
-            <app-search></app-search>
+            <ng-content></ng-content>
         </div>
     </div>
     <div class="navigation">

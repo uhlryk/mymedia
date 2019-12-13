@@ -7,7 +7,6 @@ import { Component, OnInit, HostBinding, Output, EventEmitter } from "@angular/c
 })
 export class SideMenuComponent implements OnInit {
     @HostBinding("style.width") width: string = "35px";
-    @Output() openTagsModal = new EventEmitter<void>();
     constructor() {}
     private _isLeftMenuVisible: boolean;
     ngOnInit() {
@@ -21,9 +20,5 @@ export class SideMenuComponent implements OnInit {
         } else {
             this.width = "35px";
         }
-    }
-
-    _clickOpenTagsModal() {
-        this.openTagsModal.emit();
     }
 }
