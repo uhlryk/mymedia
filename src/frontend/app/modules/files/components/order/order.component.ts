@@ -10,7 +10,9 @@ export class OrderComponent implements OnInit {
     selectedOption: string;
     constructor(private resultManipulationService: ResultManipulationService) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.selectedOption = "0";
+    }
 
     startSorting() {
         this.resultManipulationService.setOrder(this.selectedOption);
