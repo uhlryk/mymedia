@@ -1,2 +1,10 @@
-<input [(ngModel)]="searchInput" />
-<button (click)="startSearch()">search</button>
+<!--<input [(ngModel)]="searchInput" (change)="startSearch()" />-->
+<!--<button (click)="startSearch()">search</button>-->
+<input
+    pInputText
+    class="text-input"
+    type="text"
+    [(ngModel)]="searchInput"
+    (ngModelChange)="startSearch()"
+    placeholder="search"
+/>
