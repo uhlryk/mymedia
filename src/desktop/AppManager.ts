@@ -37,4 +37,7 @@ export default class AppManager {
     public triggetCreateProject() {
         this._rendererProcess.webContents.send(IpcProviderResourceEnums.TRIGGER_SET_PROJECT);
     }
+    public triggetTagsManager() {
+        this._rendererProcess.webContents.send(IpcProviderResourceEnums.TRIGGER_TAGS_MANAGER);
+    }
 }

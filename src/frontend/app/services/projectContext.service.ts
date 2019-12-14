@@ -51,6 +51,15 @@ export class ProjectContextService {
             });
         });
     }
+    listenOpenTagsManager(): Observable<void> {
+        return Observable.create(async observable => {
+            IpcProvider.listen(IpcProviderResourceEnums.TRIGGER_TAGS_MANAGER, () => {
+                this._ngZone.run(() => {
+                    observable.next();
+                });
+            });
+        });
+    }
     getProjectModel(): ProjectModel {
         return ProjectModel.getInstance();
     }

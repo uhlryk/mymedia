@@ -61,6 +61,10 @@ export class FilesComponent implements OnInit {
                 this.loaderService.hide();
             }
         });
+
+        this.projectContextService.listenOpenTagsManager().subscribe(() => {
+            this.tagsModal.show();
+        });
     }
 
     openFile(resourceId) {
@@ -69,10 +73,6 @@ export class FilesComponent implements OnInit {
 
     showFileDetails(resourceId) {
         this.detailsModal.show(resourceId);
-    }
-
-    _openTagsModal() {
-        this.tagsModal.show();
     }
 
 }

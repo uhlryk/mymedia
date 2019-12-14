@@ -46,8 +46,15 @@ app.on("ready", () => {
             ]
         },
         {
-            label: "Files",
-            submenu: [{ label: "Reload" }]
+            label: "Collection",
+            submenu: [
+                { label: "Tags Manager",
+                    click() {
+                        appManager.triggetTagsManager();
+                    }
+                },
+                { label: "Reload" }
+                ]
         }
     ]);
     Menu.setApplicationMenu(menu);
