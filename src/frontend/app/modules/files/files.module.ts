@@ -15,7 +15,7 @@ import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ButtonModule } from "primeng/button";
 import { SideMenuComponent } from "./components/side-menu/side-menu.component";
-
+import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.module";
 @NgModule({
     imports: [
         CommonModule,
@@ -25,7 +25,8 @@ import { SideMenuComponent } from "./components/side-menu/side-menu.component";
         SharedModule,
         ThumbnailsModalModule,
         TagsModalModule,
-        CardModule
+        CardModule,
+        TagSelectListModule
     ],
     providers: [ResultManipulationService],
     declarations: [

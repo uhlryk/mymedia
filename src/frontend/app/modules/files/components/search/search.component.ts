@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ResultManipulationService } from "../../../../services/result-manipulation.service";
+import { ProjectContextService } from "../../../../services/projectContext.service";
+import TagModel from "../../../../models/tag.model";
 
 @Component({
     selector: "app-search",
@@ -8,12 +10,28 @@ import { ResultManipulationService } from "../../../../services/result-manipulat
 })
 export class SearchComponent implements OnInit {
     searchInput;
-    constructor(private resultManipulationService: ResultManipulationService) {}
+    private _allProjectTags: Array<TagModel>;
+    private _selectedTagList: Array<TagModel>;
+    constructor(
+        private projectContextService: ProjectContextService,
+        private resultManipulationService: ResultManipulationService
+    ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        // this._allProjectTags = this.projectContextService.getProjectTagList().slice();
+        this._selectedTagList = [];
+    }
 
     startSearch() {
         console.log("A1");
         this.resultManipulationService.setSearch(this.searchInput);
+    }
+
+    changeAddedTags(selectedTagList: Array<TagModel>) {
+        // this.projectContextService.setResourceTagList(
+        //     this.resource.getId(),
+        //     selectedTagList
+        // );
+        // this.projectContextService.saveProject().subscribe(() => {});
     }
 }
