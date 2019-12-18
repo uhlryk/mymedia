@@ -1,14 +1,15 @@
 <!--<input [(ngModel)]="searchInput" (change)="startSearch()" />-->
 <!--<button (click)="startSearch()">search</button>-->
-<input
-    pInputText
-    class="text-input"
-    type="text"
-    [(ngModel)]="searchInput"
-    (ngModelChange)="startSearch()"
-    placeholder="search"
-/>
-
+<div class="search-input-wrapper">
+    <input
+        pInputText
+        class="text-input"
+        type="text"
+        [(ngModel)]="searchInput"
+        (ngModelChange)="startSearch()"
+        placeholder="search"
+    />
+</div>
 <app-tag-select-list
     (changeAddedTags)="changeAddedTags($event)"
     [allTagList]="projectTags"

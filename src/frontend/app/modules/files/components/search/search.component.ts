@@ -23,12 +23,14 @@ export class SearchComponent implements OnInit {
     }
 
     startSearch() {
-        console.log("A1");
         this.resultManipulationService.setSearch(this.searchInput);
     }
 
     changeAddedTags(selectedTagList: Array<TagModel>) {
         this._selectedTagList = selectedTagList;
+        this.resultManipulationService.setSearchTags(
+            this._selectedTagList.map((tag: TagModel) => tag.getId())
+        );
     }
 
     get projectTags() {

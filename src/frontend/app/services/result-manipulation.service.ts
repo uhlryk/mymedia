@@ -1,10 +1,12 @@
 import { Injectable } from "@angular/core";
 import ResourceModel from "../models/resource.model";
 import { Observable, Observer } from "rxjs";
+import TagModel from "../models/tag.model";
 
 @Injectable()
 export class ResultManipulationService {
     private _searchTerm = "";
+    private _tagList: Array<string> = [];
     private _orderType = "";
     private _observer: Observer<any>;
     private _resourceList: Array<ResourceModel>;
@@ -15,6 +17,10 @@ export class ResultManipulationService {
         this.compute();
     }
 
+    public setSearchTags(tags: Array<string>) {
+        this._tagList = tags;
+        this.compute();
+    }
     public setOrder(orderType: string) {
         this._orderType = orderType;
         this.compute();
@@ -27,15 +33,16 @@ export class ResultManipulationService {
                     .toLowerCase()
                     .includes(this._searchTerm.toLowerCase())
             ) {
-                return true;
-            }
-            const matchedFileTags = resource.getResourceTagModelList().filter(tagModel =>
-                tagModel
-                    .getName()
-                    .toLowerCase()
-                    .includes(this._searchTerm.toLowerCase())
-            );
-            if (matchedFileTags.length > 0) {
+                if (this._tagList.length) {
+                    const modelTags: Array<
+                        string
+                    > = resource
+                        .getResourceTagModelList()
+                        .map((tag: TagModel) => tag.getId());
+                    return this._tagList.every((searchedTagId: string) =>
+                        modelTags.includes(searchedTagId)
+                    );
+                }
                 return true;
             }
         });
