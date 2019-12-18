@@ -30,6 +30,23 @@ export class TagSelectListComponent implements OnChanges {
         this._selectedTagId = "0";
     }
 
+    get selectedTagId() {
+        return this._selectedTagId;
+    }
+    get availableTagList() {
+        return this._availableTagList;
+    }
+
+    get selectedTags() {
+        console.log("QQQQQQQ");
+        console.log(this.selectedTagList);
+        this._selectedTagList = this.selectedTagList.filter((selectedTag: TagModel) => {
+            return !!this.allTagList.find((allTag: TagModel) => {
+                return allTag.getId() === selectedTag.getId();
+            });
+        });
+        return this._selectedTagList;
+    }
     addTag(selectedTagId) {
         this._selectedTagId = selectedTagId;
         if (this._selectedTagId && this._selectedTagId !== "0") {

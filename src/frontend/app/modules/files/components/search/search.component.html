@@ -9,9 +9,8 @@
     placeholder="search"
 />
 
-
 <app-tag-select-list
     (changeAddedTags)="changeAddedTags($event)"
-    [allTagList]="getProjectTagList()"
-    [selectedTagList]="_selectedTagList"
+    [allTagList]="projectTags"
+    [selectedTagList]="selectedTagList"
 ></app-tag-select-list>

@@ -31,7 +31,11 @@ export class SearchComponent implements OnInit {
         this._selectedTagList = selectedTagList;
     }
 
-    getProjectTagList() {
+    get projectTags() {
         return this.projectTagList;
+    }
+
+    get selectedTagList() {
+        return this._selectedTagList;
     }
 }

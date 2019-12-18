@@ -1,15 +1,15 @@
-<select name="profile" (change)="addTag($event.target.value)" [disabled]="_availableTagList.length < 1">
-    <option [selected]="_selectedTagId === '0'">Select Tag</option>
+<select name="profile" (change)="addTag($event.target.value)" [disabled]="availableTagList.length < 1">
+    <option [selected]="selectedTagId === '0'">Select Tag</option>
     <option
-        *ngFor="let tag of _availableTagList"
+        *ngFor="let tag of availableTagList"
         [value]="tag.getId()"
-        [selected]="_selectedTagId !== '0'"
+        [selected]="selectedTagId !== '0'"
     >
         {{ tag.getName() }}
     </option>
 </select>
 <div class="tags-section">
-    <span *ngFor="let tag of _selectedTagList">
+    <span *ngFor="let tag of selectedTags">
         <app-tag (clickTag)="removeTag(tag.getId())" [tagModel]="tag"></app-tag>
     </span>
 </div>
