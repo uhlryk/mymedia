@@ -75,4 +75,7 @@ export class FilesComponent implements OnInit {
         this.detailsModal.show(resourceId);
     }
 
+    getProjectTagList() {
+        return this.projectContextService.getProjectTagList();
+    }
 }

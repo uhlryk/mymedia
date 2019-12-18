@@ -8,6 +8,7 @@ import TagModel from "../models/tag.model";
 import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ThumbnailChangeEventInterface from "../../../shared/types/thumbnailChangeEvent.interface";
+import TagCollectionModel from "../models/tag.collection.model";
 
 @Injectable()
 export class ProjectContextService {
@@ -112,9 +113,11 @@ export class ProjectContextService {
     }
 
     getProjectTagList(): Array<TagModel> {
-        return this.getProjectModel()
-            .getTagCollectionModel()
-            .getList();
+        const tagCollectionModel: TagCollectionModel = this.getProjectModel().getTagCollectionModel();
+        if(tagCollectionModel) {
+            return tagCollectionModel.getList();
+        }
+        return [];
     }
 
     getProjectTagModelById(tagId: string): TagModel {

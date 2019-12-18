@@ -1,7 +1,7 @@
 <div class="p-grid">
     <app-side-menu class="p-col-fixed">
         <app-order></app-order>
-        <app-search></app-search>
+        <app-search  [projectTagList]="getProjectTagList()"></app-search>
     </app-side-menu>
     <div class="p-col">
         <app-list

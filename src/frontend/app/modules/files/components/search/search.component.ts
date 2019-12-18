@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ResultManipulationService } from "../../../../services/result-manipulation.service";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import TagModel from "../../../../models/tag.model";
@@ -9,11 +9,11 @@ import TagModel from "../../../../models/tag.model";
     styleUrls: ["./search.component.scss"]
 })
 export class SearchComponent implements OnInit {
+    @Input() projectTagList: Array<TagModel>;
     searchInput;
-    private _allProjectTags: Array<TagModel>;
-    private _selectedTagList: Array<TagModel>;
+    _selectedTagList: Array<TagModel>;
     constructor(
-        private projectContextService: ProjectContextService,
+        // private projectContextService: ProjectContextService,
         private resultManipulationService: ResultManipulationService
     ) {}
 
@@ -28,10 +28,10 @@ export class SearchComponent implements OnInit {
     }
 
     changeAddedTags(selectedTagList: Array<TagModel>) {
-        // this.projectContextService.setResourceTagList(
-        //     this.resource.getId(),
-        //     selectedTagList
-        // );
-        // this.projectContextService.saveProject().subscribe(() => {});
+        this._selectedTagList = selectedTagList;
+    }
+
+    getProjectTagList() {
+        return this.projectTagList;
     }
 }
