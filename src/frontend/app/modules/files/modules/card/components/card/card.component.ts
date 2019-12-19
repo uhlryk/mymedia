@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import ResourceModel from "../../../../../../models/resource.model";
 import TagModel from "../../../../../../models/tag.model";
 import { TagModel as TagComponentModel } from "../../../tag-list/components/tag-list/tag-list.component";
@@ -8,14 +8,13 @@ import { TagModel as TagComponentModel } from "../../../tag-list/components/tag-
     styleUrls: ["./card.component.scss"]
 })
 export class CardComponent implements OnInit {
+    @Input("rating") _rating: number;
     @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
     constructor() {}
 
-    ngOnInit() {
-    }
-
+    ngOnInit() {}
     onClickDetailsButton() {
         this.clickDetailsButton.emit(this.resource.getId());
     }
@@ -29,5 +28,13 @@ export class CardComponent implements OnInit {
             id: tagModel.getId(),
             name: tagModel.getName()
         }));
+    }
+
+    get rating(): number {
+        return this._rating;
+    }
+
+    set rating(value: number) {
+        // readonly should not be executed
     }
 }

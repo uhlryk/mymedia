@@ -38,8 +38,6 @@ export class TagSelectListComponent implements OnChanges {
     }
 
     get selectedTags() {
-        console.log("QQQQQQQ");
-        console.log(this.selectedTagList);
         this._selectedTagList = this.selectedTagList.filter((selectedTag: TagModel) => {
             return !!this.allTagList.find((allTag: TagModel) => {
                 return allTag.getId() === selectedTag.getId();
