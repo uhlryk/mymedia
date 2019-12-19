@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import TagModel from "../../../../../../models/tag.model";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
     selector: "app-tag",
@@ -7,14 +6,13 @@ import TagModel from "../../../../../../models/tag.model";
     styleUrls: ["./tag.component.scss"]
 })
 export class TagComponent implements OnInit {
-    @Input() tagModel: TagModel;
-    @Output() clickTag = new EventEmitter<string>();
+    @Input("name") _name: string;
 
     constructor() {}
 
     ngOnInit() {}
 
-    clickButton(tagId: string) {
-        this.clickTag.emit(tagId);
+    get name(): string {
+        return this._name;
     }
 }

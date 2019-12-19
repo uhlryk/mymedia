@@ -45,13 +45,13 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.5",
     "@angular-guru/electron-builder": "^8.0.0",
-    "@angular/cli": "~8.3.2",
+    "@angular/cli": "^8.3.21",
     "@angular/compiler-cli": "~8.2.4",
     "@angular/language-service": "~8.2.4",
     "@types/fs-extra": "^8.0.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "^8.10.59",
     "codelyzer": "^5.0.0",
     "concurrently": "^4.1.2",
     "electron": "^6.0.7",
@@ -67,8 +67,8 @@
     "npm": "^6.11.3",
     "prettier": "^1.18.2",
     "protractor": "~5.4.0",
-    "ts-node": "~7.0.0",
+    "ts-node": "^8.5.4",
     "tslint": "^5.20.1",
-    "typescript": "^3.7.3"
+    "typescript": "^3.5.3"
   }
 }

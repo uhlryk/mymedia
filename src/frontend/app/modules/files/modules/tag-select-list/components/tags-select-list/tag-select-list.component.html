@@ -10,6 +10,6 @@
 </select>
 <div class="tags-section">
     <span *ngFor="let tag of selectedTags">
-        <app-tag (clickTag)="removeTag(tag.getId())" [tagModel]="tag"></app-tag>
+        <app-tag (click)="removeTag(tag.getId())" [name]="tag.getName()"></app-tag>
     </span>
 </div>
