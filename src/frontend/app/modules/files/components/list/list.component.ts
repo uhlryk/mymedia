@@ -16,10 +16,10 @@ export class ListComponent implements OnInit {
     ngOnInit() {
     }
 
-    clickOpenFile(resourceId: string) {
+    onClickThumbnail(resourceId: string) {
         this.openFile.emit(resourceId);
     }
-    clickShowDetails(resourceId: string) {
+    onClickDetailsButton(resourceId: string) {
         this.showDetails.emit(resourceId);
     }
 }
