@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { FilesComponent } from "./pages/files/files.component";
+import { FilesComponent } from "./views/files/files.component";
 import { FormsModule } from "@angular/forms";
 
 import { SharedModule } from "./modules/shared/shared.module";
