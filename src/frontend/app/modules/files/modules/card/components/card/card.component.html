@@ -7,7 +7,7 @@
             </div>
             <div class="thumbnail-wrapper" *ngIf="resource.thumbnailPath">
                 <img class="thumbnail" [src]="resource.thumbnailPath" alt="" />
-                <div class="show-play" (click)="clickExecuteMedia()">
+                <div class="show-play" (click)="onClickThumbnail()">
                     <i class="pi pi-caret-right"></i>
                 </div>
             </div>
@@ -36,7 +36,7 @@
         <button
             pButton
             type="button"
-            (click)="clickOpenDetails()"
+            (click)="onClickDetailsButton()"
             icon="fas fa-address-card"
             style="margin-right: .25em"
         ></button>

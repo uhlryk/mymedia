@@ -3,8 +3,8 @@
         class="p-col-4"
         *ngFor="let resource of resourceList"
         [resource]="resource"
-        (openDetailsModal)="clickShowDetails($event)"
-        (executeMedia)="clickOpenFile($event)"
+        (clickDetailsButton)="clickShowDetails($event)"
+        (clickThumbnail)="clickOpenFile($event)"
     >
     </app-card>
 </div>

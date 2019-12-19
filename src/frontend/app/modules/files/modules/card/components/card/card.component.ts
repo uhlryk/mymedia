@@ -9,19 +9,19 @@ import { TagModel as TagComponentModel } from "../../../tag-list/components/tag-
 })
 export class CardComponent implements OnInit {
     @Input() resource: ResourceModel;
-    @Output() openDetailsModal = new EventEmitter<string>();
-    @Output() executeMedia = new EventEmitter<string>();
+    @Output() clickDetailsButton = new EventEmitter<string>();
+    @Output() clickThumbnail = new EventEmitter<string>();
     constructor() {}
 
     ngOnInit() {
     }
 
-    clickOpenDetails() {
-        this.openDetailsModal.emit(this.resource.getId());
+    onClickDetailsButton() {
+        this.clickDetailsButton.emit(this.resource.getId());
     }
 
-    clickExecuteMedia() {
-        this.executeMedia.emit(this.resource.getId());
+    onClickThumbnail() {
+        this.clickThumbnail.emit(this.resource.getId());
     }
 
     get tagList(): Array<TagComponentModel> {
