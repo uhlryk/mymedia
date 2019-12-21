@@ -3,6 +3,7 @@
         class="p-col-4"
         *ngFor="let resource of resourceList"
         [rating]="resource.ranking"
+        [title]="resource.getTitle()"
 
         [resource]="resource"
         (clickDetailsButton)="onClickDetailsButton($event)"
