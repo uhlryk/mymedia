@@ -1,12 +1,12 @@
 <p-card styleClass="ui-card-shadow" class="card">
     <p-header>
         <div class="thumbnail-section">
-            <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper">
+            <div *ngIf="!thumbnailPath" class="spinner-wrapper">
                 <i class="pi pi-clock" style="font-size: 3em"></i>
                 <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
             </div>
-            <div class="thumbnail-wrapper" *ngIf="resource.thumbnailPath">
-                <img class="thumbnail" [src]="resource.thumbnailPath" alt="" />
+            <div class="thumbnail-wrapper" *ngIf="thumbnailPath">
+                <img class="thumbnail" [src]="thumbnailPath" alt="" />
                 <div class="show-play" (click)="onClickThumbnail()">
                     <i class="pi pi-caret-right"></i>
                 </div>

@@ -12,6 +12,8 @@ export class CardComponent implements OnInit {
     private _rating: number;
     @Input("title")
     private _title: string;
+    @Input("thumbnailPath")
+    private _thumbnailPath: string;
     @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
@@ -43,5 +45,9 @@ export class CardComponent implements OnInit {
 
     get title(): string {
         return this._title;
+    }
+
+    get thumbnailPath(): string {
+        return this._thumbnailPath;
     }
 }
