@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import ResourceModel from "../../../../../../models/resource.model";
-import TagModel from "../../../../../../models/tag.model";
-import { TagModel as TagComponentModel } from "../../../tag-list/components/tag-list/tag-list.component";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
     styleUrls: ["./card.component.scss"]
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnChanges {
+    @Input("id")
+    private _id: string;
     @Input("rating")
     private _rating: number;
     @Input("title")
@@ -16,34 +16,47 @@ export class CardComponent implements OnInit {
     private _thumbnailPath: string;
     @Input("isNew")
     private _isNew: boolean;
-    @Input() resource: ResourceModel;
+
+    @Input("tagList") _tagList: Array<{
+        id: string;
+        name: string;
+    }>;
+
+    // @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
+
+    rating: number = 0;
     constructor() {}
 
     ngOnInit() {}
+    ngOnChanges() {
+        // this.rating = this._rating;
+    }
     onClickDetailsButton() {
-        this.clickDetailsButton.emit(this.resource.getId());
+        this.clickDetailsButton.emit(this._id);
     }
 
     onClickThumbnail() {
-        this.clickThumbnail.emit(this.resource.getId());
+        this.clickThumbnail.emit(this._id);
     }
 
-    get tagList(): Array<TagComponentModel> {
-        return this.resource.getResourceTagModelList().map((tagModel: TagModel) => ({
-            id: tagModel.getId(),
-            name: tagModel.getName()
-        }));
+    get tagList(): Array<{
+        id: string;
+        name: string;
+    }> {
+        return this._tagList;
     }
 
-    get rating(): number {
-        return this._rating;
-    }
+    // get rating(): number {
+    //     console.log("AAAAAAAAAAAa");
+    //     console.log(this._rating);
+    //     return this._rating;
+    // }
 
-    set rating(value: number) {
-        // readonly should not be executed
-    }
+    // set rating(value: number) {
+    //     // readonly should not be executed
+    // }
 
     get title(): string {
         return this._title;

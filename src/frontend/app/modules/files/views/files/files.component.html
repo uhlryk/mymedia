@@ -5,6 +5,7 @@
     </app-side-menu>
     <div class="p-col">
         <app-list
+            *ngIf="resourceList"
             [resourceList]="resourceList"
             (openFile)="openFile($event)"
             (showDetails)="showFileDetails($event)"

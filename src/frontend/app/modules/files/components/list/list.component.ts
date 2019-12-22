@@ -14,6 +14,22 @@ export class ListComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
+        console.log("AAAAAAAA1");
+        console.log(this.resourceList);
+    }
+
+    get _resourceList() {
+        return this.resourceList.map((resource: ResourceModel) => ({
+            id: resource.getId(),
+            ranking: resource.ranking,
+            title: resource.getTitle(),
+            thumbnailPath: resource.thumbnailPath,
+            isNew: resource.isNew(),
+            tagList: resource.getResourceTagModelList().map(tagModel => ({
+                id: tagModel.getId(),
+                name: tagModel.getName()
+            }))
+        }));
     }
 
     onClickThumbnail(resourceId: string) {
