@@ -14,6 +14,8 @@ export class CardComponent implements OnInit {
     private _title: string;
     @Input("thumbnailPath")
     private _thumbnailPath: string;
+    @Input("isNew")
+    private _isNew: boolean;
     @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
@@ -49,5 +51,9 @@ export class CardComponent implements OnInit {
 
     get thumbnailPath(): string {
         return this._thumbnailPath;
+    }
+
+    get isNew(): boolean {
+        return this._isNew;
     }
 }
