@@ -8,8 +8,8 @@ import ResourceModel from "../../../../models/resource.model";
 })
 export class ListComponent implements OnInit, OnChanges {
     @Input() resourceList: Array<ResourceModel>;
-    @Output() openFile = new EventEmitter<string>();
-    @Output() showDetails = new EventEmitter<string>();
+    @Output() clickThumbnail = new EventEmitter<string>();
+    @Output() clickDetailsButton = new EventEmitter<string>();
 
     _resourceList;
     constructor() {}
@@ -33,9 +33,9 @@ export class ListComponent implements OnInit, OnChanges {
     }
 
     onClickThumbnail(resourceId: string) {
-        this.openFile.emit(resourceId);
+        this.clickThumbnail.emit(resourceId);
     }
     onClickDetailsButton(resourceId: string) {
-        this.showDetails.emit(resourceId);
+        this.clickDetailsButton.emit(resourceId);
     }
 }

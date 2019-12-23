@@ -72,11 +72,11 @@ export class FilesComponent implements OnInit {
         });
     }
 
-    openFile(resourceId) {
+    onClickThumbnail(resourceId) {
         this.projectContextService.openResource(resourceId);
     }
 
-    showFileDetails(resourceId) {
+    onClickDetailsButton(resourceId) {
         this.detailsModal.show(resourceId);
     }
 

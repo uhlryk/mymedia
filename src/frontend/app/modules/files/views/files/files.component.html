@@ -7,8 +7,8 @@
         <app-list
             *ngIf="resourceList"
             [resourceList]="resourceList"
-            (openFile)="openFile($event)"
-            (showDetails)="showFileDetails($event)"
+            (clickThumbnail)="onClickThumbnail($event)"
+            (clickDetailsButton)="onClickDetailsButton($event)"
         ></app-list>
 
         <app-details-modal></app-details-modal>
