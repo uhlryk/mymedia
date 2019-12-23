@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import Tag from "../../../../../../types/tag.type";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
@@ -16,10 +17,7 @@ export class CardComponent implements OnInit, OnChanges {
     @Input()
     private isNew: boolean;
 
-    @Input() tagList: Array<{
-        id: string;
-        name: string;
-    }>;
+    @Input() tagList: Array<Tag>;
 
     // @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
@@ -40,32 +38,4 @@ export class CardComponent implements OnInit, OnChanges {
         this.clickThumbnail.emit(this.id);
     }
 
-    // get tagList(): Array<{
-    //     id: string;
-    //     name: string;
-    // }> {
-    //     return this._tagList;
-    // }
-
-    // get rating(): number {
-    //     console.log("AAAAAAAAAAAa");
-    //     console.log(this._rating);
-    //     return this._rating;
-    // }
-
-    // set rating(value: number) {
-    //     // readonly should not be executed
-    // }
-    //
-    // get title(): string {
-    //     return this._title;
-    // }
-    //
-    // get thumbnailPath(): string {
-    //     return this._thumbnailPath;
-    // }
-    //
-    // get isNew(): boolean {
-    //     return this._isNew;
-    // }
 }

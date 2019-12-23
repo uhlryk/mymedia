@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
+import Tag from "../../../../../../types/tag.type";
 
 @Component({
     selector: "app-tag-list",
@@ -6,10 +7,7 @@ import { Component, Input, OnChanges, OnInit } from "@angular/core";
     styleUrls: ["./tag-list.component.scss"]
 })
 export class TagListComponent {
-    @Input("tagList") tagList: Array<{
-        id: string;
-        name: string;
-    }>;
+    @Input("tagList") tagList: Array<Tag>;
     constructor() {}
 
 }

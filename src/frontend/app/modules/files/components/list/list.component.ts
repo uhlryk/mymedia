@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
+import Tag from "../../../../types/tag.type";
 
 @Component({
     selector: "app-list",
@@ -11,7 +12,7 @@ export class ListComponent implements OnInit, OnChanges {
     @Output() clickThumbnail = new EventEmitter<string>();
     @Output() clickDetailsButton = new EventEmitter<string>();
 
-    _resourceList;
+    _resourceList: Array<CardResource>;
     constructor() {}
 
     ngOnInit() {
@@ -38,4 +39,13 @@ export class ListComponent implements OnInit, OnChanges {
     onClickDetailsButton(resourceId: string) {
         this.clickDetailsButton.emit(resourceId);
     }
+}
+
+interface CardResource {
+    id: string;
+    ranking: number;
+    title: string;
+    thumbnailPath: string;
+    isNew: boolean;
+    tagList: Array<Tag>;
 }
