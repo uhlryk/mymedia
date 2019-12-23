@@ -8,6 +8,7 @@ import { LoaderService } from "../../../../services/loader.service";
 import { Router } from "@angular/router";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
 import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
+import ProjectModel from "../../../../models/project.model";
 
 @Component({
     templateUrl: "files.component.html",
@@ -37,6 +38,17 @@ export class FilesComponent implements OnInit {
     ngOnInit() {
         this._isLeftMenuVisible = false;
         this.loaderService.show();
+        this.projectContextService
+            .projectChange()
+            .subscribe((projectModel: ProjectModel) => {
+                console.log("FilesComponent change in project");
+                this.resultManipulationService
+                    .manipulate(projectModel.getResourceCollectionModel().getList())
+                    .subscribe(resourceList => {
+                        this.resourceList = resourceList;
+                    });
+                this.resultManipulationService.compute();
+            });
         this.projectContextService.loadProject().subscribe(isProjectExist => {
             if (!isProjectExist) {
                 this.router.navigate(["/create-project"]);
@@ -50,14 +62,7 @@ export class FilesComponent implements OnInit {
                         response.videoIndex
                     );
                 });
-                this.resultManipulationService
-                    .manipulate(
-                        this.projectContextService.getResourceCollectionModel().getList()
-                    )
-                    .subscribe(resourceList => {
-                        this.resourceList = resourceList;
-                    });
-                this.resultManipulationService.compute();
+
                 this.loaderService.hide();
             }
         });

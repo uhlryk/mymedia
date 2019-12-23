@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { NgZone } from "@angular/core";
 import ProjectModel from "../models/project.model";
 import ResourceCollectionModel from "../models/resource.collection.model";
@@ -12,16 +12,24 @@ import TagCollectionModel from "../models/tag.collection.model";
 
 @Injectable()
 export class ProjectContextService {
+    private subject = new Subject<any>();
+
     constructor(private _ngZone: NgZone) {}
     loadProject(): Observable<boolean> {
         return Observable.create(async observable => {
             const isProjectExist = await this.getProjectModel().loadProject();
+            this.subject.next(this.getProjectModel());
             this._ngZone.run(() => {
                 observable.next(isProjectExist);
                 observable.complete();
             });
         });
     }
+
+    projectChange(): Observable<ProjectModel> {
+        return this.subject.asObservable();
+    }
+
     setProjectPath(): Observable<boolean> {
         return Observable.create(async observable => {
             const isProjectExist: boolean = await this.getProjectModel().setProjectPath();
@@ -114,7 +122,7 @@ export class ProjectContextService {
 
     getProjectTagList(): Array<TagModel> {
         const tagCollectionModel: TagCollectionModel = this.getProjectModel().getTagCollectionModel();
-        if(tagCollectionModel) {
+        if (tagCollectionModel) {
             return tagCollectionModel.getList();
         }
         return [];
@@ -139,6 +147,7 @@ export class ProjectContextService {
                 observable.next();
                 observable.complete();
             });
+            this.subject.next(this.getProjectModel());
         });
     }
 }

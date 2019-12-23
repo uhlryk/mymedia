@@ -20,11 +20,11 @@
             </span>
         </div>
         <div class="card-section">
-            <!--<p-rating-->
-                <!--[(ngModel)]="rating"-->
-                <!--[readonly]="true"-->
-                <!--[cancel]="false"-->
-            <!--&gt;</p-rating>-->
+            <p-rating
+                [ngModel]="_rating"
+                [readonly]="true"
+                [cancel]="false"
+            ></p-rating>
 
             <span *ngIf="isNew">NEW</span>
         </div>

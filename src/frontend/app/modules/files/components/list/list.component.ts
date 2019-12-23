@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
 
 @Component({
@@ -6,20 +6,20 @@ import ResourceModel from "../../../../models/resource.model";
     templateUrl: "./list.component.html",
     styleUrls: ["./list.component.scss"]
 })
-export class ListComponent implements OnInit {
+export class ListComponent implements OnInit, OnChanges {
     @Input() resourceList: Array<ResourceModel>;
     @Output() openFile = new EventEmitter<string>();
     @Output() showDetails = new EventEmitter<string>();
 
+    _resourceList;
     constructor() {}
 
     ngOnInit() {
-        console.log("AAAAAAAA1");
-        console.log(this.resourceList);
     }
 
-    get _resourceList() {
-        return this.resourceList.map((resource: ResourceModel) => ({
+    ngOnChanges() {
+        console.log("ListComponent.ngOnChanges");
+        this._resourceList = this.resourceList.map((resource: ResourceModel) => ({
             id: resource.getId(),
             ranking: resource.ranking,
             title: resource.getTitle(),

@@ -1,23 +1,22 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
-import ResourceModel from "../../../../../../models/resource.model";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
     styleUrls: ["./card.component.scss"]
 })
 export class CardComponent implements OnInit, OnChanges {
-    @Input("id")
-    private _id: string;
-    @Input("rating")
-    private _rating: number;
-    @Input("title")
-    private _title: string;
-    @Input("thumbnailPath")
-    private _thumbnailPath: string;
-    @Input("isNew")
-    private _isNew: boolean;
+    @Input()
+    private id: string;
+    @Input()
+    private rating: number;
+    @Input()
+    private title: string;
+    @Input()
+    private thumbnailPath: string;
+    @Input()
+    private isNew: boolean;
 
-    @Input("tagList") _tagList: Array<{
+    @Input() tagList: Array<{
         id: string;
         name: string;
     }>;
@@ -25,28 +24,28 @@ export class CardComponent implements OnInit, OnChanges {
     // @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
-
-    rating: number = 0;
+    _rating: number;
     constructor() {}
 
     ngOnInit() {}
     ngOnChanges() {
-        // this.rating = this._rating;
+        this._rating = this.rating;
+        console.log("CardComponent.ngOnChanges");
     }
     onClickDetailsButton() {
-        this.clickDetailsButton.emit(this._id);
+        this.clickDetailsButton.emit(this.id);
     }
 
     onClickThumbnail() {
-        this.clickThumbnail.emit(this._id);
+        this.clickThumbnail.emit(this.id);
     }
 
-    get tagList(): Array<{
-        id: string;
-        name: string;
-    }> {
-        return this._tagList;
-    }
+    // get tagList(): Array<{
+    //     id: string;
+    //     name: string;
+    // }> {
+    //     return this._tagList;
+    // }
 
     // get rating(): number {
     //     console.log("AAAAAAAAAAAa");
@@ -57,16 +56,16 @@ export class CardComponent implements OnInit, OnChanges {
     // set rating(value: number) {
     //     // readonly should not be executed
     // }
-
-    get title(): string {
-        return this._title;
-    }
-
-    get thumbnailPath(): string {
-        return this._thumbnailPath;
-    }
-
-    get isNew(): boolean {
-        return this._isNew;
-    }
+    //
+    // get title(): string {
+    //     return this._title;
+    // }
+    //
+    // get thumbnailPath(): string {
+    //     return this._thumbnailPath;
+    // }
+    //
+    // get isNew(): boolean {
+    //     return this._isNew;
+    // }
 }
