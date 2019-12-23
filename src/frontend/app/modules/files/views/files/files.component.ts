@@ -43,7 +43,6 @@ export class FilesComponent implements OnInit {
             .subscribe((projectModel: ProjectModel) => {
                 console.log("FilesComponent change in project");
 
-                thi
                 this.resultManipulationService
                     .manipulate(projectModel.getResourceCollectionModel().getList())
                     .subscribe(resourceList => {

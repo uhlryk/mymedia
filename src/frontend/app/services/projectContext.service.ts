@@ -9,6 +9,7 @@ import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ThumbnailChangeEventInterface from "../../../shared/types/thumbnailChangeEvent.interface";
 import TagCollectionModel from "../models/tag.collection.model";
+import Tag from "../types/tag.type";
 
 @Injectable()
 export class ProjectContextService {
@@ -98,11 +99,14 @@ export class ProjectContextService {
         this.getProjectModel().open(resourceId);
     }
 
-    setResourceTagList(resourceId, tagList: Array<TagModel>) {
+    setResourceTagList(resourceId, tagList: Array<Tag>) {
+        const tagModelList: Array<TagModel> = tagList.map((tag: Tag) => {
+            return this.getProjectTagModelById(tag.id);
+        });
         this.getProjectModel()
             .getResourceCollectionModel()
             .getResourceModelById(resourceId)
-            .setTagModelList(tagList);
+            .setTagModelList(tagModelList);
     }
 
     removeProjectTag(tagId) {
