@@ -9,6 +9,8 @@ import { Router } from "@angular/router";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
 import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
 import ProjectModel from "../../../../models/project.model";
+import Tag from "../../../../types/tag.type";
+import TagModel from "../../../../models/tag.model";
 
 @Component({
     templateUrl: "files.component.html",
@@ -25,7 +27,10 @@ export class FilesComponent implements OnInit {
     tagsModal: TagsModalComponent;
 
     resourceList: Array<ResourceModel>;
+    _projectTagList: Array<Tag>;
 
+    _searchTagList: Array<Tag>;
+    _searchText: string;
     private _isLeftMenuVisible: boolean;
     // visibleSidebar = false;
     constructor(
@@ -36,19 +41,27 @@ export class FilesComponent implements OnInit {
         private router: Router
     ) {}
     ngOnInit() {
+        this._searchTagList = [];
+        this._searchText = "";
         this._isLeftMenuVisible = false;
         this.loaderService.show();
         this.projectContextService
             .projectChange()
             .subscribe((projectModel: ProjectModel) => {
                 console.log("FilesComponent change in project");
-
-                this.resultManipulationService
-                    .manipulate(projectModel.getResourceCollectionModel().getList())
-                    .subscribe(resourceList => {
-                        this.resourceList = resourceList;
-                    });
-                this.resultManipulationService.compute();
+                this._projectTagList = this.projectContextService
+                    .getProjectTagList()
+                    .map((tag: TagModel) => ({
+                        id: tag.getId(),
+                        name: tag.getName()
+                    }));
+                this.resourceList = projectModel.getResourceCollectionModel().getList();
+                // this.resultManipulationService
+                //     .manipulate(projectModel.getResourceCollectionModel().getList())
+                //     .subscribe(resourceList => {
+                //         this.resourceList = resourceList;
+                //     });
+                // this.resultManipulationService.compute();
             });
         this.projectContextService.loadProject().subscribe(isProjectExist => {
             if (!isProjectExist) {
@@ -81,7 +94,14 @@ export class FilesComponent implements OnInit {
         this.detailsModal.show(resourceId);
     }
 
-    getProjectTagList() {
-        return this.projectContextService.getProjectTagList();
+    onChangeSearchText(searchText: string) {
+        this._searchText = searchText;
     }
+
+    onChangeSearchTagList(searchTagList: Array<Tag>) {
+        this._searchTagList = searchTagList;
+    }
+    // getProjectTagList() {
+    //     return this.projectContextService.getProjectTagList();
+    // }
 }

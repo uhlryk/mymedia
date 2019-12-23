@@ -1,12 +1,19 @@
 <div class="p-grid">
     <app-side-menu class="p-col-fixed">
         <app-order></app-order>
-        <app-search  [projectTagList]="getProjectTagList()"></app-search>
+        <app-search
+            *ngIf="_projectTagList"
+            [projectTagList]="_projectTagList"
+            (changeSearchText)="onChangeSearchText($event)"
+            (changeSearchTagList)="onChangeSearchTagList($event)"
+        ></app-search>
     </app-side-menu>
     <div class="p-col">
         <app-list
             *ngIf="resourceList"
             [resourceList]="resourceList"
+            [searchText]="_searchText"
+            [searchTagList]="_searchTagList"
             (clickThumbnail)="onClickThumbnail($event)"
             (clickDetailsButton)="onClickDetailsButton($event)"
         ></app-list>
