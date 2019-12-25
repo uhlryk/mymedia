@@ -2,7 +2,7 @@
     <!--<div *ngFor="let resource of _resourceList">{{resource}}</div>-->
     <app-card
         class="p-col-4"
-        *ngFor="let resource of _resourceList"
+        *ngFor="let resource of _managedCardList"
         [id]="resource.id"
         [rating]="resource.ranking"
         [title]="resource.title"

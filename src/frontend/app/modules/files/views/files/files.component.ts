@@ -11,6 +11,7 @@ import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.componen
 import ProjectModel from "../../../../models/project.model";
 import Tag from "../../../../types/tag.type";
 import TagModel from "../../../../models/tag.model";
+import Card from "../../../../types/card.type";
 
 @Component({
     templateUrl: "files.component.html",
@@ -26,7 +27,7 @@ export class FilesComponent implements OnInit {
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
 
-    resourceList: Array<ResourceModel>;
+    _cardList: Array<Card>;
     _projectTagList: Array<Tag>;
 
     _searchTagList: Array<Tag>;
@@ -55,13 +56,21 @@ export class FilesComponent implements OnInit {
                         id: tag.getId(),
                         name: tag.getName()
                     }));
-                this.resourceList = projectModel.getResourceCollectionModel().getList();
-                // this.resultManipulationService
-                //     .manipulate(projectModel.getResourceCollectionModel().getList())
-                //     .subscribe(resourceList => {
-                //         this.resourceList = resourceList;
-                //     });
-                // this.resultManipulationService.compute();
+                this._cardList = projectModel
+                    .getResourceCollectionModel()
+                    .getList()
+                    .map((resource: ResourceModel) => ({
+                        id: resource.getId(),
+                        ranking: resource.ranking,
+                        title: resource.getTitle(),
+                        thumbnailPath: resource.thumbnailPath,
+                        isNew: resource.isNew(),
+                        tagList: resource.getResourceTagModelList().map(tagModel => ({
+                            id: tagModel.getId(),
+                            name: tagModel.getName()
+                        }))
+                    }));
+                console.log(this._cardList);
             });
         this.projectContextService.loadProject().subscribe(isProjectExist => {
             if (!isProjectExist) {

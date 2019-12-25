@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angu
 import ResourceModel from "../../../../models/resource.model";
 import Tag from "../../../../types/tag.type";
 import TagModel from "../../../../models/tag.model";
+import Card from "../../../../types/card.type";
 
 @Component({
     selector: "app-list",
@@ -9,68 +10,36 @@ import TagModel from "../../../../models/tag.model";
     styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit, OnChanges {
-    @Input() resourceList: Array<ResourceModel>;
+    @Input() cardList: Array<Card>;
     @Input() searchText: string;
     @Input() searchTagList: Array<Tag>;
     @Output() clickThumbnail = new EventEmitter<string>();
     @Output() clickDetailsButton = new EventEmitter<string>();
 
-    _resourceList: Array<CardResource>;
+    _managedCardList: Array<Card>;
     constructor() {}
 
     ngOnInit() {}
 
     ngOnChanges() {
         console.log("ListComponent.ngOnChanges");
-        this._resourceList = this.resourceList
-            .filter(resource => {
-                if (
-                    resource
-                        .getTitle()
-                        .toLowerCase()
-                        .includes(this.searchText.toLowerCase())
-                ) {
-                    if (this.searchTagList.length) {
-                        const modelTagList: Array<
-                            TagModel
-                        > = resource.getResourceTagModelList();
-                        return this.searchTagList.every(
-                            (searchTag: Tag) =>
-                                !!modelTagList.find(
-                                    (modelTag: TagModel) =>
-                                        modelTag.getId() === searchTag.id
-                                )
-                        );
-                    }
-                    return true;
+        this._managedCardList = this.cardList.filter(card => {
+            if (card.title.toLowerCase().includes(this.searchText.toLowerCase())) {
+                if (this.searchTagList.length) {
+                    return this.searchTagList.every(
+                        (searchTag: Tag) =>
+                            !!card.tagList.find((tag: Tag) => tag.id === searchTag.id)
+                    );
                 }
-            })
-            .map((resource: ResourceModel) => ({
-                id: resource.getId(),
-                ranking: resource.ranking,
-                title: resource.getTitle(),
-                thumbnailPath: resource.thumbnailPath,
-                isNew: resource.isNew(),
-                tagList: resource.getResourceTagModelList().map(tagModel => ({
-                    id: tagModel.getId(),
-                    name: tagModel.getName()
-                }))
-            }));
+                return true;
+            }
+        });
     }
 
-    onClickThumbnail(resourceId: string) {
-        this.clickThumbnail.emit(resourceId);
+    onClickThumbnail(cardId: string) {
+        this.clickThumbnail.emit(cardId);
     }
-    onClickDetailsButton(resourceId: string) {
-        this.clickDetailsButton.emit(resourceId);
+    onClickDetailsButton(cardId: string) {
+        this.clickDetailsButton.emit(cardId);
     }
-}
-
-interface CardResource {
-    id: string;
-    ranking: number;
-    title: string;
-    thumbnailPath: string;
-    isNew: boolean;
-    tagList: Array<Tag>;
 }

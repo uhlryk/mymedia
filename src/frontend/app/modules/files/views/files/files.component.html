@@ -10,8 +10,8 @@
     </app-side-menu>
     <div class="p-col">
         <app-list
-            *ngIf="resourceList"
-            [resourceList]="resourceList"
+            *ngIf="_cardList"
+            [cardList]="_cardList"
             [searchText]="_searchText"
             [searchTagList]="_searchTagList"
             (clickThumbnail)="onClickThumbnail($event)"
