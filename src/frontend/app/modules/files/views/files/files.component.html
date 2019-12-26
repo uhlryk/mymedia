@@ -1,6 +1,8 @@
 <div class="p-grid">
     <app-side-menu class="p-col-fixed">
-        <app-order></app-order>
+        <app-order
+            (changeOrderMethod)="onChangeOrderMethod($event)"
+        ></app-order>
         <app-search
             *ngIf="_projectTagList"
             [projectTagList]="_projectTagList"
@@ -14,6 +16,7 @@
             [cardList]="_cardList"
             [searchText]="_searchText"
             [searchTagList]="_searchTagList"
+            [orderMethod]="_orderMethod"
             (clickThumbnail)="onClickThumbnail($event)"
             (clickDetailsButton)="onClickDetailsButton($event)"
         ></app-list>

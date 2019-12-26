@@ -32,6 +32,7 @@ export class FilesComponent implements OnInit {
 
     _searchTagList: Array<Tag>;
     _searchText: string;
+    _orderMethod: string;
     private _isLeftMenuVisible: boolean;
     // visibleSidebar = false;
     constructor(
@@ -44,6 +45,7 @@ export class FilesComponent implements OnInit {
     ngOnInit() {
         this._searchTagList = [];
         this._searchText = "";
+        this._orderMethod = "";
         this._isLeftMenuVisible = false;
         this.loaderService.show();
         this.projectContextService
@@ -109,6 +111,10 @@ export class FilesComponent implements OnInit {
 
     onChangeSearchTagList(searchTagList: Array<Tag>) {
         this._searchTagList = searchTagList;
+    }
+
+    onChangeOrderMethod(orderMethod: string) {
+        this._orderMethod = orderMethod;
     }
     // getProjectTagList() {
     //     return this.projectContextService.getProjectTagList();

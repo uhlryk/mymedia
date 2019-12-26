@@ -1,9 +1,11 @@
-<select name="profile" [(ngModel)]="selectedOption" (change)="startSorting()" >
-    <option value="0">sort by</option>
-    <option value="alphabet">
-        Alphabetical
-    </option>
-    <option value="size">
-        Size
-    </option>
+<select name="profile" [(ngModel)]="selectedOption" (change)="startSorting()">
+    <option value="NAME_ASC" >Name &#9650;</option>
+    <option value="NAME_DESC">Name &#9660;</option>
+    <option value="RATING_ASC" >Rating &#9650;</option>
+    <option value="RATING_DESC">Rating &#9660;</option>
+    <!--<option *ngFor="let option of _options" [value]="option[0]" [innerHTML]="option[1]">-->
+    <!--</option>-->
+    <!--<option value="size">-->
+    <!--Size-->
+    <!--</option>-->
 </select>

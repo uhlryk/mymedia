@@ -15,36 +15,21 @@ export class SearchComponent implements OnInit, OnChanges {
     @Output() changeSearchTagList = new EventEmitter<Array<Tag>>();
     _searchInput: string;
     _selectedTagList: Array<Tag>;
-    constructor(
-        // private projectContextService: ProjectContextService,
-        private resultManipulationService: ResultManipulationService
-    ) {}
+    constructor() {}
 
     ngOnInit() {
-        // this._allProjectTags = this.projectContextService.getProjectTagList().slice();
         this._selectedTagList = [];
     }
 
     ngOnChanges() {}
 
     onChangeSearchText() {
-        this.changeSearchText.emit(this._searchInput)
+        this.changeSearchText.emit(this._searchInput);
         // this.resultManipulationService.setSearch(this._searchInput);
     }
 
     onChangeSearchTagList(selectedTagList: Array<Tag>) {
         this._selectedTagList = selectedTagList;
         this.changeSearchTagList.emit(selectedTagList);
-        // this.resultManipulationService.setSearchTags(
-        //     this._selectedTagList.map((tag: TagModel) => tag.getId())
-        // );
     }
-
-    // get projectTags() {
-    //     return this.projectTagList;
-    // }
-    //
-    // get selectedTagList() {
-    //     return this._selectedTagList;
-    // }
 }
