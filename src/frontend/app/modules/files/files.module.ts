@@ -10,7 +10,6 @@ import { ThumbnailsModalModule } from "./modules/thumbnails-modal/thumbnails-mod
 import { TagsModalModule } from "./modules/tags-modal/tags-modal.module";
 
 import { CardModule } from "./modules/card/card.module";
-import { ResultManipulationService } from "../../services/result-manipulation.service";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
 import { ButtonModule } from "primeng/button";
@@ -28,7 +27,7 @@ import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.m
         CardModule,
         TagSelectListModule
     ],
-    providers: [ResultManipulationService],
+    providers: [],
     declarations: [
         FilesComponent,
         ListComponent,

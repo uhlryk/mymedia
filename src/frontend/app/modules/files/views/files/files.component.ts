@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
-import { ResultManipulationService } from "../../../../services/result-manipulation.service";
 import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
 import ResourceModel from "../../../../models/resource.model";
@@ -38,7 +37,6 @@ export class FilesComponent implements OnInit {
     constructor(
         private projectContextService: ProjectContextService,
         private thumbnailService: ThumbnailService,
-        private resultManipulationService: ResultManipulationService,
         private loaderService: LoaderService,
         private router: Router
     ) {}
@@ -116,7 +114,4 @@ export class FilesComponent implements OnInit {
     onChangeOrderMethod(orderMethod: string) {
         this._orderMethod = orderMethod;
     }
-    // getProjectTagList() {
-    //     return this.projectContextService.getProjectTagList();
-    // }
 }

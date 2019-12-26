@@ -1,7 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
-import { ResultManipulationService } from "../../../../services/result-manipulation.service";
-import { ProjectContextService } from "../../../../services/projectContext.service";
-import TagModel from "../../../../models/tag.model";
 import Tag from "../../../../types/tag.type";
 
 @Component({
@@ -25,7 +22,6 @@ export class SearchComponent implements OnInit, OnChanges {
 
     onChangeSearchText() {
         this.changeSearchText.emit(this._searchInput);
-        // this.resultManipulationService.setSearch(this._searchInput);
     }
 
     onChangeSearchTagList(selectedTagList: Array<Tag>) {

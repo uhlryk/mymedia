@@ -37,8 +37,6 @@ export class ListComponent implements OnInit, OnChanges {
                 }
             })
             .sort((prev, next) => {
-                console.log("AA");
-                console.log(this.orderMethod);
                 switch (this.orderMethod) {
                     case "NAME_DESC":
                         return prev.title > next.title ? -1 : 1;
