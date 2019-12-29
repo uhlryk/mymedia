@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
-import Tag from "../../../../../../types/tag.type";
+import TagModel from "../../../../../../models/tag.model";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
@@ -17,7 +17,7 @@ export class CardComponent implements OnInit, OnChanges {
     @Input()
     private isNew: boolean;
 
-    @Input() tagList: Array<Tag>;
+    @Input() tagList: Array<TagModel>;
 
     // @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();

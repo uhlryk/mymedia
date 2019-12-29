@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
-import Tag from "../../../../types/tag.type";
+import TagModel from "../../../../models/tag.model";
 
 @Component({
     selector: "app-search",
@@ -7,11 +7,11 @@ import Tag from "../../../../types/tag.type";
     styleUrls: ["./search.component.scss"]
 })
 export class SearchComponent implements OnInit, OnChanges {
-    @Input() projectTagList: Array<Tag>;
+    @Input() projectTagList: Array<TagModel>;
     @Output() changeSearchText = new EventEmitter<string>();
-    @Output() changeSearchTagList = new EventEmitter<Array<Tag>>();
+    @Output() changeSearchTagList = new EventEmitter<Array<TagModel>>();
     _searchInput: string;
-    _selectedTagList: Array<Tag>;
+    _selectedTagList: Array<TagModel>;
     constructor() {}
 
     ngOnInit() {
@@ -24,7 +24,7 @@ export class SearchComponent implements OnInit, OnChanges {
         this.changeSearchText.emit(this._searchInput);
     }
 
-    onChangeSearchTagList(selectedTagList: Array<Tag>) {
+    onChangeSearchTagList(selectedTagList: Array<TagModel>) {
         this._selectedTagList = selectedTagList;
         this.changeSearchTagList.emit(selectedTagList);
     }

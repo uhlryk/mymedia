@@ -3,7 +3,6 @@ import { Component } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
-import Tag from "../../../../types/tag.type";
 
 @Component({
     selector: "app-details-modal",
@@ -15,24 +14,19 @@ export class DetailsModalComponent {
 
     resource: ResourceModel;
     thumbnailPath: string;
-    _allProjectTagList: Array<Tag>;
-    _selectedTagList: Array<Tag>;
+    _allProjectTagList: Array<TagModel>;
+    _selectedTagList: Array<TagModel>;
     visibleSidebar: boolean;
     show(resourceId: string) {
+        console.log("=====");
+        console.log(resourceId);
         this.resource = this.projectContextService.getResourceModel(resourceId);
+        console.log(this.resource);
         this.thumbnailPath = this.resource.thumbnailPath;
         this._allProjectTagList = this.projectContextService
-            .getProjectTagList()
-            .map((tag: TagModel) => ({
-                id: tag.getId(),
-                name: tag.getName()
-            }));
+            .getProjectTagList();
         this._selectedTagList = this.resource
-            .getResourceTagModelList()
-            .map((tag: TagModel) => ({
-                id: tag.getId(),
-                name: tag.getName()
-            }));
+            .getTagList();
         this.visibleSidebar = true;
     }
 
@@ -47,7 +41,7 @@ export class DetailsModalComponent {
         this.resource.ranking = event.value;
         this.projectContextService.saveProject().subscribe(() => {});
     }
-    onChangeAddedTags(selectedTagList: Array<Tag>) {
+    onChangeAddedTags(selectedTagList: Array<TagModel>) {
         console.log("DetailsModalComponent.changeAddedTags");
         this._selectedTagList = selectedTagList;
         this.projectContextService.setResourceTagList(

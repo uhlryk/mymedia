@@ -8,9 +8,7 @@ import { Router } from "@angular/router";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
 import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
 import ProjectModel from "../../../../models/project.model";
-import Tag from "../../../../types/tag.type";
 import TagModel from "../../../../models/tag.model";
-import Resource from "../../../../types/resource.type";
 
 @Component({
     templateUrl: "files.component.html",
@@ -26,10 +24,10 @@ export class FilesComponent implements OnInit {
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
 
-    _cardList: Array<Resource>;
-    _projectTagList: Array<Tag>;
+    _cardList: Array<ResourceModel>;
+    _projectTagList: Array<TagModel>;
 
-    _searchTagList: Array<Tag>;
+    _searchTagList: Array<TagModel>;
     _searchText: string;
     _orderMethod: string;
     private _isLeftMenuVisible: boolean;
@@ -51,25 +49,10 @@ export class FilesComponent implements OnInit {
             .subscribe((projectModel: ProjectModel) => {
                 console.log("FilesComponent change in project");
                 this._projectTagList = this.projectContextService
-                    .getProjectTagList()
-                    .map((tag: TagModel) => ({
-                        id: tag.getId(),
-                        name: tag.getName()
-                    }));
+                    .getProjectTagList();
                 this._cardList = projectModel
                     .getResourceCollectionModel()
-                    .getList()
-                    .map((resource: ResourceModel) => ({
-                        id: resource.getId(),
-                        ranking: resource.ranking,
-                        title: resource.getTitle(),
-                        thumbnailPath: resource.thumbnailPath,
-                        isNew: resource.isNew(),
-                        tagList: resource.getResourceTagModelList().map(tagModel => ({
-                            id: tagModel.getId(),
-                            name: tagModel.getName()
-                        }))
-                    }));
+                    .getList();
                 console.log(this._cardList);
             });
         this.projectContextService.loadProject().subscribe(isProjectExist => {
@@ -107,7 +90,7 @@ export class FilesComponent implements OnInit {
         this._searchText = searchText;
     }
 
-    onChangeSearchTagList(searchTagList: Array<Tag>) {
+    onChangeSearchTagList(searchTagList: Array<TagModel>) {
         this._searchTagList = searchTagList;
     }
 

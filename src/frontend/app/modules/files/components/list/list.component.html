@@ -3,12 +3,12 @@
     <app-card
         class="p-col-4"
         *ngFor="let resource of _managedCardList"
-        [id]="resource.id"
+        [id]="resource.getId()"
         [ranking]="resource.ranking"
         [title]="resource.title"
         [thumbnailPath]="resource.thumbnailPath"
         [isNew]="resource.isNew"
-        [tagList]="resource.tagList"
+        [tagList]="resource.getTagList()"
         (clickDetailsButton)="onClickDetailsButton($event)"
         (clickThumbnail)="onClickThumbnail($event)"
     >
