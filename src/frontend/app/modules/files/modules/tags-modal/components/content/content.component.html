@@ -15,17 +15,17 @@
         <tr>
             <td colspan="4">
                 <app-text
-                    [text]="tag.getName()"
-                    (changed)="editTag(tag.getId(), $event)"
+                    [text]="tag.name"
+                    (changed)="editTag(tag.id, $event)"
                 ></app-text>
             </td>
             <td colspan="1"></td>
             <td colspan="1">
                 <!--<button (click)="editTag(tag.getId())">edit</button>-->
                 <p-button
-                    icon="pi pi-times"
+                    icon="pi pi-times"E
                     styleClass="ui-button-danger"
-                    (click)="removeTag(tag.getId())"
+                    (click)="removeTag(tag.id)"
                 ></p-button>
             </td>
         </tr>

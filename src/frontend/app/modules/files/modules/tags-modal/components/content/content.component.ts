@@ -14,6 +14,8 @@ export class ContentComponent implements OnInit {
 
     ngOnInit() {
         this.tagList = this.projectContextService.getProjectTagList();
+        console.log("ZZZZZZZZZZ");
+        console.log(this.tagList);
     }
 
     setValue() {
