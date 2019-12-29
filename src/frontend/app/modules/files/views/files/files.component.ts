@@ -10,7 +10,7 @@ import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.componen
 import ProjectModel from "../../../../models/project.model";
 import Tag from "../../../../types/tag.type";
 import TagModel from "../../../../models/tag.model";
-import Card from "../../../../types/card.type";
+import Resource from "../../../../types/resource.type";
 
 @Component({
     templateUrl: "files.component.html",
@@ -26,7 +26,7 @@ export class FilesComponent implements OnInit {
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
 
-    _cardList: Array<Card>;
+    _cardList: Array<Resource>;
     _projectTagList: Array<Tag>;
 
     _searchTagList: Array<Tag>;

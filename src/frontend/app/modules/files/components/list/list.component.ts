@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angu
 import ResourceModel from "../../../../models/resource.model";
 import Tag from "../../../../types/tag.type";
 import TagModel from "../../../../models/tag.model";
-import Card from "../../../../types/card.type";
+import Resource from "../../../../types/resource.type";
 
 @Component({
     selector: "app-list",
@@ -10,14 +10,14 @@ import Card from "../../../../types/card.type";
     styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit, OnChanges {
-    @Input() cardList: Array<Card>;
+    @Input() cardList: Array<Resource>;
     @Input() searchText: string;
     @Input() searchTagList: Array<Tag>;
     @Input() orderMethod: string;
     @Output() clickThumbnail = new EventEmitter<string>();
     @Output() clickDetailsButton = new EventEmitter<string>();
 
-    _managedCardList: Array<Card>;
+    _managedCardList: Array<Resource>;
     constructor() {}
 
     ngOnInit() {}

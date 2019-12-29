@@ -9,7 +9,7 @@ export class CardComponent implements OnInit, OnChanges {
     @Input()
     private id: string;
     @Input()
-    private rating: number;
+    private ranking: number;
     @Input()
     private title: string;
     @Input()
@@ -22,12 +22,12 @@ export class CardComponent implements OnInit, OnChanges {
     // @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
-    _rating: number;
+    _ranking: number;
     constructor() {}
 
     ngOnInit() {}
     ngOnChanges() {
-        this._rating = this.rating;
+        this._ranking = this.ranking;
         console.log("CardComponent.ngOnChanges");
     }
     onClickDetailsButton() {
