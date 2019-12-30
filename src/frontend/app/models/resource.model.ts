@@ -38,10 +38,7 @@ export default class ResourceModel {
         resourceModel._isNew = resource.isNew;
         resourceModel._thumbnailList = resource.thumbnailList || [];
         resourceModel._isRemoved = resource.isRemoved;
-        resource.tags.forEach((tagId: string) => {
-            const tagModel = tagCollectionModel.getTagModelById(tagId);
-            resourceModel._addTagModel(tagModel);
-        });
+        resourceModel._tagModelList = resource.tags.map((tagId: string) => tagCollectionModel.getTagModelById(tagId));
         return resourceModel;
     }
 
@@ -84,7 +81,7 @@ export default class ResourceModel {
     get height() {
         return this._height;
     }
-    getTitle() {
+    get title() {
         return this._title;
     }
 
@@ -106,14 +103,6 @@ export default class ResourceModel {
     public set ranking(ranking) {
         this._ranking = ranking;
     }
-    // getRanking(): number {
-    //     return this._ranking;
-    // }
-    //
-    // public setRanking(ranking) {
-    //     this._ranking = ranking;
-    // }
-
     public setTitle(title: string) {
         this._title = title;
     }
@@ -121,24 +110,15 @@ export default class ResourceModel {
         this._description = description;
     }
     public setTagModelList(tagModelList: Array<TagModel>) {
-        this._tagModelList.length = 0;
-        this._tagModelList.push(...tagModelList);
-    }
-    private _addTagModel(newTagModel: TagModel) {
-        const existingTagModel = this._tagModelList.find(
-            (tagModel: TagModel) => tagModel.getId() === newTagModel.getId()
-        );
-        if (!existingTagModel) {
-            this._tagModelList.push(newTagModel);
-        }
+        this._tagModelList = tagModelList.slice();
     }
 
     public removeTagModel(tagId: string) {
         const tagIndex = this._tagModelList.findIndex(
-            (tagModel: TagModel) => tagModel.getId() === tagId
+            (tagModel: TagModel) => tagModel.id === tagId
         );
         if (tagIndex >= 0) {
-            this._tagModelList.splice(tagIndex, 1);
+            this._tagModelList = this._tagModelList.slice(tagIndex, 1);
         }
     }
 
@@ -156,26 +136,14 @@ export default class ResourceModel {
             id: this._id,
             isRemoved: this._isRemoved,
             isNew: this._isNew,
-            tags: this._tagModelList.map((tagModel: TagModel) => tagModel.getId())
+            tags: this._tagModelList.map((tagModel: TagModel) => tagModel.id)
         };
     }
 
-    public getResourceTagModelList(): Array<TagModel> {
+    public findTagModel(tagId: string) {
+        return this._tagModelList.find((tagModel: TagModel) => tagModel.id === tagId);
+    }
+    public getTagList(): Array<TagModel> {
         return this._tagModelList;
     }
-
-    /**
-     * returns tags-modal not included in this resource
-     */
-    // public getOtherProjectTagModelList(): Array<TagModel> {
-    //     return this._tagCollectionModel
-    //         .getList()
-    //         .filter(
-    //             (projectTagModel: TagModel) =>
-    //                 !this._tagModelList.find(
-    //                     (resourceTagModel: TagModel) =>
-    //                         projectTagModel.getId() === resourceTagModel.getId()
-    //                 )
-    //         );
-    // }
 }

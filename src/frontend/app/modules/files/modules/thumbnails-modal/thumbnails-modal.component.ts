@@ -22,7 +22,7 @@ export class ThumbnailsModalComponent {
                 resourceId: resourceId,
                 index: thumbnailIndex
             },
-            header: this.projectContextService.getResourceModel(resourceId).getTitle(),
+            header: this.projectContextService.getResourceModel(resourceId).title,
             width: "90%",
             dismissableMask: true,
             contentStyle: { "max-height": "90%", overflow: "auto" },

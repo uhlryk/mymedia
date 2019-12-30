@@ -20,14 +20,14 @@ export default class TagModel {
         return tagModel;
     }
 
-    public getName(): string {
+    public get name(): string {
         return this._name;
     }
 
     public setName(name: string) {
         this._name = name;
     }
-    public getId(): string {
+    public get id(): string {
         return this._id;
     }
 

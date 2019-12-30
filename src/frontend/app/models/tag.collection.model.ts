@@ -14,12 +14,10 @@ export default class TagCollectionModel {
     }
 
     public getTagModelByName(name: string): TagModel {
-        return this._tagModelList.find(
-            (tagModel: TagModel) => tagModel.getName() === name
-        );
+        return this._tagModelList.find((tagModel: TagModel) => tagModel.name === name);
     }
     public getTagModelById(id: string): TagModel {
-        return this._tagModelList.find((tagModel: TagModel) => tagModel.getId() === id);
+        return this._tagModelList.find((tagModel: TagModel) => tagModel.id === id);
     }
 
     public addTagModel(tagModel: TagModel) {
@@ -28,7 +26,7 @@ export default class TagCollectionModel {
 
     public removeTagModelById(tagId: string) {
         this._tagModelList.splice(
-            this._tagModelList.findIndex(tagModel => tagModel.getId() === tagId),
+            this._tagModelList.findIndex(tagModel => tagModel.id === tagId),
             1
         );
     }

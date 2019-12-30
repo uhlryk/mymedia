@@ -1,29 +1,19 @@
 import ResourceModel from "./resource.model";
 import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
 import TagCollectionModel from "./tag.collection.model";
-import IpcProvider from "../providers/ipc.provider";
-import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 export default class ResourceCollectionModel {
     private _resourceModelList: Array<ResourceModel>;
     private _tagCollectionModel: TagCollectionModel;
-    public constructor(resourceList: Array<ResourceModelInterface>, tagCollectionModel: TagCollectionModel) {
+    public constructor(
+        resourceList: Array<ResourceModelInterface>,
+        tagCollectionModel: TagCollectionModel
+    ) {
         this._tagCollectionModel = tagCollectionModel;
-        this._resourceModelList = resourceList.map(
-            (resource: ResourceModelInterface) => {
-                return ResourceModel.fromProject(resource, tagCollectionModel);
-            }
-        );
+        this._resourceModelList = resourceList.map((resource: ResourceModelInterface) => {
+            return ResourceModel.fromProject(resource, tagCollectionModel);
+        });
     }
 
-    public addResourceModel(resourceModel: ResourceModel) {
-        this._resourceModelList.push(resourceModel);
-    }
-
-    public getResourceModelByPath(filePath: string): ResourceModel {
-        return this._resourceModelList.find(
-            (resourceModel: ResourceModel) => resourceModel.getFilePath() === filePath
-        );
-    }
     public getResourceModelById(id: string): ResourceModel {
         return this._resourceModelList.find(
             (resourceModel: ResourceModel) => resourceModel.getId() === id
@@ -43,6 +33,6 @@ export default class ResourceCollectionModel {
     }
 
     public getList(): Array<ResourceModel> {
-        return this._resourceModelList;
+        return this._resourceModelList.slice();
     }
 }

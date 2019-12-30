@@ -1,5 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import {ResultManipulationService} from "../../../../services/result-manipulation.service";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 
 @Component({
     selector: "app-order",
@@ -8,13 +7,16 @@ import {ResultManipulationService} from "../../../../services/result-manipulatio
 })
 export class OrderComponent implements OnInit {
     selectedOption: string;
-    constructor(private resultManipulationService: ResultManipulationService) {}
+    @Output() changeOrderMethod = new EventEmitter<string>();
+    constructor() {}
 
     ngOnInit() {
-        this.selectedOption = "0";
+        this.selectedOption = "NAME_ASC";
     }
 
     startSorting() {
-        this.resultManipulationService.setOrder(this.selectedOption);
+        console.log(this.selectedOption);
+        this.changeOrderMethod.emit(this.selectedOption);
+        // this.resultManipulationService.setOrder(this.selectedOption);
     }
 }

@@ -14,12 +14,19 @@ export class DetailsModalComponent {
 
     resource: ResourceModel;
     thumbnailPath: string;
-    private _allProjectTags: Array<TagModel>;
+    _allProjectTagList: Array<TagModel>;
+    _selectedTagList: Array<TagModel>;
     visibleSidebar: boolean;
     show(resourceId: string) {
+        console.log("=====");
+        console.log(resourceId);
         this.resource = this.projectContextService.getResourceModel(resourceId);
+        console.log(this.resource);
         this.thumbnailPath = this.resource.thumbnailPath;
-        this._allProjectTags = this.projectContextService.getProjectTagList().slice();
+        this._allProjectTagList = this.projectContextService
+            .getProjectTagList();
+        this._selectedTagList = this.resource
+            .getTagList();
         this.visibleSidebar = true;
     }
 
@@ -34,7 +41,9 @@ export class DetailsModalComponent {
         this.resource.ranking = event.value;
         this.projectContextService.saveProject().subscribe(() => {});
     }
-    changeAddedTags(selectedTagList: Array<TagModel>) {
+    onChangeAddedTags(selectedTagList: Array<TagModel>) {
+        console.log("DetailsModalComponent.changeAddedTags");
+        this._selectedTagList = selectedTagList;
         this.projectContextService.setResourceTagList(
             this.resource.getId(),
             selectedTagList

@@ -6,14 +6,8 @@ import TagModel from "../../../../../../models/tag.model";
     templateUrl: "./tag-list.component.html",
     styleUrls: ["./tag-list.component.scss"]
 })
-export class TagListComponent implements OnInit, OnChanges {
-    @Input() tags: Array<TagModel>;
-    private _lineTagList: Array<TagModel>;
+export class TagListComponent {
+    @Input() tagList: Array<TagModel>;
     constructor() {}
 
-    ngOnInit() {}
-
-    ngOnChanges() {
-        this._lineTagList = this.tags;
-    }
 }

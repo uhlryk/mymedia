@@ -5,13 +5,13 @@
         pInputText
         class="text-input"
         type="text"
-        [(ngModel)]="searchInput"
-        (ngModelChange)="startSearch()"
+        [(ngModel)]="_searchInput"
+        (ngModelChange)="onChangeSearchText()"
         placeholder="search"
     />
 </div>
 <app-tag-select-list
-    (changeAddedTags)="changeAddedTags($event)"
-    [allTagList]="projectTags"
-    [selectedTagList]="selectedTagList"
+    (changeTagList)="onChangeSearchTagList($event)"
+    [allTagList]="projectTagList"
+    [selectedTagList]="_selectedTagList"
 ></app-tag-select-list>

@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { ResultManipulationService } from "../../../../services/result-manipulation.service";
-import { ProjectContextService } from "../../../../services/projectContext.service";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import TagModel from "../../../../models/tag.model";
 
 @Component({
@@ -8,36 +6,26 @@ import TagModel from "../../../../models/tag.model";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.scss"]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnChanges {
     @Input() projectTagList: Array<TagModel>;
-    searchInput;
+    @Output() changeSearchText = new EventEmitter<string>();
+    @Output() changeSearchTagList = new EventEmitter<Array<TagModel>>();
+    _searchInput: string;
     _selectedTagList: Array<TagModel>;
-    constructor(
-        // private projectContextService: ProjectContextService,
-        private resultManipulationService: ResultManipulationService
-    ) {}
+    constructor() {}
 
     ngOnInit() {
-        // this._allProjectTags = this.projectContextService.getProjectTagList().slice();
         this._selectedTagList = [];
     }
 
-    startSearch() {
-        this.resultManipulationService.setSearch(this.searchInput);
+    ngOnChanges() {}
+
+    onChangeSearchText() {
+        this.changeSearchText.emit(this._searchInput);
     }
 
-    changeAddedTags(selectedTagList: Array<TagModel>) {
+    onChangeSearchTagList(selectedTagList: Array<TagModel>) {
         this._selectedTagList = selectedTagList;
-        this.resultManipulationService.setSearchTags(
-            this._selectedTagList.map((tag: TagModel) => tag.getId())
-        );
-    }
-
-    get projectTags() {
-        return this.projectTagList;
-    }
-
-    get selectedTagList() {
-        return this._selectedTagList;
+        this.changeSearchTagList.emit(selectedTagList);
     }
 }

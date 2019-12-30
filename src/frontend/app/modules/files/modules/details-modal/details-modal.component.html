@@ -53,7 +53,7 @@
                 </div>
             </div>
             <app-text
-                [text]="resource.getTitle()"
+                [text]="resource.title"
                 (changed)="saveTitle($event)"
             ></app-text>
             <div class="file-path-text">{{ resource.getFilePath() }}</div>
@@ -78,9 +78,9 @@
             </div>
 
             <app-tag-select-list
-                (changeAddedTags)="changeAddedTags($event)"
-                [allTagList]="_allProjectTags"
-                [selectedTagList]="resource.getResourceTagModelList()"
+                (changeTagList)="onChangeAddedTags($event)"
+                [allTagList]="_allProjectTagList"
+                [selectedTagList]="_selectedTagList"
             ></app-tag-select-list>
         </div>
     </p-sidebar>

@@ -1,0 +1,28 @@
+<div class="p-grid">
+    <app-side-menu class="p-col-fixed">
+        <app-order
+            (changeOrderMethod)="onChangeOrderMethod($event)"
+        ></app-order>
+        <app-search
+            *ngIf="_projectTagList"
+            [projectTagList]="_projectTagList"
+            (changeSearchText)="onChangeSearchText($event)"
+            (changeSearchTagList)="onChangeSearchTagList($event)"
+        ></app-search>
+    </app-side-menu>
+    <div class="p-col">
+        <app-list
+            *ngIf="_cardList"
+            [cardList]="_cardList"
+            [searchText]="_searchText"
+            [searchTagList]="_searchTagList"
+            [orderMethod]="_orderMethod"
+            (clickThumbnail)="onClickThumbnail($event)"
+            (clickDetailsButton)="onClickDetailsButton($event)"
+        ></app-list>
+
+        <app-details-modal></app-details-modal>
+        <app-thumbnails-modal></app-thumbnails-modal>
+        <app-tags-modal></app-tags-modal>
+    </div>
+</div>

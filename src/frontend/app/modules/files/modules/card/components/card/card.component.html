@@ -1,13 +1,14 @@
 <p-card styleClass="ui-card-shadow" class="card">
     <p-header>
+        {{ log("CardComponent.render") }}
         <div class="thumbnail-section">
-            <div *ngIf="!resource.thumbnailPath" class="spinner-wrapper">
+            <div *ngIf="!thumbnailPath" class="spinner-wrapper">
                 <i class="pi pi-clock" style="font-size: 3em"></i>
                 <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
             </div>
-            <div class="thumbnail-wrapper" *ngIf="resource.thumbnailPath">
-                <img class="thumbnail" [src]="resource.thumbnailPath" alt="" />
-                <div class="show-play" (click)="clickExecuteMedia()">
+            <div class="thumbnail-wrapper" *ngIf="thumbnailPath">
+                <img class="thumbnail" [src]="thumbnailPath" alt="" />
+                <div class="show-play" (click)="onClickThumbnail()">
                     <i class="pi pi-caret-right"></i>
                 </div>
             </div>
@@ -15,28 +16,28 @@
     </p-header>
     <div>
         <div class="title">
-            <span [pTooltip]="resource.getTitle()">
-                {{ resource.getTitle() }}
+            <span [pTooltip]="title">
+                {{ title }}
             </span>
         </div>
         <div class="card-section">
             <p-rating
-                [(ngModel)]="resource.ranking"
+                [ngModel]="_ranking"
                 [readonly]="true"
                 [cancel]="false"
             ></p-rating>
 
-            <span *ngIf="resource.isNew()">NEW</span>
+            <span *ngIf="isNew">NEW</span>
         </div>
         <div class="card-section">
-            <app-tag-list [tags]="_tagList"></app-tag-list>
+            <app-tag-list [tagList]="tagList"></app-tag-list>
         </div>
     </div>
     <p-footer>
         <button
             pButton
             type="button"
-            (click)="clickOpenDetails()"
+            (click)="onClickDetailsButton()"
             icon="fas fa-address-card"
             style="margin-right: .25em"
         ></button>
