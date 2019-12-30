@@ -38,10 +38,7 @@ export default class ResourceModel {
         resourceModel._isNew = resource.isNew;
         resourceModel._thumbnailList = resource.thumbnailList || [];
         resourceModel._isRemoved = resource.isRemoved;
-        resource.tags.forEach((tagId: string) => {
-            const tagModel = tagCollectionModel.getTagModelById(tagId);
-            resourceModel._addTagModel(tagModel);
-        });
+        resourceModel._tagModelList = resource.tags.map((tagId: string) => tagCollectionModel.getTagModelById(tagId));
         return resourceModel;
     }
 
@@ -113,16 +110,7 @@ export default class ResourceModel {
         this._description = description;
     }
     public setTagModelList(tagModelList: Array<TagModel>) {
-        this._tagModelList.length = 0;
-        this._tagModelList.push(...tagModelList);
-    }
-    private _addTagModel(newTagModel: TagModel) {
-        const existingTagModel = this._tagModelList.find(
-            (tagModel: TagModel) => tagModel.id === newTagModel.id
-        );
-        if (!existingTagModel) {
-            this._tagModelList.push(newTagModel);
-        }
+        this._tagModelList = tagModelList.slice();
     }
 
     public removeTagModel(tagId: string) {
@@ -130,7 +118,7 @@ export default class ResourceModel {
             (tagModel: TagModel) => tagModel.id === tagId
         );
         if (tagIndex >= 0) {
-            this._tagModelList.splice(tagIndex, 1);
+            this._tagModelList = this._tagModelList.slice(tagIndex, 1);
         }
     }
 

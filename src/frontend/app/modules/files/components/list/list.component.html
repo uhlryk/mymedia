@@ -1,8 +1,9 @@
 <div class="p-grid">
+    {{ log("ListComponent.render") }}
     <!--<div *ngFor="let resource of _resourceList">{{resource}}</div>-->
     <app-card
         class="p-col-4"
-        *ngFor="let resource of _managedCardList"
+        *ngFor="let resource of _managedCardList; trackBy: trackByList"
         [id]="resource.getId()"
         [ranking]="resource.ranking"
         [title]="resource.title"
@@ -12,5 +13,6 @@
         (clickDetailsButton)="onClickDetailsButton($event)"
         (clickThumbnail)="onClickThumbnail($event)"
     >
+        {{ log("ListComponent.render.card") }}
     </app-card>
 </div>

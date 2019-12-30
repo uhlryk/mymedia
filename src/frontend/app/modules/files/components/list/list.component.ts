@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
 
 @Component({
     selector: "app-list",
     templateUrl: "./list.component.html",
-    styleUrls: ["./list.component.scss"]
+    styleUrls: ["./list.component.scss"],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListComponent implements OnInit, OnChanges {
     @Input() cardList: Array<ResourceModel>;
@@ -56,5 +57,16 @@ export class ListComponent implements OnInit, OnChanges {
     }
     onClickDetailsButton(resourceId: string) {
         this.clickDetailsButton.emit(resourceId);
+    }
+
+    log(val) {
+        console.log(val);
+    }
+
+    trackByList(index, resource: ResourceModel) {
+        if(resource) {
+            return resource.getId();
+        }
+        return null;
     }
 }

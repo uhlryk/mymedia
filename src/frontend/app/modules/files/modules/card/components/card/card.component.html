@@ -1,5 +1,6 @@
 <p-card styleClass="ui-card-shadow" class="card">
     <p-header>
+        {{ log("CardComponent.render") }}
         <div class="thumbnail-section">
             <div *ngIf="!thumbnailPath" class="spinner-wrapper">
                 <i class="pi pi-clock" style="font-size: 3em"></i>

@@ -33,6 +33,6 @@ export default class ResourceCollectionModel {
     }
 
     public getList(): Array<ResourceModel> {
-        return this._resourceModelList;
+        return this._resourceModelList.slice();
     }
 }
