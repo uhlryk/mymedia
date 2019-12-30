@@ -18,7 +18,7 @@ export class ProjectContextService {
     loadProject(): Observable<boolean> {
         return Observable.create(async observable => {
             const isProjectExist = await this.getProjectModel().loadProject();
-            this.subject.next(this.getProjectModel());
+            this.triggerChange();
             this._ngZone.run(() => {
                 observable.next(isProjectExist);
                 observable.complete();
@@ -150,7 +150,11 @@ export class ProjectContextService {
                 observable.next();
                 observable.complete();
             });
-            this.subject.next(this.getProjectModel());
+            this.triggerChange();
         });
+    }
+
+    triggerChange() {
+        this.subject.next(this.getProjectModel());
     }
 }

@@ -60,13 +60,14 @@ export class FilesComponent implements OnInit {
                 this.router.navigate(["/create-project"]);
             } else {
                 this.thumbnailService.onThumbnailChange().subscribe(response => {
-                    const resourceModer: ResourceModel = this.projectContextService.getResourceModel(
+                    const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
                         response.resourceId
                     );
-                    resourceModer.setThumbnailPath(
+                    resourceModel.setThumbnailPath(
                         response.resourceThumbnailPath,
                         response.videoIndex
                     );
+                    this.projectContextService.triggerChange();
                 });
 
                 this.loaderService.hide();
