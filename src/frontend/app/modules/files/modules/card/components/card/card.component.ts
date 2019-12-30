@@ -22,6 +22,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     // @Input() resource: ResourceModel;
     @Output() clickDetailsButton = new EventEmitter<string>();
+    @Output() clickDeleteButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
     _ranking: number;
     constructor() {}
@@ -33,6 +34,10 @@ export class CardComponent implements OnInit, OnChanges {
     }
     onClickDetailsButton() {
         this.clickDetailsButton.emit(this.id);
+    }
+
+    onClickDeleteButton() {
+        this.clickDeleteButton.emit(this.id);
     }
 
     onClickThumbnail() {
