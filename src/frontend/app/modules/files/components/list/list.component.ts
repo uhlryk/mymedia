@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output
+} from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
 
@@ -25,11 +33,12 @@ export class ListComponent implements OnInit, OnChanges {
         console.log("ListComponent.ngOnChanges");
         this._managedCardList = this.cardList
             .filter(resource => {
-                if (resource.title.toLowerCase().includes(this.searchText.toLowerCase())) {
+                if (
+                    resource.title.toLowerCase().includes(this.searchText.toLowerCase())
+                ) {
                     if (this.searchTagList.length) {
                         return this.searchTagList.every(
-                            (searchTag: TagModel) =>
-                                !!resource.findTagModel(searchTag.id)
+                            (searchTag: TagModel) => !!resource.findTagModel(searchTag.id)
                         );
                     }
                     return true;
@@ -64,7 +73,7 @@ export class ListComponent implements OnInit, OnChanges {
     }
 
     trackByList(index, resource: ResourceModel) {
-        if(resource) {
+        if (resource) {
             return resource.getId();
         }
         return null;
