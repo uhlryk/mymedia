@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
@@ -32,6 +32,7 @@ export class FilesComponent implements OnInit, OnDestroy {
     _searchText: string;
     _orderMethod: string;
     _projectChange: Subscription;
+    _thumbnailChange: Subscription;
     _openTagManager: Subscription;
     private _isLeftMenuVisible: boolean;
     // visibleSidebar = false;
@@ -63,16 +64,18 @@ export class FilesComponent implements OnInit, OnDestroy {
         this.projectContextService
             .loadProject()
             .then(() => {
-                this.thumbnailService.onThumbnailChange().subscribe(response => {
-                    const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
-                        response.resourceId
-                    );
-                    resourceModel.setThumbnailPath(
-                        response.resourceThumbnailPath,
-                        response.videoIndex
-                    );
-                    this.projectContextService.triggerChange();
-                });
+                this._thumbnailChange = this.thumbnailService
+                    .onThumbnailChange()
+                    .subscribe(response => {
+                        const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
+                            response.resourceId
+                        );
+                        resourceModel.setThumbnailPath(
+                            response.resourceThumbnailPath,
+                            response.videoIndex
+                        );
+                        this.projectContextService.triggerChange();
+                    });
 
                 this.loaderService.hide();
             })
@@ -102,7 +105,14 @@ export class FilesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this._projectChange.unsubscribe();
-        this._openTagManager.unsubscribe();
+        if (this._projectChange) {
+            this._projectChange.unsubscribe();
+        }
+        if (this._openTagManager) {
+            this._openTagManager.unsubscribe();
+        }
+        if (this._thumbnailChange) {
+            this._thumbnailChange.unsubscribe();
+        }
     }
 }
