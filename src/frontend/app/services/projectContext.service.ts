@@ -15,14 +15,15 @@ export class ProjectContextService {
     private subject = new Subject<any>();
 
     constructor(private _ngZone: NgZone) {}
-    loadProject(): Observable<boolean> {
-        return Observable.create(async observable => {
+    loadProject(): Promise<void> {
+        return new Promise(async (resolve, reject) => {
             const isProjectExist = await this.getProjectModel().loadProject();
             this.triggerChange();
-            this._ngZone.run(() => {
-                observable.next(isProjectExist);
-                observable.complete();
-            });
+            if (isProjectExist) {
+                resolve();
+            } else {
+                reject();
+            }
         });
     }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
@@ -9,12 +9,13 @@ import { ThumbnailService } from "../../../../services/thumbnail.service";
 import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
 import ProjectModel from "../../../../models/project.model";
 import TagModel from "../../../../models/tag.model";
+import { Subscription } from "rxjs";
 
 @Component({
     templateUrl: "files.component.html",
     styleUrls: ["./files.component.scss"]
 })
-export class FilesComponent implements OnInit {
+export class FilesComponent implements OnInit, OnDestroy {
     @ViewChild(DetailsModalComponent, { static: true })
     detailsModal: DetailsModalComponent;
 
@@ -30,6 +31,8 @@ export class FilesComponent implements OnInit {
     _searchTagList: Array<TagModel>;
     _searchText: string;
     _orderMethod: string;
+    _projectChange: Subscription;
+    _openTagManager: Subscription;
     private _isLeftMenuVisible: boolean;
     // visibleSidebar = false;
     constructor(
@@ -44,21 +47,22 @@ export class FilesComponent implements OnInit {
         this._orderMethod = "";
         this._isLeftMenuVisible = false;
         this.loaderService.show();
-        this.projectContextService
+        this._projectChange = this.projectContextService
             .projectChange()
             .subscribe((projectModel: ProjectModel) => {
                 console.log("FilesComponent change in project");
-                this._projectTagList = this.projectContextService
-                    .getProjectTagList();
-                this._cardList = projectModel
-                    .getResourceCollectionModel()
-                    .getList();
+                this._projectTagList = this.projectContextService.getProjectTagList();
+                this._cardList = projectModel.getResourceCollectionModel().getList();
                 console.log(this._cardList);
             });
-        this.projectContextService.loadProject().subscribe(isProjectExist => {
-            if (!isProjectExist) {
-                this.router.navigate(["/create-project"]);
-            } else {
+        this._openTagManager = this.projectContextService
+            .listenOpenTagsManager()
+            .subscribe(() => {
+                this.tagsModal.show();
+            });
+        this.projectContextService
+            .loadProject()
+            .then(() => {
                 this.thumbnailService.onThumbnailChange().subscribe(response => {
                     const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
                         response.resourceId
@@ -71,12 +75,10 @@ export class FilesComponent implements OnInit {
                 });
 
                 this.loaderService.hide();
-            }
-        });
-
-        this.projectContextService.listenOpenTagsManager().subscribe(() => {
-            this.tagsModal.show();
-        });
+            })
+            .catch(() => {
+                this.router.navigate(["/create-project"]);
+            });
     }
 
     onClickThumbnail(resourceId) {
@@ -97,5 +99,10 @@ export class FilesComponent implements OnInit {
 
     onChangeOrderMethod(orderMethod: string) {
         this._orderMethod = orderMethod;
+    }
+
+    ngOnDestroy() {
+        this._projectChange.unsubscribe();
+        this._openTagManager.unsubscribe();
     }
 }
