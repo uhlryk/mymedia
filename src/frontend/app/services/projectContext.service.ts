@@ -7,7 +7,6 @@ import ResourceModel from "../models/resource.model";
 import TagModel from "../models/tag.model";
 import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
-import ThumbnailChangeEventInterface from "../../../shared/types/thumbnailChangeEvent.interface";
 import TagCollectionModel from "../models/tag.collection.model";
 
 @Injectable()
@@ -31,25 +30,11 @@ export class ProjectContextService {
         return this.subject.asObservable();
     }
 
-    setProjectPath(): Observable<boolean> {
-        return Observable.create(async observable => {
-            const isProjectExist: boolean = await this.getProjectModel().setProjectPath();
-
-            this._ngZone.run(() => {
-                observable.next(isProjectExist);
-                observable.complete();
-            });
-        });
+    setProjectPath(): Promise<boolean> {
+        return this.getProjectModel().setProjectPath();
     }
-    getProjectPath(): Observable<string> {
-        return Observable.create(async observable => {
-            const projectPath = await this.getProjectModel().getProjectPath();
-
-            this._ngZone.run(() => {
-                observable.next(projectPath);
-                observable.complete();
-            });
-        });
+    getProjectPath(): Promise<string> {
+        return this.getProjectModel().getProjectPath();
     }
 
     listenNewProject(): Observable<void> {

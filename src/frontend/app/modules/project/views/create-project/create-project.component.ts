@@ -17,7 +17,7 @@ export class CreateProjectComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.projectContextService.getProjectPath().subscribe(projectPath => {
+        this.projectContextService.getProjectPath().then(projectPath => {
             this.projectPath = projectPath;
             this.loaderService.hide();
         });
