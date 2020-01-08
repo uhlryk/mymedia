@@ -1,12 +1,12 @@
 import { shell, dialog } from "electron";
-import ProjectModelInterface from "../shared/types/projectModel.interface";
+import IProject from "../shared/types/project.interface";
 import setInitProject from "./fs/setInitProject";
 import * as path from "path";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import isProjectStructure from "./fs/isProjectStructure";
 import ProjectManager from "./ProjectManager";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
-import ThumbnailChangeEventInterface from "../shared/types/thumbnailChangeEvent.interface";
+import IThumbnailChangeEvent from "../shared/types/thumbnailChangeEvent.interface";
 import Listener from "./core/Listener";
 
 export default class AppController {
@@ -35,7 +35,7 @@ export default class AppController {
                 context.reply.send();
             } else {
                 this._projectManager = new ProjectManager(this._projectPath);
-                const projectModel: ProjectModelInterface = await this._projectManager.loadProjectModel(
+                const projectModel: IProject = await this._projectManager.loadProjectModel(
                     context.loader
                 );
                 await this._projectManager.save();
@@ -48,7 +48,7 @@ export default class AppController {
                 (resourceId: string, resourceThumbnailPath: string, index: number) => {
                     console.log("====");
                     console.log(resourceId, resourceThumbnailPath);
-                    const thumbnailChangeEventInterface: ThumbnailChangeEventInterface = {
+                    const IThumbnailChangeEvent: IThumbnailChangeEvent = {
                         resourceId,
                         resourceThumbnailPath,
                         videoIndex: index
@@ -57,7 +57,7 @@ export default class AppController {
                         .getEvent()
                         .reply(
                             IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE,
-                            thumbnailChangeEventInterface
+                            IThumbnailChangeEvent
                         );
                 }
             );
@@ -67,7 +67,7 @@ export default class AppController {
             context.reply.send(this._projectPath);
         });
         Listener.on(IpcProviderResourceEnums.SAVE_PROJECT, async context => {
-            const project: ProjectModelInterface = context.data.project;
+            const project: IProject = context.data.project;
             await this._projectManager.setProjectModel(project);
             await this._projectManager.save();
             context.reply.send();

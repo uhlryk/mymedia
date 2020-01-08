@@ -1,5 +1,5 @@
 import TagCollectionModel from "./tag.collection.model";
-import ProjectModelInterface from "../../../shared/types/projectModel.interface";
+import IProject from "../../../shared/types/project.interface";
 import ResourceCollectionModel from "./resource.collection.model";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ResourceModel from "./resource.model";
@@ -29,7 +29,7 @@ export default class ProjectModel {
         return await IpcProvider.request(IpcProviderResourceEnums.GET_PROJECT);
     }
     public async loadProject(): Promise<boolean> {
-        const project: ProjectModelInterface = await IpcProvider.request(
+        const project: IProject = await IpcProvider.request(
             IpcProviderResourceEnums.LOAD_PROJECT
         );
         if (project) {
@@ -49,7 +49,7 @@ export default class ProjectModel {
     }
 
     public async save() {
-        const project: ProjectModelInterface = {
+        const project: IProject = {
             resourceList: this._resourceCollectionModel.toSaveValue(),
             tagList: this._tagCollectionModel.toSaveValue()
         };

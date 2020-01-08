@@ -1,4 +1,4 @@
-import ProjectModelInterface from "../shared/types/projectModel.interface";
+import IProject from "../shared/types/project.interface";
 import loadFile from "./fs/loadFile";
 import ProjectFileInterface from "./types/projectFile.interface";
 import getFileList from "./fs/getFileList";
@@ -7,7 +7,7 @@ import ResourceFileInterface from "./types/resourceFile.interface";
 import uuid from "uuidv4";
 import getMetadata from "./fs/getMetadata";
 import * as path from "path";
-import ResourceModelInterface from "../shared/types/resourceModel.interface";
+import IResource from "../shared/types/resource.interface";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import saveProjectFile from "./fs/saveProjectFile";
 import Loader from "./core/Loader";
@@ -18,7 +18,7 @@ export default class ProjectManager {
 
     _projectPath: string;
     _projectFolderPath: string;
-    _projectModel: ProjectModelInterface;
+    _projectModel: IProject;
     _isDestroyed: boolean = false;
     private _thumbnailManager: ThumbnailManager;
     constructor(projectPath: string) {
@@ -39,7 +39,7 @@ export default class ProjectManager {
             this._thumbnailManager.destroy();
         }
     }
-    public async loadProjectModel(loader: Loader): Promise<ProjectModelInterface> {
+    public async loadProjectModel(loader: Loader): Promise<IProject> {
         loader.setMessage("Load project");
         const projectFile: ProjectFileInterface = await loadProjectFile(
             this._projectFolderPath,
@@ -66,7 +66,7 @@ export default class ProjectManager {
             string,
             Array<string>
         > = await this._thumbnailManager.loadExistingThumbnails();
-        this._projectModel.resourceList.map((resourceModel: ResourceModelInterface) => {
+        this._projectModel.resourceList.map((resourceModel: IResource) => {
             if (thumbnailMap.has(resourceModel.id)) {
                 const thumbnailList: Array<string> = thumbnailMap.get(resourceModel.id);
                 this._thumbnailManager.queueGenerateMissingThumbnails(
@@ -82,15 +82,15 @@ export default class ProjectManager {
     private async generateProjectModel(
         projectFile: ProjectFileInterface,
         loader: Loader
-    ): Promise<ProjectModelInterface> {
+    ): Promise<IProject> {
         const fileList: Array<FileInterface> = await getFileList(this._projectPath);
-        const projectModel: ProjectModelInterface = createModelFromProjectFile(
+        const projectModel: IProject = createModelFromProjectFile(
             projectFile
         );
         loader.setProgress(0);
         await asyncForEach(fileList, async (file: FileInterface, index: number) => {
             loader.setProgress(Math.ceil(((index + 1) * 100) / fileList.length));
-            const resource: ResourceModelInterface = getResourceByPath(
+            const resource: IResource = getResourceByPath(
                 projectModel.resourceList,
                 file.filePath
             );
@@ -109,13 +109,13 @@ export default class ProjectManager {
         return projectModel;
     }
 
-    public setProjectModel(projectModel: ProjectModelInterface) {
+    public setProjectModel(projectModel: IProject) {
         this._projectModel = projectModel;
     }
     public async save() {
         const projectFile: ProjectFileInterface = {
             resourceList: this._projectModel.resourceList.map(
-                (resourceModel: ResourceModelInterface): ResourceFileInterface => {
+                (resourceModel: IResource): ResourceFileInterface => {
                     return resourceModel as ResourceFileInterface;
                 }
             ),
@@ -139,28 +139,28 @@ async function loadProjectFile(
 
 function createModelFromProjectFile(
     projectFile: ProjectFileInterface
-): ProjectModelInterface {
-    const projectModel: ProjectModelInterface = {
+): IProject {
+    const projectModel: IProject = {
         resourceList: [],
         tagList: projectFile.tagList
     };
     projectModel.resourceList = projectFile.resourceList.map(
-        (fileResource: ResourceFileInterface): ResourceModelInterface => {
+        (fileResource: ResourceFileInterface): IResource => {
             return Object.assign({}, fileResource, {
                 isRemoved: true,
                 isNew: false
-            }) as ResourceModelInterface;
+            }) as IResource;
         }
     );
     return projectModel;
 }
 
 function getResourceByPath(
-    resourceList: Array<ResourceModelInterface>,
+    resourceList: Array<IResource>,
     filePath: string
-): ResourceModelInterface {
+): IResource {
     return resourceList.find(
-        (resource: ResourceModelInterface) => resource.filePath === filePath
+        (resource: IResource) => resource.filePath === filePath
     );
 }
 
@@ -168,10 +168,10 @@ async function createResourceModel(
     projectPath: string,
     projectFoldeName: string,
     file: FileInterface
-): Promise<ResourceModelInterface> {
+): Promise<IResource> {
     const id = uuid();
     const metadata = await getMetadata(path.resolve(projectPath, file.filePath));
-    const resource: ResourceModelInterface = {
+    const resource: IResource = {
         filePath: file.filePath,
         fileName: file.fileName,
         title: file.name,

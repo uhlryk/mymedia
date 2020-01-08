@@ -1,4 +1,4 @@
-export default interface ResourceModelInterface {
+export default interface IResource {
     id: string;
     ranking: number;
     title: string;

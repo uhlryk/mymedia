@@ -1,7 +1,7 @@
 import * as path from "path";
 import generateThumbnail from "./generateThumbnail";
 import getThumbnailList from "./getThumbnailList";
-import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
+import IResource from "../../../shared/types/resource.interface";
 import ThumbnailName from "../../../shared/ThumbnailName";
 
 export default class ThumbnailManager {
@@ -34,7 +34,7 @@ export default class ThumbnailManager {
         return this._thumbnailMap;
     }
 
-    public queueGenerateAllThumbnails(resource: ResourceModelInterface) {
+    public queueGenerateAllThumbnails(resource: IResource) {
         if (!resource.duration) {
             this.queueGenerateThumbnail(resource, 0, 0);
         } else {
@@ -44,7 +44,7 @@ export default class ThumbnailManager {
         }
     }
     public queueGenerateMissingThumbnails(
-        resource: ResourceModelInterface,
+        resource: IResource,
         thumbnailList: Array<string>
     ) {
         const indexedThumbnailArray = new Array(ThumbnailName.NUMBER_OF_THUMBNAILS);
@@ -65,7 +65,7 @@ export default class ThumbnailManager {
         }
     }
     private queueGenerateThumbnail(
-        resource: ResourceModelInterface,
+        resource: IResource,
         index: number,
         priority: number
     ) {
