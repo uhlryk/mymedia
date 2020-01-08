@@ -10,6 +10,9 @@ import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.componen
 import ProjectModel from "../../../../models/project.model";
 import TagModel from "../../../../models/tag.model";
 import { Subscription } from "rxjs";
+import IProject from "../../../../../../shared/types/project.interface";
+import IResource from "../../../../../../shared/types/resource.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
 
 @Component({
     templateUrl: "files.component.html",
@@ -25,9 +28,11 @@ export class FilesComponent implements OnInit, OnDestroy {
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
 
-    _cardList: Array<ResourceModel>;
-    _projectTagList: Array<TagModel>;
+    // _cardList: Array<ResourceModel>;
+    // _projectTagList: Array<TagModel>;
 
+    _resourceList: Array<IResource>;
+    _tagList: Array<ITag>;
     _searchTagList: Array<TagModel>;
     _searchText: string;
     _orderMethod: string;
@@ -49,12 +54,10 @@ export class FilesComponent implements OnInit, OnDestroy {
         this._isLeftMenuVisible = false;
         this.loaderService.show();
         this._projectChange = this.projectContextService
-            .projectChange()
-            .subscribe((projectModel: ProjectModel) => {
-                console.log("FilesComponent change in project");
-                this._projectTagList = this.projectContextService.getProjectTagList();
-                this._cardList = projectModel.getResourceCollectionModel().getList();
-                console.log(this._cardList);
+            .listenProjectChange()
+            .subscribe((project: IProject) => {
+                this._resourceList = project.resourceList;
+                this._tagList = project.tagList;
             });
         this._openTagManager = this.projectContextService
             .listenOpenTagsManager()
@@ -63,24 +66,27 @@ export class FilesComponent implements OnInit, OnDestroy {
             });
         this.projectContextService
             .loadProject()
-            .then(() => {
-                this._thumbnailChange = this.thumbnailService
-                    .onThumbnailChange()
-                    .subscribe(response => {
-                        const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
-                            response.resourceId
-                        );
-                        resourceModel.setThumbnailPath(
-                            response.resourceThumbnailPath,
-                            response.videoIndex
-                        );
-                        this.projectContextService.triggerChange();
-                    });
+            .then((project: IProject) => {
+                if(project) {
+                    this._resourceList = project.resourceList;
+                    this._tagList = project.tagList;
+                    // this._thumbnailChange = this.thumbnailService
+                    //     .onThumbnailChange()
+                    //     .subscribe(response => {
+                    //         const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
+                    //             response.resourceId
+                    //         );
+                    //         resourceModel.setThumbnailPath(
+                    //             response.resourceThumbnailPath,
+                    //             response.videoIndex
+                    //         );
+                    //         this.projectContextService.triggerChange();
+                    //     });
 
-                this.loaderService.hide();
-            })
-            .catch(() => {
-                this.router.navigate(["/create-project"]);
+                    this.loaderService.hide();
+                } else {
+                    this.router.navigate(["/create-project"]);
+                }
             });
     }
 

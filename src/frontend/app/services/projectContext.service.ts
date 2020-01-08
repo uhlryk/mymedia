@@ -8,25 +8,28 @@ import TagModel from "../models/tag.model";
 import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import TagCollectionModel from "../models/tag.collection.model";
+import IProject from "../../../shared/types/project.interface";
 
 @Injectable()
 export class ProjectContextService {
+    private _project: IProject;
     private subject = new Subject<any>();
 
     constructor(private _ngZone: NgZone) {}
-    loadProject(): Promise<void> {
-        return new Promise(async (resolve, reject) => {
-            const isProjectExist = await this.getProjectModel().loadProject();
+    async loadProject(): Promise<IProject> {
+        const project: IProject = await IpcProvider.request(
+            IpcProviderResourceEnums.LOAD_PROJECT
+        );
+        if (project) {
+            this._project = project;
             this.triggerChange();
-            if (isProjectExist) {
-                resolve();
-            } else {
-                reject();
-            }
-        });
+            return project;
+        } else {
+            return null;
+        }
     }
 
-    projectChange(): Observable<ProjectModel> {
+    listenProjectChange(): Observable<IProject> {
         return this.subject.asObservable();
     }
 
@@ -141,6 +144,6 @@ export class ProjectContextService {
     }
 
     triggerChange() {
-        this.subject.next(this.getProjectModel());
+        this.subject.next(this._project);
     }
 }
