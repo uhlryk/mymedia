@@ -56,8 +56,10 @@ export class FilesComponent implements OnInit, OnDestroy {
         this._projectChange = this.projectContextService
             .listenProjectChange()
             .subscribe((project: IProject) => {
-                this._resourceList = project.resourceList;
-                this._tagList = project.tagList;
+                if(project) {
+                    this._resourceList = project.resourceList;
+                    this._tagList = project.tagList;
+                }
             });
         this._openTagManager = this.projectContextService
             .listenOpenTagsManager()
@@ -67,7 +69,7 @@ export class FilesComponent implements OnInit, OnDestroy {
         this.projectContextService
             .loadProject()
             .then((project: IProject) => {
-                if(project) {
+                if (project) {
                     console.log(this._resourceList);
                     this._resourceList = project.resourceList;
                     this._tagList = project.tagList;

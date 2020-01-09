@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../../../../../services/projectContext.service";
 import TagModel from "../../../../../../models/tag.model";
+import IProject from "../../../../../../../../shared/types/project.interface";
+import ITag from "../../../../../../../../shared/types/tag.interface";
 
 @Component({
     templateUrl: "./content.component.html",
@@ -8,14 +10,17 @@ import TagModel from "../../../../../../models/tag.model";
 })
 export class ContentComponent implements OnInit {
     tagName: string;
-    tagList: Array<TagModel>;
+    tagList: Array<ITag>;
 
     constructor(private projectContextService: ProjectContextService) {}
 
     ngOnInit() {
-        this.tagList = this.projectContextService.getProjectTagList();
-        console.log("ZZZZZZZZZZ");
-        console.log(this.tagList);
+        this.projectContextService
+            .listenProjectChange()
+            .subscribe((project: IProject) => {
+                this.tagList = project.tagList;
+                console.log(this.tagList);
+            });
     }
 
     setValue() {

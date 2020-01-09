@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { NgZone } from "@angular/core";
 import ProjectModel from "../models/project.model";
 import ResourceCollectionModel from "../models/resource.collection.model";
@@ -13,7 +13,7 @@ import IProject from "../../../shared/types/project.interface";
 @Injectable()
 export class ProjectContextService {
     private _project: IProject;
-    private subject = new Subject<any>();
+    private subject = new BehaviorSubject<any>(null);
 
     constructor(private _ngZone: NgZone) {}
     async loadProject(): Promise<IProject> {
