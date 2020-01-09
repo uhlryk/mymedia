@@ -3,20 +3,18 @@
         <app-order
             (changeOrderMethod)="onChangeOrderMethod($event)"
         ></app-order>
-        <!--<app-search-->
-            <!--*ngIf="_tagList"-->
-            <!--[projectTagList]="_tagList"-->
-            <!--(changeSearchText)="onChangeSearchText($event)"-->
-            <!--(changeSearchTagList)="onChangeSearchTagList($event)"-->
-        <!--&gt;</app-search>-->
+        <app-search
+            *ngIf="_tagList"
+            [projectTagList]="_tagList"
+            (changeSearch)="onChangeSearch($event)"
+        ></app-search>
     </app-side-menu>
     <div class="p-col">
         <app-list
             *ngIf="_tagList"
             [tagList]="_tagList"
             [resourceList]="_resourceList"
-            [searchText]="_searchText"
-            [searchTagList]="_searchTagList"
+            [search]="_search"
             [orderMethod]="_orderMethod"
             (clickThumbnail)="onClickThumbnail($event)"
             (clickDetailsButton)="onClickDetailsButton($event)"

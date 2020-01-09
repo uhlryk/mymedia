@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import TagModel from "../../../../../../models/tag.model";
+import ITag from "../../../../../../../../shared/types/tag.interface";
 
 @Component({
     selector: "app-tag-select-list",
@@ -8,11 +9,11 @@ import TagModel from "../../../../../../models/tag.model";
 })
 export class TagSelectListComponent implements OnChanges {
     _selectedTagId: string;
-    _availableTagList: Array<TagModel>;
+    _availableTagList: Array<ITag>;
 
-    @Input() allTagList: Array<TagModel>;
-    @Input() selectedTagList: Array<TagModel>;
-    @Output() changeTagList = new EventEmitter<Array<TagModel>>();
+    @Input() allTagList: Array<ITag>;
+    @Input() selectedTagList: Array<ITag>;
+    @Output() changeTagList = new EventEmitter<Array<ITag>>();
     constructor() {}
 
     ngOnChanges() {

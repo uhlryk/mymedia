@@ -11,6 +11,7 @@ import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
+import ISearch from "../../types/search.interface";
 
 @Component({
     selector: "app-list",
@@ -21,8 +22,7 @@ import ITag from "../../../../../../shared/types/tag.interface";
 export class ListComponent implements OnInit, OnChanges {
     @Input() resourceList: Array<IResource>;
     @Input() tagList: Array<ITag>;
-    @Input() searchText: string;
-    @Input() searchTagList: Array<TagModel>;
+    @Input() search: ISearch;
     @Input() orderMethod: string;
     @Output() clickThumbnail = new EventEmitter<string>();
     @Output() clickDetailsButton = new EventEmitter<string>();
@@ -36,14 +36,18 @@ export class ListComponent implements OnInit, OnChanges {
         console.log("ListComponent.ngOnChanges");
         this._managedResourceList = this.resourceList
             .filter((resource: IResource) => {
-                if (
-                    resource.title.toLowerCase().includes(this.searchText.toLowerCase())
-                ) {
-                    if (this.searchTagList.length) {
-                        return this.searchTagList.every(
-                            (searchTag: TagModel) => !!resource.tags.includes(searchTag.id)
-                        );
+                if(this.search) {
+                    if (
+                        resource.title.toLowerCase().includes(this.search.text.toLowerCase())
+                    ) {
+                        if (this.search.tagList && this.search.tagList.length) {
+                            return this.search.tagList.every(
+                                (searchTag: ITag) => !!resource.tags.includes(searchTag.id)
+                            );
+                        }
+                        return true;
                     }
+                } else {
                     return true;
                 }
             })

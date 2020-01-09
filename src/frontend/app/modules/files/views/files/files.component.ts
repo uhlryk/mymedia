@@ -13,6 +13,7 @@ import { Subscription } from "rxjs";
 import IProject from "../../../../../../shared/types/project.interface";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
+import ISearch from "../../types/search.interface";
 
 @Component({
     templateUrl: "files.component.html",
@@ -33,8 +34,7 @@ export class FilesComponent implements OnInit, OnDestroy {
 
     _resourceList: Array<IResource>;
     _tagList: Array<ITag>;
-    _searchTagList: Array<TagModel>;
-    _searchText: string;
+    _search: ISearch;
     _orderMethod: string;
     _projectChange: Subscription;
     _thumbnailChange: Subscription;
@@ -48,8 +48,8 @@ export class FilesComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
     ngOnInit() {
-        this._searchTagList = [];
-        this._searchText = "";
+        // this._searchTagList = [];
+        // this._searchText = "";
         this._orderMethod = "";
         this._isLeftMenuVisible = false;
         this.loaderService.show();
@@ -68,6 +68,7 @@ export class FilesComponent implements OnInit, OnDestroy {
             .loadProject()
             .then((project: IProject) => {
                 if(project) {
+                    console.log(this._resourceList);
                     this._resourceList = project.resourceList;
                     this._tagList = project.tagList;
                     // this._thumbnailChange = this.thumbnailService
@@ -98,13 +99,10 @@ export class FilesComponent implements OnInit, OnDestroy {
         this.detailsModal.show(resourceId);
     }
 
-    onChangeSearchText(searchText: string) {
-        this._searchText = searchText;
+    onChangeSearch(search: ISearch) {
+        this._search = search;
     }
 
-    onChangeSearchTagList(searchTagList: Array<TagModel>) {
-        this._searchTagList = searchTagList;
-    }
 
     onChangeOrderMethod(orderMethod: string) {
         this._orderMethod = orderMethod;
