@@ -82,10 +82,6 @@ export class ProjectContextService {
             .getResourceModelById(resourceId);
     }
 
-    getResourceCollectionModel(): ResourceCollectionModel {
-        return this.getProjectModel().getResourceCollectionModel();
-    }
-
     public openResource(resourceId: string) {
         const selectedResource: IResource = this._project.resourceList.find(
             (resource: IResource) => resource.id === resourceId
@@ -93,16 +89,6 @@ export class ProjectContextService {
         IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {
             filePath: selectedResource.filePath
         });
-    }
-
-    setResourceTagList(resourceId, tagList: Array<TagModel>) {
-        const tagModelList: Array<TagModel> = tagList.map((tag: TagModel) => {
-            return this.getProjectTagModelById(tag.id);
-        });
-        this.getProjectModel()
-            .getResourceCollectionModel()
-            .getResourceModelById(resourceId)
-            .setTagModelList(tagModelList);
     }
 
     public createProjectTag(tagDiff: Omit<ITag, "id">) {
@@ -115,7 +101,7 @@ export class ProjectContextService {
         this.saveProject();
     }
 
-    public renameProjectTag(tagId, tagName) {
+    public changeProjectTag(tagId, tagName) {
         this._project = Object.assign({}, this._project, {
             tagList: this._project.tagList.map((tag: ITag) => {
                 if (tag.id === tagId) {
@@ -147,44 +133,14 @@ export class ProjectContextService {
         this.saveProject();
     }
 
-    getProjectTagList(): Array<TagModel> {
-        const tagCollectionModel: TagCollectionModel = this.getProjectModel().getTagCollectionModel();
-        if (tagCollectionModel) {
-            return tagCollectionModel.getList();
-        }
-        return [];
-    }
-
-    getProjectTagModelById(tagId: string): TagModel {
-        return this.getProjectModel()
-            .getTagCollectionModel()
-            .getTagModelById(tagId);
-    }
-
-    getProjectTagModelByName(tagName: string): TagModel {
-        return this.getProjectModel()
-            .getTagCollectionModel()
-            .getTagModelByName(tagName);
-    }
-
     private saveProject(): void {
         IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
             project: this._project
         });
         this.triggerChange();
     }
-    // saveProject(): Observable<null> {
-    //     return Observable.create(async observable => {
-    //         await this.getProjectModel().save();
-    //         this._ngZone.run(() => {
-    //             observable.next();
-    //             observable.complete();
-    //         });
-    //         this.triggerChange();
-    //     });
-    // }
 
-    triggerChange() {
+    private triggerChange() {
         this.subject.next(this._project);
     }
 }

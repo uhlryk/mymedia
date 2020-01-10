@@ -35,7 +35,7 @@ export class ContentComponent implements OnInit {
     }
 
     onEditTag(tagId, newName) {
-        this.projectContextService.renameProjectTag(tagId, newName);
+        this.projectContextService.changeProjectTag(tagId, newName);
         this.tagName = "";
         // const tagModel = this.projectContextService.getProjectTagModelById(tagId);
         // tagModel.setName(newName);

@@ -18,7 +18,6 @@ export class DetailsModalComponent {
     resource: IResource;
     thumbnailPath: string;
     _allProjectTagList: Array<ITag>;
-    // _selectedTagList: Array<TagModel>;
     visibleSidebar: boolean;
     show(resourceId: string) {
         this.projectContextService.listenProjectChange().subscribe((project: IProject) => {
