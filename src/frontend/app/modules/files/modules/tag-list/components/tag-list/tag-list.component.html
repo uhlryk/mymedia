@@ -1,15 +1,15 @@
 <p-overlayPanel #op>
     <div class="extra-tag-list">
-    <span class="extra-tag-wrapper" *ngFor="let tag of tagList.slice(4, tagList.length); let i = index">
+    <span class="extra-tag-wrapper" *ngFor="let tag of _resourceTagList.slice(4, _resourceTagList.length); let i = index">
         <app-tag [name]="tag.name"> </app-tag>
     </span>
     </div>
 </p-overlayPanel>
 <div class="tag-list">
-    <span class="tag-wrapper" *ngFor="let tag of tagList.slice(0, 4); let i = index">
+    <span class="tag-wrapper" *ngFor="let tag of _resourceTagList.slice(0, 4); let i = index">
         <app-tag [name]="tag.name"> </app-tag>
     </span>
-    <span class="tag-more" *ngIf="tagList.length > 4">
+    <span class="tag-more" *ngIf="_resourceTagList.length > 4">
         <p-button
             icon="pi pi-ellipsis-h"
             class="button-more"

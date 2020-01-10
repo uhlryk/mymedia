@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import TagModel from "../../../../models/tag.model";
+import ISearch from "../../types/search.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
 
 @Component({
     selector: "app-search",
@@ -7,25 +9,30 @@ import TagModel from "../../../../models/tag.model";
     styleUrls: ["./search.component.scss"]
 })
 export class SearchComponent implements OnInit, OnChanges {
-    @Input() projectTagList: Array<TagModel>;
-    @Output() changeSearchText = new EventEmitter<string>();
-    @Output() changeSearchTagList = new EventEmitter<Array<TagModel>>();
-    _searchInput: string;
-    _selectedTagList: Array<TagModel>;
+    @Input() projectTagList: Array<ITag>;
+    @Input() searchCriteria: ISearch;
+    @Output() changeSearch = new EventEmitter<ISearch>();
     constructor() {}
 
     ngOnInit() {
-        this._selectedTagList = [];
     }
 
-    ngOnChanges() {}
-
-    onChangeSearchText() {
-        this.changeSearchText.emit(this._searchInput);
+    ngOnChanges() {
+        // this._selectedTagList = this;
+        // this._searchInput = "";
     }
 
-    onChangeSearchTagList(selectedTagList: Array<TagModel>) {
-        this._selectedTagList = selectedTagList;
-        this.changeSearchTagList.emit(selectedTagList);
+    onChangeSearchText(inputText) {
+        this.changeSearch.emit({
+            tagIdList: this.searchCriteria.tagIdList,
+            text: inputText
+        });
+    }
+
+    onChangeSearchTagList(selectedTagList: Array<string>) {
+        this.changeSearch.emit({
+            tagIdList: selectedTagList,
+            text: this.searchCriteria.text
+        });
     }
 }

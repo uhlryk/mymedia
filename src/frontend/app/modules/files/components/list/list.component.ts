@@ -9,6 +9,9 @@ import {
 } from "@angular/core";
 import ResourceModel from "../../../../models/resource.model";
 import TagModel from "../../../../models/tag.model";
+import IResource from "../../../../../../shared/types/resource.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
+import ISearch from "../../types/search.interface";
 
 @Component({
     selector: "app-list",
@@ -17,30 +20,37 @@ import TagModel from "../../../../models/tag.model";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListComponent implements OnInit, OnChanges {
-    @Input() cardList: Array<ResourceModel>;
-    @Input() searchText: string;
-    @Input() searchTagList: Array<TagModel>;
+    @Input() resourceList: Array<IResource>;
+    @Input() tagList: Array<ITag>;
+    @Input() search: ISearch;
     @Input() orderMethod: string;
     @Output() clickThumbnail = new EventEmitter<string>();
     @Output() clickDetailsButton = new EventEmitter<string>();
 
-    _managedCardList: Array<ResourceModel>;
+    _managedResourceList: Array<IResource>;
     constructor() {}
 
     ngOnInit() {}
 
     ngOnChanges() {
         console.log("ListComponent.ngOnChanges");
-        this._managedCardList = this.cardList
-            .filter(resource => {
-                if (
-                    resource.title.toLowerCase().includes(this.searchText.toLowerCase())
-                ) {
-                    if (this.searchTagList.length) {
-                        return this.searchTagList.every(
-                            (searchTag: TagModel) => !!resource.findTagModel(searchTag.id)
-                        );
+        this._managedResourceList = this.resourceList
+            .filter((resource: IResource) => {
+                if (this.search) {
+                    if (
+                        resource.title
+                            .toLowerCase()
+                            .includes(this.search.text.toLowerCase())
+                    ) {
+                        if (this.search.tagIdList && this.search.tagIdList.length) {
+                            return this.search.tagIdList.every(
+                                (searchTagId: string) =>
+                                    !!resource.tags.includes(searchTagId)
+                            );
+                        }
+                        return true;
                     }
+                } else {
                     return true;
                 }
             })
@@ -72,9 +82,9 @@ export class ListComponent implements OnInit, OnChanges {
         console.log(val);
     }
 
-    trackByList(index, resource: ResourceModel) {
+    trackByList(index, resource: IResource) {
         if (resource) {
-            return resource.getId();
+            return resource.id;
         }
         return null;
     }

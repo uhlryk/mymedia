@@ -4,18 +4,18 @@
             (changeOrderMethod)="onChangeOrderMethod($event)"
         ></app-order>
         <app-search
-            *ngIf="_projectTagList"
-            [projectTagList]="_projectTagList"
-            (changeSearchText)="onChangeSearchText($event)"
-            (changeSearchTagList)="onChangeSearchTagList($event)"
+            *ngIf="_tagList"
+            [projectTagList]="_tagList"
+            [searchCriteria]="_search"
+            (changeSearch)="onChangeSearch($event)"
         ></app-search>
     </app-side-menu>
     <div class="p-col">
         <app-list
-            *ngIf="_cardList"
-            [cardList]="_cardList"
-            [searchText]="_searchText"
-            [searchTagList]="_searchTagList"
+            *ngIf="_tagList"
+            [tagList]="_tagList"
+            [resourceList]="_resourceList"
+            [search]="_search"
             [orderMethod]="_orderMethod"
             (clickThumbnail)="onClickThumbnail($event)"
             (clickDetailsButton)="onClickDetailsButton($event)"

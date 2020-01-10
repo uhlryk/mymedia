@@ -1,6 +1,6 @@
 <div class="create-section">
     <input type="text" pInputText [(ngModel)]="tagName" />
-    <p-button label="Create" (click)="setValue()"></p-button>
+    <p-button label="Create" (click)="onNewTag()"></p-button>
 </div>
 <p-table [value]="tagList">
     <ng-template pTemplate="header">
@@ -16,7 +16,7 @@
             <td colspan="4">
                 <app-text
                     [text]="tag.name"
-                    (changed)="editTag(tag.id, $event)"
+                    (changed)="onEditTag(tag.id, $event)"
                 ></app-text>
             </td>
             <td colspan="1"></td>
@@ -25,7 +25,7 @@
                 <p-button
                     icon="pi pi-times"E
                     styleClass="ui-button-danger"
-                    (click)="removeTag(tag.id)"
+                    (click)="onRemoveTag(tag.id)"
                 ></p-button>
             </td>
         </tr>

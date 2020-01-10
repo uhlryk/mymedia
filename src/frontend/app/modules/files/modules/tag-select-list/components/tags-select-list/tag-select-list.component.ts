@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import TagModel from "../../../../../../models/tag.model";
+import ITag from "../../../../../../../../shared/types/tag.interface";
 
 @Component({
     selector: "app-tag-select-list",
@@ -8,33 +9,35 @@ import TagModel from "../../../../../../models/tag.model";
 })
 export class TagSelectListComponent implements OnChanges {
     _selectedTagId: string;
-    _availableTagList: Array<TagModel>;
+    _availableTagList: Array<ITag>;
+    _selectedTagList: Array<ITag>;
 
-    @Input() allTagList: Array<TagModel>;
-    @Input() selectedTagList: Array<TagModel>;
-    @Output() changeTagList = new EventEmitter<Array<TagModel>>();
+    @Input() allTagList: Array<ITag>;
+    @Input() selectedTagIdList: Array<string>;
+    @Output() changeTagList = new EventEmitter<Array<string>>();
     constructor() {}
 
     ngOnChanges() {
         console.log("TagSelectListComponent.ngOnChanges");
         this._selectedTagId = "0";
-        this._availableTagList = this.allTagList.filter((allTag: TagModel) => {
-            return !this.selectedTagList.find(
-                (selectedTag: TagModel) => selectedTag.id === allTag.id
+        this._availableTagList = this.allTagList.filter((allTag: ITag) => {
+            return !this.selectedTagIdList.find(
+                (selectedTagId: string) => selectedTagId === allTag.id
+            );
+        });
+        this._selectedTagList = this.allTagList.filter((allTag: ITag) => {
+            return this.selectedTagIdList.find(
+                (selectedTagId: string) => selectedTagId === allTag.id
             );
         });
     }
     addTag(selectedTagId) {
-        console.log("TagSelectListComponent.addTag");
-        const tag: TagModel = this.allTagList.find(
-            (allTag: TagModel) => allTag.id === selectedTagId
-        );
-        this.changeTagList.emit(this.selectedTagList.concat([tag]));
+        this.changeTagList.emit(this._selectedTagList.map((tag: ITag)  => tag.id).concat(selectedTagId));
     }
 
     onRemoveTag(tagId: string) {
         this.changeTagList.emit(
-            this.selectedTagList.filter((selectedTag: TagModel) => selectedTag.id !== tagId)
+            this._selectedTagList.map((tag: ITag)  => tag.id).filter((selectedTagId: string) => selectedTagId !== tagId)
         );
     }
 }

@@ -3,13 +3,9 @@
     <!--<div *ngFor="let resource of _resourceList">{{resource}}</div>-->
     <app-card
         class="p-col-4"
-        *ngFor="let resource of _managedCardList; trackBy: trackByList"
-        [id]="resource.getId()"
-        [ranking]="resource.ranking"
-        [title]="resource.title"
-        [thumbnailPath]="resource.thumbnailPath"
-        [isNew]="resource.isNew"
-        [tagList]="resource.getTagList()"
+        *ngFor="let resource of _managedResourceList; trackBy: trackByList"
+        [resource]="resource"
+        [tagList]="tagList"
         (clickDetailsButton)="onClickDetailsButton($event)"
         (clickThumbnail)="onClickThumbnail($event)"
     >

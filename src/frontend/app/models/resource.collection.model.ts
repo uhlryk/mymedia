@@ -1,15 +1,15 @@
 import ResourceModel from "./resource.model";
-import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
+import IResource from "../../../shared/types/resource.interface";
 import TagCollectionModel from "./tag.collection.model";
 export default class ResourceCollectionModel {
     private _resourceModelList: Array<ResourceModel>;
     private _tagCollectionModel: TagCollectionModel;
     public constructor(
-        resourceList: Array<ResourceModelInterface>,
+        resourceList: Array<IResource>,
         tagCollectionModel: TagCollectionModel
     ) {
         this._tagCollectionModel = tagCollectionModel;
-        this._resourceModelList = resourceList.map((resource: ResourceModelInterface) => {
+        this._resourceModelList = resourceList.map((resource: IResource) => {
             return ResourceModel.fromProject(resource, tagCollectionModel);
         });
     }
@@ -26,7 +26,7 @@ export default class ResourceCollectionModel {
         });
     }
 
-    public toSaveValue(): Array<ResourceModelInterface> {
+    public toSaveValue(): Array<IResource> {
         return this._resourceModelList.map((resourceModel: ResourceModel) =>
             resourceModel.toSaveValue()
         );

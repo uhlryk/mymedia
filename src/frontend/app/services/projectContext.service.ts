@@ -1,5 +1,6 @@
+import uuid from "uuidv4";
 import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { NgZone } from "@angular/core";
 import ProjectModel from "../models/project.model";
 import ResourceCollectionModel from "../models/resource.collection.model";
@@ -8,25 +9,30 @@ import TagModel from "../models/tag.model";
 import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import TagCollectionModel from "../models/tag.collection.model";
+import IProject from "../../../shared/types/project.interface";
+import ITag from "../../../shared/types/tag.interface";
+import IResource from "../../../shared/types/resource.interface";
 
 @Injectable()
 export class ProjectContextService {
-    private subject = new Subject<any>();
+    private _project: IProject;
+    private subject = new BehaviorSubject<any>(null);
 
     constructor(private _ngZone: NgZone) {}
-    loadProject(): Promise<void> {
-        return new Promise(async (resolve, reject) => {
-            const isProjectExist = await this.getProjectModel().loadProject();
+    public async loadProject(): Promise<IProject> {
+        const project: IProject = await IpcProvider.request(
+            IpcProviderResourceEnums.LOAD_PROJECT
+        );
+        if (project) {
+            this._project = project;
             this.triggerChange();
-            if (isProjectExist) {
-                resolve();
-            } else {
-                reject();
-            }
-        });
+            return project;
+        } else {
+            return null;
+        }
     }
 
-    projectChange(): Observable<ProjectModel> {
+    public listenProjectChange(): Observable<IProject> {
         return this.subject.asObservable();
     }
 
@@ -76,71 +82,76 @@ export class ProjectContextService {
             .getResourceModelById(resourceId);
     }
 
-    getResourceCollectionModel(): ResourceCollectionModel {
-        return this.getProjectModel().getResourceCollectionModel();
-    }
-
-    openResource(resourceId: string) {
-        this.getProjectModel().open(resourceId);
-    }
-
-    setResourceTagList(resourceId, tagList: Array<TagModel>) {
-        const tagModelList: Array<TagModel> = tagList.map((tag: TagModel) => {
-            return this.getProjectTagModelById(tag.id);
-        });
-        this.getProjectModel()
-            .getResourceCollectionModel()
-            .getResourceModelById(resourceId)
-            .setTagModelList(tagModelList);
-    }
-
-    removeProjectTag(tagId) {
-        this.getProjectModel()
-            .getResourceCollectionModel()
-            .removeAllResourceTagModel(tagId);
-        this.getProjectModel()
-            .getTagCollectionModel()
-            .removeTagModelById(tagId);
-    }
-
-    createProjectTag(tagName) {
-        this.getProjectModel()
-            .getTagCollectionModel()
-            .addTagModel(TagModel.create(tagName));
-    }
-
-    getProjectTagList(): Array<TagModel> {
-        const tagCollectionModel: TagCollectionModel = this.getProjectModel().getTagCollectionModel();
-        if (tagCollectionModel) {
-            return tagCollectionModel.getList();
-        }
-        return [];
-    }
-
-    getProjectTagModelById(tagId: string): TagModel {
-        return this.getProjectModel()
-            .getTagCollectionModel()
-            .getTagModelById(tagId);
-    }
-
-    getProjectTagModelByName(tagName: string): TagModel {
-        return this.getProjectModel()
-            .getTagCollectionModel()
-            .getTagModelByName(tagName);
-    }
-
-    saveProject(): Observable<null> {
-        return Observable.create(async observable => {
-            await this.getProjectModel().save();
-            this._ngZone.run(() => {
-                observable.next();
-                observable.complete();
-            });
-            this.triggerChange();
+    public openResource(resourceId: string) {
+        const selectedResource: IResource = this._project.resourceList.find(
+            (resource: IResource) => resource.id === resourceId
+        );
+        IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {
+            filePath: selectedResource.filePath
         });
     }
 
-    triggerChange() {
-        this.subject.next(this.getProjectModel());
+    public changeProjectResource(resourceId, resourceDiff: Partial<Omit<IResource, "id">>) {
+        this._project = Object.assign({}, this._project, {
+            resourceList: this._project.resourceList.map((resource: IResource) => {
+                if (resource.id === resourceId) {
+                    return Object.assign({}, resource, resourceDiff);
+                } else {
+                    return resource;
+                }
+            })
+        });
+        this.saveProject();
+    }
+
+    public createProjectTag(tagDiff: Omit<ITag, "id">) {
+        this._project = Object.assign({}, this._project, {
+            tagList: (this._project.tagList || []).concat({
+                id: uuid(),
+                ...tagDiff
+            })
+        });
+        this.saveProject();
+    }
+
+    public changeProjectTag(tagId, tagDiff: Partial<Omit<ITag, "id">>) {
+        this._project = Object.assign({}, this._project, {
+            tagList: this._project.tagList.map((tag: ITag) => {
+                if (tag.id === tagId) {
+                    return Object.assign({}, tag, tagDiff);
+                } else {
+                    return tag;
+                }
+            })
+        });
+        this.saveProject();
+    }
+    public removeProjectTag(tagId) {
+        this._project = Object.assign({}, this._project, {
+            tagList: this._project.tagList.filter((tag: ITag) => tag.id !== tagId),
+            resourceList: this._project.resourceList.map((resource: IResource) => {
+                if (resource.tags.includes(tagId)) {
+                    return Object.assign({}, resource, {
+                        tags: resource.tags.filter(
+                            (resourceTagId: string) => resourceTagId !== tagId
+                        )
+                    });
+                } else {
+                    return resource;
+                }
+            })
+        });
+        this.saveProject();
+    }
+
+    private saveProject(): void {
+        IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
+            project: this._project
+        });
+        this.triggerChange();
+    }
+
+    private triggerChange() {
+        this.subject.next(this._project);
     }
 }

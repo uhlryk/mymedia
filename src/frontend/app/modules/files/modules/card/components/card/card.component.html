@@ -2,12 +2,12 @@
     <p-header>
         {{ log("CardComponent.render") }}
         <div class="thumbnail-section">
-            <div *ngIf="!thumbnailPath" class="spinner-wrapper">
+            <div *ngIf="!resource.thumbnailList[0]" class="spinner-wrapper">
                 <i class="pi pi-clock" style="font-size: 3em"></i>
                 <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
             </div>
-            <div class="thumbnail-wrapper" *ngIf="thumbnailPath">
-                <img class="thumbnail" [src]="thumbnailPath" alt="" />
+            <div class="thumbnail-wrapper" *ngIf="resource.thumbnailList[0]">
+                <img class="thumbnail" [src]="resource.thumbnailList[0]" alt="" />
                 <div class="show-play" (click)="onClickThumbnail()">
                     <i class="pi pi-caret-right"></i>
                 </div>
@@ -16,8 +16,8 @@
     </p-header>
     <div>
         <div class="title">
-            <span [pTooltip]="title">
-                {{ title }}
+            <span [pTooltip]="resource.title">
+                {{ resource.title }}
             </span>
         </div>
         <div class="card-section">
@@ -27,10 +27,10 @@
                 [cancel]="false"
             ></p-rating>
 
-            <span *ngIf="isNew">NEW</span>
+            <span *ngIf="resource.isNew">NEW</span>
         </div>
         <div class="card-section">
-            <app-tag-list [tagList]="tagList"></app-tag-list>
+            <app-tag-list [projectTagList]="tagList" [resourceTagIdList]="resource.tags"></app-tag-list>
         </div>
     </div>
     <p-footer>

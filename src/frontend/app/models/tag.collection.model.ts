@@ -1,13 +1,13 @@
-import TagInterface from "../../../shared/types/tag.interface";
+import ITag from "../../../shared/types/tag.interface";
 import TagModel from "./tag.model";
 
 export default class TagCollectionModel {
     private _tagModelList: Array<TagModel> = [];
     public constructor() {}
-    static fromProject(tagList: Array<TagInterface> = []): TagCollectionModel {
+    static fromProject(tagList: Array<ITag> = []): TagCollectionModel {
         const tagCollectionModel = new TagCollectionModel();
 
-        tagCollectionModel._tagModelList = tagList.map((tag: TagInterface) => {
+        tagCollectionModel._tagModelList = tagList.map((tag: ITag) => {
             return TagModel.fromProject(tag);
         });
         return tagCollectionModel;
@@ -31,7 +31,7 @@ export default class TagCollectionModel {
         );
     }
 
-    public toSaveValue(): Array<TagInterface> {
+    public toSaveValue(): Array<ITag> {
         return this._tagModelList.map((tagModel: TagModel) => tagModel.toSaveValue());
     }
 

@@ -1,4 +1,4 @@
-import ResourceModelInterface from "../../../shared/types/resourceModel.interface";
+import IResource from "../../../shared/types/resource.interface";
 import TagCollectionModel from "./tag.collection.model";
 import TagModel from "./tag.model";
 
@@ -21,7 +21,7 @@ export default class ResourceModel {
     private _tagCollectionModel: TagCollectionModel;
     private _thumbnailList: Array<string>;
     static fromProject(
-        resource: ResourceModelInterface,
+        resource: IResource,
         tagCollectionModel: TagCollectionModel
     ) {
         const resourceModel: ResourceModel = new ResourceModel(tagCollectionModel);
@@ -122,7 +122,7 @@ export default class ResourceModel {
         }
     }
 
-    public toSaveValue(): ResourceModelInterface {
+    public toSaveValue(): IResource {
         return {
             filePath: this._filePath,
             fileName: this._fileName,

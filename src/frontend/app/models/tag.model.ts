@@ -1,12 +1,12 @@
 import uuid from "uuidv4";
-import TagInterface from "../../../shared/types/tag.interface";
+import ITag from "../../../shared/types/tag.interface";
 
 export default class TagModel {
     private _id: string;
     private _name: string;
     private constructor() {}
 
-    static fromProject(tag: TagInterface): TagModel {
+    static fromProject(tag: ITag): TagModel {
         const tagModel = new TagModel();
         tagModel._id = tag.id;
         tagModel._name = tag.name;
@@ -31,7 +31,7 @@ export default class TagModel {
         return this._id;
     }
 
-    public toSaveValue(): TagInterface {
+    public toSaveValue(): ITag {
         return {
             id: this._id,
             name: this._name

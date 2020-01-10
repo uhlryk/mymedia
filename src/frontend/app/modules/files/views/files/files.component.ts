@@ -10,6 +10,10 @@ import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.componen
 import ProjectModel from "../../../../models/project.model";
 import TagModel from "../../../../models/tag.model";
 import { Subscription } from "rxjs";
+import IProject from "../../../../../../shared/types/project.interface";
+import IResource from "../../../../../../shared/types/resource.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
+import ISearch from "../../types/search.interface";
 
 @Component({
     templateUrl: "files.component.html",
@@ -25,11 +29,12 @@ export class FilesComponent implements OnInit, OnDestroy {
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
 
-    _cardList: Array<ResourceModel>;
-    _projectTagList: Array<TagModel>;
+    // _cardList: Array<ResourceModel>;
+    // _projectTagList: Array<TagModel>;
 
-    _searchTagList: Array<TagModel>;
-    _searchText: string;
+    _resourceList: Array<IResource>;
+    _tagList: Array<ITag>;
+    _search: ISearch;
     _orderMethod: string;
     _projectChange: Subscription;
     _thumbnailChange: Subscription;
@@ -43,45 +48,57 @@ export class FilesComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
     ngOnInit() {
-        this._searchTagList = [];
-        this._searchText = "";
+        this._search = {
+            text: "",
+            tagIdList: []
+        };
+        // this._searchTagList = [];
+        // this._searchText = "";
         this._orderMethod = "";
         this._isLeftMenuVisible = false;
         this.loaderService.show();
         this._projectChange = this.projectContextService
-            .projectChange()
-            .subscribe((projectModel: ProjectModel) => {
-                console.log("FilesComponent change in project");
-                this._projectTagList = this.projectContextService.getProjectTagList();
-                this._cardList = projectModel.getResourceCollectionModel().getList();
-                console.log(this._cardList);
+            .listenProjectChange()
+            .subscribe((project: IProject) => {
+                if (project) {
+                    this._resourceList = project.resourceList;
+                    if (this._tagList !== project.tagList) {
+                        this._search.tagIdList = this._search.tagIdList.filter(
+                            (tagId: string) =>
+                                project.tagList.find((tag: ITag) => tag.id === tagId)
+                        );
+                    }
+                    this._tagList = project.tagList;
+                }
             });
         this._openTagManager = this.projectContextService
             .listenOpenTagsManager()
             .subscribe(() => {
                 this.tagsModal.show();
             });
-        this.projectContextService
-            .loadProject()
-            .then(() => {
-                this._thumbnailChange = this.thumbnailService
-                    .onThumbnailChange()
-                    .subscribe(response => {
-                        const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
-                            response.resourceId
-                        );
-                        resourceModel.setThumbnailPath(
-                            response.resourceThumbnailPath,
-                            response.videoIndex
-                        );
-                        this.projectContextService.triggerChange();
-                    });
+        this.projectContextService.loadProject().then((project: IProject) => {
+            if (project) {
+                console.log(this._resourceList);
+                this._resourceList = project.resourceList;
+                this._tagList = project.tagList;
+                // this._thumbnailChange = this.thumbnailService
+                //     .onThumbnailChange()
+                //     .subscribe(response => {
+                //         const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
+                //             response.resourceId
+                //         );
+                //         resourceModel.setThumbnailPath(
+                //             response.resourceThumbnailPath,
+                //             response.videoIndex
+                //         );
+                //         this.projectContextService.triggerChange();
+                //     });
 
                 this.loaderService.hide();
-            })
-            .catch(() => {
+            } else {
                 this.router.navigate(["/create-project"]);
-            });
+            }
+        });
     }
 
     onClickThumbnail(resourceId) {
@@ -92,12 +109,8 @@ export class FilesComponent implements OnInit, OnDestroy {
         this.detailsModal.show(resourceId);
     }
 
-    onChangeSearchText(searchText: string) {
-        this._searchText = searchText;
-    }
-
-    onChangeSearchTagList(searchTagList: Array<TagModel>) {
-        this._searchTagList = searchTagList;
+    onChangeSearch(search: ISearch) {
+        this._search = search;
     }
 
     onChangeOrderMethod(orderMethod: string) {
