@@ -66,3 +66,17 @@ img.thumbnail {
     background-color: red;
     border-color: red;
 }
+
+.align-meta-info {
+    display: flex;
+    flex-direction: row; /* NEW */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 3px 6px;
+    font-size: 10px;
+}
+.align-rating {
+    display: flex;
+    justify-content: center;
+}

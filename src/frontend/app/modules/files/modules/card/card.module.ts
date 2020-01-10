@@ -7,9 +7,10 @@ import { CardModule as PrimengCardModule } from "primeng/card";
 import { ButtonModule } from "primeng/button";
 import { TooltipModule } from "primeng/tooltip";
 import { RatingModule } from "primeng/rating";
+import { SharedModule } from "../shared/shared.module";
 @NgModule({
     declarations: [CardComponent],
-    imports: [CommonModule, FormsModule, TagListModule, ButtonModule, PrimengCardModule, TooltipModule, RatingModule],
+    imports: [CommonModule, FormsModule, TagListModule, ButtonModule, PrimengCardModule, TooltipModule, RatingModule, SharedModule],
     exports: [CardComponent]
 })
 export class CardModule {}

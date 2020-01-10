@@ -19,7 +19,12 @@
                 {{ resource.title }}
             </span>
         </div>
-        <div class="card-section">
+        <div class="align-meta-info">
+            <app-file-size [size]="resource.size"></app-file-size>
+            <span>{{ resource.width }} x {{ resource.height }}</span>
+            <app-video-length [length]="resource.duration"></app-video-length>
+        </div>
+        <div class="align-rating">
             <p-rating
                 [ngModel]="_ranking"
                 [readonly]="true"
