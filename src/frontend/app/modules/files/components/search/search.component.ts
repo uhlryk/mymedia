@@ -24,14 +24,14 @@ export class SearchComponent implements OnInit, OnChanges {
 
     onChangeSearchText(inputText) {
         this.changeSearch.emit({
-            tagList: this.searchCriteria.tagList,
+            tagIdList: this.searchCriteria.tagIdList,
             text: inputText
         });
     }
 
-    onChangeSearchTagList(selectedTagList: Array<TagModel>) {
+    onChangeSearchTagList(selectedTagList: Array<string>) {
         this.changeSearch.emit({
-            tagList: selectedTagList,
+            tagIdList: selectedTagList,
             text: this.searchCriteria.text
         });
     }

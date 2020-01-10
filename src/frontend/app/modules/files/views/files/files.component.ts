@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
-import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
+// import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
 import ResourceModel from "../../../../models/resource.model";
 import { LoaderService } from "../../../../services/loader.service";
@@ -20,8 +20,8 @@ import ISearch from "../../types/search.interface";
     styleUrls: ["./files.component.scss"]
 })
 export class FilesComponent implements OnInit, OnDestroy {
-    @ViewChild(DetailsModalComponent, { static: true })
-    detailsModal: DetailsModalComponent;
+    // @ViewChild(DetailsModalComponent, { static: true })
+    // detailsModal: DetailsModalComponent;
 
     @ViewChild(ThumbnailsModalComponent, { static: true })
     thumbnailsModal: ThumbnailsModalComponent;
@@ -50,7 +50,7 @@ export class FilesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this._search = {
             text: "",
-            tagList: []
+            tagIdList: []
         };
         // this._searchTagList = [];
         // this._searchText = "";
@@ -60,8 +60,14 @@ export class FilesComponent implements OnInit, OnDestroy {
         this._projectChange = this.projectContextService
             .listenProjectChange()
             .subscribe((project: IProject) => {
-                if(project) {
+                if (project) {
                     this._resourceList = project.resourceList;
+                    if (this._tagList !== project.tagList) {
+                        this._search.tagIdList = this._search.tagIdList.filter(
+                            (tagId: string) =>
+                                project.tagList.find((tag: ITag) => tag.id === tagId)
+                        );
+                    }
                     this._tagList = project.tagList;
                 }
             });
@@ -70,31 +76,29 @@ export class FilesComponent implements OnInit, OnDestroy {
             .subscribe(() => {
                 this.tagsModal.show();
             });
-        this.projectContextService
-            .loadProject()
-            .then((project: IProject) => {
-                if (project) {
-                    console.log(this._resourceList);
-                    this._resourceList = project.resourceList;
-                    this._tagList = project.tagList;
-                    // this._thumbnailChange = this.thumbnailService
-                    //     .onThumbnailChange()
-                    //     .subscribe(response => {
-                    //         const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
-                    //             response.resourceId
-                    //         );
-                    //         resourceModel.setThumbnailPath(
-                    //             response.resourceThumbnailPath,
-                    //             response.videoIndex
-                    //         );
-                    //         this.projectContextService.triggerChange();
-                    //     });
+        this.projectContextService.loadProject().then((project: IProject) => {
+            if (project) {
+                console.log(this._resourceList);
+                this._resourceList = project.resourceList;
+                this._tagList = project.tagList;
+                // this._thumbnailChange = this.thumbnailService
+                //     .onThumbnailChange()
+                //     .subscribe(response => {
+                //         const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
+                //             response.resourceId
+                //         );
+                //         resourceModel.setThumbnailPath(
+                //             response.resourceThumbnailPath,
+                //             response.videoIndex
+                //         );
+                //         this.projectContextService.triggerChange();
+                //     });
 
-                    this.loaderService.hide();
-                } else {
-                    this.router.navigate(["/create-project"]);
-                }
-            });
+                this.loaderService.hide();
+            } else {
+                this.router.navigate(["/create-project"]);
+            }
+        });
     }
 
     onClickThumbnail(resourceId) {
@@ -102,13 +106,12 @@ export class FilesComponent implements OnInit, OnDestroy {
     }
 
     onClickDetailsButton(resourceId) {
-        this.detailsModal.show(resourceId);
+        // this.detailsModal.show(resourceId);
     }
 
     onChangeSearch(search: ISearch) {
         this._search = search;
     }
-
 
     onChangeOrderMethod(orderMethod: string) {
         this._orderMethod = orderMethod;

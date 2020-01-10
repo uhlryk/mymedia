@@ -25,7 +25,7 @@ export class ContentComponent implements OnInit {
     }
 
     onNewTag() {
-        this.projectContextService.createProjectTag(this.tagName);
+        this.projectContextService.createProjectTag({ name: this.tagName });
         this.tagName = "";
         // if (!this.projectContextService.getProjectTagModelByName(this.tagName)) {
         //     this.projectContextService.createProjectTag(this.tagName);

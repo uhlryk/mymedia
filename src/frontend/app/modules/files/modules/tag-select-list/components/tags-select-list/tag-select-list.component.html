@@ -9,7 +9,7 @@
     </option>
 </select>
 <div class="tags-section">
-    <span *ngFor="let tag of selectedTagList">
+    <span *ngFor="let tag of _selectedTagList">
         <app-tag (click)="onRemoveTag(tag.id)" [name]="tag.name"></app-tag>
     </span>
 </div>

@@ -10,32 +10,34 @@ import ITag from "../../../../../../../../shared/types/tag.interface";
 export class TagSelectListComponent implements OnChanges {
     _selectedTagId: string;
     _availableTagList: Array<ITag>;
+    _selectedTagList: Array<ITag>;
 
     @Input() allTagList: Array<ITag>;
-    @Input() selectedTagList: Array<ITag>;
-    @Output() changeTagList = new EventEmitter<Array<ITag>>();
+    @Input() selectedTagIdList: Array<string>;
+    @Output() changeTagList = new EventEmitter<Array<string>>();
     constructor() {}
 
     ngOnChanges() {
         console.log("TagSelectListComponent.ngOnChanges");
         this._selectedTagId = "0";
         this._availableTagList = this.allTagList.filter((allTag: ITag) => {
-            return !this.selectedTagList.find(
-                (selectedTag: TagModel) => selectedTag.id === allTag.id
+            return !this.selectedTagIdList.find(
+                (selectedTagId: string) => selectedTagId === allTag.id
+            );
+        });
+        this._selectedTagList = this.allTagList.filter((allTag: ITag) => {
+            return this.selectedTagIdList.find(
+                (selectedTagId: string) => selectedTagId === allTag.id
             );
         });
     }
     addTag(selectedTagId) {
-        console.log("TagSelectListComponent.addTag");
-        const tag: TagModel = this.allTagList.find(
-            (allTag: TagModel) => allTag.id === selectedTagId
-        );
-        this.changeTagList.emit(this.selectedTagList.concat([tag]));
+        this.changeTagList.emit(this._selectedTagList.map((tag: ITag)  => tag.id).concat(selectedTagId));
     }
 
     onRemoveTag(tagId: string) {
         this.changeTagList.emit(
-            this.selectedTagList.filter((selectedTag: TagModel) => selectedTag.id !== tagId)
+            this._selectedTagList.map((tag: ITag)  => tag.id).filter((selectedTagId: string) => selectedTagId !== tagId)
         );
     }
 }

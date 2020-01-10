@@ -36,13 +36,16 @@ export class ListComponent implements OnInit, OnChanges {
         console.log("ListComponent.ngOnChanges");
         this._managedResourceList = this.resourceList
             .filter((resource: IResource) => {
-                if(this.search) {
+                if (this.search) {
                     if (
-                        resource.title.toLowerCase().includes(this.search.text.toLowerCase())
+                        resource.title
+                            .toLowerCase()
+                            .includes(this.search.text.toLowerCase())
                     ) {
-                        if (this.search.tagList && this.search.tagList.length) {
-                            return this.search.tagList.every(
-                                (searchTag: ITag) => !!resource.tags.includes(searchTag.id)
+                        if (this.search.tagIdList && this.search.tagIdList.length) {
+                            return this.search.tagIdList.every(
+                                (searchTagId: string) =>
+                                    !!resource.tags.includes(searchTagId)
                             );
                         }
                         return true;

@@ -87,9 +87,11 @@ export class ProjectContextService {
     }
 
     public openResource(resourceId: string) {
-        const resource: IResource = this._project.resourceList.find((resource: IResource) => resource.id === resourceId);
+        const selectedResource: IResource = this._project.resourceList.find(
+            (resource: IResource) => resource.id === resourceId
+        );
         IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {
-            filePath: resource.filePath
+            filePath: selectedResource.filePath
         });
     }
 
@@ -103,11 +105,11 @@ export class ProjectContextService {
             .setTagModelList(tagModelList);
     }
 
-    public createProjectTag(tagName) {
+    public createProjectTag(tagDiff: Omit<ITag, "id">) {
         this._project = Object.assign({}, this._project, {
             tagList: (this._project.tagList || []).concat({
                 id: uuid(),
-                name: tagName
+                ...tagDiff
             })
         });
         this.saveProject();
@@ -165,8 +167,8 @@ export class ProjectContextService {
             .getTagModelByName(tagName);
     }
 
-    private async saveProject(): Promise<void> {
-        await IpcProvider.request(IpcProviderResourceEnums.SAVE_PROJECT, {
+    private saveProject(): void {
+        IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
             project: this._project
         });
         this.triggerChange();
