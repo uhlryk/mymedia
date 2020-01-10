@@ -31,7 +31,7 @@ export class DetailsModalComponent {
     }
 
     clickOpenFile() {
-        // this.projectContextService.getProjectModel().open(this.resource.getId());
+        this.projectContextService.openResource(this.resource.id);
     }
     cancelRating() {
         // this.resource.ranking = 0;
