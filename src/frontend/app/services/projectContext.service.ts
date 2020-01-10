@@ -101,13 +101,11 @@ export class ProjectContextService {
         this.saveProject();
     }
 
-    public changeProjectTag(tagId, tagName) {
+    public changeProjectTag(tagId, tagDiff: Partial<Omit<ITag, "id">>) {
         this._project = Object.assign({}, this._project, {
             tagList: this._project.tagList.map((tag: ITag) => {
                 if (tag.id === tagId) {
-                    return Object.assign({}, tag, {
-                        name: tagName
-                    });
+                    return Object.assign({}, tag, tagDiff);
                 } else {
                     return tag;
                 }

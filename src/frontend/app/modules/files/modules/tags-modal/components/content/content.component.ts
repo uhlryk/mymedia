@@ -19,32 +19,20 @@ export class ContentComponent implements OnInit {
             .listenProjectChange()
             .subscribe((project: IProject) => {
                 this.tagList = project.tagList;
-                console.log("===");
-                console.log(this.tagList);
             });
     }
 
     onNewTag() {
         this.projectContextService.createProjectTag({ name: this.tagName });
         this.tagName = "";
-        // if (!this.projectContextService.getProjectTagModelByName(this.tagName)) {
-        //     this.projectContextService.createProjectTag(this.tagName);
-        // }
-        // this.tagName = "";
-        // this.projectContextService.saveProject().subscribe(() => {});
     }
 
     onEditTag(tagId, newName) {
-        this.projectContextService.changeProjectTag(tagId, newName);
+        this.projectContextService.changeProjectTag(tagId, { name: newName });
         this.tagName = "";
-        // const tagModel = this.projectContextService.getProjectTagModelById(tagId);
-        // tagModel.setName(newName);
-        // this.projectContextService.saveProject().subscribe(() => {});
     }
     onRemoveTag(tagId) {
         this.projectContextService.removeProjectTag(tagId);
         this.tagName = "";
-        // this.tagList = this.projectContextService.getProjectTagList();
-        // this.projectContextService.saveProject().subscribe(() => {});
     }
 }
