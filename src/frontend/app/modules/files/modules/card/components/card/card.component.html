@@ -2,12 +2,11 @@
     <p-header>
         {{ log("CardComponent.render") }}
         <div class="thumbnail-section">
-            <div *ngIf="!resource.thumbnailList[0]" class="spinner-wrapper">
+            <div *ngIf="!_thumbnailPath" class="spinner-wrapper">
                 <i class="pi pi-clock" style="font-size: 3em"></i>
-                <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
             </div>
-            <div class="thumbnail-wrapper" *ngIf="resource.thumbnailList[0]">
-                <img class="thumbnail" [src]="resource.thumbnailList[0]" alt="" />
+            <div class="thumbnail-wrapper" *ngIf="_thumbnailPath">
+                <img class="thumbnail" [src]="_thumbnailPath" alt="" />
                 <div class="show-play" (click)="onClickThumbnail()">
                     <i class="pi pi-caret-right"></i>
                 </div>

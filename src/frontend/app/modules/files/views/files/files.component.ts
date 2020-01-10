@@ -29,9 +29,6 @@ export class FilesComponent implements OnInit, OnDestroy {
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
 
-    // _cardList: Array<ResourceModel>;
-    // _projectTagList: Array<TagModel>;
-
     _resourceList: Array<IResource>;
     _tagList: Array<ITag>;
     _search: ISearch;
@@ -40,7 +37,6 @@ export class FilesComponent implements OnInit, OnDestroy {
     _thumbnailChange: Subscription;
     _openTagManager: Subscription;
     private _isLeftMenuVisible: boolean;
-    // visibleSidebar = false;
     constructor(
         private projectContextService: ProjectContextService,
         private thumbnailService: ThumbnailService,
@@ -52,8 +48,6 @@ export class FilesComponent implements OnInit, OnDestroy {
             text: "",
             tagIdList: []
         };
-        // this._searchTagList = [];
-        // this._searchText = "";
         this._orderMethod = "";
         this._isLeftMenuVisible = false;
         this.loaderService.show();
@@ -81,18 +75,21 @@ export class FilesComponent implements OnInit, OnDestroy {
                 console.log(this._resourceList);
                 this._resourceList = project.resourceList;
                 this._tagList = project.tagList;
-                // this._thumbnailChange = this.thumbnailService
-                //     .onThumbnailChange()
-                //     .subscribe(response => {
-                //         const resourceModel: ResourceModel = this.projectContextService.getResourceModel(
-                //             response.resourceId
-                //         );
-                //         resourceModel.setThumbnailPath(
-                //             response.resourceThumbnailPath,
-                //             response.videoIndex
-                //         );
-                //         this.projectContextService.triggerChange();
-                //     });
+                this._thumbnailChange = this.thumbnailService
+                    .onThumbnailChange()
+                    .subscribe(response => {
+                        const thumbnailResource = this._resourceList.find(
+                            (resource: IResource) => resource.id === response.resourceId
+                        );
+                        const list = (thumbnailResource.thumbnailList || []).slice();
+                        list[response.videoIndex] = response.resourceThumbnailPath;
+                        this.projectContextService.changeProjectResource(
+                            thumbnailResource.id,
+                            {
+                                thumbnailList: list
+                            }
+                        );
+                    });
 
                 this.loaderService.hide();
             } else {

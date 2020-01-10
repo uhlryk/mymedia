@@ -22,8 +22,9 @@ export class DetailsModalComponent {
             this.resource = project.resourceList.find((resource: IResource) => resource.id === resourceId);
             this.thumbnailPath = this.resource.thumbnailList[0];
             this._allProjectTagList = project.tagList;
-            this.visibleSidebar = true;
+
         });
+        this.visibleSidebar = true;
     }
 
     clickOpenFile() {

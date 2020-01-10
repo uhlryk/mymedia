@@ -27,11 +27,13 @@ export class CardComponent implements OnInit, OnChanges {
     @Output() clickDeleteButton = new EventEmitter<string>();
     @Output() clickThumbnail = new EventEmitter<string>();
     _ranking: number;
+    _thumbnailPath: string;
     constructor() {}
 
     ngOnInit() {}
     ngOnChanges() {
         this._ranking = this.resource.ranking;
+        this._thumbnailPath = (this.resource.thumbnailList || [])[0];
         console.log("CardComponent.ngOnChanges");
     }
     onClickDetailsButton() {
