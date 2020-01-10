@@ -26,6 +26,7 @@ export class ListComponent implements OnInit, OnChanges {
     @Input() orderMethod: string;
     @Output() clickThumbnail = new EventEmitter<string>();
     @Output() clickDetailsButton = new EventEmitter<string>();
+    @Output() clickDeleteButton = new EventEmitter<string>();
 
     _managedResourceList: Array<IResource>;
     constructor() {}
@@ -76,6 +77,10 @@ export class ListComponent implements OnInit, OnChanges {
     }
     onClickDetailsButton(resourceId: string) {
         this.clickDetailsButton.emit(resourceId);
+    }
+
+    onClickDeleteButton(resourceId: string) {
+        this.clickDeleteButton.emit(resourceId);
     }
 
     log(val) {

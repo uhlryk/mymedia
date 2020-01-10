@@ -3,12 +3,8 @@ import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import { NgZone } from "@angular/core";
 import ProjectModel from "../models/project.model";
-import ResourceCollectionModel from "../models/resource.collection.model";
-import ResourceModel from "../models/resource.model";
-import TagModel from "../models/tag.model";
 import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
-import TagCollectionModel from "../models/tag.collection.model";
 import IProject from "../../../shared/types/project.interface";
 import ITag from "../../../shared/types/tag.interface";
 import IResource from "../../../shared/types/resource.interface";
@@ -76,12 +72,6 @@ export class ProjectContextService {
         });
     }
 
-    getResourceModel(resourceId: string): ResourceModel {
-        return this.getProjectModel()
-            .getResourceCollectionModel()
-            .getResourceModelById(resourceId);
-    }
-
     public openResource(resourceId: string) {
         const selectedResource: IResource = this._project.resourceList.find(
             (resource: IResource) => resource.id === resourceId
@@ -103,7 +93,12 @@ export class ProjectContextService {
         });
         this.saveProject();
     }
-
+    public removeProjectResource(resourceId) {
+        this._project = Object.assign({}, this._project, {
+            resourceList: this._project.resourceList.filter((resource: IResource) => resource.id !== resourceId),
+        });
+        this.saveProject();
+    }
     public createProjectTag(tagDiff: Omit<ITag, "id">) {
         this._project = Object.assign({}, this._project, {
             tagList: (this._project.tagList || []).concat({

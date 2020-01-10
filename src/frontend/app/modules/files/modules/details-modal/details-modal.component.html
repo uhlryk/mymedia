@@ -6,6 +6,7 @@
         styleClass="ui-sidebar-sm"
         [style]="{'overflow': 'scroll'}"
         [blockScroll]="true"
+        (onHide)="onHide()"
     >
         <div *ngIf="!resource">
             <div class="center">

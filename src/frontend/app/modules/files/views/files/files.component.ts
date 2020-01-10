@@ -10,6 +10,7 @@ import IProject from "../../../../../../shared/types/project.interface";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import ISearch from "../../types/search.interface";
+import { ConfirmationService } from "primeng/api";
 
 @Component({
     templateUrl: "files.component.html",
@@ -31,6 +32,7 @@ export class FilesComponent implements OnInit, OnDestroy {
     _openTagManager: Subscription;
     private _isLeftMenuVisible: boolean;
     constructor(
+        private confirmationService: ConfirmationService,
         private projectContextService: ProjectContextService,
         private thumbnailService: ThumbnailService,
         private loaderService: LoaderService,
@@ -96,6 +98,16 @@ export class FilesComponent implements OnInit, OnDestroy {
 
     onClickDetailsButton(resourceId) {
         this.detailsModal.show(resourceId);
+    }
+
+    onClickDeleteButton(resourceId) {
+        this.confirmationService.confirm({
+            message: "Are you sure that you want to delete resource?",
+            accept: () => {
+                console.log("Removed");
+                this.projectContextService.removeProjectResource(resourceId);
+            }
+        });
     }
 
     onChangeSearch(search: ISearch) {

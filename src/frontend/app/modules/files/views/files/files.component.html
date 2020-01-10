@@ -19,9 +19,11 @@
             [orderMethod]="_orderMethod"
             (clickThumbnail)="onClickThumbnail($event)"
             (clickDetailsButton)="onClickDetailsButton($event)"
+            (clickDeleteButton)="onClickDeleteButton($event)"
         ></app-list>
 
         <app-details-modal></app-details-modal>
         <app-tags-modal></app-tags-modal>
+        <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
     </div>
 </div>

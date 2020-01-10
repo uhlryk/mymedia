@@ -12,10 +12,14 @@ import { OrderComponent } from "./components/order/order.component";
 import { ButtonModule } from "primeng/button";
 import { SideMenuComponent } from "./components/side-menu/side-menu.component";
 import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.module";
+import { ConfirmationService } from "primeng/api";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        ConfirmDialogModule,
         ButtonModule,
         DetailsModalModule,
         SharedModule,
@@ -23,7 +27,7 @@ import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.m
         CardModule,
         TagSelectListModule
     ],
-    providers: [],
+    providers: [ConfirmationService],
     declarations: [
         FilesComponent,
         ListComponent,
