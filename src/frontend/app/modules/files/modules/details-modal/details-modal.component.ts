@@ -1,8 +1,6 @@
 import { Component } from "@angular/core";
 
 import { ProjectContextService } from "../../../../services/projectContext.service";
-import ResourceModel from "../../../../models/resource.model";
-import TagModel from "../../../../models/tag.model";
 import IProject from "../../../../../../shared/types/project.interface";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
@@ -22,7 +20,6 @@ export class DetailsModalComponent {
     show(resourceId: string) {
         this.projectContextService.listenProjectChange().subscribe((project: IProject) => {
             this.resource = project.resourceList.find((resource: IResource) => resource.id === resourceId);
-
             this.thumbnailPath = this.resource.thumbnailList[0];
             this._allProjectTagList = project.tagList;
             this.visibleSidebar = true;
@@ -36,13 +33,7 @@ export class DetailsModalComponent {
         this.projectContextService.changeProjectResource(this.resource.id, { ranking: ranking});
     }
     onChangeAddedTags(selectedTagList: Array<string>) {
-        // console.log("DetailsModalComponent.changeAddedTags");
-        // this._selectedTagList = selectedTagList;
-        // this.projectContextService.setResourceTagList(
-        //     this.resource.getId(),
-        //     selectedTagList
-        // );
-        // this.projectContextService.saveProject().subscribe(() => {});
+        this.projectContextService.changeProjectResource(this.resource.id, { tags: [].concat(selectedTagList)});
     }
 
     saveTitle(newTitle) {
