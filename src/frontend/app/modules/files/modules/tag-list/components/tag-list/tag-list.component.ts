@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit } from "@angular/core";
-import TagModel from "../../../../../../models/tag.model";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 
 @Component({

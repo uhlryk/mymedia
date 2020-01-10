@@ -7,8 +7,6 @@ import {
     OnInit,
     Output
 } from "@angular/core";
-import ResourceModel from "../../../../models/resource.model";
-import TagModel from "../../../../models/tag.model";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import ISearch from "../../types/search.interface";

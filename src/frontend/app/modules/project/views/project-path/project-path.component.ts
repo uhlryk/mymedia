@@ -1,7 +1,8 @@
-import { Component, ChangeDetectorRef } from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { ProjectContextService } from "../../../../services/projectContext.service";
 import { LoaderService } from "../../../../services/loader.service";
+import IpcProvider from "../../../../providers/ipc.provider";
+import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
 
 @Component({
     templateUrl: "project-path.component.html",
@@ -9,15 +10,13 @@ import { LoaderService } from "../../../../services/loader.service";
 })
 export class ProjectPathComponent {
     constructor(
-        private cdr: ChangeDetectorRef,
         private router: Router,
-        private projectContextService: ProjectContextService,
         private loaderService: LoaderService
     ) {}
 
     onSelectPath() {
         this.loaderService.show();
-        this.projectContextService.setProjectPath().then(isProjectExist => {
+        IpcProvider.request(IpcProviderResourceEnums.SET_PROJECT).then(isProjectExist => {
             if (isProjectExist) {
                 this.router.navigate(["/files"]);
             } else {

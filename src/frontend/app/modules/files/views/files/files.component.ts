@@ -11,6 +11,8 @@ import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import ISearch from "../../types/search.interface";
 import { ConfirmationService } from "primeng/api";
+import IpcProvider from "../../../../providers/ipc.provider";
+import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
 
 @Component({
     templateUrl: "files.component.html",
@@ -29,8 +31,6 @@ export class FilesComponent implements OnInit, OnDestroy {
     _orderMethod: string;
     _projectChange: Subscription;
     _thumbnailChange: Subscription;
-    _openTagManager: Subscription;
-    private _isLeftMenuVisible: boolean;
     constructor(
         private confirmationService: ConfirmationService,
         private projectContextService: ProjectContextService,
@@ -44,7 +44,6 @@ export class FilesComponent implements OnInit, OnDestroy {
             tagIdList: []
         };
         this._orderMethod = "";
-        this._isLeftMenuVisible = false;
         this.loaderService.show();
         this._projectChange = this.projectContextService
             .listenProjectChange()
@@ -60,11 +59,9 @@ export class FilesComponent implements OnInit, OnDestroy {
                     this._tagList = project.tagList;
                 }
             });
-        this._openTagManager = this.projectContextService
-            .listenOpenTagsManager()
-            .subscribe(() => {
-                this.tagsModal.show();
-            });
+        IpcProvider.listen(IpcProviderResourceEnums.TRIGGER_TAGS_MANAGER, () => {
+            this.tagsModal.show();
+        });
         this.projectContextService.loadProject().then((project: IProject) => {
             if (project) {
                 this._resourceList = project.resourceList;
@@ -121,9 +118,6 @@ export class FilesComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         if (this._projectChange) {
             this._projectChange.unsubscribe();
-        }
-        if (this._openTagManager) {
-            this._openTagManager.unsubscribe();
         }
         if (this._thumbnailChange) {
             this._thumbnailChange.unsubscribe();

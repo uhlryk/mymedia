@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
-import TagModel from "../../../../models/tag.model";
 import ISearch from "../../types/search.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 

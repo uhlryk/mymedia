@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
-import TagModel from "../../../../../../models/tag.model";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import IResource from "../../../../../../../../shared/types/resource.interface";
 @Component({

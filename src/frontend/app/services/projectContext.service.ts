@@ -1,8 +1,6 @@
 import uuid from "uuidv4";
 import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-import { NgZone } from "@angular/core";
-import ProjectModel from "../models/project.model";
 import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import IProject from "../../../shared/types/project.interface";
@@ -14,7 +12,7 @@ export class ProjectContextService {
     private _project: IProject;
     private subject = new BehaviorSubject<any>(null);
 
-    constructor(private _ngZone: NgZone) {}
+    constructor() {}
     public async loadProject(): Promise<IProject> {
         const project: IProject = await IpcProvider.request(
             IpcProviderResourceEnums.LOAD_PROJECT
@@ -32,46 +30,6 @@ export class ProjectContextService {
         return this.subject.asObservable();
     }
 
-    setProjectPath(): Promise<boolean> {
-        return this.getProjectModel().setProjectPath();
-    }
-    getProjectPath(): Promise<string> {
-        return this.getProjectModel().getProjectPath();
-    }
-
-    listenNewProject(): Observable<void> {
-        return Observable.create(async observable => {
-            IpcProvider.listen(IpcProviderResourceEnums.TRIGGER_SET_PROJECT, () => {
-                this._ngZone.run(() => {
-                    observable.next();
-                });
-            });
-        });
-    }
-    listenOpenTagsManager(): Observable<void> {
-        return Observable.create(async observable => {
-            IpcProvider.listen(IpcProviderResourceEnums.TRIGGER_TAGS_MANAGER, () => {
-                this._ngZone.run(() => {
-                    observable.next();
-                });
-            });
-        });
-    }
-    getProjectModel(): ProjectModel {
-        return ProjectModel.getInstance();
-    }
-
-    createProject(): Observable<boolean> {
-        return Observable.create(async observable => {
-            await this.getProjectModel().createProject();
-
-            this._ngZone.run(() => {
-                observable.next(true);
-                observable.complete();
-            });
-        });
-    }
-
     public openResource(resourceId: string) {
         const selectedResource: IResource = this._project.resourceList.find(
             (resource: IResource) => resource.id === resourceId
@@ -81,7 +39,10 @@ export class ProjectContextService {
         });
     }
 
-    public changeProjectResource(resourceId, resourceDiff: Partial<Omit<IResource, "id">>) {
+    public changeProjectResource(
+        resourceId,
+        resourceDiff: Partial<Omit<IResource, "id">>
+    ) {
         this._project = Object.assign({}, this._project, {
             resourceList: this._project.resourceList.map((resource: IResource) => {
                 if (resource.id === resourceId) {
@@ -95,7 +56,9 @@ export class ProjectContextService {
     }
     public removeProjectResource(resourceId) {
         this._project = Object.assign({}, this._project, {
-            resourceList: this._project.resourceList.filter((resource: IResource) => resource.id !== resourceId),
+            resourceList: this._project.resourceList.filter(
+                (resource: IResource) => resource.id !== resourceId
+            )
         });
         this.saveProject();
     }
