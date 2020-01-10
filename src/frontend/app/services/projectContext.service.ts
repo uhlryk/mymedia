@@ -91,6 +91,19 @@ export class ProjectContextService {
         });
     }
 
+    public changeProjectResource(resourceId, resourceDiff: Partial<Omit<IResource, "id">>) {
+        this._project = Object.assign({}, this._project, {
+            resourceList: this._project.resourceList.map((resource: IResource) => {
+                if (resource.id === resourceId) {
+                    return Object.assign({}, resource, resourceDiff);
+                } else {
+                    return resource;
+                }
+            })
+        });
+        this.saveProject();
+    }
+
     public createProjectTag(tagDiff: Omit<ITag, "id">) {
         this._project = Object.assign({}, this._project, {
             tagList: (this._project.tagList || []).concat({

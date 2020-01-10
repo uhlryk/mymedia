@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ProjectContextService } from "../../../../../../services/projectContext.service";
-import TagModel from "../../../../../../models/tag.model";
 import IProject from "../../../../../../../../shared/types/project.interface";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 

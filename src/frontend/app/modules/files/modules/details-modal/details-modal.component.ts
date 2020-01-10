@@ -32,13 +32,8 @@ export class DetailsModalComponent {
     clickOpenFile() {
         this.projectContextService.openResource(this.resource.id);
     }
-    cancelRating() {
-        // this.resource.ranking = 0;
-        // this.projectContextService.saveProject().subscribe(() => {});
-    }
-    setRanking(event) {
-        // this.resource.ranking = event.value;
-        // this.projectContextService.saveProject().subscribe(() => {});
+    setRanking(ranking) {
+        this.projectContextService.changeProjectResource(this.resource.id, { ranking: ranking});
     }
     onChangeAddedTags(selectedTagList: Array<string>) {
         // console.log("DetailsModalComponent.changeAddedTags");

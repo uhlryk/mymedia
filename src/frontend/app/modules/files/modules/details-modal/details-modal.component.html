@@ -66,8 +66,8 @@
             <div class="align-rating">
                 <p-rating
                     [ngModel]="resource.ranking"
-                    (onRate)="setRanking($event)"
-                    (onCancel)="cancelRating()"
+                    (onRate)="setRanking($event.value)"
+                    (onCancel)="setRanking(0)"
                 ></p-rating>
             </div>
             <div>
