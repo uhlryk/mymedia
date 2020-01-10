@@ -1,14 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
 import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
-import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
-import ResourceModel from "../../../../models/resource.model";
 import { LoaderService } from "../../../../services/loader.service";
 import { Router } from "@angular/router";
 import { ThumbnailService } from "../../../../services/thumbnail.service";
 import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
-import ProjectModel from "../../../../models/project.model";
-import TagModel from "../../../../models/tag.model";
 import { Subscription } from "rxjs";
 import IProject from "../../../../../../shared/types/project.interface";
 import IResource from "../../../../../../shared/types/resource.interface";
@@ -22,9 +18,6 @@ import ISearch from "../../types/search.interface";
 export class FilesComponent implements OnInit, OnDestroy {
     @ViewChild(DetailsModalComponent, { static: true })
     detailsModal: DetailsModalComponent;
-
-    @ViewChild(ThumbnailsModalComponent, { static: true })
-    thumbnailsModal: ThumbnailsModalComponent;
 
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
@@ -72,7 +65,6 @@ export class FilesComponent implements OnInit, OnDestroy {
             });
         this.projectContextService.loadProject().then((project: IProject) => {
             if (project) {
-                console.log(this._resourceList);
                 this._resourceList = project.resourceList;
                 this._tagList = project.tagList;
                 this._thumbnailChange = this.thumbnailService
