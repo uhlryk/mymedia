@@ -16,19 +16,19 @@
         <div *ngIf="resource" class="side-menu-container">
             <div class="thumbnail-section">
                 <div
-                    *ngIf="!thumbnailPath && !resource.thumbnailPath"
+                    *ngIf="!thumbnailPath"
                     class="empty-thumbnail"
                 >
                     <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
                     <i class="pi pi-clock" style="font-size: 3em"></i>
                 </div>
-                <div class="thumbnail-wrapper" *ngIf="thumbnailPath || resource.thumbnailPath">
+                <div class="thumbnail-wrapper" *ngIf="thumbnailPath">
                     <img
                         class="thumbnail"
-                        [src]="thumbnailPath || resource.thumbnailPath"
+                        [src]="thumbnailPath"
                         alt=""
                     />
-                    <div class="show-play" (click)="clickOpenFile(resource.getId())">
+                    <div class="show-play" (click)="clickOpenFile()">
                         <i class="pi pi-caret-right"></i>
                     </div>
                 </div>
@@ -56,9 +56,9 @@
                 [text]="resource.title"
                 (changed)="saveTitle($event)"
             ></app-text>
-            <div class="file-path-text">{{ resource.getFilePath() }}</div>
+            <div class="file-path-text">{{ resource.filePath }}</div>
             <div class="align-meta-info">
-                <app-file-size [size]="resource.getSize()"></app-file-size>
+                <app-file-size [size]="resource.size"></app-file-size>
                 <span>{{ resource.width }} x {{ resource.height }}</span>
                 <app-video-length [length]="resource.duration"></app-video-length>
             </div>
@@ -67,12 +67,12 @@
                 <p-rating
                     [ngModel]="resource.ranking"
                     (onRate)="setRanking($event)"
-                    (onCancel)="cancelRating(0)"
+                    (onCancel)="cancelRating()"
                 ></p-rating>
             </div>
             <div>
                 <app-description
-                    [text]="resource.getDescription()"
+                    [text]="resource.description"
                     (changed)="saveDescription($event)"
                 ></app-description>
             </div>
@@ -80,7 +80,7 @@
             <app-tag-select-list
                 (changeTagList)="onChangeAddedTags($event)"
                 [allTagList]="_allProjectTagList"
-                [selectedTagList]="_selectedTagList"
+                [selectedTagIdList]="resource.tags"
             ></app-tag-select-list>
         </div>
     </p-sidebar>

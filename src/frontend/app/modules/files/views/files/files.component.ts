@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ProjectContextService } from "../../../../services/projectContext.service";
-// import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
+import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { ThumbnailsModalComponent } from "../../modules/thumbnails-modal/thumbnails-modal.component";
 import ResourceModel from "../../../../models/resource.model";
 import { LoaderService } from "../../../../services/loader.service";
@@ -20,8 +20,8 @@ import ISearch from "../../types/search.interface";
     styleUrls: ["./files.component.scss"]
 })
 export class FilesComponent implements OnInit, OnDestroy {
-    // @ViewChild(DetailsModalComponent, { static: true })
-    // detailsModal: DetailsModalComponent;
+    @ViewChild(DetailsModalComponent, { static: true })
+    detailsModal: DetailsModalComponent;
 
     @ViewChild(ThumbnailsModalComponent, { static: true })
     thumbnailsModal: ThumbnailsModalComponent;
@@ -106,7 +106,7 @@ export class FilesComponent implements OnInit, OnDestroy {
     }
 
     onClickDetailsButton(resourceId) {
-        // this.detailsModal.show(resourceId);
+        this.detailsModal.show(resourceId);
     }
 
     onChangeSearch(search: ISearch) {

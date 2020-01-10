@@ -5,7 +5,7 @@ import { FormsModule } from "@angular/forms";
 
 import { SharedModule } from "./modules/shared/shared.module";
 import { ListComponent } from "./components/list/list.component";
-// import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
+import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
 import { ThumbnailsModalModule } from "./modules/thumbnails-modal/thumbnails-modal.module";
 import { TagsModalModule } from "./modules/tags-modal/tags-modal.module";
 
@@ -20,7 +20,7 @@ import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.m
         CommonModule,
         FormsModule,
         ButtonModule,
-        // DetailsModalModule,
+        DetailsModalModule,
         SharedModule,
         ThumbnailsModalModule,
         TagsModalModule,
