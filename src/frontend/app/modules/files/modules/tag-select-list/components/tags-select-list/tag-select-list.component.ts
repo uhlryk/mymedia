@@ -19,7 +19,7 @@ export class TagSelectListComponent implements OnChanges {
     ngOnChanges() {
         console.log("TagSelectListComponent.ngOnChanges");
         this._selectedTagId = "0";
-        this._availableTagList = this.allTagList.filter((allTag: TagModel) => {
+        this._availableTagList = this.allTagList.filter((allTag: ITag) => {
             return !this.selectedTagList.find(
                 (selectedTag: TagModel) => selectedTag.id === allTag.id
             );

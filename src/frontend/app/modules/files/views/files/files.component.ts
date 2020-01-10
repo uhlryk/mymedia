@@ -48,6 +48,10 @@ export class FilesComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
     ngOnInit() {
+        this._search = {
+            text: "",
+            tagList: []
+        };
         // this._searchTagList = [];
         // this._searchText = "";
         this._orderMethod = "";

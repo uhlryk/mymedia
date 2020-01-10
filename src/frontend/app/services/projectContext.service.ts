@@ -1,3 +1,4 @@
+import uuid from "uuidv4";
 import { Injectable } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
 import { NgZone } from "@angular/core";
@@ -9,6 +10,8 @@ import IpcProvider from "../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import TagCollectionModel from "../models/tag.collection.model";
 import IProject from "../../../shared/types/project.interface";
+import ITag from "../../../shared/types/tag.interface";
+import IResource from "../../../shared/types/resource.interface";
 
 @Injectable()
 export class ProjectContextService {
@@ -16,7 +19,7 @@ export class ProjectContextService {
     private subject = new BehaviorSubject<any>(null);
 
     constructor(private _ngZone: NgZone) {}
-    async loadProject(): Promise<IProject> {
+    public async loadProject(): Promise<IProject> {
         const project: IProject = await IpcProvider.request(
             IpcProviderResourceEnums.LOAD_PROJECT
         );
@@ -29,7 +32,7 @@ export class ProjectContextService {
         }
     }
 
-    listenProjectChange(): Observable<IProject> {
+    public listenProjectChange(): Observable<IProject> {
         return this.subject.asObservable();
     }
 
@@ -83,8 +86,11 @@ export class ProjectContextService {
         return this.getProjectModel().getResourceCollectionModel();
     }
 
-    openResource(resourceId: string) {
-        this.getProjectModel().open(resourceId);
+    public openResource(resourceId: string) {
+        const resource: IResource = this._project.resourceList.find((resource: IResource) => resource.id === resourceId);
+        IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {
+            filePath: resource.filePath
+        });
     }
 
     setResourceTagList(resourceId, tagList: Array<TagModel>) {
@@ -97,19 +103,46 @@ export class ProjectContextService {
             .setTagModelList(tagModelList);
     }
 
-    removeProjectTag(tagId) {
-        this.getProjectModel()
-            .getResourceCollectionModel()
-            .removeAllResourceTagModel(tagId);
-        this.getProjectModel()
-            .getTagCollectionModel()
-            .removeTagModelById(tagId);
+    public createProjectTag(tagName) {
+        this._project = Object.assign({}, this._project, {
+            tagList: (this._project.tagList || []).concat({
+                id: uuid(),
+                name: tagName
+            })
+        });
+        this.saveProject();
     }
 
-    createProjectTag(tagName) {
-        this.getProjectModel()
-            .getTagCollectionModel()
-            .addTagModel(TagModel.create(tagName));
+    public renameProjectTag(tagId, tagName) {
+        this._project = Object.assign({}, this._project, {
+            tagList: this._project.tagList.map((tag: ITag) => {
+                if (tag.id === tagId) {
+                    return Object.assign({}, tag, {
+                        name: tagName
+                    });
+                } else {
+                    return tag;
+                }
+            })
+        });
+        this.saveProject();
+    }
+    public removeProjectTag(tagId) {
+        this._project = Object.assign({}, this._project, {
+            tagList: this._project.tagList.filter((tag: ITag) => tag.id !== tagId),
+            resourceList: this._project.resourceList.map((resource: IResource) => {
+                if (resource.tags.includes(tagId)) {
+                    return Object.assign({}, resource, {
+                        tags: resource.tags.filter(
+                            (resourceTagId: string) => resourceTagId !== tagId
+                        )
+                    });
+                } else {
+                    return resource;
+                }
+            })
+        });
+        this.saveProject();
     }
 
     getProjectTagList(): Array<TagModel> {
@@ -132,16 +165,22 @@ export class ProjectContextService {
             .getTagModelByName(tagName);
     }
 
-    saveProject(): Observable<null> {
-        return Observable.create(async observable => {
-            await this.getProjectModel().save();
-            this._ngZone.run(() => {
-                observable.next();
-                observable.complete();
-            });
-            this.triggerChange();
+    private async saveProject(): Promise<void> {
+        await IpcProvider.request(IpcProviderResourceEnums.SAVE_PROJECT, {
+            project: this._project
         });
+        this.triggerChange();
     }
+    // saveProject(): Observable<null> {
+    //     return Observable.create(async observable => {
+    //         await this.getProjectModel().save();
+    //         this._ngZone.run(() => {
+    //             observable.next();
+    //             observable.complete();
+    //         });
+    //         this.triggerChange();
+    //     });
+    // }
 
     triggerChange() {
         this.subject.next(this._project);

@@ -6,6 +6,7 @@
         <app-search
             *ngIf="_tagList"
             [projectTagList]="_tagList"
+            [searchCriteria]="_search"
             (changeSearch)="onChangeSearch($event)"
         ></app-search>
     </app-side-menu>
@@ -20,7 +21,7 @@
             (clickDetailsButton)="onClickDetailsButton($event)"
         ></app-list>
 
-        <app-details-modal></app-details-modal>
+        <!--<app-details-modal></app-details-modal>-->
         <app-thumbnails-modal></app-thumbnails-modal>
         <app-tags-modal></app-tags-modal>
     </div>

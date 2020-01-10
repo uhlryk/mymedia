@@ -10,30 +10,29 @@ import ITag from "../../../../../../shared/types/tag.interface";
 })
 export class SearchComponent implements OnInit, OnChanges {
     @Input() projectTagList: Array<ITag>;
+    @Input() searchCriteria: ISearch;
     @Output() changeSearch = new EventEmitter<ISearch>();
-    _searchInput: string;
-    _selectedTagList: Array<ITag>;
     constructor() {}
 
     ngOnInit() {
-        this._selectedTagList = [];
-        this._searchInput = "";
     }
 
-    ngOnChanges() {}
+    ngOnChanges() {
+        // this._selectedTagList = this;
+        // this._searchInput = "";
+    }
 
-    onChangeSearchText() {
+    onChangeSearchText(inputText) {
         this.changeSearch.emit({
-            tagList: this._selectedTagList,
-            text: this._searchInput
+            tagList: this.searchCriteria.tagList,
+            text: inputText
         });
     }
 
     onChangeSearchTagList(selectedTagList: Array<TagModel>) {
-        this._selectedTagList = selectedTagList;
         this.changeSearch.emit({
-            tagList: this._selectedTagList,
-            text: this._searchInput
+            tagList: selectedTagList,
+            text: this.searchCriteria.text
         });
     }
 }

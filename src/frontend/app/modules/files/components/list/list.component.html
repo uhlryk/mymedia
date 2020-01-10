@@ -5,7 +5,7 @@
         class="p-col-4"
         *ngFor="let resource of _managedResourceList; trackBy: trackByList"
         [resource]="resource"
-        [tagList]="_tagList"
+        [tagList]="tagList"
         (clickDetailsButton)="onClickDetailsButton($event)"
         (clickThumbnail)="onClickThumbnail($event)"
     >
