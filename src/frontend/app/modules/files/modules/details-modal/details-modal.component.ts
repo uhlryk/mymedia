@@ -37,16 +37,14 @@ export class DetailsModalComponent {
     }
 
     saveTitle(newTitle) {
-        // this.resource.setTitle(newTitle);
-        // this.projectContextService.saveProject().subscribe(() => {});
+        this.projectContextService.changeProjectResource(this.resource.id, { title: newTitle});
     }
 
     saveDescription(text) {
-        // this.resource.setDescription(text);
-        // this.projectContextService.saveProject().subscribe(() => {});
+        this.projectContextService.changeProjectResource(this.resource.id, { description: text});
     }
 
     changeThumbnail(thumbnailPath) {
-        // this.thumbnailPath = thumbnailPath;
+        this.thumbnailPath = thumbnailPath;
     }
 }
