@@ -55,6 +55,9 @@ export class ProjectContextService {
         this.saveProject();
     }
     public removeProjectResource(resourceId) {
+        IpcProvider.trigger(IpcProviderResourceEnums.TRIGGER_REMOVE_RESOURCE, {
+            resourceId: resourceId
+        });
         this._project = Object.assign({}, this._project, {
             resourceList: this._project.resourceList.filter(
                 (resource: IResource) => resource.id !== resourceId

@@ -11,6 +11,7 @@ import IResource from "../shared/types/resource.interface";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import saveProjectFile from "./fs/saveProjectFile";
 import Loader from "./core/Loader";
+import removeFile from "./fs/removeFile";
 
 export default class ProjectManager {
     static PROJECT_FOLDER = ".mymedia";
@@ -84,9 +85,7 @@ export default class ProjectManager {
         loader: Loader
     ): Promise<IProject> {
         const fileList: Array<FileInterface> = await getFileList(this._projectPath);
-        const projectModel: IProject = createModelFromProjectFile(
-            projectFile
-        );
+        const projectModel: IProject = createModelFromProjectFile(projectFile);
         loader.setProgress(0);
         await asyncForEach(fileList, async (file: FileInterface, index: number) => {
             loader.setProgress(Math.ceil(((index + 1) * 100) / fileList.length));
@@ -111,6 +110,15 @@ export default class ProjectManager {
 
     public setProjectModel(projectModel: IProject) {
         this._projectModel = projectModel;
+    }
+
+    public async removeResource(resourceId: string) {
+        const resourceToRemove: IResource = this._projectModel.resourceList.find(
+            (resource: IResource) => resource.id === resourceId
+        );
+        const resourcePath = resourceToRemove.filePath;
+        await this._thumbnailManager.removeResourceThumbnails(resourceToRemove);
+        await removeFile(this._projectPath, resourcePath);
     }
     public async save() {
         const projectFile: ProjectFileInterface = {
@@ -137,9 +145,7 @@ async function loadProjectFile(
     return JSON.parse(projectFileString);
 }
 
-function createModelFromProjectFile(
-    projectFile: ProjectFileInterface
-): IProject {
+function createModelFromProjectFile(projectFile: ProjectFileInterface): IProject {
     const projectModel: IProject = {
         resourceList: [],
         tagList: projectFile.tagList
@@ -155,13 +161,8 @@ function createModelFromProjectFile(
     return projectModel;
 }
 
-function getResourceByPath(
-    resourceList: Array<IResource>,
-    filePath: string
-): IResource {
-    return resourceList.find(
-        (resource: IResource) => resource.filePath === filePath
-    );
+function getResourceByPath(resourceList: Array<IResource>, filePath: string): IResource {
+    return resourceList.find((resource: IResource) => resource.filePath === filePath);
 }
 
 async function createResourceModel(

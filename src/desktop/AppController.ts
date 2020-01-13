@@ -48,7 +48,7 @@ export default class AppController {
                 (resourceId: string, resourceThumbnailPath: string, index: number) => {
                     console.log("====");
                     console.log(resourceId, resourceThumbnailPath);
-                    const IThumbnailChangeEvent: IThumbnailChangeEvent = {
+                    const thumbnailChangeEvent: IThumbnailChangeEvent = {
                         resourceId,
                         resourceThumbnailPath,
                         videoIndex: index
@@ -57,7 +57,7 @@ export default class AppController {
                         .getEvent()
                         .reply(
                             IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE,
-                            IThumbnailChangeEvent
+                            thumbnailChangeEvent
                         );
                 }
             );
@@ -76,6 +76,11 @@ export default class AppController {
         Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
             const resourcePath: string = context.data.filePath;
             shell.openItem(path.join(this.getProjectPath(), resourcePath));
+        });
+
+        Listener.on(IpcProviderResourceEnums.TRIGGER_REMOVE_RESOURCE, async context => {
+            const resourceId = context.data.resourceId;
+            await this._projectManager.removeResource(resourceId);
         });
     }
 

@@ -3,6 +3,7 @@ import generateThumbnail from "./generateThumbnail";
 import getThumbnailList from "./getThumbnailList";
 import IResource from "../../../shared/types/resource.interface";
 import ThumbnailName from "../../../shared/ThumbnailName";
+import removeFolder from "../../fs/removeFolder";
 
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
@@ -64,6 +65,11 @@ export default class ThumbnailManager {
             }
         }
     }
+
+    public async removeResourceThumbnails(resource: IResource) {
+        return removeFolder(path.join(this._thumbnailFolderName, resource.id));
+    }
+
     private queueGenerateThumbnail(
         resource: IResource,
         index: number,
