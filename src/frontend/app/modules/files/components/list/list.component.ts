@@ -61,7 +61,10 @@ export class ListComponent implements OnInit, OnChanges {
                         return prev.ranking - next.ranking;
                     case "RATING_DESC":
                         return next.ranking - prev.ranking;
-
+                    case "SIZE_ASC":
+                        return prev.size - next.size;
+                    case "SIZE_DESC":
+                        return next.size - prev.size;
                     case "":
                     case "NAME_ASC":
                     default:
