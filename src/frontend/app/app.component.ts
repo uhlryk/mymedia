@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import IpcProvider from "./providers/ipc.provider";
 import IpcProviderResourceEnums from "../../shared/IpcProviderResourceEnums";
+import { AppMenuService } from "./services/app-menu.service";
 
 @Component({
     selector: "app-root",
@@ -9,8 +10,8 @@ import IpcProviderResourceEnums from "../../shared/IpcProviderResourceEnums";
     styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
-    constructor(private router: Router) {
-        IpcProvider.listen(IpcProviderResourceEnums.TRIGGER_SET_PROJECT, () => {
+    constructor(private appMenu: AppMenuService, private router: Router) {
+        this.appMenu.setProjectButton().subscribe(() => {
             this.router.navigate(["/"]);
         });
     }

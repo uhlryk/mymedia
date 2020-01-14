@@ -1,6 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { ProjectContextService } from "./services/projectContext.service";
+import { AppMenuService } from "./services/app-menu.service";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -19,7 +20,7 @@ import { LoaderService } from "./services/loader.service";
         ProgressSpinnerModule,
         ProgressBarModule
     ],
-    providers: [LoaderService, ProjectContextService],
+    providers: [LoaderService, ProjectContextService, AppMenuService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
