@@ -13,6 +13,7 @@ import ISearch from "../../types/search.interface";
 import { ConfirmationService } from "primeng/api";
 import IpcProvider from "../../../../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
+import { AppMenuService } from "../../../../services/app-menu.service";
 
 @Component({
     templateUrl: "files.component.html",
@@ -31,9 +32,11 @@ export class FilesComponent implements OnInit, OnDestroy {
     _orderMethod: string;
     _projectChange: Subscription;
     _thumbnailChange: Subscription;
+    _tagsManagerChange: Subscription;
     constructor(
         private confirmationService: ConfirmationService,
         private projectContextService: ProjectContextService,
+        private appMenu: AppMenuService,
         private thumbnailService: ThumbnailService,
         private loaderService: LoaderService,
         private router: Router
@@ -59,7 +62,7 @@ export class FilesComponent implements OnInit, OnDestroy {
                     this._tagList = project.tagList;
                 }
             });
-        IpcProvider.listen(IpcProviderResourceEnums.TRIGGER_TAGS_MANAGER, () => {
+        this._tagsManagerChange = this.appMenu.listenTagsManagerButton().subscribe(() => {
             this.tagsModal.show();
         });
         this.projectContextService.loadProject().then((project: IProject) => {
@@ -121,6 +124,10 @@ export class FilesComponent implements OnInit, OnDestroy {
         }
         if (this._thumbnailChange) {
             this._thumbnailChange.unsubscribe();
+        }
+
+        if (this._tagsManagerChange) {
+            this._tagsManagerChange.unsubscribe();
         }
     }
 }

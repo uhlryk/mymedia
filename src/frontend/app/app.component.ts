@@ -11,7 +11,7 @@ import { AppMenuService } from "./services/app-menu.service";
 })
 export class AppComponent {
     constructor(private appMenu: AppMenuService, private router: Router) {
-        this.appMenu.setProjectButton().subscribe(() => {
+        this.appMenu.listenProjectButton().subscribe(() => {
             this.router.navigate(["/"]);
         });
     }
