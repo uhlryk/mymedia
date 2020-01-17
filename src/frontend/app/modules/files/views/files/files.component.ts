@@ -14,6 +14,9 @@ import { ConfirmationService } from "primeng/api";
 import IpcProvider from "../../../../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
 import { AppMenuService } from "../../../../services/app-menu.service";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../../../reducers";
+import {projectInitDataReady} from "../../actions/index.action";
 
 @Component({
     templateUrl: "files.component.html",
@@ -35,6 +38,7 @@ export class FilesComponent implements OnInit, OnDestroy {
     _tagsManagerChange: Subscription;
     constructor(
         private confirmationService: ConfirmationService,
+        private store: Store<AppState>,
         private projectContextService: ProjectContextService,
         private appMenu: AppMenuService,
         private thumbnailService: ThumbnailService,
@@ -48,48 +52,61 @@ export class FilesComponent implements OnInit, OnDestroy {
         };
         this._orderMethod = "";
         this.loaderService.show();
-        this._projectChange = this.projectContextService
-            .listenProjectChange()
-            .subscribe((project: IProject) => {
-                if (project) {
-                    this._resourceList = project.resourceList;
-                    if (this._tagList !== project.tagList) {
-                        this._search.tagIdList = this._search.tagIdList.filter(
-                            (tagId: string) =>
-                                project.tagList.find((tag: ITag) => tag.id === tagId)
-                        );
-                    }
-                    this._tagList = project.tagList;
-                }
-            });
+        // this._projectChange = this.projectContextService
+        //     .listenProjectChange()
+        //     .subscribe((project: IProject) => {
+        //         if (project) {
+        //             this._resourceList = project.resourceList;
+        //             if (this._tagList !== project.tagList) {
+        //                 this._search.tagIdList = this._search.tagIdList.filter(
+        //                     (tagId: string) =>
+        //                         project.tagList.find((tag: ITag) => tag.id === tagId)
+        //                 );
+        //             }
+        //             this._tagList = project.tagList;
+        //         }
+        //     });
         this._tagsManagerChange = this.appMenu.listenTagsManagerButton().subscribe(() => {
             this.tagsModal.show();
         });
-        this.projectContextService.loadProject().then((project: IProject) => {
-            if (project) {
-                this._resourceList = project.resourceList;
-                this._tagList = project.tagList;
-                this._thumbnailChange = this.thumbnailService
-                    .onThumbnailChange()
-                    .subscribe(response => {
-                        const thumbnailResource = this._resourceList.find(
-                            (resource: IResource) => resource.id === response.resourceId
-                        );
-                        const list = (thumbnailResource.thumbnailList || []).slice();
-                        list[response.videoIndex] = response.resourceThumbnailPath;
-                        this.projectContextService.changeProjectResource(
-                            thumbnailResource.id,
-                            {
-                                thumbnailList: list
-                            }
-                        );
-                    });
 
-                this.loaderService.hide();
-            } else {
-                this.router.navigate(["/create-project"]);
+        IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT).then(
+            (project: IProject) => {
+                if (project) {
+                    this.store.dispatch(projectInitDataReady({
+                        resourceList: project.resourceList,
+                        tagList: project.tagList
+                    }));
+                } else {
+                    this.router.navigate(["/create-project"]);
+                }
             }
-        });
+        );
+        // this.projectContextService.loadProject().then((project: IProject) => {
+        //     if (project) {
+        //         this._resourceList = project.resourceList;
+        //         this._tagList = project.tagList;
+        //         this._thumbnailChange = this.thumbnailService
+        //             .onThumbnailChange()
+        //             .subscribe(response => {
+        //                 const thumbnailResource = this._resourceList.find(
+        //                     (resource: IResource) => resource.id === response.resourceId
+        //                 );
+        //                 const list = (thumbnailResource.thumbnailList || []).slice();
+        //                 list[response.videoIndex] = response.resourceThumbnailPath;
+        //                 this.projectContextService.changeProjectResource(
+        //                     thumbnailResource.id,
+        //                     {
+        //                         thumbnailList: list
+        //                     }
+        //                 );
+        //             });
+        //
+        //         this.loaderService.hide();
+        //     } else {
+        //         this.router.navigate(["/create-project"]);
+        //     }
+        // });
     }
 
     onClickThumbnail(resourceId) {
