@@ -1,5 +1,12 @@
 // src-backend/main.ts
 import { app, BrowserWindow, ipcMain, Menu } from "electron";
+
+import installExtension, { REDUX_DEVTOOLS } from "electron-devtools-installer";
+
+installExtension(REDUX_DEVTOOLS)
+    .then(name => console.log(`Added Extension:  ${name}`))
+    .catch(err => console.log("An error occurred: ", err));
+
 import * as path from "path";
 import AppManager from "./AppManager";
 const contextMenu = require("electron-context-menu");
@@ -11,7 +18,6 @@ const IS_HOT = process.env.IS_HOT;
 let mainWindow: Electron.BrowserWindow;
 
 app.on("ready", () => {
-
     mainWindow = new BrowserWindow({
         icon: path.join(__dirname, "../dist/assets/icon.png"),
         webPreferences: {
@@ -31,7 +37,8 @@ app.on("ready", () => {
         {
             label: "Project",
             submenu: [
-                { label: "Create",
+                {
+                    label: "Create",
                     click() {
                         appManager.triggetCreateProject();
                     }
@@ -48,13 +55,14 @@ app.on("ready", () => {
         {
             label: "Collection",
             submenu: [
-                { label: "Tags Manager",
+                {
+                    label: "Tags Manager",
                     click() {
                         appManager.triggetTagsManager();
                     }
                 },
                 { label: "Reload" }
-                ]
+            ]
         }
     ]);
     Menu.setApplicationMenu(menu);
