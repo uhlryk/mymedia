@@ -13,6 +13,7 @@ import { LoaderService } from "./services/loader.service";
 import { StoreModule } from "@ngrx/store";
 import { reducers, metaReducers } from "./reducers";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { environment } from "../environments/environment";
 @NgModule({
     declarations: [AppComponent, LoaderComponent],
     imports: [
@@ -29,7 +30,7 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
                 strictActionImmutability: true
             }
         }),
-        StoreDevtoolsModule.instrument({ maxAge: 25 })
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
     ],
     providers: [LoaderService, ProjectContextService, AppMenuService],
     bootstrap: [AppComponent]

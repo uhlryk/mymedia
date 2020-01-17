@@ -7,13 +7,22 @@ import { ThumbnailService } from "../../services/thumbnail.service";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
 import { CreateProjectComponent } from "./views/create-project/create-project.component";
+import { StoreModule } from "@ngrx/store";
+import * as fromProjectList from "./reducers";
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
         ButtonModule,
-        CheckboxModule
+        CheckboxModule,
+        StoreModule.forFeature(
+            fromProjectList.projectListFeatureKey,
+            fromProjectList.reducers,
+            {
+                metaReducers: fromProjectList.metaReducers
+            }
+        )
     ],
     providers: [ProjectContextService, ThumbnailService],
     declarations: [ProjectPathComponent, CreateProjectComponent]

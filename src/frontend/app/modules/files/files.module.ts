@@ -14,6 +14,8 @@ import { SideMenuComponent } from "./components/side-menu/side-menu.component";
 import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.module";
 import { ConfirmationService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { StoreModule } from "@ngrx/store";
+import * as fromProject from "./reducers";
 
 @NgModule({
     imports: [
@@ -25,7 +27,12 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
         SharedModule,
         TagsModalModule,
         CardModule,
-        TagSelectListModule
+        TagSelectListModule,
+        StoreModule.forFeature(
+            fromProject.projectFeatureKey,
+            fromProject.reducers,
+            { metaReducers: fromProject.metaReducers }
+        )
     ],
     providers: [ConfirmationService],
     declarations: [
