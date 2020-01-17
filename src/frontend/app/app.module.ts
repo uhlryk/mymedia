@@ -10,6 +10,9 @@ import { LoaderComponent } from "./components/loader/loader.component";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { ProgressBarModule } from "primeng/progressbar";
 import { LoaderService } from "./services/loader.service";
+import { StoreModule } from "@ngrx/store";
+import { reducers, metaReducers } from "./reducers";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 @NgModule({
     declarations: [AppComponent, LoaderComponent],
     imports: [
@@ -18,7 +21,15 @@ import { LoaderService } from "./services/loader.service";
         TabMenuModule,
         BrowserAnimationsModule,
         ProgressSpinnerModule,
-        ProgressBarModule
+        ProgressBarModule,
+        StoreModule.forRoot(reducers, {
+            metaReducers,
+            runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true
+            }
+        }),
+        StoreDevtoolsModule.instrument({ maxAge: 25 })
     ],
     providers: [LoaderService, ProjectContextService, AppMenuService],
     bootstrap: [AppComponent]
