@@ -30,8 +30,7 @@ import * as fromProject from "./reducers";
         TagSelectListModule,
         StoreModule.forFeature(
             fromProject.projectFeatureKey,
-            fromProject.reducers,
-            { metaReducers: fromProject.metaReducers }
+            fromProject.InitialProjectReducer
         )
     ],
     providers: [ConfirmationService],
