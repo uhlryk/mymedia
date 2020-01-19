@@ -1,10 +1,7 @@
-import {
-    createReducer,
-    on
-} from "@ngrx/store";
+import { createReducer, on } from "@ngrx/store";
 import IResource from "../../../../../shared/types/resource.interface";
 import ITag from "../../../../../shared/types/tag.interface";
-import { setProjectInitData } from "../actions/index.action";
+import { setProjectInitialData, setResourceOrder } from "../actions/index.action";
 
 export const projectFeatureKey = "project";
 
@@ -15,6 +12,7 @@ export interface ProjectState {
         tagIdList: Array<string>;
         text: string;
     };
+    order: string;
 }
 
 export const InitialProjectState: ProjectState = {
@@ -23,16 +21,26 @@ export const InitialProjectState: ProjectState = {
     search: {
         tagIdList: [],
         text: null
-    }
+    },
+    order: "NAME_ASC"
 };
 
 export const InitialProjectReducer = createReducer(
     InitialProjectState,
-    on(setProjectInitData, (state, action) => {
+    on(setProjectInitialData, (state, action) => {
         return {
             resourceList: action.resourceList,
             tagList: action.tagList,
-            search: InitialProjectState.search
+            search: InitialProjectState.search,
+            order: InitialProjectState.order
+        };
+    }),
+    on(setResourceOrder, (state, action) => {
+        return {
+            resourceList: state.resourceList,
+            tagList: state.tagList,
+            search: state.search,
+            order: action.order
         };
     })
 );

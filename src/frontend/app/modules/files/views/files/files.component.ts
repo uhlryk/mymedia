@@ -16,7 +16,7 @@ import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResour
 import { AppMenuService } from "../../../../services/app-menu.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../reducers";
-import {setProjectInitData} from "../../actions/index.action";
+import {setProjectInitialData} from "../../actions/index.action";
 
 @Component({
     templateUrl: "files.component.html",
@@ -73,10 +73,11 @@ export class FilesComponent implements OnInit, OnDestroy {
         IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT).then(
             (project: IProject) => {
                 if (project) {
-                    this.store.dispatch(setProjectInitData({
+                    this.store.dispatch(setProjectInitialData({
                         resourceList: project.resourceList,
                         tagList: project.tagList
                     }));
+                    this.loaderService.hide();
                 } else {
                     this.router.navigate(["/create-project"]);
                 }
