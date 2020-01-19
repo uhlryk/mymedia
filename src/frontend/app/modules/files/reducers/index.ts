@@ -20,7 +20,7 @@ export const InitialProjectState: ProjectState = {
     tagList: [],
     search: {
         tagIdList: [],
-        text: null
+        text: ""
     },
     order: "NAME_ASC"
 };
@@ -28,19 +28,14 @@ export const InitialProjectState: ProjectState = {
 export const InitialProjectReducer = createReducer(
     InitialProjectState,
     on(setProjectInitialData, (state, action) => {
-        return {
+        return Object.assign({}, InitialProjectState, {
             resourceList: action.resourceList,
-            tagList: action.tagList,
-            search: InitialProjectState.search,
-            order: InitialProjectState.order
-        };
+            tagList: action.tagList
+        });
     }),
     on(setResourceOrder, (state, action) => {
-        return {
-            resourceList: state.resourceList,
-            tagList: state.tagList,
-            search: state.search,
+        return Object.assign({}, state, {
             order: action.order
-        };
+        });
     })
 );

@@ -10,11 +10,6 @@
     </app-side-menu>
     <div class="p-col">
         <app-list
-            *ngIf="_tagList"
-            [tagList]="_tagList"
-            [resourceList]="_resourceList"
-            [search]="_search"
-            [orderMethod]="_orderMethod"
             (clickThumbnail)="onClickThumbnail($event)"
             (clickDetailsButton)="onClickDetailsButton($event)"
             (clickDeleteButton)="onClickDeleteButton($event)"
