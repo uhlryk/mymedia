@@ -15,7 +15,7 @@ import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.m
 import { ConfirmationService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { StoreModule } from "@ngrx/store";
-import * as fromProject from "./reducers";
+import * as fromProject from "./store/reducers";
 
 @NgModule({
     imports: [

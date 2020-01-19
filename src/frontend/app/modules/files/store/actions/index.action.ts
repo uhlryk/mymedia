@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
-import IResource from "../../../../../shared/types/resource.interface";
-import ITag from "../../../../../shared/types/tag.interface";
+import IResource from "../../../../../../shared/types/resource.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
 
 export const setProjectInitialData = createAction(
     "SET_PROJECT_INIT_DATA",

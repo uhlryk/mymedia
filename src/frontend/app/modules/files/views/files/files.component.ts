@@ -16,7 +16,7 @@ import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResour
 import { AppMenuService } from "../../../../services/app-menu.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../reducers";
-import {setProjectInitialData} from "../../actions/index.action";
+import {setProjectInitialData} from "../../store/actions/index.action";
 
 @Component({
     templateUrl: "files.component.html",

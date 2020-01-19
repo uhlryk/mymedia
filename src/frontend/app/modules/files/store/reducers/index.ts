@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
-import IResource from "../../../../../shared/types/resource.interface";
-import ITag from "../../../../../shared/types/tag.interface";
+import IResource from "../../../../../../shared/types/resource.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
 import { setProjectInitialData, setResourceOrder } from "../actions/index.action";
 
 export const projectFeatureKey = "project";

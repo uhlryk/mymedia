@@ -14,7 +14,7 @@ import { AppState } from "../../../../reducers";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import {ProjectState} from "../../reducers";
+import {ProjectState} from "../../store/reducers";
 
 @Component({
     selector: "app-list",

@@ -8,7 +8,7 @@ import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
 import { CreateProjectComponent } from "./views/create-project/create-project.component";
 import { StoreModule } from "@ngrx/store";
-import * as fromProjectList from "./reducers";
+import * as fromProjectList from "./store/reducers";
 @NgModule({
     imports: [
         CommonModule,
