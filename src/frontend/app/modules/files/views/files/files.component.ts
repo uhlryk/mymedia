@@ -110,23 +110,23 @@ export class FilesComponent implements OnInit, OnDestroy {
         // });
     }
 
-    onClickThumbnail(resourceId) {
-        this.projectContextService.openResource(resourceId);
-    }
-
-    onClickDetailsButton(resourceId) {
-        this.detailsModal.show(resourceId);
-    }
-
-    onClickDeleteButton(resourceId) {
-        this.confirmationService.confirm({
-            message: "Are you sure that you want to delete resource?",
-            accept: () => {
-                console.log("Removed");
-                this.projectContextService.removeProjectResource(resourceId);
-            }
-        });
-    }
+    // onClickThumbnail(resourceId) {
+    //     this.projectContextService.openResource(resourceId);
+    // }
+    //
+    // onClickDetailsButton(resourceId) {
+    //     this.detailsModal.show(resourceId);
+    // }
+    //
+    // onClickDeleteButton(resourceId) {
+    //     this.confirmationService.confirm({
+    //         message: "Are you sure that you want to delete resource?",
+    //         accept: () => {
+    //             console.log("Removed");
+    //             this.projectContextService.removeProjectResource(resourceId);
+    //         }
+    //     });
+    // }
 
     onChangeSearch(search: ISearch) {
         this._search = search;

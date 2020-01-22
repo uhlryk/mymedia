@@ -3,9 +3,8 @@
     <!--<div *ngFor="let resource of _resourceList">{{resource}}</div>-->
     <app-card
         class="p-col-4"
-        *ngFor="let resource of resourceList$ | async; trackBy: trackByList"
-        [resource]="resource"
-        [tagList]="tagList$ | async"
+        *ngFor="let resourceId of resourceIdList$ | async; trackBy: trackByList"
+        [resourceId]="resourceId"
         (clickDetailsButton)="onClickDetailsButton($event)"
         (clickThumbnail)="onClickThumbnail($event)"
         (clickDeleteButton)="onClickDeleteButton($event)"

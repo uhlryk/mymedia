@@ -2,11 +2,11 @@
     <p-header>
         {{ log("CardComponent.render") }}
         <div class="thumbnail-section">
-            <div *ngIf="!_thumbnailPath" class="spinner-wrapper">
+            <div *ngIf="!((resource$ | async).thumbnailList || [])[0]" class="spinner-wrapper">
                 <i class="pi pi-clock" style="font-size: 3em"></i>
             </div>
-            <div class="thumbnail-wrapper" *ngIf="_thumbnailPath">
-                <img class="thumbnail" [src]="_thumbnailPath" alt="" />
+            <div class="thumbnail-wrapper" *ngIf="((resource$ | async).thumbnailList || [])[0]">
+                <img class="thumbnail" [src]="((resource$ | async).thumbnailList || [])[0]" alt="" />
                 <div class="show-play" (click)="onClickThumbnail()">
                     <i class="pi pi-caret-right"></i>
                 </div>
@@ -15,26 +15,26 @@
     </p-header>
     <div>
         <div class="title">
-            <span [pTooltip]="resource.title">
-                {{ resource.title }}
+            <span [pTooltip]="(resource$ | async).title">
+                {{ (resource$ | async).title }}
             </span>
         </div>
         <div class="align-meta-info">
-            <app-file-size [size]="resource.size"></app-file-size>
-            <span>{{ resource.width }} x {{ resource.height }}</span>
-            <app-video-length [length]="resource.duration"></app-video-length>
+            <app-file-size [size]="(resource$ | async).size"></app-file-size>
+            <span>{{ (resource$ | async).width }} x {{ (resource$ | async).height }}</span>
+            <app-video-length [length]="(resource$ | async).duration"></app-video-length>
         </div>
         <div class="align-rating">
             <p-rating
-                [ngModel]="_ranking"
+                [ngModel]="(resource$ | async).ranking"
                 [readonly]="true"
                 [cancel]="false"
             ></p-rating>
 
-            <span *ngIf="resource.isNew">NEW</span>
+            <span *ngIf="(resource$ | async).isNew">NEW</span>
         </div>
         <div class="card-section">
-            <app-tag-list [projectTagList]="tagList" [resourceTagIdList]="resource.tags"></app-tag-list>
+            <app-tag-list [projectTagList]="(tagList$ | async)" [resourceTagIdList]="(resource$ | async).tags"></app-tag-list>
         </div>
     </div>
     <p-footer>
