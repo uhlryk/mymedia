@@ -45,7 +45,4 @@ export class ListComponent implements OnInit, OnChanges {
     log(val) {
         console.log(val);
     }
-    trackByList(index, resourceId: string) {
-        return resourceId;
-    }
 }
