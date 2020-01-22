@@ -1,14 +1,34 @@
-import { createSelector } from "@ngrx/store";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { ProjectState } from "../reducers";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ISearch from "../../types/search.interface";
+import { projectFeatureKey } from "../reducers/index";
+export const projectFeatureSelector = createFeatureSelector<ProjectState>(
+    projectFeatureKey
+);
 
-export const list = createSelector(
-    (state: { project: ProjectState }) => state.project.resourceList,
-    (state: { project: ProjectState }) => state.project.search,
-    (state: { project: ProjectState }) => state.project.order,
+export const resourceListSelector = createSelector(
+    projectFeatureSelector,
+    (project: ProjectState) => project.resourceList
+);
+export const searchSelector = createSelector(
+    projectFeatureSelector,
+    (project: ProjectState) => project.search
+);
+export const orderSelector = createSelector(
+    projectFeatureSelector,
+    (project: ProjectState) => project.order
+);
+export const tagListSelector = createSelector(
+    projectFeatureSelector,
+    (project: ProjectState) => project.tagList
+);
+export const listSelector = createSelector(
+    resourceListSelector,
+    searchSelector,
+    orderSelector,
     (resourceList: Array<IResource>, search: ISearch, order: string) => {
-        console.log("Selector recalculated")
+        console.log("Selector recalculated");
         return resourceList
             .filter((resource: IResource) => {
                 if (resource.title.toLowerCase().includes(search.text.toLowerCase())) {

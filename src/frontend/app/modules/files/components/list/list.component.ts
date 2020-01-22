@@ -10,7 +10,7 @@ import {
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { ProjectState } from "../../store/reducers";
-import { list } from "../../store/selectors/list.selector";
+import { listSelector } from "../../store/selectors/index.selector";
 
 @Component({
     selector: "app-list",
@@ -26,7 +26,7 @@ export class ListComponent implements OnInit, OnChanges {
     constructor(private store: Store<{ project: ProjectState }>) {}
 
     ngOnInit() {
-        this.resourceIdList$ = this.store.pipe(select(list));
+        this.resourceIdList$ = this.store.pipe(select(listSelector));
     }
 
     ngOnChanges() {}
