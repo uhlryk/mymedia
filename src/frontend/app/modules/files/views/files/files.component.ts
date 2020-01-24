@@ -16,7 +16,11 @@ import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResour
 import { AppMenuService } from "../../../../services/app-menu.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../../../reducers";
-import {setProjectInitialData} from "../../store/actions/index.action";
+import {
+    addResourceThumbnail,
+    setProjectInitialData
+} from "../../store/actions/index.action";
+import IThumbnailChangeEvent from "../../../../../../shared/types/thumbnailChangeEvent.interface";
 
 @Component({
     templateUrl: "files.component.html",
@@ -36,6 +40,8 @@ export class FilesComponent implements OnInit, OnDestroy {
     _projectChange: Subscription;
     _thumbnailChange: Subscription;
     _tagsManagerChange: Subscription;
+
+    thumbnailListenerCleaner: () => void;
     constructor(
         private confirmationService: ConfirmationService,
         private store: Store<AppState>,
@@ -73,10 +79,25 @@ export class FilesComponent implements OnInit, OnDestroy {
         IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT).then(
             (project: IProject) => {
                 if (project) {
-                    this.store.dispatch(setProjectInitialData({
-                        resourceList: project.resourceList,
-                        tagList: project.tagList
-                    }));
+                    this.store.dispatch(
+                        setProjectInitialData({
+                            resourceList: project.resourceList,
+                            tagList: project.tagList
+                        })
+                    );
+                    this.thumbnailListenerCleaner = IpcProvider.listen(
+                        IpcProviderResourceEnums.ON_THUMBNAIL_CHANGE,
+                        (response: IThumbnailChangeEvent) => {
+                            this.store.dispatch(
+                                addResourceThumbnail({
+                                    resourceId: response.resourceId,
+                                    index: response.videoIndex,
+                                    thumbnail: response.resourceThumbnailPath
+                                })
+                            );
+                        }
+                    );
+                    IpcProvider.trigger(IpcProviderResourceEnums.RUN_THUMBNAIL_CHANGE);
                     this.loaderService.hide();
                 } else {
                     this.router.navigate(["/create-project"]);
@@ -137,6 +158,9 @@ export class FilesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
+        if (this.thumbnailListenerCleaner) {
+            this.thumbnailListenerCleaner();
+        }
         if (this._projectChange) {
             this._projectChange.unsubscribe();
         }

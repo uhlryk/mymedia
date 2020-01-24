@@ -14,17 +14,21 @@ export const setResourceOrder = createAction(
 
 export const setResourceTitle = createAction(
     "SET_RESOURCE_TITLE",
-    props<{ resourceId: string, title: string }>()
+    props<{ resourceId: string; title: string }>()
 );
 export const setResourceDescription = createAction(
     "SET_RESOURCE_DESCRIPTION",
-    props<{ resourceId: string, description: string }>()
+    props<{ resourceId: string; description: string }>()
 );
 export const setResourceRanking = createAction(
     "SET_RESOURCE_RANKING",
-    props<{ resourceId: string, ranking: number }>()
+    props<{ resourceId: string; ranking: number }>()
 );
 export const setResourceTags = createAction(
     "SET_RESOURCE_TAGS",
-    props<{ resourceId: string, tags: Array<string> }>()
+    props<{ resourceId: string; tags: Array<string> }>()
+);
+export const addResourceThumbnail = createAction(
+    "SET_RESOURCE_THUMBNAILS",
+    props<{ resourceId: string; index: number, thumbnail: string }>()
 );

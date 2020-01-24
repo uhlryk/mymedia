@@ -2,8 +2,12 @@ import { createReducer, on } from "@ngrx/store";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import {
-    setProjectInitialData, setResourceDescription,
-    setResourceOrder, setResourceRanking, setResourceTags,
+    addResourceThumbnail,
+    setProjectInitialData,
+    setResourceDescription,
+    setResourceOrder,
+    setResourceRanking,
+    setResourceTags,
     setResourceTitle
 } from "../actions/index.action";
 
@@ -53,7 +57,9 @@ export const InitialProjectReducer = createReducer(
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
-                    return Object.assign({}, resource, { description: action.description });
+                    return Object.assign({}, resource, {
+                        description: action.description
+                    });
                 } else {
                     return resource;
                 }
@@ -77,9 +83,27 @@ export const InitialProjectReducer = createReducer(
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
-                    const updatedResource = Object.assign({}, resource, { tags: action.tags.slice() });
-                    console.log("ppppppppppp");
-                    console.log(updatedResource);
+                    const updatedResource = Object.assign({}, resource, {
+                        tags: action.tags.slice()
+                    });
+                    return updatedResource;
+                } else {
+                    return resource;
+                }
+            }),
+            tagList: state.tagList
+        });
+    }),
+    on(addResourceThumbnail, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList.map((resource: IResource) => {
+                if (resource.id === action.resourceId) {
+                    const list: Array<string> = (resource.thumbnailList || []).slice();
+
+                    list[action.index] = action.thumbnail;
+                    const updatedResource = Object.assign({}, resource, {
+                        thumbnailList: list
+                    });
                     return updatedResource;
                 } else {
                     return resource;
