@@ -43,16 +43,20 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
             .pipe(select(resourceListSelector))
             .subscribe((resourceList: Array<IResource>) => {
                 this.resourceList = resourceList;
+                this.changeResource();
             });
     }
 
-    ngOnChanges() {
+    private changeResource() {
         if (this.resourceId) {
             this.resource = this.resourceList.find(
                 (resource: IResource) => resource.id === this.resourceId
             );
             this.thumbnailPath = this.resource.thumbnailList[0];
         }
+    }
+    ngOnChanges() {
+        this.changeResource();
     }
 
     clickOpenFile() {
