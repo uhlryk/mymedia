@@ -1,14 +1,18 @@
 import { createReducer, on } from "@ngrx/store";
+import uuid from "uuidv4";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import {
     addResourceThumbnail,
+    createTag,
+    removeTag,
     setProjectInitialData,
     setResourceDescription,
     setResourceOrder,
     setResourceRanking,
     setResourceTags,
-    setResourceTitle
+    setResourceTitle,
+    setTagName
 } from "../actions/index.action";
 
 export const projectFeatureKey = "project";
@@ -39,6 +43,33 @@ export const InitialProjectReducer = createReducer(
         return Object.assign({}, InitialProjectState, {
             resourceList: action.resourceList,
             tagList: action.tagList
+        });
+    }),
+    on(createTag, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList,
+            tagList: state.tagList.concat({
+                id: uuid(),
+                name: action.name
+            })
+        });
+    }),
+    on(setTagName, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList,
+            tagList: state.tagList.map((tag: ITag) => {
+                if (tag.id === action.tagId) {
+                    return Object.assign({}, tag, { name: action.name });
+                } else {
+                    return tag;
+                }
+            })
+        });
+    }),
+    on(removeTag, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList,
+            tagList: state.tagList.filter((tag: ITag) => tag.id !== action.tagId)
         });
     }),
     on(setResourceTitle, (state, action) => {
