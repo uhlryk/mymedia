@@ -26,7 +26,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     resource$: Observable<IResource>;
     tagList$;
-    // @Output() clickDetailsButton = new EventEmitter<string>();
+    @Output() clickDetailsButton = new EventEmitter<string>();
     // @Output() clickDeleteButton = new EventEmitter<string>();
     // @Output() clickThumbnail = new EventEmitter<string>();
     constructor(private store: Store<{ project: ProjectState }>) {}
@@ -44,7 +44,7 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     onClickDetailsButton() {
-        // this.clickDetailsButton.emit(this.resourceId);
+        this.clickDetailsButton.emit(this.resourceId);
     }
 
     onClickDeleteButton() {

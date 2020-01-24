@@ -1,7 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
-import { setProjectInitialData, setResourceOrder } from "../actions/index.action";
+import {
+    setProjectInitialData, setResourceDescription,
+    setResourceOrder, setResourceRanking, setResourceTags,
+    setResourceTitle
+} from "../actions/index.action";
 
 export const projectFeatureKey = "project";
 
@@ -31,6 +35,57 @@ export const InitialProjectReducer = createReducer(
         return Object.assign({}, InitialProjectState, {
             resourceList: action.resourceList,
             tagList: action.tagList
+        });
+    }),
+    on(setResourceTitle, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList.map((resource: IResource) => {
+                if (resource.id === action.resourceId) {
+                    return Object.assign({}, resource, { title: action.title });
+                } else {
+                    return resource;
+                }
+            }),
+            tagList: state.tagList
+        });
+    }),
+    on(setResourceDescription, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList.map((resource: IResource) => {
+                if (resource.id === action.resourceId) {
+                    return Object.assign({}, resource, { description: action.description });
+                } else {
+                    return resource;
+                }
+            }),
+            tagList: state.tagList
+        });
+    }),
+    on(setResourceRanking, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList.map((resource: IResource) => {
+                if (resource.id === action.resourceId) {
+                    return Object.assign({}, resource, { ranking: action.ranking });
+                } else {
+                    return resource;
+                }
+            }),
+            tagList: state.tagList
+        });
+    }),
+    on(setResourceTags, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList.map((resource: IResource) => {
+                if (resource.id === action.resourceId) {
+                    const updatedResource = Object.assign({}, resource, { tags: action.tags.slice() });
+                    console.log("ppppppppppp");
+                    console.log(updatedResource);
+                    return updatedResource;
+                } else {
+                    return resource;
+                }
+            }),
+            tagList: state.tagList
         });
     }),
     on(setResourceOrder, (state, action) => {

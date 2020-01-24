@@ -79,7 +79,7 @@
 
             <app-tag-select-list
                 (changeTagList)="onChangeAddedTags($event)"
-                [allTagList]="_allProjectTagList"
+                [allTagList]="tagList$ | async"
                 [selectedTagIdList]="resource.tags"
             ></app-tag-select-list>
         </div>

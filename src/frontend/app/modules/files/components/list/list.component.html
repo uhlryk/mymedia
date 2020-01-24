@@ -5,6 +5,7 @@
         class="p-col-4"
         *ngFor="let resourceId of resourceIdList$ | async;"
         [resourceId]="resourceId"
+        (clickDetailsButton)="onClickDetailsButton($event)"
     >
         {{ log("ListComponent.render.card") }}
     </app-card>

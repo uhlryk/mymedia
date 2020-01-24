@@ -9,7 +9,9 @@
         ></app-search>
     </app-side-menu>
     <div class="p-col">
-        <app-list></app-list>
+        <app-list
+            (clickDetailsButton)="onClickDetailsButton($event)"
+        ></app-list>
 
         <app-details-modal></app-details-modal>
         <app-tags-modal></app-tags-modal>

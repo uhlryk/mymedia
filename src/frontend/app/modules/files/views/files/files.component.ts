@@ -114,9 +114,9 @@ export class FilesComponent implements OnInit, OnDestroy {
     //     this.projectContextService.openResource(resourceId);
     // }
     //
-    // onClickDetailsButton(resourceId) {
-    //     this.detailsModal.show(resourceId);
-    // }
+    onClickDetailsButton(resourceId) {
+        this.detailsModal.show(resourceId);
+    }
     //
     // onClickDeleteButton(resourceId) {
     //     this.confirmationService.confirm({

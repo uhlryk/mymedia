@@ -11,3 +11,20 @@ export const setResourceOrder = createAction(
     "SET_RESOURCE_ORDER",
     props<{ order: string }>()
 );
+
+export const setResourceTitle = createAction(
+    "SET_RESOURCE_TITLE",
+    props<{ resourceId: string, title: string }>()
+);
+export const setResourceDescription = createAction(
+    "SET_RESOURCE_DESCRIPTION",
+    props<{ resourceId: string, description: string }>()
+);
+export const setResourceRanking = createAction(
+    "SET_RESOURCE_RANKING",
+    props<{ resourceId: string, ranking: number }>()
+);
+export const setResourceTags = createAction(
+    "SET_RESOURCE_TAGS",
+    props<{ resourceId: string, tags: Array<string> }>()
+);
