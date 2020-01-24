@@ -25,6 +25,19 @@ export const orderSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.order
 );
+export const rightMenuSelector = createSelector(
+    projectFeatureSelector,
+    (project: ProjectState) => project.rightMenu
+);
+
+export const rightMenuResourceIdSelector = createSelector(
+    rightMenuSelector,
+    (rightMenu: { resourceId: string; visible: boolean }) => rightMenu.resourceId
+);
+export const rightMenuVisibleSelector = createSelector(
+    rightMenuSelector,
+    (rightMenu: { resourceId: string; visible: boolean }) => rightMenu.visible
+);
 export const tagListSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.tagList

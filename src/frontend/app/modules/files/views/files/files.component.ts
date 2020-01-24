@@ -3,7 +3,6 @@ import { ProjectContextService } from "../../../../services/projectContext.servi
 import { DetailsModalComponent } from "../../modules/details-modal/details-modal.component";
 import { LoaderService } from "../../../../services/loader.service";
 import { Router } from "@angular/router";
-import { ThumbnailService } from "../../../../services/thumbnail.service";
 import { TagsModalComponent } from "../../modules/tags-modal/tags-modal.component";
 import { Subscription } from "rxjs";
 import IProject from "../../../../../../shared/types/project.interface";
@@ -27,8 +26,8 @@ import IThumbnailChangeEvent from "../../../../../../shared/types/thumbnailChang
     styleUrls: ["./files.component.scss"]
 })
 export class FilesComponent implements OnInit, OnDestroy {
-    @ViewChild(DetailsModalComponent, { static: true })
-    detailsModal: DetailsModalComponent;
+    // @ViewChild(DetailsModalComponent, { static: true })
+    // detailsModal: DetailsModalComponent;
 
     @ViewChild(TagsModalComponent, { static: true })
     tagsModal: TagsModalComponent;
@@ -47,7 +46,6 @@ export class FilesComponent implements OnInit, OnDestroy {
         private store: Store<AppState>,
         private projectContextService: ProjectContextService,
         private appMenu: AppMenuService,
-        private thumbnailService: ThumbnailService,
         private loaderService: LoaderService,
         private router: Router
     ) {}
@@ -135,9 +133,9 @@ export class FilesComponent implements OnInit, OnDestroy {
     //     this.projectContextService.openResource(resourceId);
     // }
     //
-    onClickDetailsButton(resourceId) {
-        this.detailsModal.show(resourceId);
-    }
+    // onClickDetailsButton(resourceId) {
+    //     this.detailsModal.show(resourceId);
+    // }
     //
     // onClickDeleteButton(resourceId) {
     //     this.confirmationService.confirm({

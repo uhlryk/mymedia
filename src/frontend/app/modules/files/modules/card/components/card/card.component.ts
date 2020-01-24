@@ -12,6 +12,7 @@ import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Store, select } from "@ngrx/store";
 import { ProjectState } from "../../../../store/reducers";
 import {Observable} from "rxjs";
+import {hideRightMenu, showRightMenu} from "../../../../store/actions/index.action";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
@@ -26,7 +27,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     resource$: Observable<IResource>;
     tagList$;
-    @Output() clickDetailsButton = new EventEmitter<string>();
+    // @Output() clickDetailsButton = new EventEmitter<string>();
     // @Output() clickDeleteButton = new EventEmitter<string>();
     // @Output() clickThumbnail = new EventEmitter<string>();
     constructor(private store: Store<{ project: ProjectState }>) {}
@@ -44,7 +45,10 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     onClickDetailsButton() {
-        this.clickDetailsButton.emit(this.resourceId);
+        this.store.dispatch(showRightMenu({
+            resourceId: this.resourceId
+        }));
+        // this.clickDetailsButton.emit(this.resourceId);
     }
 
     onClickDeleteButton() {

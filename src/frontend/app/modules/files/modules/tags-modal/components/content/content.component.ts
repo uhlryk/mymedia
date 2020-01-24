@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { ProjectContextService } from "../../../../../../services/projectContext.service";
-import IProject from "../../../../../../../../shared/types/project.interface";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import { AppState } from "../../../../../../reducers";
 import { select, Store } from "@ngrx/store";

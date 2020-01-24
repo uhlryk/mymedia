@@ -1,6 +1,6 @@
 <div>
     <p-sidebar
-        [(visible)]="visibleSidebar"
+        [visible]="visible$ | async"
         [baseZIndex]="10000"
         position="right"
         styleClass="ui-sidebar-sm"
@@ -8,6 +8,6 @@
         [blockScroll]="true"
         (onHide)="onHide()"
     >
-        <app-details [resourceId]="resourceId"></app-details>
+        <app-details [resourceId]="resourceId$ | async"></app-details>
     </p-sidebar>
 </div>

@@ -11,6 +11,7 @@ import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { ProjectState } from "../../store/reducers";
 import { listSelector } from "../../store/selectors/index.selector";
+import {AppState} from "../../../../reducers";
 
 @Component({
     selector: "app-list",
@@ -21,9 +22,8 @@ import { listSelector } from "../../store/selectors/index.selector";
 export class ListComponent implements OnInit, OnChanges {
     resourceIdList$: Observable<Array<string>>;
     // @Output() clickThumbnail = new EventEmitter<string>();
-    @Output() clickDetailsButton = new EventEmitter<string>();
     // @Output() clickDeleteButton = new EventEmitter<string>();
-    constructor(private store: Store<{ project: ProjectState }>) {}
+    constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
         this.resourceIdList$ = this.store.pipe(select(listSelector));
@@ -34,9 +34,9 @@ export class ListComponent implements OnInit, OnChanges {
     // onClickThumbnail(resourceId: string) {
     //     this.clickThumbnail.emit(resourceId);
     // }
-    onClickDetailsButton(resourceId: string) {
-        this.clickDetailsButton.emit(resourceId);
-    }
+    // onClickDetailsButton(resourceId: string) {
+    //     this.clickDetailsButton.emit(resourceId);
+    // }
     //
     // onClickDeleteButton(resourceId: string) {
     //     this.clickDeleteButton.emit(resourceId);

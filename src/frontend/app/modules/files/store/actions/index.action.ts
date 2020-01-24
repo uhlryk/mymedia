@@ -38,3 +38,8 @@ export const setTagName = createAction(
     props<{ tagId: string; name: string }>()
 );
 export const removeTag = createAction("REMOVE_TAG", props<{ tagId: string }>());
+
+export const showRightMenu = createAction("SHOW_RIGHT_MENU", props<{
+    resourceId: string
+}>());
+export const hideRightMenu = createAction("HIDE_RIGHT_MENU", props<{}>());

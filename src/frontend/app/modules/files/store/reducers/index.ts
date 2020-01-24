@@ -4,7 +4,7 @@ import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import {
     addResourceThumbnail,
-    createTag,
+    createTag, hideRightMenu,
     removeTag,
     setProjectInitialData,
     setResourceDescription,
@@ -12,7 +12,7 @@ import {
     setResourceRanking,
     setResourceTags,
     setResourceTitle,
-    setTagName
+    setTagName, showRightMenu
 } from "../actions/index.action";
 
 export const projectFeatureKey = "project";
@@ -20,6 +20,10 @@ export const projectFeatureKey = "project";
 export interface ProjectState {
     resourceList: Array<IResource>;
     tagList: Array<ITag>;
+    rightMenu: {
+        resourceId?: string,
+        visible: boolean
+    };
     search: {
         tagIdList: Array<string>;
         text: string;
@@ -30,6 +34,10 @@ export interface ProjectState {
 export const InitialProjectState: ProjectState = {
     resourceList: [],
     tagList: [],
+    rightMenu: {
+        resourceId: null,
+        visible: false
+    },
     search: {
         tagIdList: [],
         text: ""
@@ -146,6 +154,22 @@ export const InitialProjectReducer = createReducer(
     on(setResourceOrder, (state, action) => {
         return Object.assign({}, state, {
             order: action.order
+        });
+    }),
+    on(showRightMenu, (state, action) => {
+        return Object.assign({}, state, {
+            rightMenu: {
+                resourceId: action.resourceId,
+                visible: true
+            }
+        });
+    }),
+    on(hideRightMenu, (state, action) => {
+        return Object.assign({}, state, {
+            rightMenu: {
+                resourceId: null,
+                visible: false
+            }
         });
     })
 );
