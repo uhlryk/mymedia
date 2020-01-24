@@ -11,6 +11,12 @@ export const resourceListSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.resourceList
 );
+
+export const resourceSelector = createSelector(
+    resourceListSelector,
+    (resourceList: Array<IResource>, props: { resourceId: string }) =>
+        resourceList.find((resource: IResource) => resource.id === props.resourceId)
+);
 export const searchSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.search

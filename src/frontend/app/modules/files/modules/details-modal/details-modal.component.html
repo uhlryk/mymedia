@@ -4,84 +4,10 @@
         [baseZIndex]="10000"
         position="right"
         styleClass="ui-sidebar-sm"
-        [style]="{'overflow': 'scroll'}"
+        [style]="{ overflow: 'scroll' }"
         [blockScroll]="true"
         (onHide)="onHide()"
     >
-        <div *ngIf="!resource">
-            <div class="center">
-                <i class="pi pi-file-excel not-found-icon"></i>
-                <p>Media doesn't exist</p>
-            </div>
-        </div>
-        <div *ngIf="resource" class="side-menu-container">
-            <div class="thumbnail-section">
-                <div
-                    *ngIf="!thumbnailPath"
-                    class="empty-thumbnail"
-                >
-                    <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
-                    <i class="pi pi-clock" style="font-size: 3em"></i>
-                </div>
-                <div class="thumbnail-wrapper" *ngIf="thumbnailPath">
-                    <img
-                        class="thumbnail"
-                        [src]="thumbnailPath"
-                        alt=""
-                    />
-                    <div class="show-play" (click)="clickOpenFile()">
-                        <i class="pi pi-caret-right"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="thumbnail-gallery">
-                <div
-                    class="thumbnail-wrapper-small"
-                    *ngFor="let thumbnailPath of resource.thumbnailList"
-                >
-                    <div *ngIf="!thumbnailPath" class="empty-thumbnail">
-                        <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
-                        <i class="pi pi-clock" style="font-size: 3em"></i>
-                    </div>
-
-                    <img
-                        *ngIf="thumbnailPath"
-                        class="thumbnail"
-                        (click)="changeThumbnail(thumbnailPath)"
-                        [src]="thumbnailPath"
-                        alt=""
-                    />
-                </div>
-            </div>
-            <app-text
-                [text]="resource.title"
-                (changed)="saveTitle($event)"
-            ></app-text>
-            <div class="file-path-text">{{ resource.filePath }}</div>
-            <div class="align-meta-info">
-                <app-file-size [size]="resource.size"></app-file-size>
-                <span>{{ resource.width }} x {{ resource.height }}</span>
-                <app-video-length [length]="resource.duration"></app-video-length>
-            </div>
-            <div class="align-rating">
-                <p-rating
-                    [ngModel]="resource.ranking"
-                    (onRate)="setRanking($event.value)"
-                    (onCancel)="setRanking(0)"
-                ></p-rating>
-            </div>
-            <div>
-                <app-description
-                    [text]="resource.description"
-                    (changed)="saveDescription($event)"
-                ></app-description>
-            </div>
-
-            <app-tag-select-list
-                (changeTagList)="onChangeAddedTags($event)"
-                [allTagList]="tagList$ | async"
-                [selectedTagIdList]="resource.tags"
-            ></app-tag-select-list>
-        </div>
+        <app-details [resourceId]="resourceId"></app-details>
     </p-sidebar>
 </div>
