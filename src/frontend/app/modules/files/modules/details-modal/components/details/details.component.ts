@@ -7,7 +7,7 @@ import {
     OnDestroy
 } from "@angular/core";
 import { select, Store } from "@ngrx/store";
-import { ProjectState } from "../../../../store/reducers";
+import { ProjectState } from "../../../../store/reducers/index.reducer";
 import {
     resourceListSelector,
     tagListSelector

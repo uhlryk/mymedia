@@ -1,8 +1,7 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { ProjectState } from "../reducers";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ISearch from "../../types/search.interface";
-import { projectFeatureKey } from "../reducers/index";
+import { projectFeatureKey, ProjectState } from "../reducers/index.reducer";
 export const projectFeatureSelector = createFeatureSelector<ProjectState>(
     projectFeatureKey
 );

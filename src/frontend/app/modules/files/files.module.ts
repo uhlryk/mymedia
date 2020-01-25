@@ -15,7 +15,8 @@ import { TagSelectListModule } from "./modules/tag-select-list/tag-select-list.m
 import { ConfirmationService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { StoreModule } from "@ngrx/store";
-import * as fromProject from "./store/reducers";
+import * as fromProject from "./store/reducers/index.reducer";
+import { ProjectEffects } from "./store/effects/index.effect";
 import { EffectsModule } from "@ngrx/effects";
 
 @NgModule({
@@ -33,7 +34,7 @@ import { EffectsModule } from "@ngrx/effects";
             fromProject.projectFeatureKey,
             fromProject.InitialProjectReducer
         ),
-        EffectsModule.forFeature([])
+        EffectsModule.forFeature([ProjectEffects])
     ],
     providers: [ConfirmationService],
     declarations: [

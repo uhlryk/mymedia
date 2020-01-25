@@ -10,7 +10,7 @@ import {
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Store, select } from "@ngrx/store";
-import { ProjectState } from "../../../../store/reducers";
+import { ProjectState } from "../../../../store/reducers/index.reducer";
 import {Observable} from "rxjs";
 import {hideRightMenu, showRightMenu} from "../../../../store/actions/index.action";
 @Component({

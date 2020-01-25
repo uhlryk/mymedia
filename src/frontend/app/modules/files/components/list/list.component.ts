@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { ProjectState } from "../../store/reducers";
+import { ProjectState } from "../../store/reducers/index.reducer";
 import { listSelector } from "../../store/selectors/index.selector";
 import {AppState} from "../../../../reducers";
 
