@@ -16,6 +16,7 @@ import { ConfirmationService } from "primeng/api";
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { StoreModule } from "@ngrx/store";
 import * as fromProject from "./store/reducers";
+import { EffectsModule } from "@ngrx/effects";
 
 @NgModule({
     imports: [
@@ -31,7 +32,8 @@ import * as fromProject from "./store/reducers";
         StoreModule.forFeature(
             fromProject.projectFeatureKey,
             fromProject.InitialProjectReducer
-        )
+        ),
+        EffectsModule.forFeature([])
     ],
     providers: [ConfirmationService],
     declarations: [
