@@ -70,7 +70,7 @@ export default class AppController {
             const project: IProject = context.data.project;
             await this._projectManager.setProjectModel(project);
             await this._projectManager.save();
-            context.reply.send();
+            // context.reply.send();
         });
 
         Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
