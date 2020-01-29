@@ -43,3 +43,5 @@ export const showRightMenu = createAction("SHOW_RIGHT_MENU", props<{
     resourceId: string
 }>());
 export const hideRightMenu = createAction("HIDE_RIGHT_MENU", props<{}>());
+
+export const executeResource = createAction("EXECUTE_RESOURCE", props<{ resourceId: string; }>());

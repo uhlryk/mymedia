@@ -12,7 +12,7 @@ import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Store, select } from "@ngrx/store";
 import { ProjectState } from "../../../../store/reducers/index.reducer";
 import {Observable} from "rxjs";
-import {hideRightMenu, showRightMenu} from "../../../../store/actions/index.action";
+import {executeResource, hideRightMenu, showRightMenu} from "../../../../store/actions/index.action";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
@@ -56,6 +56,9 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     onClickThumbnail() {
+        this.store.dispatch(executeResource({
+            resourceId: this.resourceId
+        }));
         // this.clickThumbnail.emit(this.resourceId);
     }
 
