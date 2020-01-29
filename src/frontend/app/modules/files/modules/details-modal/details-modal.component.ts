@@ -22,10 +22,6 @@ export class DetailsModalComponent implements OnInit {
     visible$: Observable<boolean>;
 
     ngOnInit(): void {
-        // this.store.subscribe(store => {
-        //     console.log("AAAAAAAAA");
-        //     console.log(store);
-        // });
         this.resourceId$ = this.store.pipe(select(rightMenuResourceIdSelector));
         this.visible$ = this.store.pipe(select(rightMenuVisibleSelector));
     }

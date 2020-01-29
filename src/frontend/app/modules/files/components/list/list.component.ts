@@ -21,8 +21,6 @@ import {AppState} from "../../../../reducers";
 })
 export class ListComponent implements OnInit, OnChanges {
     resourceIdList$: Observable<Array<string>>;
-    // @Output() clickThumbnail = new EventEmitter<string>();
-    // @Output() clickDeleteButton = new EventEmitter<string>();
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
@@ -30,17 +28,6 @@ export class ListComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {}
-
-    // onClickThumbnail(resourceId: string) {
-    //     this.clickThumbnail.emit(resourceId);
-    // }
-    // onClickDetailsButton(resourceId: string) {
-    //     this.clickDetailsButton.emit(resourceId);
-    // }
-    //
-    // onClickDeleteButton(resourceId: string) {
-    //     this.clickDeleteButton.emit(resourceId);
-    // }
 
     log(val) {
         console.log(val);

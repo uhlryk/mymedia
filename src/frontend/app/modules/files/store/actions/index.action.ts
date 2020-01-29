@@ -39,11 +39,28 @@ export const setTagName = createAction(
 );
 export const removeTag = createAction("REMOVE_TAG", props<{ tagId: string }>());
 
-export const showRightMenu = createAction("SHOW_RIGHT_MENU", props<{
-    resourceId: string
-}>());
+export const showRightMenu = createAction(
+    "SHOW_RIGHT_MENU",
+    props<{
+        resourceId: string;
+    }>()
+);
 export const hideRightMenu = createAction("HIDE_RIGHT_MENU", props<{}>());
 
-export const executeResource = createAction("EXECUTE_RESOURCE", props<{ resourceId: string; }>());
+export const executeResource = createAction(
+    "EXECUTE_RESOURCE",
+    props<{ resourceId: string }>()
+);
 
-export const deleteResource = createAction("DELETE_RESOURCE", props<{ resourceId: string; }>());
+export const showDeleteResourceMenu = createAction(
+    "SHOW_DELETE_RESOURCE_MENU",
+    props<{ resourceId: string }>()
+);
+export const hideDeleteResourceMenu = createAction(
+    "HIDE_DELETE_RESOURCE_MENU",
+    props<{}>()
+);
+export const deleteResourceFromDeleteResourceMenu = createAction(
+    "DELETE_RESOURCE_FROM_DELETE_RESOURCE_MENU",
+    props<{ resourceId: string }>()
+);

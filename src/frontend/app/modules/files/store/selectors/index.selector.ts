@@ -24,6 +24,11 @@ export const orderSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.order
 );
+
+export const deleteResourceMenuSelector = createSelector(
+    projectFeatureSelector,
+    (project: ProjectState) => project.deleteResourceMenu
+);
 export const rightMenuSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.rightMenu
@@ -49,7 +54,7 @@ export const listSelector = createSelector(
         console.log("Selector recalculated");
         return resourceList
             .filter((resource: IResource) => {
-                if (resource.title.toLowerCase().includes(search.text.toLowerCase())) {
+                if (resource.isRemoved === false && resource.title.toLowerCase().includes(search.text.toLowerCase())) {
                     if (search.tagIdList.length) {
                         return search.tagIdList.every(
                             (searchTagId: string) => !!resource.tags.includes(searchTagId)

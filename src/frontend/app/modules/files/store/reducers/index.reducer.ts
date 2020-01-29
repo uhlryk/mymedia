@@ -4,7 +4,10 @@ import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import {
     addResourceThumbnail,
-    createTag, hideRightMenu,
+    createTag,
+    deleteResourceFromDeleteResourceMenu,
+    hideDeleteResourceMenu,
+    hideRightMenu,
     removeTag,
     setProjectInitialData,
     setResourceDescription,
@@ -12,7 +15,9 @@ import {
     setResourceRanking,
     setResourceTags,
     setResourceTitle,
-    setTagName, showRightMenu
+    setTagName,
+    showDeleteResourceMenu,
+    showRightMenu
 } from "../actions/index.action";
 
 export const projectFeatureKey = "project";
@@ -20,9 +25,13 @@ export const projectFeatureKey = "project";
 export interface ProjectState {
     resourceList: Array<IResource>;
     tagList: Array<ITag>;
+    deleteResourceMenu: {
+        resourceId?: string;
+        visible: boolean;
+    };
     rightMenu: {
-        resourceId?: string,
-        visible: boolean
+        resourceId?: string;
+        visible: boolean;
     };
     search: {
         tagIdList: Array<string>;
@@ -34,6 +43,10 @@ export interface ProjectState {
 export const InitialProjectState: ProjectState = {
     resourceList: [],
     tagList: [],
+    deleteResourceMenu: {
+        resourceId: null,
+        visible: false
+    },
     rightMenu: {
         resourceId: null,
         visible: false
@@ -55,7 +68,6 @@ export const InitialProjectReducer = createReducer(
     }),
     on(createTag, (state, action) => {
         return Object.assign({}, state, {
-            resourceList: state.resourceList,
             tagList: state.tagList.concat({
                 id: uuid(),
                 name: action.name
@@ -64,7 +76,6 @@ export const InitialProjectReducer = createReducer(
     }),
     on(setTagName, (state, action) => {
         return Object.assign({}, state, {
-            resourceList: state.resourceList,
             tagList: state.tagList.map((tag: ITag) => {
                 if (tag.id === action.tagId) {
                     return Object.assign({}, tag, { name: action.name });
@@ -76,7 +87,6 @@ export const InitialProjectReducer = createReducer(
     }),
     on(removeTag, (state, action) => {
         return Object.assign({}, state, {
-            resourceList: state.resourceList,
             tagList: state.tagList.filter((tag: ITag) => tag.id !== action.tagId)
         });
     }),
@@ -88,8 +98,7 @@ export const InitialProjectReducer = createReducer(
                 } else {
                     return resource;
                 }
-            }),
-            tagList: state.tagList
+            })
         });
     }),
     on(setResourceDescription, (state, action) => {
@@ -102,8 +111,7 @@ export const InitialProjectReducer = createReducer(
                 } else {
                     return resource;
                 }
-            }),
-            tagList: state.tagList
+            })
         });
     }),
     on(setResourceRanking, (state, action) => {
@@ -114,8 +122,7 @@ export const InitialProjectReducer = createReducer(
                 } else {
                     return resource;
                 }
-            }),
-            tagList: state.tagList
+            })
         });
     }),
     on(setResourceTags, (state, action) => {
@@ -129,8 +136,24 @@ export const InitialProjectReducer = createReducer(
                 } else {
                     return resource;
                 }
+            })
+        });
+    }),
+    on(deleteResourceFromDeleteResourceMenu, (state, action) => {
+        return Object.assign({}, state, {
+            resourceList: state.resourceList.map((resource: IResource) => {
+                if (resource.id === action.resourceId) {
+                    return Object.assign({}, resource, {
+                        isRemoved: true
+                    });
+                } else {
+                    return resource;
+                }
             }),
-            tagList: state.tagList
+            deleteResourceMenu: {
+                resourceId: null,
+                visible: false
+            }
         });
     }),
     on(addResourceThumbnail, (state, action) => {
@@ -147,13 +170,28 @@ export const InitialProjectReducer = createReducer(
                 } else {
                     return resource;
                 }
-            }),
-            tagList: state.tagList
+            })
         });
     }),
     on(setResourceOrder, (state, action) => {
         return Object.assign({}, state, {
             order: action.order
+        });
+    }),
+    on(showDeleteResourceMenu, (state, action) => {
+        return Object.assign({}, state, {
+            deleteResourceMenu: {
+                resourceId: action.resourceId,
+                visible: true
+            }
+        });
+    }),
+    on(hideDeleteResourceMenu, (state, action) => {
+        return Object.assign({}, state, {
+            deleteResourceMenu: {
+                resourceId: null,
+                visible: false
+            }
         });
     }),
     on(showRightMenu, (state, action) => {

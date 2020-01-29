@@ -12,7 +12,13 @@ import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Store, select } from "@ngrx/store";
 import { ProjectState } from "../../../../store/reducers/index.reducer";
 import {Observable} from "rxjs";
-import {executeResource, hideRightMenu, showRightMenu} from "../../../../store/actions/index.action";
+import {
+    deleteResource,
+    executeResource,
+    hideRightMenu,
+    showDeleteResourceMenu,
+    showRightMenu
+} from "../../../../store/actions/index.action";
 @Component({
     selector: "app-card",
     templateUrl: "./card.component.html",
@@ -48,11 +54,12 @@ export class CardComponent implements OnInit, OnChanges {
         this.store.dispatch(showRightMenu({
             resourceId: this.resourceId
         }));
-        // this.clickDetailsButton.emit(this.resourceId);
     }
 
     onClickDeleteButton() {
-        // this.clickDeleteButton.emit(this.resourceId);
+        this.store.dispatch(showDeleteResourceMenu({
+            resourceId: this.resourceId
+        }));
     }
 
     onClickThumbnail() {
