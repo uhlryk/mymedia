@@ -59,7 +59,6 @@ export class CardComponent implements OnInit, OnChanges {
         this.store.dispatch(executeResource({
             resourceId: this.resourceId
         }));
-        // this.clickThumbnail.emit(this.resourceId);
     }
 
     log(val) {

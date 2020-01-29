@@ -16,6 +16,7 @@ import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Observable, Subscription } from "rxjs";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import {
+    executeResource,
     setResourceDescription,
     setResourceRanking,
     setResourceTags,
@@ -60,7 +61,9 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     clickOpenFile() {
-        // this.projectContextService.openResource(this.resource.id);
+        this.store.dispatch(executeResource({
+            resourceId: this.resourceId
+        }));
     }
     setRanking(ranking) {
         this.store.dispatch(
