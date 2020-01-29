@@ -44,9 +44,9 @@ export class ProjectEffects {
             this.actions$.pipe(
                 ofType(actions.executeResource),
                 withLatestFrom(this.store$.pipe(select(projectFeatureSelector))),
-                tap(([action, projectState]: [Action, ProjectState]) => {
+                tap(([action, projectState]: [{ resourceId: string}, ProjectState]) => {
                     const selectedResource: IResource = projectState.resourceList.find(
-                        (resource: IResource) => resource.id === action["resourceId"]
+                        (resource: IResource) => resource.id === action.resourceId
                     );
                     IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {
                         filePath: selectedResource.filePath
