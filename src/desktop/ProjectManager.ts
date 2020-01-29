@@ -112,13 +112,27 @@ export default class ProjectManager {
         this._projectModel = projectModel;
     }
 
-    public async removeResource(resourceId: string) {
-        const resourceToRemove: IResource = this._projectModel.resourceList.find(
-            (resource: IResource) => resource.id === resourceId
-        );
-        const resourcePath = resourceToRemove.filePath;
-        await this._thumbnailManager.removeResourceThumbnails(resourceToRemove);
-        await removeFile(this._projectPath, resourcePath);
+    public async removeResourcesMarkedAsDeleted() {
+        const newResourceList: Array<IResource> = [];
+        for (const resource of this._projectModel.resourceList) {
+            if (resource.isRemoved) {
+                await this.removeResource(resource);
+            } else {
+                newResourceList.push(resource);
+            }
+        }
+        this._projectModel.resourceList = newResourceList;
+    }
+
+    private async removeResource(resourceToRemove: IResource) {
+        try {
+            const resourcePath = resourceToRemove.filePath;
+            await this._thumbnailManager.removeResourceThumbnails(resourceToRemove);
+            await removeFile(this._projectPath, resourcePath);
+        } catch (err) {
+            console.log("Error during removing file");
+            console.log(err);
+        }
     }
     public async save() {
         const projectFile: ProjectFileInterface = {

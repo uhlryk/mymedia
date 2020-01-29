@@ -10,8 +10,9 @@ import { InplaceModule } from "primeng/inplace";
 import { ButtonModule } from "primeng/button";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { RatingModule } from "primeng/rating";
+import { DetailsComponent } from './components/details/details.component';
 @NgModule({
-    declarations: [DetailsModalComponent, DescriptionComponent],
+    declarations: [DetailsModalComponent, DescriptionComponent, DetailsComponent],
     imports: [
         CommonModule,
         TagSelectListModule,

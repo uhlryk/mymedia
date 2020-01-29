@@ -7,9 +7,11 @@ import {
     OnInit,
     Output
 } from "@angular/core";
-import IResource from "../../../../../../shared/types/resource.interface";
-import ITag from "../../../../../../shared/types/tag.interface";
-import ISearch from "../../types/search.interface";
+import { select, Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { ProjectState } from "../../store/reducers/index.reducer";
+import { listSelector } from "../../store/selectors/index.selector";
+import {AppState} from "../../../../reducers";
 
 @Component({
     selector: "app-list",
@@ -18,80 +20,16 @@ import ISearch from "../../types/search.interface";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ListComponent implements OnInit, OnChanges {
-    @Input() resourceList: Array<IResource>;
-    @Input() tagList: Array<ITag>;
-    @Input() search: ISearch;
-    @Input() orderMethod: string;
-    @Output() clickThumbnail = new EventEmitter<string>();
-    @Output() clickDetailsButton = new EventEmitter<string>();
-    @Output() clickDeleteButton = new EventEmitter<string>();
+    resourceIdList$: Observable<Array<string>>;
+    constructor(private store: Store<AppState>) {}
 
-    _managedResourceList: Array<IResource>;
-    constructor() {}
-
-    ngOnInit() {}
-
-    ngOnChanges() {
-        console.log("ListComponent.ngOnChanges");
-        this._managedResourceList = this.resourceList
-            .filter((resource: IResource) => {
-                if (this.search) {
-                    if (
-                        resource.title
-                            .toLowerCase()
-                            .includes(this.search.text.toLowerCase())
-                    ) {
-                        if (this.search.tagIdList && this.search.tagIdList.length) {
-                            return this.search.tagIdList.every(
-                                (searchTagId: string) =>
-                                    !!resource.tags.includes(searchTagId)
-                            );
-                        }
-                        return true;
-                    }
-                } else {
-                    return true;
-                }
-            })
-            .sort((prev, next) => {
-                switch (this.orderMethod) {
-                    case "NAME_DESC":
-                        return prev.title > next.title ? -1 : 1;
-                    case "RATING_ASC":
-                        return prev.ranking - next.ranking;
-                    case "RATING_DESC":
-                        return next.ranking - prev.ranking;
-                    case "SIZE_ASC":
-                        return prev.size - next.size;
-                    case "SIZE_DESC":
-                        return next.size - prev.size;
-                    case "":
-                    case "NAME_ASC":
-                    default:
-                        return prev.title < next.title ? -1 : 1;
-                }
-            });
+    ngOnInit() {
+        this.resourceIdList$ = this.store.pipe(select(listSelector));
     }
 
-    onClickThumbnail(resourceId: string) {
-        this.clickThumbnail.emit(resourceId);
-    }
-    onClickDetailsButton(resourceId: string) {
-        this.clickDetailsButton.emit(resourceId);
-    }
-
-    onClickDeleteButton(resourceId: string) {
-        this.clickDeleteButton.emit(resourceId);
-    }
+    ngOnChanges() {}
 
     log(val) {
         console.log(val);
-    }
-
-    trackByList(index, resource: IResource) {
-        if (resource) {
-            return resource.id;
-        }
-        return null;
     }
 }

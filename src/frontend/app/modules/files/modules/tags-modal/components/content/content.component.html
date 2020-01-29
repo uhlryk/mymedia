@@ -2,7 +2,7 @@
     <input type="text" pInputText [(ngModel)]="tagName" />
     <p-button label="Create" (click)="onNewTag()"></p-button>
 </div>
-<p-table [value]="tagList">
+<p-table [value]="tagList$ | async">
     <ng-template pTemplate="header">
         <tr>
             <th colspan="4">tag name</th>
