@@ -23,7 +23,8 @@ export class ProjectEffects {
                     actions.setResourceTags,
                     actions.setResourceRanking,
                     actions.setResourceDescription,
-                    actions.setResourceTitle
+                    actions.setResourceTitle,
+                    actions.deleteResourceFromDeleteResourceMenu
                 ),
                 // tap((action: Action) => {})
                 withLatestFrom(this.store$.pipe(select(projectFeatureSelector))),

@@ -69,18 +69,13 @@ export default class AppController {
         Listener.on(IpcProviderResourceEnums.SAVE_PROJECT, async context => {
             const project: IProject = context.data.project;
             await this._projectManager.setProjectModel(project);
+            await this._projectManager.removeResourcesMarkedAsDeleted();
             await this._projectManager.save();
-            // context.reply.send();
         });
 
         Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
             const resourcePath: string = context.data.filePath;
             shell.openItem(path.join(this.getProjectPath(), resourcePath));
-        });
-
-        Listener.on(IpcProviderResourceEnums.TRIGGER_REMOVE_RESOURCE, async context => {
-            const resourceId = context.data.resourceId;
-            await this._projectManager.removeResource(resourceId);
         });
     }
 

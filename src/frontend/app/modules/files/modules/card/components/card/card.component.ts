@@ -1,21 +1,17 @@
 import {
     ChangeDetectionStrategy,
     Component,
-    EventEmitter,
     Input,
     OnChanges,
-    OnInit,
-    Output
+    OnInit
 } from "@angular/core";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Store, select } from "@ngrx/store";
 import { ProjectState } from "../../../../store/reducers/index.reducer";
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 import {
-    deleteResource,
     executeResource,
-    hideRightMenu,
     showDeleteResourceMenu,
     showRightMenu
 } from "../../../../store/actions/index.action";
@@ -33,9 +29,6 @@ export class CardComponent implements OnInit, OnChanges {
 
     resource$: Observable<IResource>;
     tagList$;
-    // @Output() clickDetailsButton = new EventEmitter<string>();
-    // @Output() clickDeleteButton = new EventEmitter<string>();
-    // @Output() clickThumbnail = new EventEmitter<string>();
     constructor(private store: Store<{ project: ProjectState }>) {}
 
     ngOnInit() {}
@@ -51,21 +44,27 @@ export class CardComponent implements OnInit, OnChanges {
     }
 
     onClickDetailsButton() {
-        this.store.dispatch(showRightMenu({
-            resourceId: this.resourceId
-        }));
+        this.store.dispatch(
+            showRightMenu({
+                resourceId: this.resourceId
+            })
+        );
     }
 
     onClickDeleteButton() {
-        this.store.dispatch(showDeleteResourceMenu({
-            resourceId: this.resourceId
-        }));
+        this.store.dispatch(
+            showDeleteResourceMenu({
+                resourceId: this.resourceId
+            })
+        );
     }
 
     onClickThumbnail() {
-        this.store.dispatch(executeResource({
-            resourceId: this.resourceId
-        }));
+        this.store.dispatch(
+            executeResource({
+                resourceId: this.resourceId
+            })
+        );
     }
 
     log(val) {
