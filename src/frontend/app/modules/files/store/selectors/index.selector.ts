@@ -20,6 +20,14 @@ export const searchSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.search
 );
+export const tagsSearchSelector = createSelector(
+    searchSelector,
+    (search: { tagIdList: Array<string>; text: string }) => search.tagIdList
+);
+export const textSearchSelector = createSelector(
+    searchSelector,
+    (search: { tagIdList: Array<string>; text: string }) => search.text
+);
 export const orderSelector = createSelector(
     projectFeatureSelector,
     (project: ProjectState) => project.order
@@ -54,7 +62,10 @@ export const listSelector = createSelector(
         console.log("Selector recalculated");
         return resourceList
             .filter((resource: IResource) => {
-                if (resource.isRemoved === false && resource.title.toLowerCase().includes(search.text.toLowerCase())) {
+                if (
+                    resource.isRemoved === false &&
+                    resource.title.toLowerCase().includes(search.text.toLowerCase())
+                ) {
                     if (search.tagIdList.length) {
                         return search.tagIdList.every(
                             (searchTagId: string) => !!resource.tags.includes(searchTagId)

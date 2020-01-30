@@ -1,6 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
 import ISearch from "../../types/search.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
+import { AppState } from "../../../../reducers";
+import { Observable } from "rxjs";
+import { select, Store } from "@ngrx/store";
+import {
+    tagListSelector,
+    tagsSearchSelector,
+    textSearchSelector
+} from "../../store/selectors/index.selector";
+import {setSearchTags, setSearchText} from "../../store/actions/index.action";
 
 @Component({
     selector: "app-search",
@@ -8,12 +17,15 @@ import ITag from "../../../../../../shared/types/tag.interface";
     styleUrls: ["./search.component.scss"]
 })
 export class SearchComponent implements OnInit, OnChanges {
-    @Input() projectTagList: Array<ITag>;
-    @Input() searchCriteria: ISearch;
-    @Output() changeSearch = new EventEmitter<ISearch>();
-    constructor() {}
+    searchTagIdList$: Observable<Array<string>>;
+    projectTagIdList$: Observable<Array<ITag>>;
+    searchText$: Observable<string>;
+    constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
+        this.searchTagIdList$ = this.store.pipe(select(tagsSearchSelector));
+        this.projectTagIdList$ = this.store.pipe(select(tagListSelector));
+        this.searchText$ = this.store.pipe(select(textSearchSelector));
     }
 
     ngOnChanges() {
@@ -22,16 +34,18 @@ export class SearchComponent implements OnInit, OnChanges {
     }
 
     onChangeSearchText(inputText) {
-        this.changeSearch.emit({
-            tagIdList: this.searchCriteria.tagIdList,
-            text: inputText
-        });
+        this.store.dispatch(
+            setSearchText({
+                text: inputText
+            })
+        );
     }
 
     onChangeSearchTagList(selectedTagList: Array<string>) {
-        this.changeSearch.emit({
-            tagIdList: selectedTagList,
-            text: this.searchCriteria.text
-        });
+        this.store.dispatch(
+            setSearchTags({
+                tagIdList: selectedTagList
+            })
+        );
     }
 }

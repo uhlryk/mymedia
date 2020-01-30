@@ -5,13 +5,13 @@
         pInputText
         class="text-input"
         type="text"
-        [value]="searchCriteria.text"
+        [value]="searchText$ | async"
         (input)="onChangeSearchText($event.target.value)"
         placeholder="search"
     />
 </div>
 <app-tag-select-list
     (changeTagList)="onChangeSearchTagList($event)"
-    [allTagList]="projectTagList"
-    [selectedTagIdList]="searchCriteria.tagIdList"
+    [allTagList]="projectTagIdList$ | async"
+    [selectedTagIdList]="searchTagIdList$ | async"
 ></app-tag-select-list>

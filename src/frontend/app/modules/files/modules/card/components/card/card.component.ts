@@ -28,7 +28,7 @@ export class CardComponent implements OnInit, OnChanges {
     @Input() resourceId: string;
 
     resource$: Observable<IResource>;
-    tagList$;
+    tagList$: Observable<Array<ITag>>;
     constructor(private store: Store<{ project: ProjectState }>) {}
 
     ngOnInit() {}

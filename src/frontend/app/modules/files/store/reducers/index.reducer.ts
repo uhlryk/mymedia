@@ -15,6 +15,7 @@ import {
     setResourceRanking,
     setResourceTags,
     setResourceTitle,
+    setSearchTags, setSearchText,
     setTagName,
     showDeleteResourceMenu,
     showRightMenu
@@ -208,6 +209,20 @@ export const InitialProjectReducer = createReducer(
                 resourceId: null,
                 visible: false
             }
+        });
+    }),
+    on(setSearchTags, (state, action) => {
+        return Object.assign({}, state, {
+            search: Object.assign({}, state.search, {
+                tagIdList: action.tagIdList
+            })
+        });
+    }),
+    on(setSearchText, (state, action) => {
+        return Object.assign({}, state, {
+            search: Object.assign({}, state.search, {
+                text: action.text
+            })
         });
     })
 );

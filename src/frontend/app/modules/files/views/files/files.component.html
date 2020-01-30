@@ -2,10 +2,6 @@
     <app-side-menu class="p-col-fixed">
         <app-order></app-order>
         <app-search
-            *ngIf="_tagList"
-            [projectTagList]="_tagList"
-            [searchCriteria]="_search"
-            (changeSearch)="onChangeSearch($event)"
         ></app-search>
     </app-side-menu>
     <div class="p-col">

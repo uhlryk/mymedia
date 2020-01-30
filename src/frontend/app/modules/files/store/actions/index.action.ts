@@ -64,3 +64,17 @@ export const deleteResourceFromDeleteResourceMenu = createAction(
     "DELETE_RESOURCE_FROM_DELETE_RESOURCE_MENU",
     props<{ resourceId: string }>()
 );
+
+export const setSearchTags = createAction(
+    "SET_SEARCH_TAGS",
+    props<{ tagIdList: Array<string> }>()
+);
+export const setSearchText = createAction(
+    "SET_SEARCH_TEXT",
+    props<{ text: string }>()
+);
+export const addSearchTag = createAction("ADD_SEARCH_TAG", props<{ tagId: string }>());
+export const removeSearchTag = createAction(
+    "REMOVE_SEARCH_TAG",
+    props<{ tagId: string }>()
+);
