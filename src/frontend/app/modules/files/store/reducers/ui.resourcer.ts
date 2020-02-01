@@ -11,6 +11,9 @@ export interface UIState {
         resourceId?: string;
         visible: boolean;
     };
+    tagsManager: {
+        visible: boolean
+    };
 }
 
 export const InitialUIState: UIState = {
@@ -20,6 +23,9 @@ export const InitialUIState: UIState = {
     },
     rightMenu: {
         resourceId: null,
+        visible: false
+    },
+    tagsManager: {
         visible: false
     }
 };
@@ -62,6 +68,20 @@ export const InitialUIReducer = createReducer(
         return Object.assign({}, state, {
             rightMenu: {
                 resourceId: null,
+                visible: false
+            }
+        });
+    }),
+    on(Actions.UI.showTagsManager, (state, action) => {
+        return Object.assign({}, state, {
+            tagsManager: {
+                visible: true
+            }
+        });
+    }),
+    on(Actions.UI.hideTagsManager, (state, action) => {
+        return Object.assign({}, state, {
+            tagsManager: {
                 visible: false
             }
         });

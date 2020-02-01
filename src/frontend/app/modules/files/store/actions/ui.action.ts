@@ -16,3 +16,11 @@ export const hideDeleteResourceMenu = createAction(
     "HIDE_DELETE_RESOURCE_MENU",
     props<{}>()
 );
+export const showTagsManager = createAction(
+    "SHOW_TAGS_MANAGER",
+    props<{}>()
+);
+export const hideTagsManager = createAction(
+    "HIDE_TAGS_MANAGER",
+    props<{}>()
+);

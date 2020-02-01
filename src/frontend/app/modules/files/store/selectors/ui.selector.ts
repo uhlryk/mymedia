@@ -1,6 +1,7 @@
 import { createSelector } from "@ngrx/store";
 import { projectFeatureSelector } from "./project.selector";
 import { ProjectState } from "../reducers/index.reducer";
+import {UIState} from "../reducers/ui.resourcer";
 
 export const uiSelector = createSelector(
     projectFeatureSelector,
@@ -8,11 +9,11 @@ export const uiSelector = createSelector(
 );
 export const deleteResourceMenuSelector = createSelector(
     uiSelector,
-    (ui: {deleteResourceMenu}) => ui.deleteResourceMenu
+    (ui: UIState) => ui.deleteResourceMenu
 );
 export const rightMenuSelector = createSelector(
     uiSelector,
-    (ui: {rightMenu}) => ui.rightMenu
+    (ui: UIState) => ui.rightMenu
 );
 
 export const rightMenuResourceIdSelector = createSelector(
@@ -22,4 +23,13 @@ export const rightMenuResourceIdSelector = createSelector(
 export const rightMenuVisibleSelector = createSelector(
     rightMenuSelector,
     (rightMenu: { resourceId: string; visible: boolean }) => rightMenu.visible
+);
+
+export const tagsManagerSelector = createSelector(
+    uiSelector,
+    (ui: UIState) => ui.tagsManager
+);
+export const tagsManagerVisibleSelector = createSelector(
+    tagsManagerSelector,
+    (tagsManager: { visible: boolean }) => tagsManager.visible
 );
