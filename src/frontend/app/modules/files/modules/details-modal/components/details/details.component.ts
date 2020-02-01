@@ -8,10 +8,7 @@ import {
 } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { ProjectState } from "../../../../store/reducers/index.reducer";
-import {
-    resourceListSelector,
-    tagListSelector
-} from "../../../../store/selectors/index.selector";
+import * as Selector from "../../../../store/selectors/index.selector";
 import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Observable, Subscription } from "rxjs";
 import ITag from "../../../../../../../../shared/types/tag.interface";
@@ -35,9 +32,9 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private store: Store<{ project: ProjectState }>) {}
 
     ngOnInit() {
-        this.tagList$ = this.store.pipe(select(tagListSelector));
+        this.tagList$ = this.store.pipe(select(Selector.Tag.tagListSelector));
         this.resourceListChange = this.store
-            .pipe(select(resourceListSelector))
+            .pipe(select(Selector.Resource.resourceListSelector))
             .subscribe((resourceList: Array<IResource>) => {
                 this.resourceList = resourceList;
                 this.changeResource();

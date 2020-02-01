@@ -1,14 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from "@angular/core";
-import ISearch from "../../types/search.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
 import { AppState } from "../../../../reducers";
 import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";
-import {
-    tagListSelector,
-    tagsSearchSelector,
-    textSearchSelector
-} from "../../store/selectors/index.selector";
+import * as Selector from "../../store/selectors/index.selector";
 import {Search} from "../../store/actions/index.action";
 
 @Component({
@@ -16,21 +11,16 @@ import {Search} from "../../store/actions/index.action";
     templateUrl: "./search.component.html",
     styleUrls: ["./search.component.scss"]
 })
-export class SearchComponent implements OnInit, OnChanges {
+export class SearchComponent implements OnInit {
     searchTagIdList$: Observable<Array<string>>;
     projectTagIdList$: Observable<Array<ITag>>;
     searchText$: Observable<string>;
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
-        this.searchTagIdList$ = this.store.pipe(select(tagsSearchSelector));
-        this.projectTagIdList$ = this.store.pipe(select(tagListSelector));
-        this.searchText$ = this.store.pipe(select(textSearchSelector));
-    }
-
-    ngOnChanges() {
-        // this._selectedTagList = this;
-        // this._searchInput = "";
+        this.searchTagIdList$ = this.store.pipe(select(Selector.Search.tagsSearchSelector));
+        this.projectTagIdList$ = this.store.pipe(select(Selector.Tag.tagListSelector));
+        this.searchText$ = this.store.pipe(select(Selector.Search.textSearchSelector));
     }
 
     onChangeSearchText(inputText) {

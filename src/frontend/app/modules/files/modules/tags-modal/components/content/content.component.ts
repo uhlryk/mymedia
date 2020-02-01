@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import { AppState } from "../../../../../../reducers";
 import { select, Store } from "@ngrx/store";
-import { tagListSelector } from "../../../../store/selectors/index.selector";
+import * as Selector from "../../../../store/selectors/index.selector";
 import { Observable } from "rxjs";
 import { Tag } from "../../../../store/actions/index.action";
 
@@ -17,7 +17,7 @@ export class ContentComponent implements OnInit {
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
-        this.tagList$ = this.store.pipe(select(tagListSelector));
+        this.tagList$ = this.store.pipe(select(Selector.Tag.tagListSelector));
     }
 
     onNewTag() {

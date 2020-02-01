@@ -6,10 +6,7 @@ import {
     Resource,
     Menu
 } from "../../store/actions/index.action";
-import {
-    deleteResourceMenuSelector,
-    rightMenuResourceIdSelector
-} from "../../store/selectors/index.selector";
+import * as Selectors from "../../store/selectors/index.selector";
 
 @Component({
     selector: "app-delete-resource-menu",
@@ -23,7 +20,7 @@ export class DeleteResourceMenuComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.store.pipe(select(deleteResourceMenuSelector)).subscribe(menu => {
+        this.store.pipe(select(Selectors.Menu.deleteResourceMenuSelector)).subscribe(menu => {
             if (menu.visible) {
                 this.confirmationService.confirm({
                     message: "Are you sure that you want to delete resource?",
