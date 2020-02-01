@@ -9,13 +9,15 @@ export const projectFeatureKey = "project";
 export interface ProjectState {
     resourceList: Array<IResource>;
     tagList: Array<ITag>;
-    deleteResourceMenu: {
-        resourceId?: string;
-        visible: boolean;
-    };
-    rightMenu: {
-        resourceId?: string;
-        visible: boolean;
+    ui: {
+        deleteResourceMenu: {
+            resourceId?: string;
+            visible: boolean;
+        };
+        rightMenu: {
+            resourceId?: string;
+            visible: boolean;
+        };
     };
     search: {
         tagIdList: Array<string>;
@@ -27,13 +29,15 @@ export interface ProjectState {
 export const InitialProjectState: ProjectState = {
     resourceList: [],
     tagList: [],
-    deleteResourceMenu: {
-        resourceId: null,
-        visible: false
-    },
-    rightMenu: {
-        resourceId: null,
-        visible: false
+    ui: {
+        deleteResourceMenu: {
+            resourceId: null,
+            visible: false
+        },
+        rightMenu: {
+            resourceId: null,
+            visible: false
+        }
     },
     search: {
         tagIdList: [],
@@ -164,34 +168,42 @@ export const InitialProjectReducer = createReducer(
     }),
     on(Actions.UI.showDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
-            deleteResourceMenu: {
-                resourceId: action.resourceId,
-                visible: true
-            }
+            ui: Object.assign({}, state.ui, {
+                deleteResourceMenu: {
+                    resourceId: action.resourceId,
+                    visible: true
+                }
+            })
         });
     }),
     on(Actions.UI.hideDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
-            deleteResourceMenu: {
-                resourceId: null,
-                visible: false
-            }
+            ui: Object.assign({}, state.ui, {
+                deleteResourceMenu: {
+                    resourceId: null,
+                    visible: false
+                }
+            })
         });
     }),
     on(Actions.UI.showRightMenu, (state, action) => {
         return Object.assign({}, state, {
-            rightMenu: {
-                resourceId: action.resourceId,
-                visible: true
-            }
+            ui: Object.assign({}, state.ui, {
+                rightMenu: {
+                    resourceId: action.resourceId,
+                    visible: true
+                }
+            })
         });
     }),
     on(Actions.UI.hideRightMenu, (state, action) => {
         return Object.assign({}, state, {
-            rightMenu: {
-                resourceId: null,
-                visible: false
-            }
+            ui: Object.assign({}, state.ui, {
+                rightMenu: {
+                    resourceId: null,
+                    visible: false
+                }
+            })
         });
     }),
     on(Actions.Search.setSearchTags, (state, action) => {

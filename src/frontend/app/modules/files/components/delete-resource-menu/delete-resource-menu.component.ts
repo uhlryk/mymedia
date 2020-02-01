@@ -20,7 +20,7 @@ export class DeleteResourceMenuComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.store.pipe(select(Selectors.Menu.deleteResourceMenuSelector)).subscribe(menu => {
+        this.store.pipe(select(Selectors.UI.deleteResourceMenuSelector)).subscribe(menu => {
             if (menu.visible) {
                 this.confirmationService.confirm({
                     message: "Are you sure that you want to delete resource?",

@@ -18,8 +18,8 @@ export class DetailsModalComponent implements OnInit {
     visible$: Observable<boolean>;
 
     ngOnInit(): void {
-        this.resourceId$ = this.store.pipe(select(Selector.Menu.rightMenuResourceIdSelector));
-        this.visible$ = this.store.pipe(select(Selector.Menu.rightMenuVisibleSelector));
+        this.resourceId$ = this.store.pipe(select(Selector.UI.rightMenuResourceIdSelector));
+        this.visible$ = this.store.pipe(select(Selector.UI.rightMenuVisibleSelector));
     }
 
     onHide() {
