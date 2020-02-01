@@ -30,8 +30,8 @@ export class ProjectEffects {
                 tap(([action, projectState]: [Action, ProjectState]) => {
                     IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
                         project: {
-                            resourceList: projectState.resourceList,
-                            tagList: projectState.tagList
+                            resourceList: projectState.resourceList.list,
+                            tagList: projectState.tagList.list
                         }
                     });
                 })
@@ -45,7 +45,7 @@ export class ProjectEffects {
                 ofType(ActionList.Resource.executeResource),
                 withLatestFrom(this.store$.pipe(select(Selector.Project.projectFeatureSelector))),
                 tap(([action, projectState]: [{ resourceId: string }, ProjectState]) => {
-                    const selectedResource: IResource = projectState.resourceList.find(
+                    const selectedResource: IResource = projectState.resourceList.list.find(
                         (resource: IResource) => resource.id === action.resourceId
                     );
                     IpcProvider.trigger(IpcProviderResourceEnums.EXECUTE_RESOURCE, {

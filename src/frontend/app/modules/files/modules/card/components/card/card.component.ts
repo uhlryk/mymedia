@@ -33,12 +33,12 @@ export class CardComponent implements OnInit, OnChanges {
     ngOnChanges() {
         this.resource$ = this.store.pipe(
             select(store =>
-                store.project.resourceList.find(
+                store.project.resourceList.list.find(
                     (resource: IResource) => resource.id === this.resourceId
                 )
             )
         );
-        this.tagList$ = this.store.pipe(select(store => store.project.tagList));
+        this.tagList$ = this.store.pipe(select(store => store.project.tagList.list));
     }
 
     onClickDetailsButton() {

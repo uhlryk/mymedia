@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit {
 
     ngOnInit() {
         this.searchTagIdList$ = this.store.pipe(select(Selector.Search.tagsSearchSelector));
-        this.projectTagIdList$ = this.store.pipe(select(Selector.Tag.tagListSelector));
+        this.projectTagIdList$ = this.store.pipe(select(Selector.Tag.listSelector));
         this.searchText$ = this.store.pipe(select(Selector.Search.textSearchSelector));
     }
 

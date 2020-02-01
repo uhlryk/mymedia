@@ -17,7 +17,7 @@ export class ContentComponent implements OnInit {
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
-        this.tagList$ = this.store.pipe(select(Selector.Tag.tagListSelector));
+        this.tagList$ = this.store.pipe(select(Selector.Tag.listSelector));
     }
 
     onNewTag() {
