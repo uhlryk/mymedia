@@ -7,10 +7,10 @@
 
 :host > .wrapper {
     position: fixed;
-    top: 0;
+    top: 40px;
     left: -185px;
     width: 220px;
-    height: 100%;
+    bottom:0px;
     display: flex;
     align-items: flex-end;
 }

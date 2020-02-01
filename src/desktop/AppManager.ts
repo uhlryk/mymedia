@@ -1,14 +1,11 @@
-import {BrowserWindow, dialog} from "electron";
+import { BrowserWindow, dialog } from "electron";
 import AppController from "./AppController";
 import IpcProviderResourceEnums from "../shared/IpcProviderResourceEnums";
 import Listener from "./core/Listener";
 import Reply from "./core/Reply";
 export default class AppManager {
     private _appController: AppController;
-    private _triggerCreateProject: Reply;
-    private _rendererProcess: BrowserWindow;
-    constructor(rendererProcess: BrowserWindow) {
-        this._rendererProcess = rendererProcess;
+    constructor() {
         this.registerListener();
     }
 
@@ -32,12 +29,5 @@ export default class AppManager {
                 }
             );
         });
-    }
-
-    public triggetCreateProject() {
-        this._rendererProcess.webContents.send(IpcProviderResourceEnums.TRIGGER_SET_PROJECT);
-    }
-    public triggetTagsManager() {
-        this._rendererProcess.webContents.send(IpcProviderResourceEnums.TRIGGER_TAGS_MANAGER);
     }
 }

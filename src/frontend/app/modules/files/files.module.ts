@@ -6,6 +6,7 @@ import { SharedModule } from "./modules/shared/shared.module";
 import { ListComponent } from "./components/list/list.component";
 import { DetailsModalModule } from "./modules/details-modal/details-modal.module";
 import { TagsModalModule } from "./modules/tags-modal/tags-modal.module";
+import { TopMenuModule } from "./modules/top-menu/top-menu.module";
 import { CardModule } from "./modules/card/card.module";
 import { SearchComponent } from "./components/search/search.component";
 import { OrderComponent } from "./components/order/order.component";
@@ -18,7 +19,7 @@ import { StoreModule } from "@ngrx/store";
 import * as fromProject from "./store/reducers/index.reducer";
 import { ProjectEffects } from "./store/effects/index.effect";
 import { EffectsModule } from "@ngrx/effects";
-import { DeleteResourceMenuComponent } from './components/delete-resource-menu/delete-resource-menu.component';
+import { DeleteResourceMenuComponent } from "./components/delete-resource-menu/delete-resource-menu.component";
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import { DeleteResourceMenuComponent } from './components/delete-resource-menu/d
         ConfirmDialogModule,
         ButtonModule,
         DetailsModalModule,
+        TopMenuModule,
         SharedModule,
         TagsModalModule,
         CardModule,

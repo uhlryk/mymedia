@@ -1,0 +1,11 @@
+:host {
+    position: fixed;
+    z-index: 100000;
+    width:100%;
+
+    & ::ng-deep .ui-menubar {
+        border-radius: 0px;
+        border-left: 0;
+        border-right: 0;
+    }
+}
