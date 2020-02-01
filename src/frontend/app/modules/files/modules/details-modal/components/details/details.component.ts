@@ -16,11 +16,7 @@ import IResource from "../../../../../../../../shared/types/resource.interface";
 import { Observable, Subscription } from "rxjs";
 import ITag from "../../../../../../../../shared/types/tag.interface";
 import {
-    executeResource,
-    setResourceDescription,
-    setResourceRanking,
-    setResourceTags,
-    setResourceTitle
+    Resource
 } from "../../../../store/actions/index.action";
 
 @Component({
@@ -61,28 +57,28 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     clickOpenFile() {
-        this.store.dispatch(executeResource({
+        this.store.dispatch(Resource.executeResource({
             resourceId: this.resourceId
         }));
     }
     setRanking(ranking) {
         this.store.dispatch(
-            setResourceRanking({ resourceId: this.resource.id, ranking: ranking })
+            Resource.setResourceRanking({ resourceId: this.resource.id, ranking: ranking })
         );
     }
     onChangeAddedTags(selectedTagList: Array<string>) {
         this.store.dispatch(
-            setResourceTags({ resourceId: this.resource.id, tags: selectedTagList })
+            Resource.setResourceTags({ resourceId: this.resource.id, tags: selectedTagList })
         );
     }
     saveTitle(newTitle) {
         this.store.dispatch(
-            setResourceTitle({ resourceId: this.resource.id, title: newTitle })
+            Resource.setResourceTitle({ resourceId: this.resource.id, title: newTitle })
         );
     }
     saveDescription(text) {
         this.store.dispatch(
-            setResourceDescription({ resourceId: this.resource.id, description: text })
+            Resource.setResourceDescription({ resourceId: this.resource.id, description: text })
         );
     }
     changeThumbnail(thumbnailPath) {

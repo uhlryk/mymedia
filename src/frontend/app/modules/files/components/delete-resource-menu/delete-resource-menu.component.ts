@@ -3,9 +3,8 @@ import { select, Store } from "@ngrx/store";
 import { AppState } from "../../../../reducers";
 import { ConfirmationService } from "primeng/api";
 import {
-    deleteResourceFromDeleteResourceMenu,
-    hideDeleteResourceMenu,
-    showDeleteResourceMenu
+    Resource,
+    Menu
 } from "../../store/actions/index.action";
 import {
     deleteResourceMenuSelector,
@@ -30,13 +29,13 @@ export class DeleteResourceMenuComponent implements OnInit {
                     message: "Are you sure that you want to delete resource?",
                     accept: () => {
                         this.store.dispatch(
-                            deleteResourceFromDeleteResourceMenu({
+                            Resource.deleteResourceFromDeleteResourceMenu({
                                 resourceId: menu.resourceId
                             })
                         );
                     },
                     reject: () => {
-                        this.store.dispatch(hideDeleteResourceMenu({}));
+                        this.store.dispatch(Menu.hideDeleteResourceMenu({}));
                     }
                 });
             }

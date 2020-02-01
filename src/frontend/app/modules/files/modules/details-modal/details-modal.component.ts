@@ -6,7 +6,7 @@ import {
     rightMenuVisibleSelector
 } from "../../store/selectors/index.selector";
 import { Observable } from "rxjs";
-import { hideRightMenu } from "../../store/actions/index.action";
+import { Menu } from "../../store/actions/index.action";
 import { map } from "rxjs/operators";
 
 @Component({
@@ -27,6 +27,6 @@ export class DetailsModalComponent implements OnInit {
     }
 
     onHide() {
-        this.store.dispatch(hideRightMenu({}));
+        this.store.dispatch(Menu.hideRightMenu({}));
     }
 }

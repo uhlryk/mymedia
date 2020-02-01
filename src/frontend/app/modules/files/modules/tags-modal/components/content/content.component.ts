@@ -4,7 +4,7 @@ import { AppState } from "../../../../../../reducers";
 import { select, Store } from "@ngrx/store";
 import { tagListSelector } from "../../../../store/selectors/index.selector";
 import { Observable } from "rxjs";
-import { createTag, removeTag, setTagName } from "../../../../store/actions/index.action";
+import { Tag } from "../../../../store/actions/index.action";
 
 @Component({
     templateUrl: "./content.component.html",
@@ -21,16 +21,16 @@ export class ContentComponent implements OnInit {
     }
 
     onNewTag() {
-        this.store.dispatch(createTag({ name: this.tagName }));
+        this.store.dispatch(Tag.createTag({ name: this.tagName }));
         this.tagName = "";
     }
 
     onEditTag(tagId, newName) {
-        this.store.dispatch(setTagName({ tagId: tagId, name: newName }));
+        this.store.dispatch(Tag.setTagName({ tagId: tagId, name: newName }));
         this.tagName = "";
     }
     onRemoveTag(tagId) {
-        this.store.dispatch(removeTag({ tagId: tagId }));
+        this.store.dispatch(Tag.removeTag({ tagId: tagId }));
         this.tagName = "";
     }
 }

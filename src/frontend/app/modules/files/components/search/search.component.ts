@@ -9,7 +9,7 @@ import {
     tagsSearchSelector,
     textSearchSelector
 } from "../../store/selectors/index.selector";
-import {setSearchTags, setSearchText} from "../../store/actions/index.action";
+import {Search} from "../../store/actions/index.action";
 
 @Component({
     selector: "app-search",
@@ -35,7 +35,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
     onChangeSearchText(inputText) {
         this.store.dispatch(
-            setSearchText({
+            Search.setSearchText({
                 text: inputText
             })
         );
@@ -43,7 +43,7 @@ export class SearchComponent implements OnInit, OnChanges {
 
     onChangeSearchTagList(selectedTagList: Array<string>) {
         this.store.dispatch(
-            setSearchTags({
+            Search.setSearchTags({
                 tagIdList: selectedTagList
             })
         );

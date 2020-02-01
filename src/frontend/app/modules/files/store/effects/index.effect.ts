@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AppState } from "../../../../reducers";
-import * as actions from "../actions/index.action";
+import * as ActionList from "../actions/index.action";
 import { Action, select, Store } from "@ngrx/store";
 import { filter, tap, withLatestFrom } from "rxjs/operators";
 import IpcProvider from "../../../../providers/ipc.provider";
@@ -17,14 +17,14 @@ export class ProjectEffects {
         () =>
             this.actions$.pipe(
                 ofType(
-                    actions.removeTag,
-                    actions.setTagName,
-                    actions.createTag,
-                    actions.setResourceTags,
-                    actions.setResourceRanking,
-                    actions.setResourceDescription,
-                    actions.setResourceTitle,
-                    actions.deleteResourceFromDeleteResourceMenu
+                    ActionList.Tag.removeTag,
+                    ActionList.Tag.setTagName,
+                    ActionList.Tag.createTag,
+                    ActionList.Resource.setResourceTags,
+                    ActionList.Resource.setResourceRanking,
+                    ActionList.Resource.setResourceDescription,
+                    ActionList.Resource.setResourceTitle,
+                    ActionList.Resource.deleteResourceFromDeleteResourceMenu
                 ),
                 // tap((action: Action) => {})
                 withLatestFrom(this.store$.pipe(select(projectFeatureSelector))),
@@ -43,9 +43,9 @@ export class ProjectEffects {
     executeResource = createEffect(
         () =>
             this.actions$.pipe(
-                ofType(actions.executeResource),
+                ofType(ActionList.Resource.executeResource),
                 withLatestFrom(this.store$.pipe(select(projectFeatureSelector))),
-                tap(([action, projectState]: [{ resourceId: string}, ProjectState]) => {
+                tap(([action, projectState]: [{ resourceId: string }, ProjectState]) => {
                     const selectedResource: IResource = projectState.resourceList.find(
                         (resource: IResource) => resource.id === action.resourceId
                     );

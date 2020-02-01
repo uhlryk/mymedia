@@ -1,80 +1,8 @@
-import { createAction, props } from "@ngrx/store";
-import IResource from "../../../../../../shared/types/resource.interface";
-import ITag from "../../../../../../shared/types/tag.interface";
+import * as Menu from "./menu.action";
+import * as Order from "./order.action";
+import * as Project from "./project.action";
+import * as Resource from "./resource.action";
+import * as Search from "./search.action";
+import * as Tag from "./tag.action";
 
-export const setProjectInitialData = createAction(
-    "SET_PROJECT_INIT_DATA",
-    props<{ resourceList: Array<IResource>; tagList: Array<ITag> }>()
-);
-
-export const setResourceOrder = createAction(
-    "SET_RESOURCE_ORDER",
-    props<{ order: string }>()
-);
-
-export const setResourceTitle = createAction(
-    "SET_RESOURCE_TITLE",
-    props<{ resourceId: string; title: string }>()
-);
-export const setResourceDescription = createAction(
-    "SET_RESOURCE_DESCRIPTION",
-    props<{ resourceId: string; description: string }>()
-);
-export const setResourceRanking = createAction(
-    "SET_RESOURCE_RANKING",
-    props<{ resourceId: string; ranking: number }>()
-);
-export const setResourceTags = createAction(
-    "SET_RESOURCE_TAGS",
-    props<{ resourceId: string; tags: Array<string> }>()
-);
-export const addResourceThumbnail = createAction(
-    "SET_RESOURCE_THUMBNAILS",
-    props<{ resourceId: string; index: number; thumbnail: string }>()
-);
-export const createTag = createAction("CREATE_TAG", props<{ name: string }>());
-export const setTagName = createAction(
-    "SET_TAG_NAME",
-    props<{ tagId: string; name: string }>()
-);
-export const removeTag = createAction("REMOVE_TAG", props<{ tagId: string }>());
-
-export const showRightMenu = createAction(
-    "SHOW_RIGHT_MENU",
-    props<{
-        resourceId: string;
-    }>()
-);
-export const hideRightMenu = createAction("HIDE_RIGHT_MENU", props<{}>());
-
-export const executeResource = createAction(
-    "EXECUTE_RESOURCE",
-    props<{ resourceId: string }>()
-);
-
-export const showDeleteResourceMenu = createAction(
-    "SHOW_DELETE_RESOURCE_MENU",
-    props<{ resourceId: string }>()
-);
-export const hideDeleteResourceMenu = createAction(
-    "HIDE_DELETE_RESOURCE_MENU",
-    props<{}>()
-);
-export const deleteResourceFromDeleteResourceMenu = createAction(
-    "DELETE_RESOURCE_FROM_DELETE_RESOURCE_MENU",
-    props<{ resourceId: string }>()
-);
-
-export const setSearchTags = createAction(
-    "SET_SEARCH_TAGS",
-    props<{ tagIdList: Array<string> }>()
-);
-export const setSearchText = createAction(
-    "SET_SEARCH_TEXT",
-    props<{ text: string }>()
-);
-export const addSearchTag = createAction("ADD_SEARCH_TAG", props<{ tagId: string }>());
-export const removeSearchTag = createAction(
-    "REMOVE_SEARCH_TAG",
-    props<{ tagId: string }>()
-);
+export {Menu, Order, Project, Resource, Search, Tag};

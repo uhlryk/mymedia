@@ -2,24 +2,7 @@ import { createReducer, on } from "@ngrx/store";
 import uuid from "uuidv4";
 import IResource from "../../../../../../shared/types/resource.interface";
 import ITag from "../../../../../../shared/types/tag.interface";
-import {
-    addResourceThumbnail,
-    createTag,
-    deleteResourceFromDeleteResourceMenu,
-    hideDeleteResourceMenu,
-    hideRightMenu,
-    removeTag,
-    setProjectInitialData,
-    setResourceDescription,
-    setResourceOrder,
-    setResourceRanking,
-    setResourceTags,
-    setResourceTitle,
-    setSearchTags, setSearchText,
-    setTagName,
-    showDeleteResourceMenu,
-    showRightMenu
-} from "../actions/index.action";
+import * as Actions from "../actions/index.action";
 
 export const projectFeatureKey = "project";
 
@@ -61,13 +44,13 @@ export const InitialProjectState: ProjectState = {
 
 export const InitialProjectReducer = createReducer(
     InitialProjectState,
-    on(setProjectInitialData, (state, action) => {
+    on(Actions.Project.setProjectInitialData, (state, action) => {
         return Object.assign({}, InitialProjectState, {
             resourceList: action.resourceList,
             tagList: action.tagList
         });
     }),
-    on(createTag, (state, action) => {
+    on(Actions.Tag.createTag, (state, action) => {
         return Object.assign({}, state, {
             tagList: state.tagList.concat({
                 id: uuid(),
@@ -75,7 +58,7 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(setTagName, (state, action) => {
+    on(Actions.Tag.setTagName, (state, action) => {
         return Object.assign({}, state, {
             tagList: state.tagList.map((tag: ITag) => {
                 if (tag.id === action.tagId) {
@@ -86,12 +69,12 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(removeTag, (state, action) => {
+    on(Actions.Tag.removeTag, (state, action) => {
         return Object.assign({}, state, {
             tagList: state.tagList.filter((tag: ITag) => tag.id !== action.tagId)
         });
     }),
-    on(setResourceTitle, (state, action) => {
+    on(Actions.Resource.setResourceTitle, (state, action) => {
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
@@ -102,7 +85,7 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(setResourceDescription, (state, action) => {
+    on(Actions.Resource.setResourceDescription, (state, action) => {
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
@@ -115,7 +98,7 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(setResourceRanking, (state, action) => {
+    on(Actions.Resource.setResourceRanking, (state, action) => {
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
@@ -126,7 +109,7 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(setResourceTags, (state, action) => {
+    on(Actions.Resource.setResourceTags, (state, action) => {
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
@@ -140,7 +123,7 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(deleteResourceFromDeleteResourceMenu, (state, action) => {
+    on(Actions.Resource.deleteResourceFromDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
@@ -157,7 +140,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(addResourceThumbnail, (state, action) => {
+    on(Actions.Resource.addResourceThumbnail, (state, action) => {
         return Object.assign({}, state, {
             resourceList: state.resourceList.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
@@ -174,12 +157,12 @@ export const InitialProjectReducer = createReducer(
             })
         });
     }),
-    on(setResourceOrder, (state, action) => {
+    on(Actions.Order.setResourceOrder, (state, action) => {
         return Object.assign({}, state, {
             order: action.order
         });
     }),
-    on(showDeleteResourceMenu, (state, action) => {
+    on(Actions.Menu.showDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
             deleteResourceMenu: {
                 resourceId: action.resourceId,
@@ -187,7 +170,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(hideDeleteResourceMenu, (state, action) => {
+    on(Actions.Menu.hideDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
             deleteResourceMenu: {
                 resourceId: null,
@@ -195,7 +178,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(showRightMenu, (state, action) => {
+    on(Actions.Menu.showRightMenu, (state, action) => {
         return Object.assign({}, state, {
             rightMenu: {
                 resourceId: action.resourceId,
@@ -203,7 +186,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(hideRightMenu, (state, action) => {
+    on(Actions.Menu.hideRightMenu, (state, action) => {
         return Object.assign({}, state, {
             rightMenu: {
                 resourceId: null,
@@ -211,14 +194,14 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(setSearchTags, (state, action) => {
+    on(Actions.Search.setSearchTags, (state, action) => {
         return Object.assign({}, state, {
             search: Object.assign({}, state.search, {
                 tagIdList: action.tagIdList
             })
         });
     }),
-    on(setSearchText, (state, action) => {
+    on(Actions.Search.setSearchText, (state, action) => {
         return Object.assign({}, state, {
             search: Object.assign({}, state.search, {
                 text: action.text

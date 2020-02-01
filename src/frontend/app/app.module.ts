@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { ProjectContextService } from "./services/projectContext.service";
-import { AppMenuService } from "./services/app-menu.service";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -36,7 +35,7 @@ import { StoreRouterConnectingModule} from "@ngrx/router-store";
         StoreRouterConnectingModule.forRoot(),
         EffectsModule.forRoot([])
     ],
-    providers: [LoaderService, ProjectContextService, AppMenuService],
+    providers: [LoaderService, ProjectContextService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
