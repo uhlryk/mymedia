@@ -162,7 +162,7 @@ export const InitialProjectReducer = createReducer(
             order: action.order
         });
     }),
-    on(Actions.Menu.showDeleteResourceMenu, (state, action) => {
+    on(Actions.UI.showDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
             deleteResourceMenu: {
                 resourceId: action.resourceId,
@@ -170,7 +170,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(Actions.Menu.hideDeleteResourceMenu, (state, action) => {
+    on(Actions.UI.hideDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
             deleteResourceMenu: {
                 resourceId: null,
@@ -178,7 +178,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(Actions.Menu.showRightMenu, (state, action) => {
+    on(Actions.UI.showRightMenu, (state, action) => {
         return Object.assign({}, state, {
             rightMenu: {
                 resourceId: action.resourceId,
@@ -186,7 +186,7 @@ export const InitialProjectReducer = createReducer(
             }
         });
     }),
-    on(Actions.Menu.hideRightMenu, (state, action) => {
+    on(Actions.UI.hideRightMenu, (state, action) => {
         return Object.assign({}, state, {
             rightMenu: {
                 resourceId: null,

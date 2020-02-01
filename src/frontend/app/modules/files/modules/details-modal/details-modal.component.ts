@@ -3,8 +3,7 @@ import { AppState } from "../../../../reducers";
 import { select, Store } from "@ngrx/store";
 import * as Selector from "../../store/selectors/index.selector";
 import { Observable } from "rxjs";
-import { Menu } from "../../store/actions/index.action";
-import { map } from "rxjs/operators";
+import { UI } from "../../store/actions/index.action";
 
 @Component({
     selector: "app-details-modal",
@@ -24,6 +23,6 @@ export class DetailsModalComponent implements OnInit {
     }
 
     onHide() {
-        this.store.dispatch(Menu.hideRightMenu({}));
+        this.store.dispatch(UI.hideRightMenu({}));
     }
 }

@@ -11,7 +11,7 @@ import { Store, select } from "@ngrx/store";
 import { ProjectState } from "../../../../store/reducers/index.reducer";
 import { Observable } from "rxjs";
 import {
-    Menu, Resource
+    UI, Resource
 } from "../../../../store/actions/index.action";
 @Component({
     selector: "app-card",
@@ -43,7 +43,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     onClickDetailsButton() {
         this.store.dispatch(
-            Menu.showRightMenu({
+            UI.showRightMenu({
                 resourceId: this.resourceId
             })
         );
@@ -51,7 +51,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     onClickDeleteButton() {
         this.store.dispatch(
-            Menu.showDeleteResourceMenu({
+            UI.showDeleteResourceMenu({
                 resourceId: this.resourceId
             })
         );

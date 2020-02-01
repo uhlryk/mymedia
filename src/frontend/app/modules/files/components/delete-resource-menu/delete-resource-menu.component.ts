@@ -4,7 +4,7 @@ import { AppState } from "../../../../reducers";
 import { ConfirmationService } from "primeng/api";
 import {
     Resource,
-    Menu
+    UI
 } from "../../store/actions/index.action";
 import * as Selectors from "../../store/selectors/index.selector";
 
@@ -32,7 +32,7 @@ export class DeleteResourceMenuComponent implements OnInit {
                         );
                     },
                     reject: () => {
-                        this.store.dispatch(Menu.hideDeleteResourceMenu({}));
+                        this.store.dispatch(UI.hideDeleteResourceMenu({}));
                     }
                 });
             }
