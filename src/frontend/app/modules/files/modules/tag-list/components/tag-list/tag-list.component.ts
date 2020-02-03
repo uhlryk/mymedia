@@ -16,6 +16,6 @@ export class TagListComponent implements OnChanges {
     ngOnChanges() {
         this._resourceTagList = (this.resourceTagIdList || []).map((tagId: string) =>
             this.projectTagList.find((tag: ITag) => tag.id === tagId)
-        );
+        ).filter((tag: ITag) => tag);
     }
 }
