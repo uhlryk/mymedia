@@ -1,16 +1,16 @@
 export default interface IResource {
     id: string;
-    ranking: number;
-    title: string;
-    thumbnailList?: Array<string>;
-    isNew: boolean;
     filePath: string;
     fileName: string;
+    title: string;
+    ranking: number;
     size: number;
     duration: number;
     width: number;
     height: number;
     description: string;
-    isRemoved: boolean;
     tags: Array<string>;
+    isNew: boolean;
+    isRemoved: boolean;
+    thumbnailList?: Array<string>;
 }

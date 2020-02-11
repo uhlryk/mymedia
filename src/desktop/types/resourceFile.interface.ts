@@ -1,16 +1,16 @@
 export default interface ResourceFileInterface {
+    id: string;
     filePath: string;
     fileName: string;
     title: string;
+    ranking: number;
     size: number;
     duration: number;
     width: number;
     height: number;
-    ranking: number;
     description: string;
-    id: string;
     tags: Array<string>;
-    isRemoved: boolean;
     isNew: boolean;
+    isRemoved: boolean;
     thumbnailPath: string;
 }
