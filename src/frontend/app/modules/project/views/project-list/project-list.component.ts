@@ -4,14 +4,17 @@ import { LoaderService } from "../../../../services/loader.service";
 import IpcProvider from "../../../../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
 import * as Actions from "../../store/actions/index.action";
-import { Store } from "@ngrx/store";
+import { select, Store } from "@ngrx/store";
 import { AppState } from "../../../../reducers";
+import { Observable } from "rxjs";
+import { ProjectList } from "../../store/selectors/index.selector";
 
 @Component({
-    templateUrl: "project-path.component.html",
-    styleUrls: ["./project-path.component.scss"]
+    templateUrl: "project-list.component.html",
+    styleUrls: ["./project-list.component.scss"]
 })
-export class ProjectPathComponent implements OnInit {
+export class ProjectListComponent implements OnInit {
+    projectList$: Observable<Array<string>>;
     constructor(
         private router: Router,
         private loaderService: LoaderService,
@@ -28,6 +31,7 @@ export class ProjectPathComponent implements OnInit {
                 );
             }
         );
+        this.projectList$ = this.store.pipe(select(ProjectList.listSelector));
     }
 
     onNewProjectPath() {
@@ -38,5 +42,13 @@ export class ProjectPathComponent implements OnInit {
                 this.router.navigate(["/files"]);
             }
         );
+    }
+
+    onExistingProjectPath(projectPath) {
+        console.log(projectPath);
+    }
+
+    onRemoveProjectPath(projectPath) {
+        console.log(projectPath);
     }
 }

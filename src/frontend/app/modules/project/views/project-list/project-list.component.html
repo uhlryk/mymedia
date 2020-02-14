@@ -1,0 +1,33 @@
+<div class="p-grid">
+    <div class="p-col-6 p-offset-3">
+        <h1>Projects</h1>
+        <p-button label="Select New Project Path" (click)="onNewProjectPath()"></p-button>
+    </div>
+</div>
+<div class="p-grid">
+    <div class="p-col">
+        <p-table [value]="projectList$ | async">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th colspan="4">project path name</th>
+                    <th colspan="1">actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-project>
+                <tr>
+                    <td colspan="4">
+                        <a (click)="onExistingProjectPath(project)">{{ project }}</a>
+                    </td>
+                    <td colspan="1">
+                        <p-button
+                            icon="pi pi-times"
+                            E
+                            styleClass="ui-button-danger"
+                            (click)="onRemoveProjectPath(project)"
+                        ></p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
