@@ -17,10 +17,7 @@ import * as fromProjectList from "./store/reducers";
         CheckboxModule,
         StoreModule.forFeature(
             fromProjectList.projectListFeatureKey,
-            fromProjectList.reducers,
-            {
-                metaReducers: fromProjectList.metaReducers
-            }
+            fromProjectList.InitialResourceReducer
         )
     ],
     providers: [ProjectContextService],
