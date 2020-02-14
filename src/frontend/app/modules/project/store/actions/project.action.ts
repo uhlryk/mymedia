@@ -4,6 +4,12 @@ export const setProjectList = createAction(
     "SET_PROJECT_LIST",
     props<{ list: Array<string> }>()
 );
+
+export const deleteProjectFromProjectList = createAction(
+    "DELETE_PROJECT_FROM_PROJECT_LIST",
+    props<{ projectPath: string }>()
+);
+
 // export const setResourceDescription = createAction(
 //     "SET_RESOURCE_DESCRIPTION",
 //     props<{ resourceId: string; description: string }>()

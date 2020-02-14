@@ -53,6 +53,10 @@ export class ProjectListComponent implements OnInit {
     }
 
     onRemoveProjectPath(projectPath) {
-        console.log(projectPath);
+        this.store.dispatch(
+            Actions.Project.deleteProjectFromProjectList({
+                projectPath: projectPath
+            })
+        );
     }
 }

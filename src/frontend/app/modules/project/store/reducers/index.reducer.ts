@@ -16,5 +16,10 @@ export const InitialResourceReducer = createReducer(
         return Object.assign({}, InitialProjectListState, {
             list: action.list
         });
+    }),
+    on(Actions.Project.deleteProjectFromProjectList, (state, action) => {
+        return Object.assign({}, InitialProjectListState, {
+            list: state.list.filter(project => project !== action.projectPath)
+        });
     })
 );
