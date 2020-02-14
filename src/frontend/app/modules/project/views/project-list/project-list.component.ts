@@ -45,7 +45,11 @@ export class ProjectListComponent implements OnInit {
     }
 
     onExistingProjectPath(projectPath) {
-        console.log(projectPath);
+        IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT, {
+            projectPath: projectPath
+        }).then(() => {
+            this.router.navigate(["/files"]);
+        });
     }
 
     onRemoveProjectPath(projectPath) {
