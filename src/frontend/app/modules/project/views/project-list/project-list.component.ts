@@ -22,29 +22,28 @@ export class ProjectListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-
         this.projectList$ = this.store.pipe(select(ProjectList.listSelector));
     }
 
-    onClickNewProjectPath() {
+    onClickNewProject() {
         this.loaderService.show();
 
-        IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_BY_PATH).then(
+        IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_FROM_FILEPICKER).then(
             () => {
                 this.router.navigate(["/files"]);
             }
         );
     }
 
-    onClickProjectPathFromList(projectPath) {
-        IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT, {
+    onClickProjectFromList(projectPath) {
+        IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_FROM_LIST, {
             projectPath: projectPath
         }).then(() => {
             this.router.navigate(["/files"]);
         });
     }
 
-    onRemoveProjectPathFromList(projectPath) {
+    onRemoveProjectFromList(projectPath) {
         this.store.dispatch(
             Actions.Project.deleteProjectFromProjectList({
                 projectPath: projectPath

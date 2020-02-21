@@ -21,7 +21,7 @@ export default class ProjectList {
         Listener.on(IpcProviderResourceEnums.GET_PROJECT_LIST, context => {
             context.reply.send(this.store.get("projects.list"));
         });
-        Listener.on(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_BY_PATH, context => {
+        Listener.on(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_FROM_FILEPICKER, context => {
             context.loader.setMessage("Waiting for project path");
             dialog.showOpenDialog(
                 {
@@ -38,10 +38,19 @@ export default class ProjectList {
                 }
             );
         });
-        Listener.on(IpcProviderResourceEnums.SET_ACTIVE_PROJECT, async context => {
+        Listener.on(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_FROM_LIST, async context => {
             context.loader.setMessage("Waiting for project path");
             const resourceFolderPath: string = context.data.projectPath;
             await Project.getNewProjectInstance(resourceFolderPath);
+            context.reply.send();
+        });
+
+        Listener.on(IpcProviderResourceEnums.REMOVE_PROJECT_FROM_LIST, async context => {
+            // context.loader.setMessage("Waiting for project path");
+            const resourceFolderPath: string = context.data.projectPath;
+            let projectList = this.store.get("projects.list");
+            projectList = projectList.filter(projectPath => projectPath !== resourceFolderPath);
+            this.store.set("projects.list", projectList);
             context.reply.send();
         });
     }

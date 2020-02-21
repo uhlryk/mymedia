@@ -8,6 +8,8 @@ import { CheckboxModule } from "primeng/checkbox";
 import { TableModule } from "primeng/table";
 import { StoreModule } from "@ngrx/store";
 import * as fromProjectList from "./store/reducers/index.reducer";
+import {EffectsModule} from "@ngrx/effects";
+import {ProjectListEffects} from "./store/effects/index.effect";
 @NgModule({
     imports: [
         CommonModule,
@@ -19,7 +21,8 @@ import * as fromProjectList from "./store/reducers/index.reducer";
         StoreModule.forFeature(
             fromProjectList.projectListFeatureKey,
             fromProjectList.InitialResourceReducer
-        )
+        ),
+        EffectsModule.forFeature([ProjectListEffects])
     ],
     providers: [ProjectContextService],
     declarations: [ProjectListComponent]
