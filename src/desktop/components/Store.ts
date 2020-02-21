@@ -1,12 +1,14 @@
 import { IProjectListElement } from "../../shared/types/project-list.interface";
 const ElectronStore = require("electron-store");
 export default class Store {
+    static COLLECTION = "projects";
     private _store;
+
     constructor() {
         this._store = new ElectronStore({
             schema: {
-                projects: {
-                    list: []
+                [Store.COLLECTION]: {
+                    type: "array"
                 }
             }
         });
@@ -17,18 +19,18 @@ export default class Store {
     }
 
     getProjectList(): Array<IProjectListElement> {
-        return this._store.get("projects.list");
+        return this._store.get(Store.COLLECTION, []);
     }
 
     addProject(project: IProjectListElement): void {
-        const projectList: Array<IProjectListElement> = this._store.get("projects.list");
+        const projectList: Array<IProjectListElement> = this._store.get(Store.COLLECTION, []);
         projectList.push(project);
-        this._store.set("projects.list", projectList);
+        this._store.set(Store.COLLECTION, projectList);
     }
 
     removeProject(projectId: string): void {
-        let projectList: Array<IProjectListElement> = this._store.get("projects.list");
+        let projectList: Array<IProjectListElement> = this._store.get(Store.COLLECTION, []);
         projectList = projectList.filter(project => project.id !== projectId);
-        this._store.set("projects.list", projectList);
+        this._store.set(Store.COLLECTION, projectList);
     }
 }
