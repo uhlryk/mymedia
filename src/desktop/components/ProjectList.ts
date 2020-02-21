@@ -4,17 +4,11 @@ import getProjectList from "./handlers/getProjectList";
 import setActiveProjectFromFilepicker from "./handlers/setActiveProjectFromFilepicker";
 import setActiveProjectFromList from "./handlers/setActiveProjectFromList";
 import removeProjectFromList from "./handlers/removeProjectFromList";
-const Store = require("electron-store");
+import Store from "./Store";
 export default class ProjectList {
-    private store;
+    private store: Store;
     constructor() {
-        this.store = new Store({
-            schema: {
-                projects: {
-                    list: []
-                }
-            }
-        });
+        this.store = new Store();
         this.registerListener();
     }
 
