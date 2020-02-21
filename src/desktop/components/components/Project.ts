@@ -1,4 +1,4 @@
-import ensureProjectFolder from "./helpers/createProjectFolder";
+import ensureProjectFolder from "./helpers/ensureProjectFolder";
 import * as path from "path";
 const Store = require("electron-store");
 export default class Project {
