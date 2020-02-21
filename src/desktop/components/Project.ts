@@ -1,4 +1,4 @@
-import createProjectFolder from "./helpers/createProjectFolder";
+import ensureProjectFolder from "./helpers/createProjectFolder";
 import * as path from "path";
 const Store = require("electron-store");
 export default class Project {
@@ -27,7 +27,7 @@ export default class Project {
      * create if doesn't exist project folder
      */
     public async init() {
-        await createProjectFolder(this.projectFolderPath);
+        await ensureProjectFolder(this.projectFolderPath);
         // this.store = new Store({
         //     schema: {
         //         projects: { list: [] }
