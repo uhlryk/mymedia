@@ -1,12 +1,14 @@
 import ensureProjectFolder from "./helpers/ensureProjectFolder";
 import * as path from "path";
-const Store = require("electron-store");
+import Store from "./Store";
+import IFile from "./types/file.interface";
+import getProjectFileList from "./helpers/getProjectFileList";
 export default class Project {
     static PROJECT_FOLDER = ".mymedia";
     private static projectInstance: Project;
     private readonly resourceFolderPath;
     private readonly projectFolderPath;
-    private store;
+    private store: Store;
     public static async getNewProjectInstance(resourceFolderPath: string) {
         if (Project.projectInstance) {
             Project.projectInstance.destroy();
@@ -21,6 +23,7 @@ export default class Project {
             this.resourceFolderPath,
             Project.PROJECT_FOLDER
         );
+        this.store = new Store(this.projectFolderPath);
     }
 
     /**
@@ -28,11 +31,8 @@ export default class Project {
      */
     public async init() {
         await ensureProjectFolder(this.projectFolderPath);
-        // this.store = new Store({
-        //     schema: {
-        //         projects: { list: [] }
-        //     },
-        // });
+        const fileList: Array<IFile> = await getProjectFileList(this.resourceFolderPath);
+        console.log(fileList);
     }
 
     public destroy() {}
