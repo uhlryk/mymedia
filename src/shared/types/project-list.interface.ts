@@ -1,5 +1,5 @@
-export interface IProjectList {
+export interface IProjectListElement {
     name: string;
-    path: string;
+    resourceFolderPath: string;
     id: string;
 }

@@ -17,7 +17,7 @@ export class ProjectListEffects {
                     return IpcProvider.request(
                         IpcProviderResourceEnums.REMOVE_PROJECT_FROM_LIST,
                         {
-                            projectPath: action.projectPath
+                            id: action.id
                         }
                     );
                 })

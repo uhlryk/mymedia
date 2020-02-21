@@ -6,22 +6,19 @@
 <div class="p-grid">
     <div class="p-col">
         <p-table [value]="projectList$ | async">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th colspan="4">project path name</th>
-                    <th colspan="1">actions</th>
-                </tr>
-            </ng-template>
             <ng-template pTemplate="body" let-project>
                 <tr>
                     <td colspan="4">
-                        <a (click)="onClickProjectFromList(project)">{{ project }}</a>
+                        <a (click)="onClickProjectFromList(project.id)">{{ project.name }}</a>
+                    </td>
+                    <td colspan="4">
+                        <a (click)="onClickProjectFromList(project.id)">{{ project.resourceFolderPath }}</a>
                     </td>
                     <td colspan="1">
                         <p-button
                             icon="pi pi-times"
                             styleClass="ui-button-danger"
-                            (click)="onRemoveProjectFromList(project)"
+                            (click)="onRemoveProjectFromList(project.id)"
                         ></p-button>
                     </td>
                 </tr>

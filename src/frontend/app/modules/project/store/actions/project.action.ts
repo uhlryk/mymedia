@@ -1,13 +1,14 @@
 import { createAction, props } from "@ngrx/store";
+import {IProjectListElement} from "../../../../../../shared/types/project-list.interface";
 
 export const setProjectList = createAction(
     "SET_PROJECT_LIST",
-    props<{ list: Array<string> }>()
+    props<{ list: Array<IProjectListElement> }>()
 );
 
 export const deleteProjectFromProjectList = createAction(
     "DELETE_PROJECT_FROM_PROJECT_LIST",
-    props<{ projectPath: string }>()
+    props<{ id: string }>()
 );
 
 // export const setResourceDescription = createAction(
