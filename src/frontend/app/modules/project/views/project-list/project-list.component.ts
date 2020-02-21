@@ -22,15 +22,7 @@ export class ProjectListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        IpcProvider.request(IpcProviderResourceEnums.GET_PROJECT_LIST).then(
-            projectList => {
-                this.store.dispatch(
-                    Actions.Project.setProjectList({
-                        list: projectList
-                    })
-                );
-            }
-        );
+
         this.projectList$ = this.store.pipe(select(ProjectList.listSelector));
     }
 
