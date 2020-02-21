@@ -19,12 +19,7 @@ export default class Store {
             cwd: projectFolderPath
         });
     }
-    addResource(resource: IResource) {
-        const resourceList: Array<IResource> = this._store.get(
-            Store.RESOURCE_COLLECTION,
-            []
-        );
-        resourceList.push(resource);
+    setResourceList(resourceList: Array<IResource>) {
         this._store.set(Store.RESOURCE_COLLECTION, resourceList);
     }
     getResource(id: string): IResource {

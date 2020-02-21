@@ -3,6 +3,8 @@ import * as path from "path";
 import Store from "./Store";
 import IFile from "./types/file.interface";
 import getProjectFileList from "./helpers/getProjectFileList";
+import makeResourceListUnique from "./helpers/makeResourceListUnique";
+import IResource from "../../../shared/types/resource.interface";
 export default class Project {
     static PROJECT_FOLDER = ".mymedia";
     private static projectInstance: Project;
@@ -32,7 +34,9 @@ export default class Project {
     public async init() {
         await ensureProjectFolder(this.projectFolderPath);
         const fileList: Array<IFile> = await getProjectFileList(this.resourceFolderPath);
-        console.log(fileList);
+        const resourceList: Array<IResource> = this.store.getResourceList();
+        const newResourceList: Array<IResource> = makeResourceListUnique(fileList, resourceList);
+        this.store.setResourceList(newResourceList);
     }
 
     public destroy() {}
