@@ -34,7 +34,7 @@ export class ProjectListComponent implements OnInit {
         this.projectList$ = this.store.pipe(select(ProjectList.listSelector));
     }
 
-    onNewProjectPath() {
+    onClickNewProjectPath() {
         this.loaderService.show();
 
         IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_BY_PATH).then(
@@ -44,7 +44,7 @@ export class ProjectListComponent implements OnInit {
         );
     }
 
-    onExistingProjectPath(projectPath) {
+    onClickProjectPathFromList(projectPath) {
         IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT, {
             projectPath: projectPath
         }).then(() => {
@@ -52,7 +52,7 @@ export class ProjectListComponent implements OnInit {
         });
     }
 
-    onRemoveProjectPath(projectPath) {
+    onRemoveProjectPathFromList(projectPath) {
         this.store.dispatch(
             Actions.Project.deleteProjectFromProjectList({
                 projectPath: projectPath

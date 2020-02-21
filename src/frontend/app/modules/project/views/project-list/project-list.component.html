@@ -1,7 +1,7 @@
 <div class="p-grid">
     <div class="p-col-6 p-offset-3">
         <h1>Projects</h1>
-        <p-button label="Select New Project Path" (click)="onNewProjectPath()"></p-button>
+        <p-button label="Select New Project Path" (click)="onClickNewProjectPath()"></p-button>
     </div>
 </div>
 <div class="p-grid">
@@ -16,14 +16,14 @@
             <ng-template pTemplate="body" let-project>
                 <tr>
                     <td colspan="4">
-                        <a (click)="onExistingProjectPath(project)">{{ project }}</a>
+                        <a (click)="onClickProjectPathFromList(project)">{{ project }}</a>
                     </td>
                     <td colspan="1">
                         <p-button
                             icon="pi pi-times"
                             E
                             styleClass="ui-button-danger"
-                            (click)="onRemoveProjectPath(project)"
+                            (click)="onRemoveProjectPathFromList(project)"
                         ></p-button>
                     </td>
                 </tr>
