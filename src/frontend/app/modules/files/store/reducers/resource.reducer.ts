@@ -12,7 +12,7 @@ export const InitialResourceState: ResourceState = {
 
 export const InitialResourceReducer = createReducer(
     InitialResourceState,
-    on(Actions.Project.setProjectInitialData, (state, action) => {
+    on(Actions.Resource.setResourceList, (state, action) => {
         return Object.assign({}, InitialResourceState, {
             list: action.resourceList
         });

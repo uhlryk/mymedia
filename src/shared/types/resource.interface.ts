@@ -11,5 +11,6 @@ export default interface IResource {
     description: string;
     tags: Array<string>;
     isNew: boolean;
+    isRemoved?: boolean;
     thumbnailList?: Array<string>;
 }

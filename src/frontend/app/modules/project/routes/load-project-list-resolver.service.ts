@@ -10,7 +10,8 @@ import { IProjectListElement } from "../../../../../shared/types/project-list.in
 @Injectable({
     providedIn: "root"
 })
-export class LoadProjectsResolverService implements Resolve<Array<IProjectListElement>> {
+export class LoadProjectListResolverService
+    implements Resolve<Array<IProjectListElement>> {
     constructor(private store: Store<AppState>) {}
     resolve(
         route: ActivatedRouteSnapshot,

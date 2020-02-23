@@ -13,7 +13,7 @@ export const InitialTagState: TagState = {
 
 export const InitialTagReducer = createReducer(
     InitialTagState,
-    on(Actions.Project.setProjectInitialData, (state, action) => {
+    on(Actions.Tag.setTagList, (state, action) => {
         return Object.assign({}, InitialTagState, {
             list: action.tagList
         });

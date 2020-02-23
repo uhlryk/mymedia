@@ -1,4 +1,10 @@
 import { createAction, props } from "@ngrx/store";
+import IResource from "../../../../../../shared/types/resource.interface";
+
+export const setResourceList = createAction(
+    "SET_RESOURCE_LIST",
+    props<{ resourceList: Array<IResource> }>()
+);
 
 export const setResourceTitle = createAction(
     "SET_RESOURCE_TITLE",
