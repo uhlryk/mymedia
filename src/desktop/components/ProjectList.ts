@@ -7,12 +7,12 @@ import removeProjectFromList from "./handlers/removeProjectFromList";
 import Store from "./Store";
 export default class ProjectList {
     private store: Store;
-    constructor() {
-        this.store = new Store();
-        this.registerListener();
-    }
 
-    private registerListener() {
+    public init() {
+        this.store = new Store();
+        this.registerHandlers();
+    }
+    private registerHandlers() {
         Listener.on(
             IpcProviderResourceEnums.GET_PROJECT_LIST,
             getProjectList.execute(this.store)

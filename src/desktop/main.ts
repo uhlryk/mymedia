@@ -31,6 +31,7 @@ app.on("ready", () => {
         .catch(err => console.log("An error occurred: ", err));
     // const appManager = new AppManager();
     const projectList = new ProjectList();
+    projectList.init();
     if (IS_HOT) {
         mainWindow.loadURL("http://localhost:4200/");
         mainWindow.webContents.openDevTools();

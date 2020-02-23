@@ -31,7 +31,17 @@ export default class Project {
     public async init() {
         await ensureProjectFolder(this.projectFolderPath);
         await syncDbWithFs(this.projectFolderPath, this.store);
+        this.registerHandlers();
     }
 
-    public destroy() {}
+    private registerHandlers() {
+
+    }
+
+    private removeHandlers() {
+
+    }
+    public destroy() {
+        this.removeHandlers();
+    }
 }
