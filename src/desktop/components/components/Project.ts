@@ -3,6 +3,7 @@ import * as path from "path";
 import Store from "./Store";
 import syncDbWithFs from "./helpers/syncDbWithFs";
 import getResourceList from "./handlers/getResourceList";
+import getTagList from "./handlers/getTagList";
 import Listener from "../../core/Listener";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import getProjectList from "../handlers/getProjectList";
@@ -46,7 +47,7 @@ export default class Project {
         );
         Listener.on(
             IpcProviderResourceEnums.GET_TAG_LIST,
-            getResourceList.execute(this.store)
+            getTagList.execute(this.store)
         );
     }
 

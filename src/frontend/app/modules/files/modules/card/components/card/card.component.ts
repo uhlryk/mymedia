@@ -21,8 +21,8 @@ import {
 })
 export class CardComponent implements OnInit, OnChanges {
     @Input()
-    private resource: IResource;
-    @Input() tagList: Array<ITag>;
+  //  private resource: IResource;
+  //  @Input() tagList: Array<ITag>;
     @Input() resourceId: string;
 
     resource$: Observable<IResource>;
