@@ -34,8 +34,8 @@ export default class Project {
      */
     public async init() {
         console.log("Init Project component");
-        await ensureProjectFolder(this.projectFolderPath);
-        await syncDbWithFs(this.projectFolderPath, this.store);
+    //    await ensureProjectFolder(this.projectFolderPath);
+        await syncDbWithFs(this.resourceFolderPath, this.store);
         this.registerHandlers();
     }
 
