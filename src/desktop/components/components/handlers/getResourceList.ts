@@ -6,7 +6,6 @@ export default {
         return async (context: Context) => {
             console.log("Execute Project.handler.getResourceList");
             const resourceList = store.getResourceList();
-            console.log(resourceList);
             context.reply.send(resourceList);
         };
     }

@@ -6,7 +6,6 @@ export default {
         return async (context: Context) => {
             console.log("Execute Project.handler.getTagList");
             const tagList = store.getTagList();
-            console.log(tagList);
             context.reply.send(tagList);
         };
     }

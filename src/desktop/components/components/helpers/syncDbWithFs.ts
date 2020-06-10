@@ -7,16 +7,10 @@ import uuid from "uuidv4";
 export default async function syncDbWithFs(resourceFolderPath: string, store: Store) {
     console.log("syncDbWithFs", resourceFolderPath);
     const fileList: Array<IFile> = await getProjectFileList(resourceFolderPath);
-    console.log("syncDbWithFs.fileList");
-    console.log(fileList);
     const resourceList: Array<IResource> = store.getResourceList();
-    console.log("syncDbWithFs.resourceList");
-    console.log(resourceList);
     const resourceListFilteredByFs = resourceList.filter(resource =>
         fileList.find(file => file.filePath === resource.filePath)
     );
-    console.log("syncDbWithFs.resourceListFilteredByFs");
-    console.log(resourceListFilteredByFs);
     const newResourceList: Array<IResource> = fileList.map(file => {
         const resourceByFile = resourceListFilteredByFs.find(
             resource => resource.filePath === file.filePath

@@ -22,6 +22,9 @@ export default class Store {
     setResourceList(resourceList: Array<IResource>) {
         this._store.set(Store.RESOURCE_COLLECTION, resourceList);
     }
+    setTagList(tagList: Array<ITag>) {
+        this._store.set(Store.TAG_COLLECTION, tagList);
+    }
     getResource(id: string): IResource {
         return this.getResourceList().find((resource: IResource) => resource.id === id);
     }

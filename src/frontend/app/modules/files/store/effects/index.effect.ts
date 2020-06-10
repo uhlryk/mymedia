@@ -8,7 +8,7 @@ import IpcProvider from "../../../../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
 import IResource from "../../../../../../shared/types/resource.interface";
 import { ProjectState } from "../reducers/index.reducer";
-import * as Selector  from "../selectors/index.selector";
+import * as Selector from "../selectors/index.selector";
 
 @Injectable()
 export class ProjectEffects {
