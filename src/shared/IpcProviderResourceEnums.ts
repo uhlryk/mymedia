@@ -23,6 +23,7 @@ enum IpcProviderResourceEnums {
 
 
     UPDATE_RESOURCE = "UPDATE_RESOURCE",
+    REMOVE_RESOURCE = "REMOVE_RESOURCE",
     SAVE_TAG_LIST = "SAVE_TAG_LIST"
 
 

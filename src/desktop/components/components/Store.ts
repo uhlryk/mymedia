@@ -33,9 +33,7 @@ export default class Store {
         this._store.set(Store.TAG_COLLECTION, tagList);
     }
 
-    getResource(id: string): IResource {
-        return this.getResourceList().find((resource: IResource) => resource.id === id);
-    }
+
     getResourceByPath(filePath: string): IResource {
         return this.getResourceList().find(
             (resource: IResource) => resource.filePath === filePath
@@ -54,6 +52,19 @@ export default class Store {
             } else {
                 return existingResource;
             }
+        });
+        this._store.set(Store.RESOURCE_COLLECTION, resourceList);
+    }
+    getResourceById(id: string): IResource {
+        return this.getResourceList().find((resource: IResource) => resource.id === id);
+    }
+    removeResource(resourceId: string) {
+        let resourceList: Array<IResource> = this._store.get(
+            Store.RESOURCE_COLLECTION,
+            []
+        );
+        resourceList = resourceList.filter(existingResource => {
+            return existingResource.id !== resourceId;
         });
         this._store.set(Store.RESOURCE_COLLECTION, resourceList);
     }

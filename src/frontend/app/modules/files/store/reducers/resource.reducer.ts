@@ -69,14 +69,8 @@ export const InitialResourceReducer = createReducer(
     }),
     on(Actions.Resource.deleteResourceFromDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
-            list: state.list.map((resource: IResource) => {
-                if (resource.id === action.resourceId) {
-                    return Object.assign({}, resource, {
-                        isRemoved: true
-                    });
-                } else {
-                    return resource;
-                }
+            list: state.list.filter((resource: IResource) => {
+                return resource.id !== action.resourceId;
             }),
             deleteResourceMenu: {
                 resourceId: null,

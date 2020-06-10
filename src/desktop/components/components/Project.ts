@@ -6,7 +6,8 @@ import getResourceList from "./handlers/getResourceList";
 import getTagList from "./handlers/getTagList";
 import saveTagList from "./handlers/saveTagList";
 import updateResource from "./handlers/updateResource";
-import Listener from "../../core/Listener";
+import removeResource from "./handlers/removeResource";
+import Listener, { Context } from "../../core/Listener";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import getProjectList from "../handlers/getProjectList";
 export default class Project {
@@ -37,7 +38,7 @@ export default class Project {
      */
     public async init() {
         console.log("Init Project component");
-    //    await ensureProjectFolder(this.projectFolderPath);
+        //    await ensureProjectFolder(this.projectFolderPath);
         await syncDbWithFs(this.resourceFolderPath, this.store);
         this.registerHandlers();
     }
@@ -59,11 +60,13 @@ export default class Project {
             IpcProviderResourceEnums.SAVE_TAG_LIST,
             saveTagList.execute(this.store)
         );
+        Listener.on(
+            IpcProviderResourceEnums.REMOVE_RESOURCE,
+            removeResource.execute(this.store, this.resourceFolderPath)
+        );
     }
 
-    private removeHandlers() {
-
-    }
+    private removeHandlers() {}
     public destroy() {
         this.removeHandlers();
     }

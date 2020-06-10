@@ -25,7 +25,7 @@ export class ProjectEffects {
                 withLatestFrom(
                     this.store$.pipe(select(Selector.Project.projectFeatureSelector))
                 ),
-                tap(([action, projectState]: [{resourceId}, ProjectState]) => {
+                tap(([action, projectState]: [{ resourceId }, ProjectState]) => {
                     const changedResource: IResource = projectState.resourceList.list.find(
                         (resource: IResource) => action.resourceId === resource.id
                     );
@@ -36,13 +36,26 @@ export class ProjectEffects {
             ),
         { dispatch: false }
     );
+    removeResource$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ActionList.Resource.deleteResourceFromDeleteResourceMenu),
+                // tap((action: Action) => {})
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [{ resourceId }, ProjectState]) => {
+                    IpcProvider.trigger(IpcProviderResourceEnums.REMOVE_RESOURCE, {
+                        resourceId: action.resourceId
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
     saveTagList$ = createEffect(
         () =>
             this.actions$.pipe(
-                ofType(
-                    ActionList.Tag.setTagName,
-                    ActionList.Tag.createTag
-                ),
+                ofType(ActionList.Tag.setTagName, ActionList.Tag.createTag),
                 // tap((action: Action) => {})
                 withLatestFrom(
                     this.store$.pipe(select(Selector.Project.projectFeatureSelector))
@@ -55,7 +68,7 @@ export class ProjectEffects {
             ),
         { dispatch: false }
     );
-/*
+    /*
     saveProject$ = createEffect(
         () =>
             this.actions$.pipe(
