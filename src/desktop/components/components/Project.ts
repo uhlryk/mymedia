@@ -7,6 +7,7 @@ import getTagList from "./handlers/getTagList";
 import saveTagList from "./handlers/saveTagList";
 import updateResource from "./handlers/updateResource";
 import removeResource from "./handlers/removeResource";
+import removeTag from "./handlers/removeTag";
 import Listener, { Context } from "../../core/Listener";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import getProjectList from "../handlers/getProjectList";
@@ -63,6 +64,10 @@ export default class Project {
         Listener.on(
             IpcProviderResourceEnums.REMOVE_RESOURCE,
             removeResource.execute(this.store, this.resourceFolderPath)
+        );
+        Listener.on(
+            IpcProviderResourceEnums.REMOVE_TAG,
+            removeTag.execute(this.store)
         );
     }
 

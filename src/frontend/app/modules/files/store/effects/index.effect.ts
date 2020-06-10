@@ -16,7 +16,7 @@ export class ProjectEffects {
         () =>
             this.actions$.pipe(
                 ofType(
-                    ActionList.Resource.setResourceTags,
+                    ActionList.Resource.setResourceTagList,
                     ActionList.Resource.setResourceRanking,
                     ActionList.Resource.setResourceDescription,
                     ActionList.Resource.setResourceTitle
@@ -68,36 +68,22 @@ export class ProjectEffects {
             ),
         { dispatch: false }
     );
-    /*
-    saveProject$ = createEffect(
+    removeTag$ = createEffect(
         () =>
             this.actions$.pipe(
-                ofType(
-                    ActionList.Tag.removeTag,
-                    ActionList.Tag.setTagName,
-                    ActionList.Tag.createTag,
-                    ActionList.Resource.setResourceTags,
-                    ActionList.Resource.setResourceRanking,
-                    ActionList.Resource.setResourceDescription,
-                    ActionList.Resource.setResourceTitle,
-                    ActionList.Resource.deleteResourceFromDeleteResourceMenu
-                ),
+                ofType(ActionList.Tag.removeTag),
                 // tap((action: Action) => {})
                 withLatestFrom(
                     this.store$.pipe(select(Selector.Project.projectFeatureSelector))
                 ),
-                tap(([action, projectState]: [Action, ProjectState]) => {
-                    IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
-                        project: {
-                            resourceList: projectState.resourceList.list,
-                            tagList: projectState.tagList.list
-                        }
+                tap(([action, projectState]: [{ tagId }, ProjectState]) => {
+                    IpcProvider.trigger(IpcProviderResourceEnums.REMOVE_TAG, {
+                        tagId: action.tagId
                     });
                 })
             ),
         { dispatch: false }
     );
-*/
     executeResource = createEffect(
         () =>
             this.actions$.pipe(

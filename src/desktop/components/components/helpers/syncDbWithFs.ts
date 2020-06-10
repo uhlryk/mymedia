@@ -27,7 +27,8 @@ export default async function syncDbWithFs(resourceFolderPath: string, store: St
                 ranking: 0,
                 description: "",
                 id: id,
-                tags: [],
+                tagIdList: [],
+                thumbnailList: [],
                 added: currentTimestamp
             };
         } else {

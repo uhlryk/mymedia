@@ -23,7 +23,6 @@ export class TagsModalComponent implements OnInit, OnDestroy {
         this.manager = this.store$
             .pipe(select(Selector.UI.tagsManagerVisibleSelector))
             .subscribe((isVisible: boolean) => {
-                console.log("AAAAAAAAAAAAAAAaaa");
                 if (isVisible) {
                     this.dialogRef = this.dialogService.open(ContentComponent, {
                         data: {},

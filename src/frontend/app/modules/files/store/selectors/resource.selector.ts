@@ -38,7 +38,7 @@ export const managedListSelector = createSelector(
                 ) {
                     if (search.tagIdList.length) {
                         return search.tagIdList.every(
-                            (searchTagId: string) => !!resource.tags.includes(searchTagId)
+                            (searchTagId: string) => !!resource.tagIdList.includes(searchTagId)
                         );
                     }
                     return true;

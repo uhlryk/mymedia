@@ -18,9 +18,9 @@ export const setResourceRanking = createAction(
     "SET_RESOURCE_RANKING",
     props<{ resourceId: string; ranking: number }>()
 );
-export const setResourceTags = createAction(
-    "SET_RESOURCE_TAGS",
-    props<{ resourceId: string; tags: Array<string> }>()
+export const setResourceTagList = createAction(
+    "SET_RESOURCE_TAG_LIST",
+    props<{ resourceId: string; tagIdList: Array<string> }>()
 );
 export const addResourceThumbnail = createAction(
     "SET_RESOURCE_THUMBNAILS",

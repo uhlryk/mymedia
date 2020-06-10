@@ -42,10 +42,7 @@ export default class Store {
      */
 
     updateResource(resource: IResource) {
-        let resourceList: Array<IResource> = this._store.get(
-            Store.RESOURCE_COLLECTION,
-            []
-        );
+        let resourceList: Array<IResource> = this.getResourceList();
         resourceList = resourceList.map(existingResource => {
             if (existingResource.id === resource.id) {
                 return resource;
@@ -59,10 +56,7 @@ export default class Store {
         return this.getResourceList().find((resource: IResource) => resource.id === id);
     }
     removeResource(resourceId: string) {
-        let resourceList: Array<IResource> = this._store.get(
-            Store.RESOURCE_COLLECTION,
-            []
-        );
+        let resourceList: Array<IResource> = this.getResourceList();
         resourceList = resourceList.filter(existingResource => {
             return existingResource.id !== resourceId;
         });
@@ -71,12 +65,18 @@ export default class Store {
     setTagList(tagList: Array<ITag>) {
         this._store.set(Store.TAG_COLLECTION, tagList);
     }
-    /*
-    addTag(tag: ITag) {
-        const tagList: Array<ITag> = this._store.get(Store.TAG_COLLECTION, []);
-        tagList.push(tag);
-        this._store.set(Store.RESOURCE_COLLECTION, tagList);
+    removeTag(tagId: string) {
+        const resourceList = this.getResourceList().map((resource: IResource) => {
+            resource.tagIdList = resource.tagIdList.filter(
+                existingTagId => existingTagId !== tagId
+            );
+            return resource;
+        });
+        this.setResourceList(resourceList);
+        let tagList: Array<ITag> = this.getTagList();
+        tagList = tagList.filter(existingTag => {
+            return existingTag.id !== tagId;
+        });
+        this._store.set(Store.TAG_COLLECTION, tagList);
     }
-
- */
 }

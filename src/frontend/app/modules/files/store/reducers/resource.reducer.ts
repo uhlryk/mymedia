@@ -54,12 +54,12 @@ export const InitialResourceReducer = createReducer(
             })
         });
     }),
-    on(Actions.Resource.setResourceTags, (state, action) => {
+    on(Actions.Resource.setResourceTagList, (state, action) => {
         return Object.assign({}, state, {
             list: state.list.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
                     return Object.assign({}, resource, {
-                        tags: action.tags.slice()
+                        tagIdList: action.tagIdList.slice()
                     });
                 } else {
                     return resource;
