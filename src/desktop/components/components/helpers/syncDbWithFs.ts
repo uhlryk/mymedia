@@ -5,8 +5,8 @@ import IResource from "../../../../shared/types/resource.interface";
 import uuid from "uuidv4";
 
 export default async function syncDbWithFs(resourceFolderPath: string, store: Store) {
-    const fileList: Array<IFile> = await getProjectFileList(this.resourceFolderPath);
-    const resourceList: Array<IResource> = this.store.getResourceList();
+    const fileList: Array<IFile> = await getProjectFileList(resourceFolderPath);
+    const resourceList: Array<IResource> = store.getResourceList();
     const resourceListFilteredByFs = resourceList.filter(resource =>
         fileList.find(file => file.filePath === resource.filePath)
     );
@@ -31,5 +31,5 @@ export default async function syncDbWithFs(resourceFolderPath: string, store: St
             return resourceByFile;
         }
     });
-    this.store.setResourceList(newResourceList);
+    store.setResourceList(newResourceList);
 }

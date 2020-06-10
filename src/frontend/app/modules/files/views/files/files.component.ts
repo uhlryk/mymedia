@@ -33,7 +33,7 @@ export class FilesComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
     ngOnInit() {
-        this.loaderService.show();
+        //this.loaderService.show();
         // this.tagsModal.show();
 
         // IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT).then(

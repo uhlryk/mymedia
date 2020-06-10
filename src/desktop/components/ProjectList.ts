@@ -9,6 +9,7 @@ export default class ProjectList {
     private store: Store;
 
     public init() {
+        console.log("Init ProjectList component");
         this.store = new Store();
         this.registerHandlers();
     }
