@@ -11,6 +11,8 @@ export default async function syncDbWithFs(resourceFolderPath: string, store: St
     const resourceListFilteredByFs = resourceList.filter(resource =>
         fileList.find(file => file.filePath === resource.filePath)
     );
+    const currentDate = new Date();
+    const currentTimestamp = currentDate.getTime();
     const newResourceList: Array<IResource> = fileList.map(file => {
         const resourceByFile = resourceListFilteredByFs.find(
             resource => resource.filePath === file.filePath
@@ -26,7 +28,7 @@ export default async function syncDbWithFs(resourceFolderPath: string, store: St
                 description: "",
                 id: id,
                 tags: [],
-                isNew: true
+                added: currentTimestamp
             };
         } else {
             return resourceByFile;

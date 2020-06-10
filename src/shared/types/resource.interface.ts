@@ -10,7 +10,6 @@ export default interface IResource {
     height?: number;
     description: string;
     tags: Array<string>;
-    isNew: boolean;
-    isRemoved?: boolean;
+    added: number;
     thumbnailList?: Array<string>;
 }

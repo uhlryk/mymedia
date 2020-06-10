@@ -65,6 +65,13 @@ export class CardComponent implements OnInit, OnChanges {
         );
     }
 
+    checkIfNew(resourceAddedTimestamp: number) {
+        const addedDate = new Date(resourceAddedTimestamp);
+        addedDate.setDate(addedDate.getDate() + 1);
+        const currentDate = new Date();
+        return addedDate.getTime() > currentDate.getTime();
+    }
+
     log(val) {
         console.log(val);
     }
