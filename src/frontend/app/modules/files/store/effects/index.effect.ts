@@ -12,6 +12,50 @@ import * as Selector from "../selectors/index.selector";
 
 @Injectable()
 export class ProjectEffects {
+    updateResource$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(
+                    ActionList.Resource.setResourceTags,
+                    ActionList.Resource.setResourceRanking,
+                    ActionList.Resource.setResourceDescription,
+                    ActionList.Resource.setResourceTitle
+                ),
+                // tap((action: Action) => {})
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [{resourceId}, ProjectState]) => {
+                    const changedResource: IResource = projectState.resourceList.list.find(
+                        (resource: IResource) => action.resourceId === resource.id
+                    );
+                    IpcProvider.trigger(IpcProviderResourceEnums.UPDATE_RESOURCE, {
+                        resource: changedResource
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+    saveTagList$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(
+                    ActionList.Tag.setTagName,
+                    ActionList.Tag.createTag
+                ),
+                // tap((action: Action) => {})
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [Action, ProjectState]) => {
+                    IpcProvider.trigger(IpcProviderResourceEnums.SAVE_TAG_LIST, {
+                        tagList: projectState.tagList.list
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+/*
     saveProject$ = createEffect(
         () =>
             this.actions$.pipe(
@@ -26,7 +70,9 @@ export class ProjectEffects {
                     ActionList.Resource.deleteResourceFromDeleteResourceMenu
                 ),
                 // tap((action: Action) => {})
-                withLatestFrom(this.store$.pipe(select(Selector.Project.projectFeatureSelector))),
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
                 tap(([action, projectState]: [Action, ProjectState]) => {
                     IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
                         project: {
@@ -38,12 +84,14 @@ export class ProjectEffects {
             ),
         { dispatch: false }
     );
-
+*/
     executeResource = createEffect(
         () =>
             this.actions$.pipe(
                 ofType(ActionList.Resource.executeResource),
-                withLatestFrom(this.store$.pipe(select(Selector.Project.projectFeatureSelector))),
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
                 tap(([action, projectState]: [{ resourceId: string }, ProjectState]) => {
                     const selectedResource: IResource = projectState.resourceList.list.find(
                         (resource: IResource) => resource.id === action.resourceId

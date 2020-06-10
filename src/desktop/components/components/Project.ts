@@ -4,7 +4,8 @@ import Store from "./Store";
 import syncDbWithFs from "./helpers/syncDbWithFs";
 import getResourceList from "./handlers/getResourceList";
 import getTagList from "./handlers/getTagList";
-import saveProject from "./handlers/saveProject";
+import saveTagList from "./handlers/saveTagList";
+import updateResource from "./handlers/updateResource";
 import Listener from "../../core/Listener";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import getProjectList from "../handlers/getProjectList";
@@ -51,8 +52,12 @@ export default class Project {
             getTagList.execute(this.store)
         );
         Listener.on(
-            IpcProviderResourceEnums.SAVE_PROJECT,
-            saveProject.execute(this.store)
+            IpcProviderResourceEnums.UPDATE_RESOURCE,
+            updateResource.execute(this.store)
+        );
+        Listener.on(
+            IpcProviderResourceEnums.SAVE_TAG_LIST,
+            saveTagList.execute(this.store)
         );
     }
 

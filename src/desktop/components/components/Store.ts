@@ -22,9 +22,17 @@ export default class Store {
     setResourceList(resourceList: Array<IResource>) {
         this._store.set(Store.RESOURCE_COLLECTION, resourceList);
     }
+    getResourceList(): Array<IResource> {
+        return this._store.get(Store.RESOURCE_COLLECTION, []);
+    }
+    getTagList(): Array<ITag> {
+        return this._store.get(Store.TAG_COLLECTION, []);
+    }
+    /*
     setTagList(tagList: Array<ITag>) {
         this._store.set(Store.TAG_COLLECTION, tagList);
     }
+
     getResource(id: string): IResource {
         return this.getResourceList().find((resource: IResource) => resource.id === id);
     }
@@ -33,15 +41,31 @@ export default class Store {
             (resource: IResource) => resource.filePath === filePath
         );
     }
-    getResourceList(): Array<IResource> {
-        return this._store.get(Store.RESOURCE_COLLECTION, []);
+     */
+
+    updateResource(resource: IResource) {
+        let resourceList: Array<IResource> = this._store.get(
+            Store.RESOURCE_COLLECTION,
+            []
+        );
+        resourceList = resourceList.map(existingResource => {
+            if (existingResource.id === resource.id) {
+                return resource;
+            } else {
+                return existingResource;
+            }
+        });
+        this._store.set(Store.RESOURCE_COLLECTION, resourceList);
     }
+    setTagList(tagList: Array<ITag>) {
+        this._store.set(Store.TAG_COLLECTION, tagList);
+    }
+    /*
     addTag(tag: ITag) {
         const tagList: Array<ITag> = this._store.get(Store.TAG_COLLECTION, []);
         tagList.push(tag);
         this._store.set(Store.RESOURCE_COLLECTION, tagList);
     }
-    getTagList(): Array<ITag> {
-        return this._store.get(Store.TAG_COLLECTION, []);
-    }
+
+ */
 }
