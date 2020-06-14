@@ -37,6 +37,7 @@ export class ProjectListComponent implements OnInit {
     }
 
     onClickProjectFromList(id) {
+        this.loaderService.show();
         IpcProvider.request(IpcProviderResourceEnums.SET_ACTIVE_PROJECT_FROM_LIST, {
             id: id
         }).then(() => {

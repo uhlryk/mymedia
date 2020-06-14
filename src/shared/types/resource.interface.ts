@@ -5,9 +5,9 @@ export default interface IResource {
     title: string;
     ranking: number;
     size: number;
-    duration?: number;
-    width?: number;
-    height?: number;
+    duration: number;
+    width: number;
+    height: number;
     description: string;
     tagIdList: Array<string>;
     added: number;

@@ -12,6 +12,7 @@ import { Store } from "@ngrx/store";
 import { AppState } from "../../../../reducers";
 // import { Resource, Project } from "../../store/actions/index.action";
 import IThumbnailChangeEvent from "../../../../../../shared/types/thumbnailChangeEvent.interface";
+import IResource from "../../../../../../shared/types/resource.interface";
 
 @Component({
     templateUrl: "files.component.html",
@@ -24,7 +25,7 @@ export class FilesComponent implements OnInit, OnDestroy {
     // _projectChange: Subscription;
     // _tagsManagerChange: Subscription;
     //
-    // thumbnailListenerCleaner: () => void;
+    thumbnailListenerCleaner: () => void;
     constructor(
         private confirmationService: ConfirmationService,
         private store: Store<AppState>,
@@ -33,7 +34,14 @@ export class FilesComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
     ngOnInit() {
-        //this.loaderService.show();
+        this.thumbnailListenerCleaner = IpcProvider.listen(
+            IpcProviderResourceEnums.ON_RESOURCE_CHANGE,
+            (resource: IResource) => {
+                console.log("AAA");
+            }
+        );
+        IpcProvider.trigger(IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER);
+        this.loaderService.hide();
         // this.tagsModal.show();
 
         // IpcProvider.request(IpcProviderResourceEnums.LOAD_PROJECT).then(
@@ -67,9 +75,9 @@ export class FilesComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        // if (this.thumbnailListenerCleaner) {
-        //     this.thumbnailListenerCleaner();
-        // }
+        if (this.thumbnailListenerCleaner) {
+            this.thumbnailListenerCleaner();
+        }
         // if (this._projectChange) {
         //     this._projectChange.unsubscribe();
         // }

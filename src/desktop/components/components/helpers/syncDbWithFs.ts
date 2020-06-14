@@ -3,6 +3,8 @@ import IFile from "../types/file.interface";
 import getProjectFileList from "./getProjectFileList";
 import IResource from "../../../../shared/types/resource.interface";
 import uuid from "uuidv4";
+import getMetadata from "../../../fs/getMetadata";
+import * as path from "path";
 
 export default async function syncDbWithFs(resourceFolderPath: string, store: Store) {
     console.log("syncDbWithFs", resourceFolderPath);
@@ -13,29 +15,33 @@ export default async function syncDbWithFs(resourceFolderPath: string, store: St
     );
     const currentDate = new Date();
     const currentTimestamp = currentDate.getTime();
-    const newResourceList: Array<IResource> = fileList.map(file => {
+    const newResourceList: Array<IResource> = [];
+    for (const file of fileList) {
         const resourceByFile = resourceListFilteredByFs.find(
             resource => resource.filePath === file.filePath
         );
         if (!resourceByFile) {
             const id = uuid();
-            return {
+            const metadata = await getMetadata(path.resolve(resourceFolderPath, file.filePath));
+            newResourceList.push({
                 filePath: file.filePath,
                 fileName: file.fileName,
                 title: file.name,
                 size: file.size,
                 ranking: 0,
+                duration: parseInt(metadata.duration, 10),
+                width: parseInt(metadata.width, 10),
+                height: parseInt(metadata.height, 10),
                 description: "",
                 id: id,
                 tagIdList: [],
                 thumbnailList: [],
                 added: currentTimestamp
-            };
+            });
         } else {
-            return resourceByFile;
+            newResourceList.push(resourceByFile);
         }
-    });
+    }
     console.log("syncDbWithFs.newResourceList");
-    console.log(newResourceList);
     store.setResourceList(newResourceList);
 }

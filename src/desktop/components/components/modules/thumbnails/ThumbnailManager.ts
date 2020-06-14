@@ -1,9 +1,10 @@
 import * as path from "path";
-import generateThumbnail from "./generateThumbnail";
 import getThumbnailList from "./getThumbnailList";
-import IResource from "../../../shared/types/resource.interface";
-import ThumbnailName from "../../../shared/ThumbnailName";
-import removeFolder from "../../fs/removeFolder";
+import generateThumbnail from "./generateThumbnail";
+import IResource from "../../../../../shared/types/resource.interface";
+import ThumbnailName from "../../../../../shared/ThumbnailName";
+import removeFolder from "../../../../fs/removeFolder";
+import * as fse from "fs-extra";
 
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
@@ -26,7 +27,14 @@ export default class ThumbnailManager {
         this._queue = [];
         this._isRunning = false;
     }
-
+    public async init() {
+        const isProjectFolderExist: boolean = await fse.pathExists(
+            this._thumbnailFolderName
+        );
+        if (!isProjectFolderExist) {
+            await fse.mkdir(this._thumbnailFolderName);
+        }
+    }
     public destroy() {
         this._isDestroyed = true;
     }
@@ -70,11 +78,7 @@ export default class ThumbnailManager {
         return removeFolder(path.join(this._thumbnailFolderName, resource.id));
     }
 
-    private queueGenerateThumbnail(
-        resource: IResource,
-        index: number,
-        priority: number
-    ) {
+    private queueGenerateThumbnail(resource: IResource, index: number, priority: number) {
         const queueElement: QueueElement = {
             resourceId: resource.id,
             sourceVideoPath: path.resolve(this._projectPath, resource.filePath),
@@ -110,7 +114,7 @@ export default class ThumbnailManager {
                 queueElement.sourceVideoPath + " index:" + queueElement.index
             );
             try {
-                await getThumbnail(
+                const thumbnail = await getThumbnail(
                     queueElement.sourceVideoPath,
                     queueElement.targetThumbnailPath,
                     queueElement.videoTime
