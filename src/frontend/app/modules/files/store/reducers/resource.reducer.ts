@@ -78,20 +78,21 @@ export const InitialResourceReducer = createReducer(
             }
         });
     }),
-    on(Actions.Resource.addResourceThumbnail, (state, action) => {
+    on(Actions.Resource.upsertResource, (state, action) => {
+        let existAndChanged: boolean = false;
+        let newList = state.list.map((resource: IResource) => {
+            if (resource.id === action.resource.id) {
+                existAndChanged = true;
+                return action.resource;
+            } else {
+                return resource;
+            }
+        });
+        if (existAndChanged === false) {
+            newList = newList.concat([action.resource]);
+        }
         return Object.assign({}, state, {
-            list: state.list.map((resource: IResource) => {
-                if (resource.id === action.resourceId) {
-                    const list: Array<string> = (resource.thumbnailList || []).slice();
-
-                    list[action.index] = action.thumbnail;
-                    return Object.assign({}, resource, {
-                        thumbnailList: list
-                    });
-                } else {
-                    return resource;
-                }
-            })
+            list: newList
         });
     })
 );

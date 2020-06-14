@@ -27,8 +27,6 @@ export default async function getMetadata(sourceFilePath): Promise<Metadata> {
             duration: ""
         };
         childProcess.stdout.on("data", (data: string) => {
-            console.log("QQ1");
-            console.log(sourceFilePath);
             console.log(data.toString());
             const dataArray = data.toString().split(/[^0-9.]/g);
             _metadata.width = dataArray[0];
@@ -41,7 +39,6 @@ export default async function getMetadata(sourceFilePath): Promise<Metadata> {
         });
 
         childProcess.on("close", code => {
-            console.log("QQ1");
             console.log(sourceFilePath);
             console.log(code);
             console.log(_metadata);

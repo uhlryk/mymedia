@@ -101,15 +101,19 @@ export default class Project {
         Listener.on(IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER, async context => {
             console.log("start listening for thumbnails");
             this._thumbnailManager.execute((resourceId: string, resourceThumbnailPath: string, index: number) => {
-                console.log("==AAAAAAAAAAAa==");
+                console.log("====");
                 console.log(resourceId, resourceThumbnailPath);
+                const resource = this.store.getResourceById(resourceId);
+                resource.thumbnailList[index] = resourceThumbnailPath;
+                this.store.updateResource(resource);
+
+                context.reply
+                    .getEvent()
+                    .reply(
+                        IpcProviderResourceEnums.ON_RESOURCE_CHANGE,
+                        resource
+                    );
             });
-            // context.reply
-            //     .getEvent()
-            //     .reply(
-            //         IpcProviderResourceEnums.ON_RESOURCE_CHANGE,
-            //         thumbnailChangeEvent
-            //     );
         });
     }
 

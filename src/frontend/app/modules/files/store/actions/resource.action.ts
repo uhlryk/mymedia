@@ -22,11 +22,10 @@ export const setResourceTagList = createAction(
     "SET_RESOURCE_TAG_LIST",
     props<{ resourceId: string; tagIdList: Array<string> }>()
 );
-export const addResourceThumbnail = createAction(
-    "SET_RESOURCE_THUMBNAILS",
-    props<{ resourceId: string; index: number; thumbnail: string }>()
+export const upsertResource = createAction(
+    "UPSERT_RESOURCE",
+    props<{ resource: IResource; }>()
 );
-
 export const executeResource = createAction(
     "EXECUTE_RESOURCE",
     props<{ resourceId: string }>()
