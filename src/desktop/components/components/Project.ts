@@ -16,6 +16,7 @@ import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import IResource from "../../../shared/types/resource.interface";
 import syncResourcesWithThumbnails from "./helpers/syncResourcesWithThumbnails";
 import registerResourceChangeListener from "./handlers/registerResourceChangeListener";
+import {shell} from "electron";
 export default class Project {
     static PROJECT_FOLDER = ".mymedia";
     private static projectInstance: Project;
@@ -101,6 +102,10 @@ export default class Project {
             IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER,
             registerResourceChangeListener.execute(this.store, this._thumbnailManager)
         );
+        Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
+            const resourcePath: string = context.data.filePath;
+            shell.openItem(path.join(this.resourceFolderPath, resourcePath));
+        });
     }
 
     private removeHandlers() {
@@ -111,6 +116,7 @@ export default class Project {
         Listener.removeAllListeners(IpcProviderResourceEnums.REMOVE_RESOURCE);
         Listener.removeAllListeners(IpcProviderResourceEnums.REMOVE_TAG);
         Listener.removeAllListeners(IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER);
+        Listener.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
     }
     public destroy() {
         console.log("destroy project");
