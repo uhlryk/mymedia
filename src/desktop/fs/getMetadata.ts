@@ -1,5 +1,3 @@
-import * as fse from "fs-extra";
-import * as path from "path";
 import { spawn } from "child_process";
 import * as ffprobe from "ffprobe-static-electron";
 
