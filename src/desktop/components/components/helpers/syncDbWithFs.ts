@@ -6,10 +6,9 @@ import uuid from "uuidv4";
 import getMetadata from "../../../fs/getMetadata";
 import * as path from "path";
 
-export default async function syncDbWithFs(resourceFolderPath: string, store: Store) {
+export default async function syncDbWithFs(resourceFolderPath: string, resourceList: Array<IResource>) {
     console.log("syncDbWithFs", resourceFolderPath);
     const fileList: Array<IFile> = await getProjectFileList(resourceFolderPath);
-    const resourceList: Array<IResource> = store.getResourceList();
     const resourceListFilteredByFs = resourceList.filter(resource =>
         fileList.find(file => file.filePath === resource.filePath)
     );
@@ -43,5 +42,5 @@ export default async function syncDbWithFs(resourceFolderPath: string, store: St
         }
     }
     console.log("syncDbWithFs.newResourceList");
-    store.setResourceList(newResourceList);
+    return newResourceList;
 }

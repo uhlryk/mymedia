@@ -119,50 +119,18 @@ export default class ThumbnailManager {
                     queueElement.targetThumbnailPath,
                     queueElement.videoTime
                 );
-                listener(
-                    queueElement.resourceId,
-                    "file://" + queueElement.targetThumbnailPath,
-                    queueElement.index
-                );
+                if (this._isDestroyed === false) {
+                    listener(
+                        queueElement.resourceId,
+                        "file://" + queueElement.targetThumbnailPath,
+                        queueElement.index
+                    );
+                }
             } catch (err) {
                 console.log(err);
             }
         }
     }
-    // public async run(
-    //     listener: (
-    //         resourceId: string,
-    //         resourceThumbnailPath: string,
-    //         index: number
-    //     ) => void
-    // ) {
-    //     console.log("Run thumbnail service");
-    //     if (!this._isRunning) {
-    //         this._isRunning = true;
-    //         while (this._queue[0]) {
-    //             const queueElement: QueueElement = this._queue.shift();
-    //             console.log(
-    //                 "Start generating thumbnail for ",
-    //                 queueElement.sourceVideoPath
-    //             );
-    //             try {
-    //                 await getThumbnail(
-    //                     queueElement.sourceVideoPath,
-    //                     queueElement.targetThumbnailPath,
-    //                     queueElement.videoTime
-    //                 );
-    //                 listener(
-    //                     queueElement.resourceId,
-    //                     "file://" + queueElement.targetThumbnailPath,
-    //                     queueElement.index
-    //                 );
-    //             } catch (err) {
-    //                 console.log(err);
-    //             }
-    //         }
-    //         this._isRunning = false;
-    //     }
-    // }
 }
 
 interface QueueElement {

@@ -14,21 +14,31 @@ import getProjectList from "../handlers/getProjectList";
 import IThumbnailChangeEvent from "../../../shared/types/thumbnailChangeEvent.interface";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
 import IResource from "../../../shared/types/resource.interface";
+import syncResourcesWithThumbnails from "./helpers/syncResourcesWithThumbnails";
+import registerResourceChangeListener from "./handlers/registerResourceChangeListener";
 export default class Project {
     static PROJECT_FOLDER = ".mymedia";
     private static projectInstance: Project;
     private readonly resourceFolderPath;
     private readonly projectFolderPath;
     private readonly store: Store;
+    private readonly _thumbnailManager: ThumbnailManager;
 
-
-    private _thumbnailManager: ThumbnailManager;
-
-    public static async getNewProjectInstance(resourceFolderPath: string) {
+    public static destroyInstance() {
         if (Project.projectInstance) {
+            console.log("project instance exist");
             Project.projectInstance.destroy();
         }
+    }
+    public static async getNewProjectInstance(resourceFolderPath: string) {
+        console.log("getNewProjectInstance");
+        if (Project.projectInstance) {
+            console.log("project instance exist");
+            Project.projectInstance.destroy();
+        }
+        console.log("create project instance");
         Project.projectInstance = new Project(resourceFolderPath);
+        console.log("init project instance");
         await Project.projectInstance.init();
     }
 
@@ -52,27 +62,16 @@ export default class Project {
     public async init() {
         console.log("Init Project component");
         await this._thumbnailManager.init();
-        await syncDbWithFs(this.resourceFolderPath, this.store);
-        const thumbnailMap: Map<
-            string,
-            Array<string>
-            > = await this._thumbnailManager.loadExistingThumbnails();
         const resourceList = this.store.getResourceList();
-        resourceList.map((resource: IResource) => {
-            if (thumbnailMap.has(resource.id)) {
-                const thumbnailList: Array<string> = thumbnailMap.get(resource.id);
-                this._thumbnailManager.queueGenerateMissingThumbnails(
-                    resource,
-                    thumbnailList
-                );
-                resource.thumbnailList = thumbnailList;
-            } else {
-                this._thumbnailManager.queueGenerateAllThumbnails(resource);
-            }
-        });
-        this.store.setResourceList(resourceList);
-        //    await ensureProjectFolder(this.projectFolderPath);
-
+        const syncedResourceList = await syncDbWithFs(
+            this.resourceFolderPath,
+            resourceList
+        );
+        const thumbnailSyncedResourceList = await syncResourcesWithThumbnails(
+            syncedResourceList,
+            this._thumbnailManager
+        );
+        this.store.setResourceList(thumbnailSyncedResourceList);
         this.registerHandlers();
     }
 
@@ -98,27 +97,24 @@ export default class Project {
             removeResource.execute(this.store, this.resourceFolderPath)
         );
         Listener.on(IpcProviderResourceEnums.REMOVE_TAG, removeTag.execute(this.store));
-        Listener.on(IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER, async context => {
-            console.log("start listening for thumbnails");
-            this._thumbnailManager.execute((resourceId: string, resourceThumbnailPath: string, index: number) => {
-                console.log("====");
-                console.log(resourceId, resourceThumbnailPath);
-                const resource = this.store.getResourceById(resourceId);
-                resource.thumbnailList[index] = resourceThumbnailPath;
-                this.store.updateResource(resource);
-
-                context.reply
-                    .getEvent()
-                    .reply(
-                        IpcProviderResourceEnums.ON_RESOURCE_CHANGE,
-                        resource
-                    );
-            });
-        });
+        Listener.on(
+            IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER,
+            registerResourceChangeListener.execute(this.store, this._thumbnailManager)
+        );
     }
 
-    private removeHandlers() {}
+    private removeHandlers() {
+        Listener.removeAllListeners(IpcProviderResourceEnums.GET_RESOURCE_LIST);
+        Listener.removeAllListeners(IpcProviderResourceEnums.GET_TAG_LIST);
+        Listener.removeAllListeners(IpcProviderResourceEnums.UPDATE_RESOURCE);
+        Listener.removeAllListeners(IpcProviderResourceEnums.SAVE_TAG_LIST);
+        Listener.removeAllListeners(IpcProviderResourceEnums.REMOVE_RESOURCE);
+        Listener.removeAllListeners(IpcProviderResourceEnums.REMOVE_TAG);
+        Listener.removeAllListeners(IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER);
+    }
     public destroy() {
+        console.log("destroy project");
         this.removeHandlers();
+        this._thumbnailManager.destroy();
     }
 }
