@@ -95,7 +95,7 @@ export default class Project {
         );
         Listener.on(
             IpcProviderResourceEnums.REMOVE_RESOURCE,
-            removeResource.execute(this.store, this.resourceFolderPath)
+            removeResource.execute(this.store, this.resourceFolderPath, this._thumbnailManager)
         );
         Listener.on(IpcProviderResourceEnums.REMOVE_TAG, removeTag.execute(this.store));
         Listener.on(

@@ -74,8 +74,8 @@ export default class ThumbnailManager {
         }
     }
 
-    public async removeResourceThumbnails(resource: IResource) {
-        return removeFolder(path.join(this._thumbnailFolderName, resource.id));
+    public async removeResourceThumbnails(resourceId: string) {
+        return removeFolder(path.join(this._thumbnailFolderName, resourceId));
     }
 
     private queueGenerateThumbnail(resource: IResource, index: number, priority: number) {
