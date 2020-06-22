@@ -1,28 +1,26 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { ProjectPathComponent } from "./modules/project/views/project-path/project-path.component";
-import { CreateProjectComponent } from "./modules/project/views/create-project/create-project.component";
+import { ProjectListComponent } from "./modules/project/views/project-list/project-list.component";
+import { LoadProjectListResolverService } from "./modules/project/routes/load-project-list-resolver.service";
 import { ProjectModule } from "./modules/project/project.module";
 import { FilesComponent } from "./modules/files/views/files/files.component";
 import { FilesModule } from "./modules/files/files.module";
-// import { DetailsComponent } from "./modules/files/views/details/details.component";
+import { LoadResourceListResolverService } from "./modules/files/routes/load-resource-list-resolver.service";
+import { LoadTagListResolverService } from "./modules/files/routes/load-tag-list-resolver.service";
 
 const routes: Routes = [
     {
         path: "",
-        component: ProjectPathComponent
+        component: ProjectListComponent,
+        resolve: { projectList: LoadProjectListResolverService }
     },
-    {
-        path: "create-project",
-        component: CreateProjectComponent
-    },
-    // {
-    //     path: "files/:fileId",
-    //     component: DetailsComponent
-    // },
     {
         path: "files",
-        component: FilesComponent
+        component: FilesComponent,
+        resolve: {
+            resourceList: LoadResourceListResolverService,
+            tagList: LoadTagListResolverService
+        }
     }
 ];
 

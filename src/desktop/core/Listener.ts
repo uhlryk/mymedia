@@ -21,7 +21,7 @@ export default class Listener {
 
 type ListenerCallback = (context: Context) => void;
 
-interface Context {
+export interface Context {
     reply: Reply;
     loader: Loader;
     data: {

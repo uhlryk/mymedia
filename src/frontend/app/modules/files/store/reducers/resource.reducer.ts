@@ -12,7 +12,7 @@ export const InitialResourceState: ResourceState = {
 
 export const InitialResourceReducer = createReducer(
     InitialResourceState,
-    on(Actions.Project.setProjectInitialData, (state, action) => {
+    on(Actions.Resource.setResourceList, (state, action) => {
         return Object.assign({}, InitialResourceState, {
             list: action.resourceList
         });
@@ -54,12 +54,12 @@ export const InitialResourceReducer = createReducer(
             })
         });
     }),
-    on(Actions.Resource.setResourceTags, (state, action) => {
+    on(Actions.Resource.setResourceTagList, (state, action) => {
         return Object.assign({}, state, {
             list: state.list.map((resource: IResource) => {
                 if (resource.id === action.resourceId) {
                     return Object.assign({}, resource, {
-                        tags: action.tags.slice()
+                        tagIdList: action.tagIdList.slice()
                     });
                 } else {
                     return resource;
@@ -69,14 +69,8 @@ export const InitialResourceReducer = createReducer(
     }),
     on(Actions.Resource.deleteResourceFromDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
-            list: state.list.map((resource: IResource) => {
-                if (resource.id === action.resourceId) {
-                    return Object.assign({}, resource, {
-                        isRemoved: true
-                    });
-                } else {
-                    return resource;
-                }
+            list: state.list.filter((resource: IResource) => {
+                return resource.id !== action.resourceId;
             }),
             deleteResourceMenu: {
                 resourceId: null,
@@ -84,20 +78,21 @@ export const InitialResourceReducer = createReducer(
             }
         });
     }),
-    on(Actions.Resource.addResourceThumbnail, (state, action) => {
+    on(Actions.Resource.upsertResource, (state, action) => {
+        let existAndChanged: boolean = false;
+        let newList = state.list.map((resource: IResource) => {
+            if (resource.id === action.resource.id) {
+                existAndChanged = true;
+                return action.resource;
+            } else {
+                return resource;
+            }
+        });
+        if (existAndChanged === false) {
+            newList = newList.concat([action.resource]);
+        }
         return Object.assign({}, state, {
-            list: state.list.map((resource: IResource) => {
-                if (resource.id === action.resourceId) {
-                    const list: Array<string> = (resource.thumbnailList || []).slice();
-
-                    list[action.index] = action.thumbnail;
-                    return Object.assign({}, resource, {
-                        thumbnailList: list
-                    });
-                } else {
-                    return resource;
-                }
-            })
+            list: newList
         });
     })
 );

@@ -6,7 +6,7 @@ import installExtension, { REDUX_DEVTOOLS } from "electron-devtools-installer";
 
 
 import * as path from "path";
-import AppManager from "./AppManager";
+import ProjectList from "./components/ProjectList";
 const contextMenu = require("electron-context-menu");
 contextMenu({
     showInspectElement: true
@@ -28,7 +28,8 @@ app.on("ready", () => {
     installExtension(REDUX_DEVTOOLS)
         .then(name => console.log(`Added Extension:  ${name}`))
         .catch(err => console.log("An error occurred: ", err));
-    const appManager = new AppManager();
+    const projectList = new ProjectList();
+    projectList.init();
     if (IS_HOT) {
         mainWindow.loadURL("http://localhost:4200/");
         mainWindow.webContents.openDevTools();

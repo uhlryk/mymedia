@@ -8,42 +8,89 @@ import IpcProvider from "../../../../providers/ipc.provider";
 import IpcProviderResourceEnums from "../../../../../../shared/IpcProviderResourceEnums";
 import IResource from "../../../../../../shared/types/resource.interface";
 import { ProjectState } from "../reducers/index.reducer";
-import * as Selector  from "../selectors/index.selector";
+import * as Selector from "../selectors/index.selector";
 
 @Injectable()
 export class ProjectEffects {
-    saveProject$ = createEffect(
+    updateResource$ = createEffect(
         () =>
             this.actions$.pipe(
                 ofType(
-                    ActionList.Tag.removeTag,
-                    ActionList.Tag.setTagName,
-                    ActionList.Tag.createTag,
-                    ActionList.Resource.setResourceTags,
+                    ActionList.Resource.setResourceTagList,
                     ActionList.Resource.setResourceRanking,
                     ActionList.Resource.setResourceDescription,
-                    ActionList.Resource.setResourceTitle,
-                    ActionList.Resource.deleteResourceFromDeleteResourceMenu
+                    ActionList.Resource.setResourceTitle
                 ),
                 // tap((action: Action) => {})
-                withLatestFrom(this.store$.pipe(select(Selector.Project.projectFeatureSelector))),
-                tap(([action, projectState]: [Action, ProjectState]) => {
-                    IpcProvider.trigger(IpcProviderResourceEnums.SAVE_PROJECT, {
-                        project: {
-                            resourceList: projectState.resourceList.list,
-                            tagList: projectState.tagList.list
-                        }
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [{ resourceId }, ProjectState]) => {
+                    const changedResource: IResource = projectState.resourceList.list.find(
+                        (resource: IResource) => action.resourceId === resource.id
+                    );
+                    IpcProvider.trigger(IpcProviderResourceEnums.UPDATE_RESOURCE, {
+                        resource: changedResource
                     });
                 })
             ),
         { dispatch: false }
     );
-
+    removeResource$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ActionList.Resource.deleteResourceFromDeleteResourceMenu),
+                // tap((action: Action) => {})
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [{ resourceId }, ProjectState]) => {
+                    IpcProvider.trigger(IpcProviderResourceEnums.REMOVE_RESOURCE, {
+                        resourceId: action.resourceId
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+    saveTagList$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ActionList.Tag.setTagName, ActionList.Tag.createTag),
+                // tap((action: Action) => {})
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [Action, ProjectState]) => {
+                    IpcProvider.trigger(IpcProviderResourceEnums.SAVE_TAG_LIST, {
+                        tagList: projectState.tagList.list
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
+    removeTag$ = createEffect(
+        () =>
+            this.actions$.pipe(
+                ofType(ActionList.Tag.removeTag),
+                // tap((action: Action) => {})
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
+                tap(([action, projectState]: [{ tagId }, ProjectState]) => {
+                    IpcProvider.trigger(IpcProviderResourceEnums.REMOVE_TAG, {
+                        tagId: action.tagId
+                    });
+                })
+            ),
+        { dispatch: false }
+    );
     executeResource = createEffect(
         () =>
             this.actions$.pipe(
                 ofType(ActionList.Resource.executeResource),
-                withLatestFrom(this.store$.pipe(select(Selector.Project.projectFeatureSelector))),
+                withLatestFrom(
+                    this.store$.pipe(select(Selector.Project.projectFeatureSelector))
+                ),
                 tap(([action, projectState]: [{ resourceId: string }, ProjectState]) => {
                     const selectedResource: IResource = projectState.resourceList.list.find(
                         (resource: IResource) => resource.id === action.resourceId

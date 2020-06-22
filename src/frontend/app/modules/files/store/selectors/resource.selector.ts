@@ -33,12 +33,12 @@ export const managedListSelector = createSelector(
         return list
             .filter((resource: IResource) => {
                 if (
-                    resource.isRemoved === false &&
-                    resource.title.toLowerCase().includes(search.text.toLowerCase())
+             //       resource.isRemoved === false &&
+                    (!search.text || resource.title.toLowerCase().includes(search.text.toLowerCase()))
                 ) {
                     if (search.tagIdList.length) {
                         return search.tagIdList.every(
-                            (searchTagId: string) => !!resource.tags.includes(searchTagId)
+                            (searchTagId: string) => !!resource.tagIdList.includes(searchTagId)
                         );
                     }
                     return true;

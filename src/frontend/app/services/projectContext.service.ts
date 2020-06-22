@@ -91,9 +91,9 @@ export class ProjectContextService {
         this._project = Object.assign({}, this._project, {
             tagList: this._project.tagList.filter((tag: ITag) => tag.id !== tagId),
             resourceList: this._project.resourceList.map((resource: IResource) => {
-                if (resource.tags.includes(tagId)) {
+                if (resource.tagIdList.includes(tagId)) {
                     return Object.assign({}, resource, {
-                        tags: resource.tags.filter(
+                        tags: resource.tagIdList.filter(
                             (resourceTagId: string) => resourceTagId !== tagId
                         )
                     });

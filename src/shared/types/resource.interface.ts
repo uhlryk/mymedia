@@ -9,8 +9,7 @@ export default interface IResource {
     width: number;
     height: number;
     description: string;
-    tags: Array<string>;
-    isNew: boolean;
-    isRemoved: boolean;
-    thumbnailList?: Array<string>;
+    tagIdList: Array<string>;
+    added: number;
+    thumbnailList: Array<string>;
 }

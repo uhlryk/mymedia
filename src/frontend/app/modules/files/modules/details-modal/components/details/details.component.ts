@@ -65,7 +65,7 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
     }
     onChangeAddedTags(selectedTagList: Array<string>) {
         this.store.dispatch(
-            Resource.setResourceTags({ resourceId: this.resource.id, tags: selectedTagList })
+            Resource.setResourceTagList({ resourceId: this.resource.id, tagIdList: selectedTagList })
         );
     }
     saveTitle(newTitle) {

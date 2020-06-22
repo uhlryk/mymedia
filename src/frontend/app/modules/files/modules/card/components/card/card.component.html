@@ -31,10 +31,10 @@
                 [cancel]="false"
             ></p-rating>
 
-            <span *ngIf="resource.isNew">NEW</span>
+            <span *ngIf="checkIfNew(resource.added)">NEW</span>
         </div>
         <div class="card-section">
-            <app-tag-list [projectTagList]="(tagList$ | async)" [resourceTagIdList]="(resource$ | async).tags"></app-tag-list>
+            <app-tag-list [projectTagList]="(tagList$ | async)" [resourceTagIdList]="(resource$ | async).tagIdList"></app-tag-list>
         </div>
     </div>
     <p-footer>
