@@ -21,16 +21,16 @@ export default async function syncDbWithFs(resourceFolderPath: string, resourceL
         );
         if (!resourceByFile) {
             const id = uuid();
-            const metadata = await getMetadata(path.resolve(resourceFolderPath, file.filePath));
+       //     const metadata = await getMetadata(path.resolve(resourceFolderPath, file.filePath));
             newResourceList.push({
                 filePath: file.filePath,
                 fileName: file.fileName,
                 title: file.name,
                 size: file.size,
                 ranking: 0,
-                duration: parseInt(metadata.duration, 10),
-                width: parseInt(metadata.width, 10),
-                height: parseInt(metadata.height, 10),
+                duration: null,
+                width: null,
+                height: null,
                 description: "",
                 id: id,
                 tagIdList: [],

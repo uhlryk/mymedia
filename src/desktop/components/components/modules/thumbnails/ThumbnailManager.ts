@@ -13,7 +13,6 @@ export default class ThumbnailManager {
     private _projectFolderName: string;
     private _thumbnailMap: Map<string, Array<string>>;
     private _queue: Array<QueueElement>;
-    private _isRunning: boolean;
     private _thumbnailFolderName: string;
     private _isDestroyed: boolean = false;
     constructor(projectPath: string, projectFolderName: string) {
@@ -25,7 +24,6 @@ export default class ThumbnailManager {
             ThumbnailManager.PROJECT_THUMBNAIL_FOLDER
         );
         this._queue = [];
-        this._isRunning = false;
     }
     public async init() {
         const isProjectFolderExist: boolean = await fse.pathExists(

@@ -10,13 +10,11 @@ import removeResource from "./handlers/removeResource";
 import removeTag from "./handlers/removeTag";
 import Listener, { Context } from "../../core/Listener";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
-import getProjectList from "../handlers/getProjectList";
-import IThumbnailChangeEvent from "../../../shared/types/thumbnailChangeEvent.interface";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
-import IResource from "../../../shared/types/resource.interface";
+import MetadataManager from "./modules/MetadataManager";
 import syncResourcesWithThumbnails from "./helpers/syncResourcesWithThumbnails";
 import registerResourceChangeListener from "./handlers/registerResourceChangeListener";
-import {shell} from "electron";
+import { shell } from "electron";
 export default class Project {
     static PROJECT_FOLDER = ".mymedia";
     private static projectInstance: Project;
@@ -24,6 +22,7 @@ export default class Project {
     private readonly projectFolderPath;
     private readonly store: Store;
     private readonly _thumbnailManager: ThumbnailManager;
+    private readonly _metadataManager: MetadataManager;
 
     public static destroyInstance() {
         if (Project.projectInstance) {
@@ -55,6 +54,7 @@ export default class Project {
             this.resourceFolderPath,
             Project.PROJECT_FOLDER
         );
+        this._metadataManager = new MetadataManager();
     }
 
     /**
@@ -68,10 +68,12 @@ export default class Project {
             this.resourceFolderPath,
             resourceList
         );
+        this._metadataManager.init(this.resourceFolderPath, syncedResourceList);
         const thumbnailSyncedResourceList = await syncResourcesWithThumbnails(
             syncedResourceList,
             this._thumbnailManager
         );
+
         this.store.setResourceList(thumbnailSyncedResourceList);
         this.registerHandlers();
     }
@@ -95,12 +97,20 @@ export default class Project {
         );
         Listener.on(
             IpcProviderResourceEnums.REMOVE_RESOURCE,
-            removeResource.execute(this.store, this.resourceFolderPath, this._thumbnailManager)
+            removeResource.execute(
+                this.store,
+                this.resourceFolderPath,
+                this._thumbnailManager
+            )
         );
         Listener.on(IpcProviderResourceEnums.REMOVE_TAG, removeTag.execute(this.store));
         Listener.on(
             IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER,
-            registerResourceChangeListener.execute(this.store, this._thumbnailManager)
+            registerResourceChangeListener.execute(
+                this.store,
+                this._thumbnailManager,
+                this._metadataManager
+            )
         );
         Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
             const resourcePath: string = context.data.filePath;
@@ -115,12 +125,15 @@ export default class Project {
         Listener.removeAllListeners(IpcProviderResourceEnums.SAVE_TAG_LIST);
         Listener.removeAllListeners(IpcProviderResourceEnums.REMOVE_RESOURCE);
         Listener.removeAllListeners(IpcProviderResourceEnums.REMOVE_TAG);
-        Listener.removeAllListeners(IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER);
+        Listener.removeAllListeners(
+            IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER
+        );
         Listener.removeAllListeners(IpcProviderResourceEnums.EXECUTE_RESOURCE);
     }
     public destroy() {
         console.log("destroy project");
         this.removeHandlers();
         this._thumbnailManager.destroy();
+        this._metadataManager.destroy();
     }
 }
