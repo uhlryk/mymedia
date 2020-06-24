@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 
 @Component({
     selector: "app-thumbnail",
@@ -9,9 +9,5 @@ export class ThumbnailComponent implements OnInit {
     @Input() thumbnailPath: string;
     constructor() {}
 
-    ngOnInit() {
-        if (Math.random() < 0.5) {
-            this.thumbnailPath = null;
-        }
-    }
+    ngOnInit() {}
 }

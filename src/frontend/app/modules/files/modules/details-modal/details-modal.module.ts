@@ -10,7 +10,8 @@ import { InplaceModule } from "primeng/inplace";
 import { ButtonModule } from "primeng/button";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { RatingModule } from "primeng/rating";
-import { DetailsComponent } from './components/details/details.component';
+import { DetailsComponent } from "./components/details/details.component";
+import { ThumbnailModule } from "../thumbnail/thumbnail.module";
 @NgModule({
     declarations: [DetailsModalComponent, DescriptionComponent, DetailsComponent],
     imports: [
@@ -22,7 +23,8 @@ import { DetailsComponent } from './components/details/details.component';
         InplaceModule,
         ButtonModule,
         InputTextareaModule,
-        RatingModule
+        RatingModule,
+        ThumbnailModule
     ],
     exports: [DetailsModalComponent]
 })

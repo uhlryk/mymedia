@@ -6,41 +6,20 @@
 </div>
 <div *ngIf="resource" class="side-menu-container">
     <div class="thumbnail-section">
-        <div
-            *ngIf="!thumbnailPath"
-            class="empty-thumbnail"
-        >
-            <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
-            <i class="pi pi-clock" style="font-size: 3em"></i>
-        </div>
-        <div class="thumbnail-wrapper" *ngIf="thumbnailPath">
-            <img
-                class="thumbnail"
-                [src]="thumbnailPath"
-                alt=""
-            />
-            <div class="show-play" (click)="clickOpenFile()">
-                <i class="pi pi-caret-right"></i>
-            </div>
-        </div>
+        <app-thumbnail
+            [thumbnailPath]="thumbnailPath"
+            (click)="clickOpenFile()"
+        ></app-thumbnail>
     </div>
     <div class="thumbnail-gallery">
         <div
             class="thumbnail-wrapper-small"
             *ngFor="let thumbnailPath of resource.thumbnailList"
         >
-            <div *ngIf="!thumbnailPath" class="empty-thumbnail">
-                <!--<i class="pi pi-spin pi-spinner" style="font-size: 3em"></i>-->
-                <i class="pi pi-clock" style="font-size: 3em"></i>
-            </div>
-
-            <img
-                *ngIf="thumbnailPath"
-                class="thumbnail"
+            <app-thumbnail
+                [thumbnailPath]="thumbnailPath"
                 (click)="changeThumbnail(thumbnailPath)"
-                [src]="thumbnailPath"
-                alt=""
-            />
+            ></app-thumbnail>
         </div>
     </div>
     <app-text

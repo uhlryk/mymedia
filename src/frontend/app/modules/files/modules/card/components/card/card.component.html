@@ -1,10 +1,10 @@
 <p-card styleClass="ui-card-shadow" class="card" *ngIf="resource$ | async as resource">
     <p-header>
         <div class="thumbnail-section">
-            <app-playable-thumbnail
+            <app-thumbnail
                 [thumbnailPath]="(resource.thumbnailList || [])[0]"
-                (play)="onClickThumbnail()"
-            ></app-playable-thumbnail>
+                (click)="onClickThumbnail()"
+            ></app-thumbnail>
         </div>
     </p-header>
     <div>
