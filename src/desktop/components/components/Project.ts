@@ -11,7 +11,6 @@ import removeTag from "./handlers/removeTag";
 import Listener, { Context } from "../../core/Listener";
 import IpcProviderResourceEnums from "../../../shared/IpcProviderResourceEnums";
 import ThumbnailManager from "./modules/thumbnails/ThumbnailManager";
-import MetadataManager from "./modules/MetadataManager";
 import syncResourcesWithThumbnails from "./helpers/syncResourcesWithThumbnails";
 import registerResourceChangeListener from "./handlers/registerResourceChangeListener";
 import { shell } from "electron";
@@ -22,7 +21,6 @@ export default class Project {
     private readonly projectFolderPath;
     private readonly store: Store;
     private readonly _thumbnailManager: ThumbnailManager;
-    private readonly _metadataManager: MetadataManager;
 
     public static destroyInstance() {
         if (Project.projectInstance) {
@@ -54,7 +52,6 @@ export default class Project {
             this.resourceFolderPath,
             Project.PROJECT_FOLDER
         );
-        this._metadataManager = new MetadataManager();
     }
 
     /**
@@ -68,7 +65,6 @@ export default class Project {
             this.resourceFolderPath,
             resourceList
         );
-        this._metadataManager.init(this.resourceFolderPath, syncedResourceList);
         const thumbnailSyncedResourceList = await syncResourcesWithThumbnails(
             syncedResourceList,
             this._thumbnailManager
@@ -108,8 +104,7 @@ export default class Project {
             IpcProviderResourceEnums.REGISTER_RESOURCE_CHANGE_LISTENER,
             registerResourceChangeListener.execute(
                 this.store,
-                this._thumbnailManager,
-                this._metadataManager
+                this._thumbnailManager
             )
         );
         Listener.on(IpcProviderResourceEnums.EXECUTE_RESOURCE, context => {
@@ -134,6 +129,5 @@ export default class Project {
         console.log("destroy project");
         this.removeHandlers();
         this._thumbnailManager.destroy();
-        this._metadataManager.destroy();
     }
 }

@@ -5,21 +5,22 @@ import IResource from "../../../../../shared/types/resource.interface";
 import ThumbnailName from "../../../../../shared/ThumbnailName";
 import removeFolder from "../../../../fs/removeFolder";
 import * as fse from "fs-extra";
+import getMetadata from "../../../../fs/getMetadata";
 
 export default class ThumbnailManager {
     static PROJECT_THUMBNAIL_FOLDER = "thumbnails";
 
-    private _projectPath: string;
+    private _resourceFolderPath: string;
     private _projectFolderName: string;
     private _thumbnailMap: Map<string, Array<string>>;
     private _queue: Array<QueueElement>;
     private _thumbnailFolderName: string;
     private _isDestroyed: boolean = false;
-    constructor(projectPath: string, projectFolderName: string) {
-        this._projectPath = projectPath;
+    constructor(resourceFolderPath: string, projectFolderName: string) {
+        this._resourceFolderPath = resourceFolderPath;
         this._projectFolderName = projectFolderName;
         this._thumbnailFolderName = path.resolve(
-            projectPath,
+            resourceFolderPath,
             projectFolderName,
             ThumbnailManager.PROJECT_THUMBNAIL_FOLDER
         );
@@ -78,24 +79,17 @@ export default class ThumbnailManager {
 
     private queueGenerateThumbnail(resource: IResource, index: number, priority: number) {
         const queueElement: QueueElement = {
-            resourceId: resource.id,
-            sourceVideoPath: path.resolve(this._projectPath, resource.filePath),
-            targetThumbnailPath: ThumbnailName.setName(
-                this._thumbnailFolderName,
-                resource.id,
-                index
-            ),
+            resource: resource,
+
             index: index,
-            videoTime: ThumbnailName.getVideoPosition(index, resource.duration),
+
             priority: priority
         };
         this._queue.push(queueElement);
     }
     public async execute(
         listener: (
-            resourceId: string,
-            resourceThumbnailPath: string,
-            index: number
+            resource: IResource,
         ) => void
     ) {
         const priorityOrderedArray: Array<QueueElement> = this._queue.sort(
@@ -107,21 +101,32 @@ export default class ThumbnailManager {
             if (this._isDestroyed) {
                 break;
             }
-            console.log(
-                "Start generating thumbnail for ",
-                queueElement.sourceVideoPath + " index:" + queueElement.index
-            );
             try {
-                const thumbnail = await getThumbnail(
-                    queueElement.sourceVideoPath,
-                    queueElement.targetThumbnailPath,
-                    queueElement.videoTime
+                const resource = queueElement.resource;
+                if (!resource.duration && !resource.width && !resource.height) {
+                    const metadata = await getMetadata(
+                        path.resolve(this._resourceFolderPath, resource.filePath)
+                    );
+                    resource.duration = parseInt(metadata.duration, 10);
+                    resource.width = parseInt(metadata.width, 10);
+                    resource.height = parseInt(metadata.height, 10);
+                }
+                const sourceVideoPath = path.resolve(this._resourceFolderPath, resource.filePath);
+                const targetThumbnailPath = ThumbnailName.setName(
+                    this._thumbnailFolderName,
+                    resource.id,
+                    queueElement.index
                 );
+                const videoTime = ThumbnailName.getVideoPosition(queueElement.index, resource.duration);
+                const thumbnail = await getThumbnail(
+                    sourceVideoPath,
+                    targetThumbnailPath,
+                    videoTime
+                );
+                queueElement.resource.thumbnailList[queueElement.index] = "file://" + targetThumbnailPath;
                 if (this._isDestroyed === false) {
                     listener(
-                        queueElement.resourceId,
-                        "file://" + queueElement.targetThumbnailPath,
-                        queueElement.index
+                        queueElement.resource
                     );
                 }
             } catch (err) {
@@ -132,11 +137,8 @@ export default class ThumbnailManager {
 }
 
 interface QueueElement {
-    targetThumbnailPath: string;
-    sourceVideoPath: string;
-    resourceId: string;
+    resource: IResource;
     index: number;
-    videoTime: number;
     priority: number;
 }
 
