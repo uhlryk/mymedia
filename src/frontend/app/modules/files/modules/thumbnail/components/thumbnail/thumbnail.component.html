@@ -1,0 +1,6 @@
+<div *ngIf="!thumbnailPath" class="placeholder-wrapper">
+    <i class="pi pi-clock" style="font-size: 3em"></i>
+</div>
+<div class="thumbnail-wrapper" *ngIf="thumbnailPath">
+    <img class="thumbnail" [src]="thumbnailPath" alt="" />
+</div>

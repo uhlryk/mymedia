@@ -20,9 +20,6 @@ import {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit, OnChanges {
-    @Input()
-  //  private resource: IResource;
-  //  @Input() tagList: Array<ITag>;
     @Input() resourceId: string;
 
     resource$: Observable<IResource>;
@@ -70,9 +67,5 @@ export class CardComponent implements OnInit, OnChanges {
         addedDate.setDate(addedDate.getDate() + 1);
         const currentDate = new Date();
         return addedDate.getTime() > currentDate.getTime();
-    }
-
-    log(val) {
-        console.log(val);
     }
 }
