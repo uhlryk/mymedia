@@ -29,7 +29,7 @@ export class ListComponent implements OnInit, OnChanges {
 
     ngOnChanges() {}
 
-    log(val) {
-        console.log(val);
+    trackResourceList(index, resourceId) {
+        return resourceId;
     }
 }
