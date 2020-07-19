@@ -5,7 +5,7 @@
         [value]="tag.id"
         [selected]="_selectedTagId !== '0'"
     >
-        {{ tag.name }}
+        {{ !tag.parentId ? tag.name : "&#x021B3;&nbsp;" + tag.name }}
     </option>
 </select>
 <div class="tags-section">

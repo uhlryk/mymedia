@@ -32,7 +32,7 @@ export class DetailsComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private store: Store<{ project: ProjectState }>) {}
 
     ngOnInit() {
-        this.tagList$ = this.store.pipe(select(Selector.Tag.listSelector));
+        this.tagList$ = this.store.pipe(select(Selector.Tag.treeOrderedListSelector));
         this.resourceListChange = this.store
             .pipe(select(Selector.Resource.listSelector))
             .subscribe((resourceList: Array<IResource>) => {

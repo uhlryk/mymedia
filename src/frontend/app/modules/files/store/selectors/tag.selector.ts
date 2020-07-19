@@ -19,7 +19,7 @@ export const listSelector = createSelector(
     (tagList: TagState) => tagList.list
 );
 
-export const threeOrderedListSelector = createSelector(
+export const treeOrderedListSelector = createSelector(
     listSelector,
     (list: Array<ITag>) => {
         const mainList = list.filter((tag: ITag) => !tag.parentId);
