@@ -22,7 +22,20 @@ export const InitialTagReducer = createReducer(
         return Object.assign({}, InitialTagState, {
             list: state.list.concat({
                 id: uuid(),
-                name: action.name
+                name: ""
+            })
+        });
+    }),
+    on(Actions.Tag.createSubTag, (state, action) => {
+        const parentTag = state.list.find(tag => tag.id === action.parentId);
+        if (!parentTag) {
+            // TODO: throw error
+        }
+        return Object.assign({}, InitialTagState, {
+            list: state.list.concat({
+                id: uuid(),
+                name: "",
+                parentId: action.parentId
             })
         });
     }),
@@ -39,7 +52,7 @@ export const InitialTagReducer = createReducer(
     }),
     on(Actions.Tag.removeTag, (state, action) => {
         return Object.assign({}, InitialTagState, {
-            list: state.list.filter((tag: ITag) => tag.id !== action.tagId)
+            list: state.list.filter((tag: ITag) => (tag.id !== action.tagId && tag.parentId !== action.tagId))
         });
     })
 );

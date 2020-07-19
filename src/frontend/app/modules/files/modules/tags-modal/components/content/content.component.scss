@@ -1,7 +1,11 @@
-.create-section {
-    padding-bottom: 5px;
-
-    &>input {
-        width: calc(100% - 80px);
-    }
+td, th {
+    text-align: left;
+}
+.alert-button {
+    background-color: red;
+    border-color: red;
+}
+.create-button {
+    background-color: green;
+    border-color: green;
 }

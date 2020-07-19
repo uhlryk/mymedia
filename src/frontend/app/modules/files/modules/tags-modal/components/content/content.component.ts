@@ -11,26 +11,25 @@ import { Tag } from "../../../../store/actions/index.action";
     styleUrls: ["./content.component.scss"]
 })
 export class ContentComponent implements OnInit {
-    tagName: string;
     tagList$: Observable<Array<ITag>>;
 
     constructor(private store$: Store<AppState>) {}
 
     ngOnInit() {
-        this.tagList$ = this.store$.pipe(select(Selector.Tag.listSelector));
+        this.tagList$ = this.store$.pipe(select(Selector.Tag.threeOrderedListSelector));
     }
 
     onNewTag() {
-        this.store$.dispatch(Tag.createTag({ name: this.tagName }));
-        this.tagName = "";
+        this.store$.dispatch(Tag.createTag());
     }
 
     onEditTag(tagId, newName) {
         this.store$.dispatch(Tag.setTagName({ tagId: tagId, name: newName }));
-        this.tagName = "";
     }
     onRemoveTag(tagId) {
         this.store$.dispatch(Tag.removeTag({ tagId: tagId }));
-        this.tagName = "";
+    }
+    onCreateSubTag(tagId) {
+        this.store$.dispatch(Tag.createSubTag({ parentId: tagId }));
     }
 }

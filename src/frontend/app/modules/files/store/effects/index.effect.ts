@@ -55,7 +55,7 @@ export class ProjectEffects {
     saveTagList$ = createEffect(
         () =>
             this.actions$.pipe(
-                ofType(ActionList.Tag.setTagName, ActionList.Tag.createTag),
+                ofType(ActionList.Tag.setTagName, ActionList.Tag.createTag, ActionList.Tag.createSubTag),
                 // tap((action: Action) => {})
                 withLatestFrom(
                     this.store$.pipe(select(Selector.Project.projectFeatureSelector))

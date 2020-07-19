@@ -28,11 +28,11 @@ export class TagsModalComponent implements OnInit, OnDestroy {
                         data: {},
                         header: "Tags Manager",
                         width: "90%",
-                        height: "100%",
+                        height: "calc(100% - 50px)",
                         dismissableMask: true,
                         contentStyle: { height: "calc(100% - 50px)", overflow: "auto" },
                         autoZIndex: true,
-                        baseZIndex: 20000
+                        baseZIndex: 120000
                     });
                     this.dialogRef.onClose.subscribe(() => {
                         this.store$.dispatch(Actions.UI.hideTagsManager({}));

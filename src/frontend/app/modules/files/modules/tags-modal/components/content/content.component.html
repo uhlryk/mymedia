@@ -1,32 +1,65 @@
-<div class="create-section">
-    <input type="text" pInputText [(ngModel)]="tagName" />
-    <p-button label="Create" (click)="onNewTag()"></p-button>
-</div>
 <p-table [value]="tagList$ | async">
     <ng-template pTemplate="header">
         <tr>
-            <th colspan="4">tag name</th>
+            <th colspan="8"></th>
 
-            <th colspan="1">occurence</th>
-            <th colspan="1">actions</th>
+            <th colspan="2"></th>
+            <th colspan="2">
+                <button
+                    pButton
+                    icon="pi pi-pencil"
+                    class="create-button"
+                    (click)="onNewTag()"
+                ></button>
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-tag>
-        <tr>
-            <td colspan="4">
+        <tr *ngIf="!tag.parentId">
+            <td colspan="8" style="font-weight: bold;">
                 <app-text
                     [text]="tag.name"
                     (changed)="onEditTag(tag.id, $event)"
                 ></app-text>
             </td>
-            <td colspan="1"></td>
-            <td colspan="1">
-                <!--<button (click)="editTag(tag.getId())">edit</button>-->
-                <p-button
-                    icon="pi pi-times"E
-                    styleClass="ui-button-danger"
+            <td colspan="2"></td>
+            <td colspan="2">
+                <button
+                    pButton
+                    icon="pi pi-pencil"
+                    class="create-button"
+                    (click)="onCreateSubTag(tag.id)"
+                    style="margin-right: .25em"
+                ></button>
+                <button
+                    pButton
+                    icon="pi pi-times"
+                    class="alert-button"
                     (click)="onRemoveTag(tag.id)"
-                ></p-button>
+
+                ></button>
+
+
+            </td>
+        </tr>
+        <tr *ngIf="tag.parentId">
+            <td colspan="1"></td>
+            <td colspan="7">
+                <app-text
+                    [text]="tag.name"
+                    (changed)="onEditTag(tag.id, $event)"
+                ></app-text>
+            </td>
+            <td colspan="2"></td>
+            <td colspan="2">
+                <!--<button (click)="editTag(tag.getId())">edit</button>-->
+                <button
+                    pButton
+                    icon="pi pi-times"
+                    class="alert-button"
+                    (click)="onRemoveTag(tag.id)"
+                    style="margin-right: .25em"
+                ></button>
             </td>
         </tr>
     </ng-template>
