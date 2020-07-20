@@ -1,11 +1,13 @@
-import {createSelector} from "@ngrx/store";
+import { createSelector } from "@ngrx/store";
 import IResource from "../../../../../../shared/types/resource.interface";
-import {projectFeatureSelector} from "./project.selector";
-import {ProjectState} from "../reducers/index.reducer";
-import {ResourceState} from "../reducers/resource.reducer";
-import {searchSelector} from "./search.selector";
+import { projectFeatureSelector } from "./project.selector";
+import { ProjectState } from "../reducers/index.reducer";
+import { ResourceState } from "../reducers/resource.reducer";
+import { searchSelector } from "./search.selector";
+import * as TagSelector from "./tag.selector";
 import * as OrderSelector from "./order.selector";
 import ISearch from "../../types/search.interface";
+import ITag from "../../../../../../shared/types/tag.interface";
 
 export const resourceListSelector = createSelector(
     projectFeatureSelector,
@@ -17,7 +19,6 @@ export const listSelector = createSelector(
     (resourceList: ResourceState) => resourceList.list
 );
 
-
 export const resourceSelector = createSelector(
     listSelector,
     (list: Array<IResource>, props: { resourceId: string }) =>
@@ -27,19 +28,35 @@ export const resourceSelector = createSelector(
 export const managedListSelector = createSelector(
     listSelector,
     searchSelector,
+    TagSelector.listSelector,
     OrderSelector.typeSelector,
-    (list: Array<IResource>, search: ISearch, orderType: string) => {
-        console.log("Selector recalculated");
+    (list: Array<IResource>, search: ISearch, tagList, orderType: string) => {
+        const searchTags = search.tagIdList.map(tagId =>
+            tagList.find(tag => tag.id === tagId)
+        );
         return list
             .filter((resource: IResource) => {
                 if (
-             //       resource.isRemoved === false &&
-                    (!search.text || resource.title.toLowerCase().includes(search.text.toLowerCase()))
+                    //       resource.isRemoved === false &&
+                    !search.text ||
+                    resource.title.toLowerCase().includes(search.text.toLowerCase())
                 ) {
-                    if (search.tagIdList.length) {
-                        return search.tagIdList.every(
-                            (searchTagId: string) => !!resource.tagIdList.includes(searchTagId)
+                    if (searchTags.length) {
+                        const resourceTags = resource.tagIdList.map(tagId =>
+                            tagList.find(tag => tag.id === tagId)
                         );
+                        return searchTags.every(
+                            (searchTag: ITag) =>
+                                !!resourceTags.find(
+                                    resourceTag =>
+                                        resourceTag.id === searchTag.id ||
+                                        resourceTag.parentId === searchTag.id
+                                )
+                        );
+
+                        /*             return search.tagIdList.every(
+                            (searchTagId: string) => !!resource.tagIdList.includes(searchTagId)
+                        );*/
                     }
                     return true;
                 }
