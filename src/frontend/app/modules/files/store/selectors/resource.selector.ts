@@ -65,6 +65,10 @@ export const managedListSelector = createSelector(
                 switch (orderType) {
                     case "NAME_DESC":
                         return prev.title > next.title ? -1 : 1;
+                    case "CREATED_ASC":
+                        return prev.added - next.added;
+                    case "CREATED_DESC":
+                        return next.added - prev.added;
                     case "RATING_ASC":
                         return prev.ranking - next.ranking;
                     case "RATING_DESC":

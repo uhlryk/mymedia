@@ -13,7 +13,7 @@ export class OrderComponent implements OnInit {
     constructor(private store: Store<AppState>) {}
 
     ngOnInit() {
-        this.selectedOption = "NAME_ASC";
+        this.selectedOption = "CREATED_DESC";
     }
 
     startSorting() {

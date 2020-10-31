@@ -6,7 +6,7 @@ export interface OrderState {
 }
 
 export const InitialOrderState: OrderState = {
-    type: "NAME_ASC"
+    type: "CREATED_DESC"
 };
 
 export const InitialOrderReducer = createReducer(
