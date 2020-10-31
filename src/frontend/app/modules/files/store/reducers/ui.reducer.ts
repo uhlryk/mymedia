@@ -7,6 +7,10 @@ export interface UIState {
         resourceId?: string;
         visible: boolean;
     };
+    deleteTagMenu: {
+        tagId?: string;
+        visible: boolean;
+    };
     rightMenu: {
         resourceId?: string;
         visible: boolean;
@@ -19,6 +23,10 @@ export interface UIState {
 export const InitialUIState: UIState = {
     deleteResourceMenu: {
         resourceId: null,
+        visible: false
+    },
+    deleteTagMenu: {
+        tagId: null,
         visible: false
     },
     rightMenu: {
@@ -48,10 +56,34 @@ export const InitialUIReducer = createReducer(
             }
         });
     }),
+    on(Actions.Tag.removeTag, (state, action) => {
+        return Object.assign({}, state, {
+            deleteTagMenu: {
+                tagId: null,
+                visible: false
+            }
+        });
+    }),
+    on(Actions.UI.showDeleteTagMenu, (state, action) => {
+        return Object.assign({}, state, {
+            deleteTagMenu: {
+                tagId: action.tagId,
+                visible: true
+            }
+        });
+    }),
     on(Actions.UI.hideDeleteResourceMenu, (state, action) => {
         return Object.assign({}, state, {
             deleteResourceMenu: {
                 resourceId: null,
+                visible: false
+            }
+        });
+    }),
+    on(Actions.UI.hideDeleteTagMenu, (state, action) => {
+        return Object.assign({}, state, {
+            deleteTagMenu: {
+                tagId: null,
                 visible: false
             }
         });

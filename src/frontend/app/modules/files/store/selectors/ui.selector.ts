@@ -1,7 +1,7 @@
 import { createSelector } from "@ngrx/store";
 import { projectFeatureSelector } from "./project.selector";
 import { ProjectState } from "../reducers/index.reducer";
-import {UIState} from "../reducers/ui.resourcer";
+import {UIState} from "../reducers/ui.reducer";
 
 export const uiSelector = createSelector(
     projectFeatureSelector,
@@ -10,6 +10,10 @@ export const uiSelector = createSelector(
 export const deleteResourceMenuSelector = createSelector(
     uiSelector,
     (ui: UIState) => ui.deleteResourceMenu
+);
+export const deleteTagMenuSelector = createSelector(
+    uiSelector,
+    (ui: UIState) => ui.deleteTagMenu
 );
 export const rightMenuSelector = createSelector(
     uiSelector,

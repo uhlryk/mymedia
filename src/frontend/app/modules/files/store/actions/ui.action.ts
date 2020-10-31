@@ -12,8 +12,16 @@ export const showDeleteResourceMenu = createAction(
     "SHOW_DELETE_RESOURCE_MENU",
     props<{ resourceId: string }>()
 );
+export const showDeleteTagMenu = createAction(
+    "SHOW_DELETE_TAG_MENU",
+    props<{ tagId: string }>()
+);
 export const hideDeleteResourceMenu = createAction(
     "HIDE_DELETE_RESOURCE_MENU",
+    props<{}>()
+);
+export const hideDeleteTagMenu = createAction(
+    "HIDE_DELETE_TAG_MENU",
     props<{}>()
 );
 export const showTagsManager = createAction(

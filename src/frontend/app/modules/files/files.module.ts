@@ -20,6 +20,7 @@ import * as fromProject from "./store/reducers/index.reducer";
 import { ProjectEffects } from "./store/effects/index.effect";
 import { EffectsModule } from "@ngrx/effects";
 import { DeleteResourceMenuComponent } from "./components/delete-resource-menu/delete-resource-menu.component";
+import { DeleteTagMenuComponent } from "./components/delete-tag-menu/delete-tag-menu.component";
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import { DeleteResourceMenuComponent } from "./components/delete-resource-menu/d
         SearchComponent,
         OrderComponent,
         SideMenuComponent,
-        DeleteResourceMenuComponent
+        DeleteResourceMenuComponent,
+        DeleteTagMenuComponent
     ]
 })
 export class FilesModule {}

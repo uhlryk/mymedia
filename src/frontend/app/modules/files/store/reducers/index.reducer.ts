@@ -1,7 +1,7 @@
 import { combineReducers, createReducer, on, ActionReducerMap } from "@ngrx/store";
 import { InitialResourceReducer, ResourceState } from "./resource.reducer";
 import { InitialTagReducer, TagState } from "./tag.reducer";
-import { InitialUIReducer, UIState } from "./ui.resourcer";
+import { InitialUIReducer, UIState } from "./ui.reducer";
 import { InitialSearchReducer, SearchState } from "./search.reducer";
 import { InitialOrderReducer, OrderState } from "./order.reducer";
 export const projectFeatureKey = "project";
