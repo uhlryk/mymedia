@@ -11,11 +11,12 @@ export default async function syncResourcesWithThumbnails(
     resourceList: Array<IResource>,
     thumbnailManager: ThumbnailManager
 ) {
+    console.log("syncResourcesWithThumbnails start");
     const thumbnailMap: Map<
         string,
         Array<string>
     > = await thumbnailManager.loadExistingThumbnails();
-
+    console.log("syncResourcesWithThumbnails existing thumbnails are created");
     resourceList.map((resource: IResource) => {
         if (thumbnailMap.has(resource.id)) {
             const thumbnailList: Array<string> = thumbnailMap.get(resource.id);
@@ -25,5 +26,6 @@ export default async function syncResourcesWithThumbnails(
             thumbnailManager.queueGenerateAllThumbnails(resource);
         }
     });
+    console.log("syncResourcesWithThumbnails missing thumbnails are created");
     return resourceList;
 }

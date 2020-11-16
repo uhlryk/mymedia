@@ -6,11 +6,15 @@ export default async function getThumbnailList(dir): Promise<Map<string, Array<s
     const fileDirectoryList = await fse.readdir(dir);
     for (const fileDirectoryId of fileDirectoryList) {
         const fileDirectoryPath = path.resolve(dir, fileDirectoryId);
-        let thumbnailList: Array<string> = await fse.readdir(fileDirectoryPath);
-        thumbnailList = thumbnailList.map(thumbnail => {
-            return "file://" + path.resolve(fileDirectoryPath, thumbnail);
-        });
-        map.set(fileDirectoryId, thumbnailList);
+        try {
+            let thumbnailList: Array<string> = await fse.readdir(fileDirectoryPath);
+            thumbnailList = thumbnailList.map(thumbnail => {
+                return "file://" + path.resolve(fileDirectoryPath, thumbnail);
+            });
+            map.set(fileDirectoryId, thumbnailList);
+        } catch (e) {
+            console.log("getThumbnailList error", e);
+        }
     }
     return map;
 }

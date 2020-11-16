@@ -14,26 +14,30 @@ const ACCEPTABLE_EXTENSIONS = [
 ];
 async function walk(baseDir, dir): Promise<Array<FileInterface>> {
     const results: Array<FileInterface> = [];
-    const fileList = await fse.readdir(dir);
-    for (const fileName of fileList) {
-        const filePath = path.resolve(dir, fileName);
-        const fileStat = await fse.stat(filePath);
-        if (fileStat && fileStat.isDirectory()) {
-            Array.prototype.push.apply(results, await walk(baseDir, filePath));
-        } else if (fileStat && fileStat.isFile()) {
-            const extension = path.extname(filePath);
-            if (
-                !/(^|\/)\.[^\/\.]/g.test(filePath) &&
-                ACCEPTABLE_EXTENSIONS.includes(extension)
-            ) {
-                results.push({
-                    fileName: fileName,
-                    name: path.parse(filePath).name,
-                    filePath: path.relative(baseDir, filePath),
-                    size: fileStat.size
-                });
+    try {
+        const fileList = await fse.readdir(dir);
+        for (const fileName of fileList) {
+            const filePath = path.resolve(dir, fileName);
+            const fileStat = await fse.stat(filePath);
+            if (fileStat && fileStat.isDirectory()) {
+                Array.prototype.push.apply(results, await walk(baseDir, filePath));
+            } else if (fileStat && fileStat.isFile()) {
+                const extension = path.extname(filePath);
+                if (
+                    !/(^|\/)\.[^\/\.]/g.test(filePath) &&
+                    ACCEPTABLE_EXTENSIONS.includes(extension)
+                ) {
+                    results.push({
+                        fileName: fileName,
+                        name: path.parse(filePath).name,
+                        filePath: path.relative(baseDir, filePath),
+                        size: fileStat.size
+                    });
+                }
             }
         }
+    } catch (e) {
+        console.log("getProjectFileList error", e);
     }
     return results;
 }
